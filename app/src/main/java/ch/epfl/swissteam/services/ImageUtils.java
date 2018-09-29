@@ -3,6 +3,8 @@ package ch.epfl.swissteam.services;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
 import android.media.ExifInterface;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -22,6 +24,7 @@ public class ImageUtils {
      * @return rotated bitmap
      * @throws IOException if the image could not be found at given path
      */
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public static Bitmap modifyOrientation(Bitmap bitmap, InputStream image_absolute_path) throws IOException {
         ExifInterface ei = new ExifInterface(image_absolute_path);
         int baseOrientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);

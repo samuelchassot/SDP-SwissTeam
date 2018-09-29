@@ -51,7 +51,7 @@ public class NewProfileDetails extends AppCompatActivity {
     }
 
     /**
-     * Goes to the capabilities activity.
+     * Starts the capabilities activity.
      *
      * @param view view
      */

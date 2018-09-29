@@ -12,7 +12,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //TODO: remove before pushing
         Intent i = new Intent(this, NewProfileDetails.class);
         startActivity(i);
 
