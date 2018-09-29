@@ -13,7 +13,11 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 
-public class SignIn extends AppCompatActivity {
+public class SignInActivity extends AppCompatActivity {
+    public static final String SIGNIN_MESSAGE = "ch.epfl.swissteam.services.account";
+    //Request code for startActivityForResult
+    private static final int RC_SIGN_IN = 42;
+
     private GoogleSignInClient mGoogleSignInClient;
 
     @Override
@@ -29,38 +33,25 @@ public class SignIn extends AppCompatActivity {
 
         // Build a GoogleSignInClient with the options specified by gso.
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-
-        //The button sign in the user when clicked
-        findViewById(R.id.signInButton).setOnClickListener(this);
     }
 
     @Override
     protected void onStart(){
+        super.onStart();
         // Check for existing Google Sign In account, if the user is already signed in
         // the GoogleSignInAccount will be non-null.
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
-        if(account == null){
-            //TODO
-            updateUI(account);
-        }else{
-            //TODO
-            updateUI(account);
-        }
-    }
+        if(account != null ){
+            // Launch main
 
-    //TODO
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.signInButton:
-                signIn();
-                break;
-            // ...
+            Intent mainIntent = new Intent(this, MainActivity.class);
+            mainIntent.putExtra(SIGNIN_MESSAGE , account);
+            startActivity(mainIntent);
         }
     }
 
     //Starting the intent prompts the user to select a Google account to sign in with
-    private void signIn() {
+    public void signIn(View view) {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
@@ -82,13 +73,17 @@ public class SignIn extends AppCompatActivity {
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
 
-            // Signed in successfully, show authenticated UI.
-            updateUI(account);
+            // Signed in successfully, show authenticated UI
+            //TODO Launch newProfileDetails
+            Intent newProfileIntent = new Intent(this, MainActivity.class);
+            newProfileIntent.putExtra(SIGNIN_MESSAGE , account);
+            startActivity(newProfileIntent);
+
         } catch (ApiException e) {
             // The ApiException status code indicates the detailed failure reason.
             // Please refer to the GoogleSignInStatusCodes class reference for more information.
-            Log.w(TAG, "signInResult:failed code=" + e.getStatusCode());
-            updateUI(null);
+            Log.w("SignInActivity", "signInResult:failed code=" + e.getStatusCode());
+            recreate();
         }
     }
 }
