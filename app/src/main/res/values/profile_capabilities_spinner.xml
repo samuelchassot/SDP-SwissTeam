@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="domains_array">
+        <item>Daily Life</item>
+        <item>IT</item>
+        <item>Mechanics</item>
+        <item>Teaching</item>
+        <item>Transportation</item>
+        <item>House</item>
+        <item>Bla</item>
+        <item>Bli</item>
+    </string-array>
+</resources>

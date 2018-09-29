@@ -4,10 +4,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 
-public class NewProfileCapabilites extends AppCompatActivity {
+public class NewProfileCapabilities extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,13 +17,18 @@ public class NewProfileCapabilites extends AppCompatActivity {
     }
 
     public void addNewActivity(View view) {
-        Button testButton = new Button(this);
-        testButton.setText("test");
+        Spinner newSpinner = new Spinner(this);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.domains_array, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        newSpinner.setAdapter(adapter);
+
         LinearLayout ll = findViewById(R.id.mainScrollViewLayout);
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
                                                                 ViewGroup.LayoutParams.MATCH_PARENT,
                                                                 ViewGroup.LayoutParams.WRAP_CONTENT
                                                                 );
-        ll.addView(testButton, lp);
+
+        ll.addView(newSpinner, lp);
     }
 }
