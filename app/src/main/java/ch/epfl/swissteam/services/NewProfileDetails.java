@@ -41,7 +41,7 @@ public class NewProfileDetails extends AppCompatActivity {
 
     public void nextScreen(View view) {
         //TODO: Save changes made by the user here.
-        Intent intent = new Intent(this, NewProfileCapabilites.class);
+        Intent intent = new Intent(this, NewProfileCapabilities.class);
         startActivity(intent);
     }
 }

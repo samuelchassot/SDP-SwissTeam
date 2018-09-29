@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="domains_array">
+        <item>Daily Life</item>
+        <item>IT</item>
+        <item>Mechanics</item>
+        <item>Teaching</item>
+        <item>Transportation</item>
+        <item>House</item>
+        <item>Bla</item>
+        <item>Bli</item>
+    </string-array>
+
+    <string-array name="subcat_array">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+    </string-array>
+</resources>
