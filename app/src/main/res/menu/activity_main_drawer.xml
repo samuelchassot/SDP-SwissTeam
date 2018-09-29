@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
+    <!--
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_camera"
@@ -32,6 +33,16 @@
                 android:id="@+id/nav_send"
                 android:icon="@drawable/ic_menu_send"
                 android:title="Send" />
+        </menu>
+    </item>
+    -->
+
+    <item android:title="@string/navigation_drawer_section_settings">
+        <menu>
+            <item
+                android:id="@+id/button_maindrawer_logout"
+                android:icon="@drawable/ic_maindrawer_logout"
+                android:title="@string/navigation_drawer_button_logout" />
         </menu>
     </item>
 
