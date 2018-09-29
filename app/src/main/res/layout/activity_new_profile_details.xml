@@ -7,7 +7,7 @@
     tools:context=".NewProfileDetails">
 
     <android.support.constraint.ConstraintLayout
-        android:id="@+id/newProfileNameLayout"
+        android:id="@+id/constraintlayout_newprofiledetails_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="16dp"
@@ -16,21 +16,21 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/textview_newprofiledetails_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
-            android:text="@string/hint_user_name"
+            android:text="@string/newprofile_name"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/newProfileName"
+            app:layout_constraintEnd_toStartOf="@+id/plaintext_newprofiledetails_name"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
-            android:id="@+id/newProfileName"
+            android:id="@+id/plaintext_newprofiledetails_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
@@ -42,83 +42,83 @@
     </android.support.constraint.ConstraintLayout>
 
     <android.support.constraint.ConstraintLayout
-        android:id="@+id/newProfilePictureLayout"
+        android:id="@+id/constraintlayout_newprofiledetails_picture"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/newProfileNameLayout">
+        app:layout_constraintTop_toBottomOf="@+id/constraintlayout_newprofiledetails_name">
 
         <TextView
-            android:id="@+id/textView6"
+            android:id="@+id/plaintext_newprofiledetails_picture"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
-            android:text="@string/hint_newProfile_picture"
+            android:text="@string/newprofile_picture"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/imageView"
+            app:layout_constraintEnd_toStartOf="@+id/imageview_newprofiledetails_picture"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/imageview_newprofiledetails_picture"
             android:layout_width="74dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
-            app:layout_constraintEnd_toStartOf="@+id/button"
+            app:layout_constraintEnd_toStartOf="@+id/button_newprofiledetails_changepicture"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@mipmap/ic_launcher" />
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/button_newprofiledetails_changepicture"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
-            android:text="@string/hint_newProfile_uploadPicture"
-            app:layout_constraintBottom_toBottomOf="@+id/imageView"
+            android:text="@string/newprofile_changepicture"
+            app:layout_constraintBottom_toBottomOf="@+id/imageview_newprofiledetails_picture"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/imageView" />
+            app:layout_constraintTop_toTopOf="@+id/imageview_newprofiledetails_picture" />
     </android.support.constraint.ConstraintLayout>
 
     <android.support.constraint.ConstraintLayout
-        android:id="@+id/newProfileDescriptionLayout"
+        android:id="@+id/constraintlayout_newprofiledetails_description"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/newProfileNextButtonLayout"
+        app:layout_constraintBottom_toTopOf="@+id/constraintlayout_newprofiledetails_next"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/newProfilePictureLayout">
+        app:layout_constraintTop_toBottomOf="@+id/constraintlayout_newprofiledetails_picture">
 
         <TextView
-            android:id="@+id/textView5"
+            android:id="@+id/textview_newprofiledetails_description"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
-            android:text="@string/hint_newProfile_description"
+            android:text="@string/newprofile_description"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/newProfileDescription"
+            app:layout_constraintEnd_toStartOf="@+id/plaintext_newprofiledetails_description"
             app:layout_constraintHorizontal_bias="0.507"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
-            android:id="@+id/newProfileDescription"
+            android:id="@+id/plaintext_newprofiledetails_description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
             android:ems="10"
-            android:hint="@string/hint_newProfile_descriptionPlaceholder"
+            android:hint="@string/newprofile_descriptionhint"
             android:inputType="textMultiLine|textLongMessage"
             android:scrollHorizontally="false"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -128,7 +128,7 @@
     </android.support.constraint.ConstraintLayout>
 
     <android.support.constraint.ConstraintLayout
-        android:id="@+id/newProfileNextButtonLayout"
+        android:id="@+id/constraintlayout_newprofiledetails_next"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginBottom="16dp"
@@ -137,13 +137,13 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <Button
-            android:id="@+id/button3"
+            android:id="@+id/button_newprofiledetails_next"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
-            android:text="@string/hint_newProfile_next"
+            android:text="@string/all_next"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </android.support.constraint.ConstraintLayout>

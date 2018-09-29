@@ -10,4 +10,8 @@ public class NewProfileDetails extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_profile_details);
     }
+
+    private void setName(String name) {
+        findViewById(R.id.plaintext_newprofiledetails_name).
+    }
 }
