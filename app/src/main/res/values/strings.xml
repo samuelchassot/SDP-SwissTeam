@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Services</string>
     <string name="new_service">New Service</string>
+    <string name="enter_key_word">Enter Key words</string>
 </resources>
