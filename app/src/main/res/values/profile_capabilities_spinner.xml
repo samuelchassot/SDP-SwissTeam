@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="domains_array">
+        <item>None</item>
         <item>Daily Life</item>
         <item>IT</item>
         <item>Mechanics</item>
@@ -11,14 +12,42 @@
         <item>Bli</item>
     </string-array>
 
-    <string-array name="subcat_array">
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-        <item>4</item>
-        <item>5</item>
-        <item>6</item>
-        <item>7</item>
-        <item>8</item>
+    <array name="subcat_array">
+        <item>@array/empty_array</item>
+        <item>@array/dl_array</item>
+        <item>@array/it_array</item>
+        <item>@array/empty_array</item>
+        <item>@array/empty_array</item>
+        <item>@array/empty_array</item>
+        <item>@array/empty_array</item>
+        <item>@array/empty_array</item>
+        <item>@array/empty_array</item>
+    </array>
+
+    <string-array name="dl_array">
+        <item>DL1</item>
+        <item>DL2</item>
+        <item>DL3</item>
+        <item>DL4</item>
+        <item>DL5</item>
+        <item>DL6</item>
+        <item>DL7</item>
+        <item>DL8</item>
     </string-array>
+
+    <string-array name="it_array">
+        <item>IT1</item>
+        <item>IT2</item>
+        <item>IT3</item>
+        <item>IT4</item>
+        <item>IT5</item>
+        <item>IT6</item>
+        <item>IT7</item>
+        <item>IT8</item>
+    </string-array>
+
+    <string-array name="empty_array">
+    </string-array>
+
+
 </resources>
