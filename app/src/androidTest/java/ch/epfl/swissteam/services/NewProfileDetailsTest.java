@@ -4,16 +4,24 @@ import android.app.Activity;
 import android.app.Instrumentation;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.support.test.espresso.ViewAssertion;
 import android.support.test.espresso.intent.rule.IntentsTestRule;
 import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
+import android.widget.EditText;
+import android.widget.ImageView;
+
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.common.api.Scope;
 
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import java.util.List;
 
 import static android.support.test.espresso.Espresso.closeSoftKeyboard;
 import static android.support.test.espresso.Espresso.onView;
@@ -29,7 +37,9 @@ import static android.support.test.espresso.matcher.ViewMatchers.assertThat;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withParent;
+import static android.support.test.espresso.matcher.ViewMatchers.withTagValue;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static org.hamcrest.Matchers.equalTo;
 
 @RunWith(AndroidJUnit4.class)
 public class NewProfileDetailsTest {
@@ -95,5 +105,15 @@ public class NewProfileDetailsTest {
     @Test
     public void changeToFailedPicture() {
         onView(withId(R.id.button_newprofiledetails_changepicture)).perform(click());
+    }
+
+    @Test
+    public void connectWithNullAccount() {
+        GoogleSignInAccount acc = null;
+        Intent i = new Intent();
+        i.putExtra("account", acc);
+        mActivityRule.finishActivity();
+        mActivityRule.launchActivity(i);
+        onView(withId(R.id.plaintext_newprofiledetails_name)).check(matches(withText("")));
     }
 }

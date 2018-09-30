@@ -51,7 +51,7 @@ public class ImageUtils {
     }
 
     /**
-     * Rotates a bitmap a certain number of degrees.
+     * Rotates a bitmap a certain number of degrees clockwise.
      *
      * @param bitmap bitmap to rotate
      * @param degrees degrees to rotate bitmap
