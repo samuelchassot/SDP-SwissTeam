@@ -14,7 +14,7 @@ import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 
 public class SignInActivity extends AppCompatActivity {
-    public static final String SIGNIN_MESSAGE = "ch.epfl.swissteam.services.account";
+    public static final String SIGN_IN_MESSAGE = "ch.epfl.swissteam.services.account";
     //Request code for startActivityForResult
     private static final int RC_SIGN_IN = 42;
 
@@ -45,7 +45,7 @@ public class SignInActivity extends AppCompatActivity {
             // Launch main
 
             Intent mainIntent = new Intent(this, MainActivity.class);
-            mainIntent.putExtra(SIGNIN_MESSAGE , account);
+            mainIntent.putExtra(SIGN_IN_MESSAGE , account);
             startActivity(mainIntent);
         }
     }
@@ -76,7 +76,7 @@ public class SignInActivity extends AppCompatActivity {
             // Signed in successfully, show authenticated UI
             //TODO Launch newProfileDetails
             Intent newProfileIntent = new Intent(this, MainActivity.class);
-            newProfileIntent.putExtra(SIGNIN_MESSAGE , account);
+            newProfileIntent.putExtra(SIGN_IN_MESSAGE , account);
             startActivity(newProfileIntent);
 
         } catch (ApiException e) {
