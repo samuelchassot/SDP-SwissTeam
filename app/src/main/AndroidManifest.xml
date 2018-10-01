@@ -20,7 +20,7 @@
         </activity>
 
         <activity android:name=".NewProfileDetails" />
-        <activity android:name=".NewProfileCapabilities"></activity>
+        <activity android:name=".NewProfileCapabilities"/>
     </application>
 
 </manifest>
