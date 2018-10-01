@@ -65,7 +65,7 @@ public class NewProfileDetails extends AppCompatActivity {
      * @param account Google account to use
      */
     private void findAndSetName(GoogleSignInAccount account) {
-        if(account.getDisplayName() != null) {
+        if(account.getDisplayName() != null && !account.getDisplayName().equals("")) {
             setName(account.getDisplayName());
         }
         else if(account.getGivenName() != null && account.getFamilyName() != null) {

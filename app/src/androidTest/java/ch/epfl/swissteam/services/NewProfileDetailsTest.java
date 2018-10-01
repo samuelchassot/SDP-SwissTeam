@@ -5,27 +5,20 @@ import android.app.Instrumentation;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.support.test.espresso.ViewAssertion;
+import android.os.Parcel;
 import android.support.test.espresso.intent.rule.IntentsTestRule;
-import android.support.test.espresso.matcher.ViewMatchers;
-import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
-import android.widget.EditText;
-import android.widget.ImageView;
 
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.common.api.Scope;
 
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.util.List;
-
-import static android.support.test.espresso.Espresso.closeSoftKeyboard;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static android.support.test.espresso.action.ViewActions.replaceText;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
@@ -33,19 +26,19 @@ import static android.support.test.espresso.intent.Intents.intended;
 import static android.support.test.espresso.intent.Intents.intending;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasAction;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
-import static android.support.test.espresso.matcher.ViewMatchers.assertThat;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static android.support.test.espresso.matcher.ViewMatchers.withParent;
-import static android.support.test.espresso.matcher.ViewMatchers.withTagValue;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
-import static org.hamcrest.Matchers.equalTo;
+
+import static org.mockito.Mockito.*;
 
 @RunWith(AndroidJUnit4.class)
 public class NewProfileDetailsTest {
 
     private final String username = "Jean-Claude",
-            description = "J'ai 65 ans et j'aime les pommes öä:__!ääà¨à3",
+            firstName = "Jean",
+            lastName = "Claude",
+            description = "J'ai 65 ans et j'aime les pommes.",
     longDescription = "\n" +
             "\n" +
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut a convallis urna, quis efficitur tellus. Pellentesque et aliquet lorem, efficitur efficitur mauris. Aenean at finibus neque. Integer tincidunt accumsan elit a lobortis. Vivamus eu purus aliquet, tempor mi in, fringilla arcu. Pellentesque imperdiet pulvinar neque at posuere. Maecenas sed mi eu leo vestibulum elementum aliquet sed ipsum. Nam congue in mauris a porttitor. Integer pellentesque mauris justo, dictum tempor elit ultrices eget.\n" +
@@ -71,12 +64,13 @@ public class NewProfileDetailsTest {
 
     @Test
     public void testTypingDescription() {
-        onView(withId(R.id.plaintext_newprofiledetails_description)).perform(replaceText(description)).check(matches(withText(description)));
+        onView(withId(R.id.plaintext_newprofiledetails_description)).perform(typeText(description)).check(matches(withText(description)));
     }
 
     @Test
     public void typeDescriptionThenNext() {
         onView(withId(R.id.plaintext_newprofiledetails_description)).perform(replaceText(longDescription));
+        onView(withId(R.id.plaintext_newprofiledetails_description)).perform(typeText(description), closeSoftKeyboard());
         onView(withId(R.id.button_newprofiledetails_next)).check(matches(isDisplayed())).perform(click());
         intended(hasComponent(NewProfileCapabilities.class.getName()));
     }
@@ -110,6 +104,49 @@ public class NewProfileDetailsTest {
     @Test
     public void connectWithNullAccount() {
         GoogleSignInAccount acc = null;
+        Intent i = new Intent();
+        i.putExtra("account", acc);
+        mActivityRule.finishActivity();
+        mActivityRule.launchActivity(i);
+        onView(withId(R.id.plaintext_newprofiledetails_name)).check(matches(withText("")));
+    }
+
+    @Test
+    public void connectWithMockedAccount() {
+        GoogleSignInAccount acc = mock(GoogleSignInAccount.class);
+        when(acc.getDisplayName()).thenReturn(username);
+        when(acc.getPhotoUrl()).thenReturn(Uri.parse("http://static.javadoc.io/org.mockito/mockito-core/2.22.0/org/mockito/logo@2x.png"));
+        doCallRealMethod().when(acc).writeToParcel(any(Parcel.class), anyInt());
+        Intent i = new Intent();
+        i.putExtra("account", acc);
+        mActivityRule.finishActivity();
+        mActivityRule.launchActivity(i);
+        onView(withId(R.id.plaintext_newprofiledetails_name)).check(matches(withText(username)));
+    }
+
+    @Test
+    public void connectWithMockedAccountNoDisplayName() {
+        GoogleSignInAccount acc = mock(GoogleSignInAccount.class);
+        when(acc.getDisplayName()).thenReturn(null);
+        when(acc.getGivenName()).thenReturn(firstName);
+        when(acc.getFamilyName()).thenReturn(lastName);
+        when(acc.getPhotoUrl()).thenReturn(Uri.parse("http://static.javadoc.io/org.mockito/mockito-core/2.22.0/org/mockito/logo@2x.png"));
+        doCallRealMethod().when(acc).writeToParcel(any(Parcel.class), anyInt());
+        Intent i = new Intent();
+        i.putExtra("account", acc);
+        mActivityRule.finishActivity();
+        mActivityRule.launchActivity(i);
+        onView(withId(R.id.plaintext_newprofiledetails_name)).check(matches(withText(firstName + " " + lastName)));
+    }
+
+    @Test
+    public void connectWithMockedAccountNoName() {
+        GoogleSignInAccount acc = mock(GoogleSignInAccount.class);
+        when(acc.getDisplayName()).thenReturn(null);
+        when(acc.getGivenName()).thenReturn(null);
+        when(acc.getFamilyName()).thenReturn(null);
+        when(acc.getPhotoUrl()).thenReturn(Uri.parse("http://static.javadoc.io/org.mockito/mockito-core/2.22.0/org/mockito/logo@2x.png"));
+        doCallRealMethod().when(acc).writeToParcel(any(Parcel.class), anyInt());
         Intent i = new Intent();
         i.putExtra("account", acc);
         mActivityRule.finishActivity();
