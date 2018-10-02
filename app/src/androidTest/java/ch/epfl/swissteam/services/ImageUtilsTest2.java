@@ -1,21 +1,13 @@
 package ch.epfl.swissteam.services;
 
-import android.content.Context;
 import android.graphics.Bitmap;
-import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
-import android.util.Log;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
-/**
- * Instrumented test, which will execute on an Android device.
- *
- * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
- */
 @RunWith(AndroidJUnit4.class)
 public class ImageUtilsTest2 {
     Bitmap twoByTwo = Bitmap.createBitmap(new int[] {1, 2, 3, 4}, 2, 2, Bitmap.Config.ARGB_8888);
@@ -49,14 +41,14 @@ public class ImageUtilsTest2 {
 
         Bitmap rotate180 = ImageUtils.rotate(twoByTwo, 180);
         assertEquals("The top left pixel of the rotated and the bottom right pixel of the original don't match",
-                twoByTwo.getPixel(0, 1), rotate90.getPixel(1,1));
+                twoByTwo.getPixel(0, 1), rotate180.getPixel(1,1));
 
         Bitmap rotate270 = ImageUtils.rotate(twoByTwo, 270);
         assertEquals("The top left pixel of the rotated and the top right pixel of the original don't match",
-                twoByTwo.getPixel(0, 1), rotate90.getPixel(1,0));
+                twoByTwo.getPixel(0, 1), rotate270.getPixel(1,0));
 
         Bitmap rotate360 = ImageUtils.rotate(twoByTwo, 360);
         assertEquals("The top left pixel of the rotated and the top left pixel of the original don't match",
-                twoByTwo.getPixel(0, 0), rotate90.getPixel(0,0));
+                twoByTwo.getPixel(0, 0), rotate360.getPixel(0,0));
     }
 }

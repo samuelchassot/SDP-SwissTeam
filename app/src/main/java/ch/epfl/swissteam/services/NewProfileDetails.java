@@ -3,15 +3,11 @@ package ch.epfl.swissteam.services;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Matrix;
-import android.graphics.drawable.Drawable;
-import android.media.ExifInterface;
-import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -20,9 +16,7 @@ import android.widget.ImageView;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.squareup.picasso.Picasso;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 
 /**
  * This activity is used to set up the account details of a new user.
@@ -31,14 +25,17 @@ import java.io.InputStream;
  */
 public class NewProfileDetails extends AppCompatActivity {
 
+    public static final String SIGN_IN_MESSAGE = "ch.epfl.swissteam.services.account";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_profile_details);
+        findViewById(R.id.imageview_newprofiledetails_picture).setTag(R.string.all_next);
 
         setTitle(getResources().getString(R.string.newprofile_title));
 
-        GoogleSignInAccount account = getIntent().getParcelableExtra("account");
+        GoogleSignInAccount account = getIntent().getParcelableExtra(SIGN_IN_MESSAGE);
         if(account != null) {
             findAndSetName(account);
             findAndSetPicture(account);

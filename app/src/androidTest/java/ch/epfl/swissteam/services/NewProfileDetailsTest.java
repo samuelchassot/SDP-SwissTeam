@@ -29,16 +29,20 @@ import static android.support.test.espresso.intent.matcher.IntentMatchers.hasCom
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
-
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.anyInt;
+import static org.mockito.Mockito.doCallRealMethod;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 @RunWith(AndroidJUnit4.class)
 public class NewProfileDetailsTest {
 
-    private final String username = "Jean-Claude",
+    private static final String username = "Jean-Claude",
             firstName = "Jean",
             lastName = "Claude",
             description = "J'ai 65 ans et j'aime les pommes.",
+    photoUrl = "http://static.javadoc.io/org.mockito/mockito-core/2.22.0/org/mockito/logo@2x.png",
     longDescription = "\n" +
             "\n" +
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut a convallis urna, quis efficitur tellus. Pellentesque et aliquet lorem, efficitur efficitur mauris. Aenean at finibus neque. Integer tincidunt accumsan elit a lobortis. Vivamus eu purus aliquet, tempor mi in, fringilla arcu. Pellentesque imperdiet pulvinar neque at posuere. Maecenas sed mi eu leo vestibulum elementum aliquet sed ipsum. Nam congue in mauris a porttitor. Integer pellentesque mauris justo, dictum tempor elit ultrices eget.\n" +
@@ -105,7 +109,7 @@ public class NewProfileDetailsTest {
     public void connectWithNullAccount() {
         GoogleSignInAccount acc = null;
         Intent i = new Intent();
-        i.putExtra("account", acc);
+        i.putExtra(NewProfileDetails.SIGN_IN_MESSAGE, acc);
         mActivityRule.finishActivity();
         mActivityRule.launchActivity(i);
         onView(withId(R.id.plaintext_newprofiledetails_name)).check(matches(withText("")));
@@ -115,10 +119,10 @@ public class NewProfileDetailsTest {
     public void connectWithMockedAccount() {
         GoogleSignInAccount acc = mock(GoogleSignInAccount.class);
         when(acc.getDisplayName()).thenReturn(username);
-        when(acc.getPhotoUrl()).thenReturn(Uri.parse("http://static.javadoc.io/org.mockito/mockito-core/2.22.0/org/mockito/logo@2x.png"));
+        when(acc.getPhotoUrl()).thenReturn(Uri.parse(photoUrl));
         doCallRealMethod().when(acc).writeToParcel(any(Parcel.class), anyInt());
         Intent i = new Intent();
-        i.putExtra("account", acc);
+        i.putExtra(NewProfileDetails.SIGN_IN_MESSAGE, acc);
         mActivityRule.finishActivity();
         mActivityRule.launchActivity(i);
         onView(withId(R.id.plaintext_newprofiledetails_name)).check(matches(withText(username)));
@@ -130,10 +134,10 @@ public class NewProfileDetailsTest {
         when(acc.getDisplayName()).thenReturn(null);
         when(acc.getGivenName()).thenReturn(firstName);
         when(acc.getFamilyName()).thenReturn(lastName);
-        when(acc.getPhotoUrl()).thenReturn(Uri.parse("http://static.javadoc.io/org.mockito/mockito-core/2.22.0/org/mockito/logo@2x.png"));
+        when(acc.getPhotoUrl()).thenReturn(Uri.parse(photoUrl));
         doCallRealMethod().when(acc).writeToParcel(any(Parcel.class), anyInt());
         Intent i = new Intent();
-        i.putExtra("account", acc);
+        i.putExtra(NewProfileDetails.SIGN_IN_MESSAGE, acc);
         mActivityRule.finishActivity();
         mActivityRule.launchActivity(i);
         onView(withId(R.id.plaintext_newprofiledetails_name)).check(matches(withText(firstName + " " + lastName)));
@@ -145,10 +149,25 @@ public class NewProfileDetailsTest {
         when(acc.getDisplayName()).thenReturn(null);
         when(acc.getGivenName()).thenReturn(null);
         when(acc.getFamilyName()).thenReturn(null);
-        when(acc.getPhotoUrl()).thenReturn(Uri.parse("http://static.javadoc.io/org.mockito/mockito-core/2.22.0/org/mockito/logo@2x.png"));
+        when(acc.getPhotoUrl()).thenReturn(Uri.parse(photoUrl));
         doCallRealMethod().when(acc).writeToParcel(any(Parcel.class), anyInt());
         Intent i = new Intent();
-        i.putExtra("account", acc);
+        i.putExtra(NewProfileDetails.SIGN_IN_MESSAGE, acc);
+        mActivityRule.finishActivity();
+        mActivityRule.launchActivity(i);
+        onView(withId(R.id.plaintext_newprofiledetails_name)).check(matches(withText("")));
+    }
+
+    @Test
+    public void connectWithMockedAccountWrongPhotoUrl() {
+        GoogleSignInAccount acc = mock(GoogleSignInAccount.class);
+        when(acc.getDisplayName()).thenReturn(null);
+        when(acc.getGivenName()).thenReturn(null);
+        when(acc.getFamilyName()).thenReturn(null);
+        when(acc.getPhotoUrl()).thenReturn(Uri.parse(photoUrl + "hvehiuhe"));
+        doCallRealMethod().when(acc).writeToParcel(any(Parcel.class), anyInt());
+        Intent i = new Intent();
+        i.putExtra(NewProfileDetails.SIGN_IN_MESSAGE, acc);
         mActivityRule.finishActivity();
         mActivityRule.launchActivity(i);
         onView(withId(R.id.plaintext_newprofiledetails_name)).check(matches(withText("")));
