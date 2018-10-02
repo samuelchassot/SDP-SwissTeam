@@ -13,12 +13,18 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 
+/**
+ * This class is an activity created to make the user authenticate with Google.
+ * This activity sends then the user either to set up a new profile if it is the
+ * first time they sign in, either to the main board.
+ *
+ * @author Julie Giunta
+ */
 public class SignInActivity extends AppCompatActivity implements View.OnClickListener {
-    public static final String SIGN_IN_MESSAGE = "ch.epfl.swissteam.services.account";
     //Request code for startActivityForResult
     private static final int RC_SIGN_IN = 42;
 
-    private GoogleSignInClient mGoogleSignInClient;
+    private GoogleSignInClient mGoogleSignInClient_;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,10 +38,10 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                 .build();
 
         // Build a GoogleSignInClient with the options specified by gso.
-        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+        mGoogleSignInClient_ = GoogleSignIn.getClient(this, gso);
 
         //Listen to clicks on the signIn button
-        findViewById(R.id.signInButton).setOnClickListener(this);
+        findViewById(R.id.button_signin_googlesignin).setOnClickListener(this);
     }
 
     @Override
@@ -48,7 +54,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
             // Launch main
 
             Intent mainIntent = new Intent(this, MainActivity.class);
-            mainIntent.putExtra(SIGN_IN_MESSAGE , account);
+            mainIntent.putExtra(getResources().getString(R.string.all_googleaccounttag) , account);
             startActivity(mainIntent);
         }
     }
@@ -56,7 +62,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
     //Starting the intent prompts the user to select a Google account to sign in with
     @Override
     public void onClick(View v) {
-        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+        Intent signInIntent = mGoogleSignInClient_.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
@@ -73,6 +79,13 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         }
     }
 
+    /**
+     * Sends the new user with the account he signed with in the new profile set up page
+     * after the completion of the sign in task of Google.
+     * If the task fails, provide a log of the error and then recreate the activity.
+     *
+     * @param completedTask the task of signing in, completed
+     */
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
@@ -80,15 +93,23 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
             // Signed in successfully, show authenticated UI
             //TODO Launch newProfileDetails
             Intent newProfileIntent = new Intent(this, MainActivity.class);
-            newProfileIntent.putExtra(SIGN_IN_MESSAGE , account);
+            newProfileIntent.putExtra(getResources().getString(R.string.all_googleaccounttag) , account);
             startActivity(newProfileIntent);
 
         } catch (ApiException e) {
             // The ApiException status code indicates the detailed failure reason.
             // Please refer to the GoogleSignInStatusCodes class reference for more information.
-            Log.w("SignInActivity", "signInResult:failed code=" + e.getStatusCode());
+            Log.w(getResources().getString(R.string.signin_errortag), getResources().getString(R.string.signin_errormsg) + e.getStatusCode());
             recreate();
         }
     }
 
+    /**
+     * Getter of the GoogleSignInClient attribute used to sign in the user.
+     *
+     * @return the GoogleSignInClient used for sign in
+     */
+    public GoogleSignInClient getmGoogleSignInClient_() {
+        return mGoogleSignInClient_;
+    }
 }
