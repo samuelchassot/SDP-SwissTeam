@@ -1,3 +1,10 @@
+/*
+* This class is the MainActivity of the application
+* this is the home activity that displays the feed of local demands
+*
+* @author Samuel Chassot */
+
+
 package ch.epfl.swissteam.services;
 
 import android.os.Bundle;
