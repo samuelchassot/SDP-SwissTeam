@@ -13,7 +13,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 
-public class SignInActivity extends AppCompatActivity {
+public class SignInActivity extends AppCompatActivity implements View.OnClickListener {
     public static final String SIGN_IN_MESSAGE = "ch.epfl.swissteam.services.account";
     //Request code for startActivityForResult
     private static final int RC_SIGN_IN = 42;
@@ -33,6 +33,9 @@ public class SignInActivity extends AppCompatActivity {
 
         // Build a GoogleSignInClient with the options specified by gso.
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+
+        //Listen to clicks on the signIn button
+        findViewById(R.id.signInButton).setOnClickListener(this);
     }
 
     @Override
@@ -51,7 +54,8 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     //Starting the intent prompts the user to select a Google account to sign in with
-    public void signIn(View view) {
+    @Override
+    public void onClick(View v) {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
@@ -86,4 +90,5 @@ public class SignInActivity extends AppCompatActivity {
             recreate();
         }
     }
+
 }
