@@ -100,8 +100,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
 
             // Signed in successfully, show authenticated UI
-            //TODO Launch newProfileDetails
-            Intent newProfileIntent = new Intent(this, MainActivity.class);
+            Intent newProfileIntent = new Intent(this, NewProfileDetails.class);
             newProfileIntent.putExtra(ACCOUNT_TAG , account);
             startActivity(newProfileIntent);
 
