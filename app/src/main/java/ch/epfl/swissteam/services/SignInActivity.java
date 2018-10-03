@@ -2,6 +2,7 @@ package ch.epfl.swissteam.services;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -64,7 +65,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
 
             Intent mainIntent = new Intent(this, MainActivity.class);
             mainIntent.putExtra(ACCOUNT_TAG , account);
-            mainIntent.putExtra(CLIENT_TAG, (Serializable) mGoogleSignInClient_.asGoogleApiClient());
+            mainIntent.putExtra(CLIENT_TAG, (Parcelable) mGoogleSignInClient_);
             startActivity(mainIntent);
         }
     }
@@ -104,7 +105,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
             //TODO Launch newProfileDetails
             Intent newProfileIntent = new Intent(this, MainActivity.class);
             newProfileIntent.putExtra(ACCOUNT_TAG , account);
-            newProfileIntent.putExtra(CLIENT_TAG, (Serializable) mGoogleSignInClient_.asGoogleApiClient());
+            newProfileIntent.putExtra(CLIENT_TAG, (Parcelable) mGoogleSignInClient_);
             startActivity(newProfileIntent);
 
         } catch (ApiException e) {
@@ -113,14 +114,5 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
             Log.w(ERROR_TAG, ERROR_MSG + e.getStatusCode());
             recreate();
         }
-    }
-
-    /**
-     * Getter of the GoogleSignInClient attribute used to sign in the user.
-     *
-     * @return the GoogleSignInClient used for sign in
-     */
-    public GoogleSignInClient getmGoogleSignInClient_() {
-        return mGoogleSignInClient_;
     }
 }
