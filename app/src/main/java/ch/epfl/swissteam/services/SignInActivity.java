@@ -13,6 +13,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 
+import java.io.Serializable;
+
 /**
  * This class is an activity created to make the user authenticate with Google.
  * This activity sends then the user either to set up a new profile if it is the
@@ -24,7 +26,14 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
     //Request code for startActivityForResult
     private static final int RC_SIGN_IN = 42;
 
-    public GoogleSignInClient mGoogleSignInClient_;
+    private GoogleSignInClient mGoogleSignInClient_;
+    public static final String ACCOUNT_TAG = "ch.epfl.swissteam.services.account";
+    public static final String CLIENT_TAG = "ch.epfl.swissteam.services.client";
+    private final String ERROR_TAG = "SignInActivity";
+    private final String ERROR_MSG = "signInResult:failed code=";
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +63,8 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
             // Launch main
 
             Intent mainIntent = new Intent(this, MainActivity.class);
-            mainIntent.putExtra(getResources().getString(R.string.all_googleaccounttag) , account);
+            mainIntent.putExtra(ACCOUNT_TAG , account);
+            mainIntent.putExtra(CLIENT_TAG, (Serializable) mGoogleSignInClient_.asGoogleApiClient());
             startActivity(mainIntent);
         }
     }
@@ -93,13 +103,14 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
             // Signed in successfully, show authenticated UI
             //TODO Launch newProfileDetails
             Intent newProfileIntent = new Intent(this, MainActivity.class);
-            newProfileIntent.putExtra(getResources().getString(R.string.all_googleaccounttag) , account);
+            newProfileIntent.putExtra(ACCOUNT_TAG , account);
+            newProfileIntent.putExtra(CLIENT_TAG, (Serializable) mGoogleSignInClient_.asGoogleApiClient());
             startActivity(newProfileIntent);
 
         } catch (ApiException e) {
             // The ApiException status code indicates the detailed failure reason.
             // Please refer to the GoogleSignInStatusCodes class reference for more information.
-            Log.w(getResources().getString(R.string.signin_errortag), getResources().getString(R.string.signin_errormsg) + e.getStatusCode());
+            Log.w(ERROR_TAG, ERROR_MSG + e.getStatusCode());
             recreate();
         }
     }
