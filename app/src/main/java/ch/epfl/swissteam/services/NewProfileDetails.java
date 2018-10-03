@@ -25,8 +25,6 @@ import java.io.IOException;
  */
 public class NewProfileDetails extends AppCompatActivity {
 
-    public static final String SIGN_IN_MESSAGE = "ch.epfl.swissteam.services.account";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,7 +33,7 @@ public class NewProfileDetails extends AppCompatActivity {
 
         setTitle(getResources().getString(R.string.newprofile_title));
 
-        GoogleSignInAccount account = getIntent().getParcelableExtra(SIGN_IN_MESSAGE);
+        GoogleSignInAccount account = getIntent().getParcelableExtra(SignInActivity.ACCOUNT_TAG);
         if(account != null) {
             findAndSetName(account);
             findAndSetPicture(account);
