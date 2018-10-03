@@ -15,6 +15,8 @@ import android.view.MenuItem;
 
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 
+import java.io.Serializable;
+
 import ch.epfl.swissteam.services.SignInActivity;
 
 import static ch.epfl.swissteam.services.SignInActivity.CLIENT_TAG;
@@ -57,7 +59,7 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        mGoogleSignInClient_ = getIntent().getParcelableExtra(CLIENT_TAG);
+        mGoogleSignInClient_ = (GoogleSignInClient) getIntent().getSerializableExtra(CLIENT_TAG);
     }
 
     @Override
