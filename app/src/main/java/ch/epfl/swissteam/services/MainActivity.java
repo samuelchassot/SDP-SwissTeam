@@ -1,10 +1,3 @@
-/*
-* This class is the MainActivity of the application
-* this is the home activity that displays the feed of local demands
-*
-* @author Samuel Chassot */
-
-
 package ch.epfl.swissteam.services;
 
 import android.os.Bundle;
@@ -20,6 +13,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import ch.epfl.swissteam.services.SignInActivity;
+
+/**
+ * This class is the MainActivity of the application, this is
+ * the home activity that displays the feed of local demands
+ *
+ * @author Samuel Chassot
+ */
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -103,7 +104,10 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+    /**
+     * Sign out the user from the application.
+     */
     private void signOut() {
-        mGoogleSignInClient.signOut();
+        mGoogleSignInClient_.signOut();
     }
 }

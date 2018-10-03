@@ -24,7 +24,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
     //Request code for startActivityForResult
     private static final int RC_SIGN_IN = 42;
 
-    private GoogleSignInClient mGoogleSignInClient_;
+    public GoogleSignInClient mGoogleSignInClient_;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
