@@ -1,5 +1,15 @@
 <resources>
     <string name="app_name">Services</string>
+    <string name="newprofile_title">Profile setup</string>
+    <string name="newprofile_name">Name:</string>
+    <string name="newprofile_description">Description:</string>
+    <string name="newprofile_picture">Picture:</string>
+    <string name="newprofile_changepicture">Change</string>
+    <string name="newprofile_descriptionhint">Write a short description of yourself…</string>
+    <string name="all_next">Next</string>
+    <string name="new_service">New Service</string>
+    <string name="enter_key_word">Enter Key words</string>
+    <string name="done_text">Done</string>
 
     <string name="signin_welcomemessage">Welcome in Socialize!</string>
 
