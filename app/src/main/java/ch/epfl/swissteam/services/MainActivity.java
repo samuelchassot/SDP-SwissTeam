@@ -19,7 +19,6 @@ import java.io.Serializable;
 
 import ch.epfl.swissteam.services.SignInActivity;
 
-import static ch.epfl.swissteam.services.SignInActivity.CLIENT_TAG;
 
 /**
  * This class is the MainActivity of the application, this is
@@ -30,7 +29,7 @@ import static ch.epfl.swissteam.services.SignInActivity.CLIENT_TAG;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private GoogleSignInClient mGoogleSignInClient_;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +58,7 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        mGoogleSignInClient_ = (GoogleSignInClient) getIntent().getSerializableExtra(CLIENT_TAG);
+
     }
 
     @Override
@@ -118,6 +117,6 @@ public class MainActivity extends AppCompatActivity
      * Sign out the user from the application.
      */
     private void signOut() {
-        mGoogleSignInClient_.signOut();
+        SignInActivity.mGoogleSignInClient_.signOut();
     }
 }
