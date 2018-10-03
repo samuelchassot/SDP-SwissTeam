@@ -13,6 +13,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+
 import ch.epfl.swissteam.services.SignInActivity;
 
 /**
@@ -23,6 +25,8 @@ import ch.epfl.swissteam.services.SignInActivity;
  */
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private GoogleSignInClient mGoogleSignInClient_;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +54,8 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        mGoogleSignInClient_ = getIntent().getParcelableExtra(CLIENT_TAG);
     }
 
     @Override
