@@ -15,7 +15,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 @RunWith(AndroidJUnit4.class)
 public class SignInActivityTest {
     @Rule
-    public final ActivityTestRule<SignInActivity> mActivityRule =
+    public final ActivityTestRule<SignInActivity> signInActivityRule_ =
             new ActivityTestRule<>(SignInActivity.class);
 
     @Test
