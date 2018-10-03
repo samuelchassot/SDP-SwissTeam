@@ -17,6 +17,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 
 import ch.epfl.swissteam.services.SignInActivity;
 
+import static ch.epfl.swissteam.services.SignInActivity.CLIENT_TAG;
+
 /**
  * This class is the MainActivity of the application, this is
  * the home activity that displays the feed of local demands
