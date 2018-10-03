@@ -6,7 +6,7 @@ import android.os.Bundle;
 
 
 public class MainActivity extends AppCompatActivity {
-    private boolean logged = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -15,15 +15,5 @@ public class MainActivity extends AppCompatActivity {
         Intent i = new Intent(this, NewProfileDetails.class);
         startActivity(i);
 
-        /*
-        if(!logged) {
-            startLogin();
-        }
-        */
-    }
-
-    private void startLogin(){
-        Intent intent = new Intent(this, NewProfileCapabilities.class);
-        startActivity(intent);
     }
 }

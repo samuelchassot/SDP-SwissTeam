@@ -8,7 +8,7 @@
     tools:layout_editor_absoluteY="25dp">
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/new_capability_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
@@ -24,24 +24,34 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <ScrollView
-        android:id="@+id/mainScrollView"
+        android:id="@+id/main_scroll_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginBottom="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/button"
+        android:layout_marginTop="32dp"
+        app:layout_constraintBottom_toTopOf="@+id/new_capability_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
-            android:id="@+id/mainScrollViewLayout"
+            android:id="@+id/main_scroll_view_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
         </LinearLayout>
     </ScrollView>
+
+    <Button
+        android:id="@+id/done_button"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:onClick="nextPage"
+        android:text="@string/done_text"
+        app:layout_constraintBottom_toTopOf="@+id/main_scroll_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

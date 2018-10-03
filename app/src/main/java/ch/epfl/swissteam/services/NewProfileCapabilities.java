@@ -1,5 +1,7 @@
 package ch.epfl.swissteam.services;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.res.TypedArray;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
+import android.widget.Toolbar;
 
 public class NewProfileCapabilities extends AppCompatActivity {
 
@@ -21,9 +24,14 @@ public class NewProfileCapabilities extends AppCompatActivity {
         setContentView(R.layout.activity_new_profile_capabilites);
     }
 
+    public  void nextPage(View view) {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
+
     public void addNewCapability(View view) {
         //retrieving the LinearLayout of the mainScroll
-        LinearLayout ll = findViewById(R.id.mainScrollViewLayout);
+        LinearLayout ll = findViewById(R.id.main_scroll_view_layout);
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT
@@ -32,8 +40,12 @@ public class NewProfileCapabilities extends AppCompatActivity {
         ll.addView(new CapabilitySelection(this), lp);
     }
 
+
+    private Toolbar toolbar_;
+
 }
 
+@SuppressLint("ViewConstructor")
 class CapabilitySelection extends TableLayout
                             implements AdapterView.OnItemSelectedListener {
 
@@ -55,11 +67,6 @@ class CapabilitySelection extends TableLayout
     }
 
     private void generateCapability(){
-
-        LayoutParams lp = new LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.MATCH_PARENT
-        );
 
         //main spinner
         Spinner newSpinner = new Spinner(NPC_);
