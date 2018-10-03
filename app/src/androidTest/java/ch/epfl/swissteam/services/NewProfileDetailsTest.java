@@ -10,6 +10,7 @@ import android.support.test.espresso.intent.rule.IntentsTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.signin.SignIn;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -109,7 +110,7 @@ public class NewProfileDetailsTest {
     public void connectWithNullAccount() {
         GoogleSignInAccount acc = null;
         Intent i = new Intent();
-        i.putExtra(NewProfileDetails.SIGN_IN_MESSAGE, acc);
+        i.putExtra(SignInActivity.ACCOUNT_TAG, acc);
         mActivityRule.finishActivity();
         mActivityRule.launchActivity(i);
         onView(withId(R.id.plaintext_newprofiledetails_name)).check(matches(withText("")));
@@ -122,7 +123,7 @@ public class NewProfileDetailsTest {
         when(acc.getPhotoUrl()).thenReturn(Uri.parse(photoUrl));
         doCallRealMethod().when(acc).writeToParcel(any(Parcel.class), anyInt());
         Intent i = new Intent();
-        i.putExtra(NewProfileDetails.SIGN_IN_MESSAGE, acc);
+        i.putExtra(SignInActivity.ACCOUNT_TAG, acc);
         mActivityRule.finishActivity();
         mActivityRule.launchActivity(i);
         onView(withId(R.id.plaintext_newprofiledetails_name)).check(matches(withText(username)));
@@ -137,7 +138,7 @@ public class NewProfileDetailsTest {
         when(acc.getPhotoUrl()).thenReturn(Uri.parse(photoUrl));
         doCallRealMethod().when(acc).writeToParcel(any(Parcel.class), anyInt());
         Intent i = new Intent();
-        i.putExtra(NewProfileDetails.SIGN_IN_MESSAGE, acc);
+        i.putExtra(SignInActivity.ACCOUNT_TAG, acc);
         mActivityRule.finishActivity();
         mActivityRule.launchActivity(i);
         onView(withId(R.id.plaintext_newprofiledetails_name)).check(matches(withText(firstName + " " + lastName)));
@@ -152,7 +153,7 @@ public class NewProfileDetailsTest {
         when(acc.getPhotoUrl()).thenReturn(Uri.parse(photoUrl));
         doCallRealMethod().when(acc).writeToParcel(any(Parcel.class), anyInt());
         Intent i = new Intent();
-        i.putExtra(NewProfileDetails.SIGN_IN_MESSAGE, acc);
+        i.putExtra(SignInActivity.ACCOUNT_TAG, acc);
         mActivityRule.finishActivity();
         mActivityRule.launchActivity(i);
         onView(withId(R.id.plaintext_newprofiledetails_name)).check(matches(withText("")));
@@ -167,7 +168,7 @@ public class NewProfileDetailsTest {
         when(acc.getPhotoUrl()).thenReturn(Uri.parse(photoUrl + "hvehiuhe"));
         doCallRealMethod().when(acc).writeToParcel(any(Parcel.class), anyInt());
         Intent i = new Intent();
-        i.putExtra(NewProfileDetails.SIGN_IN_MESSAGE, acc);
+        i.putExtra(SignInActivity.ACCOUNT_TAG, acc);
         mActivityRule.finishActivity();
         mActivityRule.launchActivity(i);
         onView(withId(R.id.plaintext_newprofiledetails_name)).check(matches(withText("")));
