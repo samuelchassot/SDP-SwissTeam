@@ -1,5 +1,6 @@
 package ch.epfl.swissteam.services;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -118,5 +119,7 @@ public class MainActivity extends AppCompatActivity
      */
     private void signOut() {
         SignInActivity.mGoogleSignInClient_.signOut();
+        Intent intent = new Intent(this, SignInActivity.class);
+        startActivity(intent);
     }
 }
