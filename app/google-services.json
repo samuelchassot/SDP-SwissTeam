@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "894063951971",
+    "firebase_url": "https://sdp-swissteam-30c24.firebaseio.com",
+    "project_id": "sdp-swissteam-30c24",
+    "storage_bucket": "sdp-swissteam-30c24.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:894063951971:android:df216c0adab6180a",
+        "android_client_info": {
+          "package_name": "ch.epfl.swissteam.services"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "894063951971-kakmr4bii8phovvunbja60vmrncevjnf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ch.epfl.swissteam.services",
+            "certificate_hash": "abbc294e86d99514fc07b3b60e7f89f02b2fe655"
+          }
+        },
+        {
+          "client_id": "894063951971-hua3o5msdc59hkr15mliqft39unukp6k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCG208p6rKrMJtDM3GqGUHZgOfjwtfkzlU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "894063951971-hua3o5msdc59hkr15mliqft39unukp6k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
