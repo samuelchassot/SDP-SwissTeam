@@ -16,6 +16,12 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.Toolbar;
 
+/**
+ *This activity is meant to fill the user profile with service capabilities at the first connection
+ *
+ * @author Sébastien Gachoud
+ */
+
 public class NewProfileCapabilities extends AppCompatActivity {
 
     @Override

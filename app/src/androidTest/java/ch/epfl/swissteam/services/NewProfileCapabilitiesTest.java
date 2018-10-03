@@ -1,14 +1,17 @@
 package ch.epfl.swissteam.services;
 
 import android.support.test.espresso.intent.rule.IntentsTestRule;
-import android.widget.LinearLayout;
 
 import org.junit.Rule;
 import org.junit.Test;
 
+import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.instanceOf;
+import static org.hamcrest.Matchers.is;
 
 public class NewProfileCapabilitiesTest {
     @Rule
@@ -16,9 +19,12 @@ public class NewProfileCapabilitiesTest {
             new IntentsTestRule<>(NewProfileDetails.class);
 
     @Test
+    public void noNewCapabilitySelector() {
+        onData(allOf(is(instanceOf(CapabilitySelection.class))));
+    }
+
+    @Test
     public void createNewCapabilitySelector() {
-        /*onView(withId(R.id.new_capability_button)).perform(click());
-        onView(allOf(is(instanceOf(CapabilitySelection.class)))).check()*/
-        //LinearLayout ll = withId(R.id.main_scroll_view_layout);
+        onData(allOf(is(instanceOf(CapabilitySelection.class))));
     }
 }
