@@ -27,9 +27,8 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
     //Request code for startActivityForResult
     private static final int RC_SIGN_IN = 42;
 
-    private GoogleSignInClient mGoogleSignInClient_;
+    public static GoogleSignInClient mGoogleSignInClient_;
     public static final String ACCOUNT_TAG = "ch.epfl.swissteam.services.account";
-    public static final String CLIENT_TAG = "ch.epfl.swissteam.services.client";
     private final String ERROR_TAG = "SignInActivity";
     private final String ERROR_MSG = "signInResult:failed code=";
 
@@ -65,7 +64,6 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
 
             Intent mainIntent = new Intent(this, MainActivity.class);
             mainIntent.putExtra(ACCOUNT_TAG , account);
-            mainIntent.putExtra(CLIENT_TAG, (Parcelable) mGoogleSignInClient_);
             startActivity(mainIntent);
         }
     }
@@ -105,7 +103,6 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
             //TODO Launch newProfileDetails
             Intent newProfileIntent = new Intent(this, MainActivity.class);
             newProfileIntent.putExtra(ACCOUNT_TAG , account);
-            newProfileIntent.putExtra(CLIENT_TAG, (Parcelable) mGoogleSignInClient_);
             startActivity(newProfileIntent);
 
         } catch (ApiException e) {
