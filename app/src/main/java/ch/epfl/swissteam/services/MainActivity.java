@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity
 
         switch (id) {
             case (R.id.button_maindrawer_logout) :
-                signedOut();
+                signOut();
                 break;
         }
 
