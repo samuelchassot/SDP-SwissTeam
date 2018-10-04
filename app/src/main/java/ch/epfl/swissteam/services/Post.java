@@ -1,40 +1,51 @@
 package ch.epfl.swissteam.services;
 
-import java.util.Date;
-
 /**
- * Class reprensenting posts of search of services
+ * Class representing a search for service post.
  *
  * @author Adrian Baudat
  * @author Julie Giunta
  */
-public class Post implements DatabaseObject {
+public class Post {
 
-    private final String title, username, body;
-    private final Date date;
+    private String title_, username_, body_;
+    private int timestamp_;
 
     /**
-     * Construct an immutable post for searching services
+     * Default constructor required for database.
+     */
+    public Post() {
+
+    }
+
+    /**
+     * Construct a post for searching services.
      *
      * @param title the title of the post
      * @param username the username of the person who post the post
      * @param body the body of the post
-     * @param date the date at which the post was submitted
+     * @param timestamp the timestamp at which the post was submitted
      */
-    public Post(String title, String username, String body, Date date) {
-        this.title = title;
-        this.username = username;
-        this.body = body;
-        this.date = date;
+    public Post(String title, String username, String body, int timestamp) {
+        this.title_ = title;
+        this.username_ = username;
+        this.body_ = body;
+        this.timestamp_ = timestamp;
     }
 
-    @Override
-    public DatabaseObject load() {
-        return null;
+    public String getTitle() {
+        return title_;
     }
 
-    @Override
-    public void store() {
+    public String getUsername() {
+        return username_;
+    }
 
+    public String getBody() {
+        return body_;
+    }
+
+    public int getTimestamp() {
+        return timestamp_;
     }
 }
