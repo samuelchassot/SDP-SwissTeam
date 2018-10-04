@@ -24,8 +24,6 @@
         </activity>
         <activity android:name=".NewProfileDetails" />
         <activity android:name=".NewProfileCapabilities" />
-        <activity android:name=".ServicesSearch"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
