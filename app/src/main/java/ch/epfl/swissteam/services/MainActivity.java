@@ -104,6 +104,10 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         switch (id) {
+            case (R.id.button_maindrawer_services) :
+                Intent intent = new Intent(this, ServicesSearch.class);
+                startActivity(intent);
+                break;
             case (R.id.button_maindrawer_logout) :
                 signOut();
                 break;
