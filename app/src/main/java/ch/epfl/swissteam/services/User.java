@@ -1,6 +1,8 @@
 package ch.epfl.swissteam.services;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * Class representing a user in the database,
@@ -10,8 +12,9 @@ public class User {
 
 
 
-    private String name_, surname_, description_;
-    private String[] categories_;
+
+    private String username_, name_, surname_, description_;
+    private ArrayList<String> categories_;
 
     /**
      * Default constructor, needed for database
@@ -22,18 +25,24 @@ public class User {
 
     /**
      * Create a new user given its specificities
+     * @param username_ User's unique username
      * @param name_ User's name
      * @param surname_ User's surname
      * @param description_ User's description
      * @param categories_ User's categories of services
      */
-    public User(String name_, String surname_, String description_, String... categories_) {
+    public User(String username_, String name_, String surname_, String description_, ArrayList<String> categories_) {
+        this.username_ = username_;
         this.name_ = name_;
         this.surname_ = surname_;
         this.description_ = description_;
-        this.categories_ = categories_;
+        this.categories_ = (ArrayList) categories_.clone();
     }
 
+
+    public String getUsername_() {
+        return username_;
+    }
     public String getName_() {
         return name_;
     }
@@ -46,9 +55,8 @@ public class User {
         return description_;
     }
 
-    public String[] getCategories() {
-        return Arrays.copyOf(categories_, categories_.length);
+    public List<String> getCategories_() {
+        return (List) categories_.clone();
     }
-
 
 }
