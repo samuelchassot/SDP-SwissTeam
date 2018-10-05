@@ -5,6 +5,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
+import android.util.Log;
+import android.view.View;
+import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -14,6 +18,17 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.io.Serializable;
+import java.util.Date;
+
+import ch.epfl.swissteam.services.SignInActivity;
 
 
 /**
@@ -27,6 +42,7 @@ public class MainActivity extends AppCompatActivity
 
     private Fragment servicesFragment;
     private Fragment profileShowerFragment_;
+    private Fragment servicesFragment, createPostFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,6 +129,9 @@ public class MainActivity extends AppCompatActivity
             case (R.id.button_maindrawer_services) :
                 showServicesFragment();
                 break;
+            case (R.id.button_maindrawer_createpost) :
+                showCreatePostFragment();
+                break;
             case (R.id.button_maindrawer_profile) :
                 showProfileShowerFragment();
                 break;
@@ -157,13 +176,47 @@ public class MainActivity extends AppCompatActivity
 
 
     /**
+     * Shows the create post Fragment
+     */
+    private void showCreatePostFragment(){
+        if (this.createPostFragment == null) this.createPostFragment = CreatePostFragment.newInstance();
+        this.startTransactionFragment(this.createPostFragment);
+    }
+
+    /**
      * Initiate the fragment transaction
      * @param fragment the fragment to show
      */
     private void startTransactionFragment(Fragment fragment){
         if (!fragment.isVisible()){
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.activity_main_frame_layout, fragment).commit();
+                    .replace(R.id.framelayout_main_fragmentcontainer, fragment).commit();
+        }
+    }
+
+    /**
+     * Send a post the to Firebase database.
+     *
+     * @param view view
+     */
+    public void submitPost(View view) {
+        EditText titleField = ((EditText)findViewById(R.id.plaintext_createpostfragment_title));
+        EditText bodyField = ((EditText)findViewById(R.id.plaintext_createpostfragment_body));
+        if(TextUtils.isEmpty(titleField.getText())) {
+            Toast.makeText(this, R.string.createpostfragment_titleempty, Toast.LENGTH_SHORT).show();
+        }
+        else if(TextUtils.isEmpty(bodyField.getText())) {
+            Toast.makeText(this, R.string.createpostfragment_bodyempty, Toast.LENGTH_SHORT).show();
+        }
+        else {
+            String title = titleField.getText().toString();
+            String body = bodyField.getText().toString();
+
+            //TODO: replace username by actual username once the local db works.
+            Post post = new Post(title, "username", body, (new Date()).getTime());
+
+            //DatabaseReference mDataBase = FirebaseDatabase.getInstance().getReference();
+            //mDataBase.push().setValue(post);
         }
     }
 }
