@@ -1,9 +1,12 @@
 package ch.epfl.swissteam.services;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -30,7 +33,7 @@ import ch.epfl.swissteam.services.SignInActivity;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-
+    private Fragment servicesFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +61,9 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        //TODO Load home fragment
+        //showHomeFragment();
 
 
     }
@@ -104,6 +110,9 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         switch (id) {
+            case (R.id.button_maindrawer_services) :
+                showServicesFragment();
+                break;
             case (R.id.button_maindrawer_logout) :
                 signOut();
                 break;
@@ -121,5 +130,24 @@ public class MainActivity extends AppCompatActivity
         SignInActivity.mGoogleSignInClient_.signOut();
         Intent intent = new Intent(this, SignInActivity.class);
         startActivity(intent);
+    }
+
+    /**
+     * Shows the services Fragment
+     */
+    private void showServicesFragment(){
+        if (this.servicesFragment == null) this.servicesFragment = ServicesFragment.newInstance();
+        this.startTransactionFragment(this.servicesFragment);
+    }
+
+    /**
+     * Initiate the fragment transaction
+     * @param fragment the fragment to show
+     */
+    private void startTransactionFragment(Fragment fragment){
+        if (!fragment.isVisible()){
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.activity_main_frame_layout, fragment).commit();
+        }
     }
 }

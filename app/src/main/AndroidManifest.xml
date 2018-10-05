@@ -29,7 +29,8 @@
             android:label="@string/title_activity_online_chat" />
         <activity
             android:name=".ChatRoom"
-            android:label="@string/title_activity_chat_room"></activity>
+            android:label="@string/title_activity_chat_room"/>
+
     </application>
 
 </manifest>
