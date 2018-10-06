@@ -62,7 +62,6 @@
             android:layout_marginEnd="32dp"
             android:layout_marginRight="32dp"
             android:layout_marginBottom="32dp"
-            android:onClick="submitPost"
             android:text="@string/all_send"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
