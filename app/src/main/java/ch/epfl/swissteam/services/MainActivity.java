@@ -64,6 +64,10 @@ public class MainActivity extends AppCompatActivity
 
         //TODO Load home fragment
         //showHomeFragment();
+        showServicesFragment();
+        startTransactionFragment(new OnlineChatFragment());
+        Intent intent = new Intent(this, ChatRoom.class);
+        startActivity(intent);
 
 
     }

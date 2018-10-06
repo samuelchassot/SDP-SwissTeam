@@ -8,44 +8,55 @@ import java.util.Date;
  * @author Sébastien Gachoud
  */
 public class ChatMessage {
-    private String user_;
-    private String text_;
-    private long time_;
+
 
     /**
      *
      * @param text text of the message
      * @param user name of the user who sent the message
      */
-    public ChatMessage(String text, String user){
+    public ChatMessage(String text, String user, String userId){
         text_ = text;
         user_ = user;
+        userId_ = userId;
         time_ = new Date().getTime();
     }
 
     public ChatMessage(){}
 
-    public long getTime() {
+    public long getTime_() {
         return time_;
     }
 
-    public String getText() {
+    public String getText_() {
         return text_;
     }
 
-    public String getUser() {
+    public String getUserId_() { return userId_; }
+
+    public String getUser_() {
         return user_;
     }
 
-    public void setText(String text) {
+    public void setText_(String text) {
         text_ = text;
     }
 
-    public void setTime(long time) {
+    public void setTime_(long time) {
         time_ = time;
     }
 
-    public void setUser(String user) {
+    public void setUser_(String user) {
         this.user_ = user;
     }
+
+    public void setUserId_(String userId) {
+        userId_ = userId;
+    }
+
+    private String user_;
+    private String userId_;
+    private String text_;
+    private long time_;
+
 }

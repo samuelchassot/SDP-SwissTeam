@@ -25,9 +25,6 @@
         <activity android:name=".NewProfileDetails" />
         <activity android:name=".NewProfileCapabilities" />
         <activity
-            android:name=".OnlineChatActivity"
-            android:label="@string/title_activity_online_chat" />
-        <activity
             android:name=".ChatRoom"
             android:label="@string/title_activity_chat_room"/>
 
