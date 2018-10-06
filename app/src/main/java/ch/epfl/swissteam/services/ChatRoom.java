@@ -39,7 +39,8 @@ public class ChatRoom extends Activity {
         chatRoom.setHasFixedSize(true);
         chatRoom.setLayoutManager(new LinearLayoutManager(this));
 
-        adapter_ = new FirebaseRecyclerAdapter<ChatMessage, MessageHolder>(ChatMessage.class, R.layout.chat_message_layout, MessageHolder.class, dataBase_.getReference())
+        adapter_ = new FirebaseRecyclerAdapter<ChatMessage, MessageHolder>
+                (ChatMessage.class, R.layout.chat_message_layout, MessageHolder.class, dataBase_.getReference().child("chatTest"))
         {
             @Override
             protected void populateViewHolder(MessageHolder viewHolder, ChatMessage message, int position){
@@ -61,7 +62,7 @@ public class ChatRoom extends Activity {
         String message = textInput.getText().toString();
         //TODO set user
         ChatMessage chatMessage = new ChatMessage(message, "pablo", "pabinou");
-        dataBase_.getReference().push().setValue(chatMessage);
+        dataBase_.getReference().child("chatTest").push().setValue(chatMessage);
 
         textInput.getText().clear();
     }
