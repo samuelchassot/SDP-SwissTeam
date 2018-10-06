@@ -1,5 +1,8 @@
 package ch.epfl.swissteam.services;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 /**
  * Class representing a search for service post.
  *
@@ -31,6 +34,14 @@ public class Post {
         this.username_ = username;
         this.body_ = body;
         this.timestamp_ = timestamp;
+    }
+
+    /**
+     * Store a post in the Firebase database.
+     */
+    public void storeInDatabase() {
+        DatabaseReference mDataBase = FirebaseDatabase.getInstance().getReference();
+        mDataBase.child("Posts").push().setValue(this);
     }
 
     public String getTitle() {

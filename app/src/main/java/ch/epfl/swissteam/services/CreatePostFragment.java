@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -21,7 +22,7 @@ import java.util.Date;
  *
  * @author Adrian Baudat
  */
-public class CreatePostFragment extends Fragment {
+public class CreatePostFragment extends Fragment implements View.OnClickListener{
 
     public CreatePostFragment() {
         // Required empty public constructor
@@ -44,7 +45,31 @@ public class CreatePostFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_create_post, container, false);
+        View frag = inflater.inflate(R.layout.fragment_create_post, container, false);
+        ((Button)frag.findViewById(R.id.button_createpostfragment_send)).setOnClickListener(this);
+        return frag;
+    }
+
+    @Override
+    public void onClick(View v) {
+        EditText titleField = ((EditText)getView().findViewById(R.id.plaintext_createpostfragment_title));
+        EditText bodyField = ((EditText)getView().findViewById(R.id.plaintext_createpostfragment_body));
+        if(TextUtils.isEmpty(titleField.getText())) {
+            Toast.makeText(getActivity(), R.string.createpostfragment_titleempty, Toast.LENGTH_SHORT).show();
+        }
+        else if(TextUtils.isEmpty(bodyField.getText())) {
+            Toast.makeText(getActivity(), R.string.createpostfragment_bodyempty, Toast.LENGTH_SHORT).show();
+        }
+        else {
+            String title = titleField.getText().toString();
+            String body = bodyField.getText().toString();
+
+            //TODO: replace username by actual username once the local db works.
+            Post post = new Post(title, "username", body, (new Date()).getTime());
+
+            post.storeInDatabase();
+
+            getActivity().finish();
+        }
     }
 }
