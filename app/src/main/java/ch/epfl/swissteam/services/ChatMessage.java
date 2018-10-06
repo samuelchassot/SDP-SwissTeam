@@ -14,6 +14,7 @@ public class ChatMessage {
      *
      * @param text text of the message
      * @param user name of the user who sent the message
+     * @param userId the id of the user
      */
     public ChatMessage(String text, String user, String userId){
         text_ = text;

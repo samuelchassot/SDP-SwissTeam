@@ -6,6 +6,7 @@ import android.support.design.widget.TextInputEditText;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateFormat;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.ScrollView;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 
 import com.firebase.ui.database.FirebaseListAdapter;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 /**
@@ -26,7 +28,7 @@ public class ChatRoom extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_room);
-        dataBase_ = FirebaseDatabase.getInstance("https://sdp-swissteam-30c24.firebaseio.com/");
+        dataBase_ = FirebaseDatabase.getInstance().getReference();
 
         displayMessages();
     }
@@ -40,14 +42,13 @@ public class ChatRoom extends Activity {
         chatRoom.setLayoutManager(new LinearLayoutManager(this));
 
         adapter_ = new FirebaseRecyclerAdapter<ChatMessage, MessageHolder>
-                (ChatMessage.class, R.layout.chat_message_layout, MessageHolder.class, dataBase_.getReference().child("chatTest"))
+                (ChatMessage.class, R.layout.chat_message_layout, MessageHolder.class, dataBase_.child("chatTest"))
         {
             @Override
             protected void populateViewHolder(MessageHolder viewHolder, ChatMessage message, int position){
                 viewHolder.messageText_.setText(message.getText_());
-                viewHolder.timeUserText_.setText(message.getUser_() +
-                        DateFormat.format("dd-mm-yyyy (hh:mm:ss)", message.getTime_())
-                );
+                viewHolder.timeUserText_.setText(DateFormat.format("dd-mm-yyyy (hh:mm:ss)", message.getTime_()) +
+                        message.getUser_());
             }
         };
         chatRoom.setAdapter(adapter_);
@@ -62,13 +63,13 @@ public class ChatRoom extends Activity {
         String message = textInput.getText().toString();
         //TODO set user
         ChatMessage chatMessage = new ChatMessage(message, "pablo", "pabinou");
-        dataBase_.getReference().child("chatTest").push().setValue(chatMessage);
+        dataBase_.child("chatTest").push().setValue(chatMessage);
 
         textInput.getText().clear();
     }
 
     FirebaseRecyclerAdapter<ChatMessage, MessageHolder> adapter_;
-    FirebaseDatabase dataBase_;
+    DatabaseReference dataBase_;
 
     /**
      * ViewHolder class to handle the RecyclerView
@@ -82,5 +83,6 @@ public class ChatRoom extends Activity {
             messageText_ = view.findViewById(R.id.message_message);
             timeUserText_ = view.findViewById(R.id.message_time_stamp_user);
         }
+
     }
 }
