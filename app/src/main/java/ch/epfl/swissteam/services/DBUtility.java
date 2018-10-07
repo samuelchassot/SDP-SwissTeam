@@ -9,6 +9,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DBUtility {
@@ -26,31 +27,32 @@ public class DBUtility {
         return instance;
     }
 
-
+    public DatabaseReference getDb_(){
+        return db_;
+    }
 
 
 
     public List<User> getUsersFromCategory(String category){
+        final ArrayList<User> users = new ArrayList<>();
         //FIXME Recherche dans Categories/IC
-        db_.child("Categories").child("IC").addListenerForSingleValueEvent(new ValueEventListener() {
+        db_.child("Categories").child(category).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                //FIXME DataSnapshot est une snapshot des données au moment de la requête
                 for (DataSnapshot data : dataSnapshot.getChildren()){
-                    Log.e("USERS", data.getKey());
+                    Log.i("USERSDB", "Found users : " + data.getKey());
 
-                    //FIXME Pour chaque user trouvé avant je les cherches dans la base de données USERS
                     db_.child("Users").child(data.getKey()).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            //FIXME j'affiche leur nom
-                            if (dataSnapshot.getValue() != null)
-                                Log.e("USERS", dataSnapshot.getValue(User.class).getName_());
+                            if (dataSnapshot.getValue() != null) {
+                                Log.i("USERSDB", dataSnapshot.getValue(User.class).getName_());
+                                users.add(dataSnapshot.getValue(User.class));
+                            }
                         }
 
                         @Override
                         public void onCancelled(@NonNull DatabaseError databaseError) {
-                            //Useful for stuff
                         }
                     });
                 }
@@ -58,10 +60,30 @@ public class DBUtility {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                //Useful for stuff
             }
         });
 
-        return null;
+        return users;
+    }
+
+    public List<User> getAllUsers(){
+        final ArrayList<User> users = new ArrayList<>();
+
+        db_.child("Users").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot data : dataSnapshot.getChildren()){
+                    Log.i("USERSDB", data.getValue(User.class).getName_());
+                    users.add(data.getValue(User.class));
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
+
+        return users;
     }
 }
