@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private Fragment servicesFragment;
+    private Fragment profileShowerFragment_;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
