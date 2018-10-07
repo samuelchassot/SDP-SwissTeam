@@ -19,6 +19,8 @@ public class ServicesFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+    private ArrayList<User> users = new ArrayList<>();
+
 
     public ServicesFragment() {
         // Required empty public constructor
@@ -32,25 +34,34 @@ public class ServicesFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        initDataSet();
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view =  inflater.inflate(R.layout.fragment_services, container, false);
-        User simon = new User("swicky","Simon", "Wicky", "Je suis un étudiant de l'epfl", new ArrayList<>(Arrays.asList("IC", "Maths", "Jardinage")));
-        User samuel = new User("schassot", "Samuel ", "Chassot", "Salut, je m'appelle Samuel", new ArrayList<>(Arrays.asList("IC", "Allemand", "Anglais")));
-        User sjobs = new User("sjobs", "Steve ", "Jobs", "You know who I am", new ArrayList<>(Arrays.asList("IC", "Anglais", "Jardinage", "Business")));
-        ArrayList<User> users = new ArrayList<>();
-        users.add(simon);
-        users.add(samuel);
-        users.add(sjobs);
         mRecyclerView = view.findViewById(R.id.services_recycler);
         mLayoutManager = new LinearLayoutManager(getActivity());
         mAdapter = new UserAdapter(users);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(mLayoutManager);
         return view;
+    }
+
+
+    public void initDataSet(){
+        users.clear();
+        DBUtility.get().getAllUsers(new MyCallBack<ArrayList<User>>() {
+            @Override
+            public void onCallBack(ArrayList<User> value) {
+                users.addAll(value);
+                mAdapter.notifyDataSetChanged();
+            }
+        });
+
+
     }
 
 

@@ -35,13 +35,16 @@ public class DBUtility {
     }
 
 
-    //Doesn't do anything
-    public void getUsersFromCategory(String category, final MyCallBack<ArrayList<User>> callBack){
-        //FIXME Recherche dans Categories/IC
+
+    public void getUsersFromCategory(String category, final MyCallBack<ArrayList<String>> callBack){
         db_.child(CATEGORIES).child(category).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
+                ArrayList<String> users = new ArrayList<String>();
+                for (DataSnapshot data : dataSnapshot.getChildren()) {
+                    users.add(data.getKey());
+                }
+                callBack.onCallBack(users);
             }
 
             @Override

@@ -15,9 +15,12 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
 
     public static class UserViewHolder extends RecyclerView.ViewHolder{
         public TextView nameView_;
+        public TextView surnameView_;
+        public TextView bodyView_;
         public UserViewHolder(View v){
             super(v);
-            nameView_ = (TextView) v.findViewById(R.id.textView);
+            nameView_ = (TextView) v.findViewById(R.id.nameView);
+            bodyView_ = (TextView) v.findViewById(R.id.bodyView);
         }
     }
 
@@ -35,7 +38,8 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
 
     @Override
     public void onBindViewHolder(UserViewHolder holder, int i) {
-        holder.nameView_.setText(users_.get(i).getName_());
+        holder.nameView_.setText(users_.get(i).getName_() + " " + users_.get(i).getSurname_());
+        holder.bodyView_.setText(users_.get(i).getDescription_());
     }
 
     @Override
