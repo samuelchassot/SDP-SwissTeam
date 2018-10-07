@@ -10,6 +10,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 
 public class ServicesFragment extends Fragment {
 
@@ -34,14 +37,21 @@ public class ServicesFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_services, container, false);
+        View view =  inflater.inflate(R.layout.fragment_services, container, false);
+        User simon = new User("swicky","Simon", "Wicky", "Je suis un étudiant de l'epfl", new ArrayList<>(Arrays.asList("IC", "Maths", "Jardinage")));
+        User samuel = new User("schassot", "Samuel ", "Chassot", "Salut, je m'appelle Samuel", new ArrayList<>(Arrays.asList("IC", "Allemand", "Anglais")));
+        User sjobs = new User("sjobs", "Steve ", "Jobs", "You know who I am", new ArrayList<>(Arrays.asList("IC", "Anglais", "Jardinage", "Business")));
+        ArrayList<User> users = new ArrayList<>();
+        users.add(simon);
+        users.add(samuel);
+        users.add(sjobs);
+        mRecyclerView = view.findViewById(R.id.services_recycler);
+        mLayoutManager = new LinearLayoutManager(getActivity());
+        mAdapter = new UserAdapter(users);
+        mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        return view;
     }
 
-    @Override
-    public void onViewCreated(View view, Bundle savedInstance){
-        mRecyclerView = getView().findViewById(R.id.services_recycler);
-        mLayoutManager = new LinearLayoutManager(getActivity());
-    }
 
 }
