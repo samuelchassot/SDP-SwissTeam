@@ -4,8 +4,11 @@ import android.app.Activity;
 import android.app.Instrumentation;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Environment;
 import android.os.Parcel;
+import android.provider.MediaStore;
 import android.support.test.espresso.intent.rule.IntentsTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
@@ -15,6 +18,8 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import java.io.File;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
@@ -79,29 +84,29 @@ public class NewProfileDetailsTest {
         intended(hasComponent(NewProfileCapabilities.class.getName()));
     }
 
-    @Before
-    public void nullImageIntent() {
+    @Test
+    public void changeToNullPicture() {
         Intent intent = new Intent();
         intent.setData(null);
         Instrumentation.ActivityResult result = new Instrumentation.ActivityResult(Activity.RESULT_OK, intent);
-
         intending(hasAction(Intent.ACTION_PICK)).respondWith(result);
-    }
-
-    @Test
-    public void changeToNullPicture() {
         onView(withId(R.id.button_newprofiledetails_changepicture)).perform(click());
     }
 
-    @Before
-    public void failedImageIntent() {
-        Intent intent = new Intent();
-        Instrumentation.ActivityResult result = new Instrumentation.ActivityResult(Activity.RESULT_CANCELED, intent);
+    @Test
+    public void changeToNonexistentPicture() {
+        Intent intent = mock(Intent.class);
+        when(intent.getData()).thenReturn(Uri.parse(Environment.getDownloadCacheDirectory().toString()));
+        Instrumentation.ActivityResult result = new Instrumentation.ActivityResult(Activity.RESULT_OK, intent);
         intending(hasAction(Intent.ACTION_PICK)).respondWith(result);
+        onView(withId(R.id.button_newprofiledetails_changepicture)).perform(click());
     }
 
     @Test
     public void changeToFailedPicture() {
+        Intent intent = new Intent();
+        Instrumentation.ActivityResult result = new Instrumentation.ActivityResult(Activity.RESULT_CANCELED, intent);
+        intending(hasAction(Intent.ACTION_PICK)).respondWith(result);
         onView(withId(R.id.button_newprofiledetails_changepicture)).perform(click());
     }
 
