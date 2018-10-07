@@ -1,7 +1,8 @@
 package ch.epfl.swissteam.services;
 
+import com.google.firebase.database.DatabaseReference;
+
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -58,5 +59,18 @@ public class User {
     public List<String> getCategories_() {
         return (List) categories_.clone();
     }
+
+    /**
+     * Add the user to a database
+     * @param db the database in which to add the user
+     */
+    public void addToDB(DatabaseReference db){
+        db.child("Users").child(username_).setValue(this);
+        for (String category : categories_){
+            db.child("Categories").child(category).child(username_).setValue("true");
+        }
+    }
+
+
 
 }
