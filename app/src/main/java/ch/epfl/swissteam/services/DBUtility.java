@@ -16,6 +16,9 @@ public class DBUtility {
 
     private DatabaseReference db_;
     private static DBUtility instance;
+    private final String USERS = "Users";
+    private final String CATEGORIES = "Categories";
+    private final String POSTS = "Posts";
 
     private DBUtility(DatabaseReference db_){
         this.db_ = db_;
@@ -32,30 +35,13 @@ public class DBUtility {
     }
 
 
-
-    public List<User> getUsersFromCategory(String category){
-        final ArrayList<User> users = new ArrayList<>();
+    //Doesn't do anything
+    public void getUsersFromCategory(String category, final MyCallBack<ArrayList<User>> callBack){
         //FIXME Recherche dans Categories/IC
-        db_.child("Categories").child(category).addListenerForSingleValueEvent(new ValueEventListener() {
+        db_.child(CATEGORIES).child(category).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot data : dataSnapshot.getChildren()){
-                    Log.i("USERSDB", "Found users : " + data.getKey());
 
-                    db_.child("Users").child(data.getKey()).addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            if (dataSnapshot.getValue() != null) {
-                                Log.i("USERSDB", dataSnapshot.getValue(User.class).getName_());
-                                users.add(dataSnapshot.getValue(User.class));
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-                        }
-                    });
-                }
             }
 
             @Override
@@ -63,20 +49,33 @@ public class DBUtility {
             }
         });
 
-        return users;
+    }
+    public void getUser(String username, final MyCallBack<User> callBack) {
+        db_.child(USERS).child(username).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                callBack.onCallBack(dataSnapshot.getValue(User.class));
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
-    public List<User> getAllUsers(){
-        final ArrayList<User> users = new ArrayList<>();
 
-        db_.child("Users").addListenerForSingleValueEvent(new ValueEventListener() {
+    public void getAllUsers(final MyCallBack<ArrayList<User>> callBack){
+
+        db_.child(USERS).addListenerForSingleValueEvent(new ValueEventListener() {
+            ArrayList<User> users = new ArrayList<>();
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot data : dataSnapshot.getChildren()){
                     Log.i("USERSDB", data.getValue(User.class).getName_());
                     users.add(data.getValue(User.class));
                 }
-
+                callBack.onCallBack(users);
             }
 
             @Override
@@ -84,6 +83,5 @@ public class DBUtility {
             }
         });
 
-        return users;
     }
 }

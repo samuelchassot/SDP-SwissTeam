@@ -9,7 +9,7 @@ import java.util.List;
  * Class representing a user in the database,
  * @author simonwicky
  */
-public class User {
+public class User implements DBSavable{
 
 
 
