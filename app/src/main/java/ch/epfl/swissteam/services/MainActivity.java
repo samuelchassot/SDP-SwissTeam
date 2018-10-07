@@ -172,6 +172,9 @@ public class MainActivity extends AppCompatActivity
             case (R.id.button_maindrawer_logout) :
                 signOut();
                 break;
+            case (R.id.button_maindrawer_profile) :
+                //show the profile fragment
+                break;
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
