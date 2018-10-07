@@ -19,11 +19,11 @@
         android:textSize="30sp"
         android:textStyle="bold" />
 
-    <!--<android.support.v7.widget.RecyclerView
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/services_recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="100dip"
+        android:layout_marginTop="150dip"
         tools:listitem="@layout/recycler_view_item" />
-        -->
 
 </FrameLayout>
