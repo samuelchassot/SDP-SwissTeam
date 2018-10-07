@@ -63,60 +63,7 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-        //FIXME Récuperation de la database
-        mDataBase = FirebaseDatabase.getInstance().getReference();
-
-        //FIXME création de deux users pour la database
-        User simon = new User("swicky","Simon", "Wicky", "Je suis un étudiant de l'epfl", new ArrayList<>(Arrays.asList("IC", "Maths", "Jardinage")));
-        User samuel = new User("schassot", "Samuel ", "Chassot", "Salut, je m'appelle Samuel", new ArrayList<>(Arrays.asList("IC", "Allemand", "Anglais")));
-
-        //FIXME Ajouts des users aux catégories
-        for (String category : samuel.getCategories_()){
-            mDataBase.child("Categories").child(category).child(samuel.getUsername_()).setValue("true");
-        }
-
-        for (String category : simon.getCategories_()){
-            mDataBase.child("Categories").child(category).child(simon.getUsername_()).setValue("true");
-        }
-
-        //FIXME ajouts des users à la base
-        //FIXME FireBase sait ajouté des types perso, si il existe un constructeur vide (cf User) et que les getters suivent les conventions (get + nom de l'attributs)
-        mDataBase.child("Users").child(samuel.getUsername_()).setValue(samuel);
-        mDataBase.child("Users").child(simon.getUsername_()).setValue(simon);
-
-        //FIXME Recherche dans Categories/IC
-        mDataBase.child("Categories").child("IC").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                //FIXME DataSnapshot est une snapshot des données au moment de la requête
-                for (DataSnapshot data : dataSnapshot.getChildren()){
-                    Log.e("USERS", data.getKey());
-
-                    //FIXME Pour chaque user trouvé avant je les cherches dans la base de données USERS
-                        mDataBase.child("Users").child(data.getKey()).addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            //FIXME j'affiche leur nom
-                            if (dataSnapshot.getValue() != null)
-                            Log.e("USERS", dataSnapshot.getValue(User.class).getName_());
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-                            //Useful for stuff
-                        }
-                    });
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                //Useful for stuff
-            }
-        });
-
-        //FIXME Plus d'infos ici https://firebase.google.com/docs/database/android/read-and-write
+        
 
         //TODO Load home fragment
         //showHomeFragment();
