@@ -1,6 +1,6 @@
 package ch.epfl.swissteam.services;
 
 public interface DBSavable {
-    void addToDB();
+    void addToDB(DatabaseReference databaseReference);
 
 }
