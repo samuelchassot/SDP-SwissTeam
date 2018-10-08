@@ -38,8 +38,10 @@ public class ChatRoom extends Activity {
      */
     private void displayMessages(){
         RecyclerView chatRoom = findViewById(R.id.recycler_view_message);
+        LinearLayoutManager llm = new LinearLayoutManager(this);
+
         chatRoom.setHasFixedSize(true);
-        chatRoom.setLayoutManager(new LinearLayoutManager(this));
+        chatRoom.setLayoutManager(llm);
 
         adapter_ = new FirebaseRecyclerAdapter<ChatMessage, MessageHolder>
                 (ChatMessage.class, R.layout.chat_message_layout, MessageHolder.class, dataBase_.child("chatTest"))

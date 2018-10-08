@@ -64,8 +64,6 @@ public class MainActivity extends AppCompatActivity
 
         //TODO Load home fragment
         //showHomeFragment();
-
-
     }
 
     @Override
@@ -116,6 +114,9 @@ public class MainActivity extends AppCompatActivity
             case (R.id.button_maindrawer_logout) :
                 signOut();
                 break;
+            case (R.id.button_maindrawer_chats) :
+                showChatsFragment();
+                break;
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -138,6 +139,14 @@ public class MainActivity extends AppCompatActivity
     private void showServicesFragment(){
         if (this.servicesFragment == null) this.servicesFragment = ServicesFragment.newInstance();
         this.startTransactionFragment(this.servicesFragment);
+    }
+
+
+    private void showChatsFragment(){
+        //TODO
+        Intent mainIntent = new Intent(this, ChatRoom.class);
+        startActivity(mainIntent);
+        /**********************************/
     }
 
     /**
