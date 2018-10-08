@@ -1,12 +1,15 @@
 package ch.epfl.swissteam.services;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -19,6 +22,7 @@ public class DBUtility {
     private final String USERS = "Users";
     private final String CATEGORIES = "Categories";
     private final String POSTS = "Posts";
+    private final String ERROR_TAG = "DBUtility";
 
     private DBUtility(DatabaseReference db_){
         this.db_ = db_;
@@ -40,7 +44,7 @@ public class DBUtility {
         db_.child(CATEGORIES).child(category).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                ArrayList<String> users = new ArrayList<String>();
+                ArrayList<String> users = new ArrayList<>();
                 for (DataSnapshot data : dataSnapshot.getChildren()) {
                     users.add(data.getKey());
                 }
@@ -83,6 +87,31 @@ public class DBUtility {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
+
+    }
+
+    /**
+     * Retrieves the ten freshest post of the database
+     * @param callBack the function called on the callBack
+     */
+    public void getPostsFeed(final MyCallBack<ArrayList<Post>> callBack){
+        Query freshestPosts = db_.child(POSTS).limitToFirst(10);
+        freshestPosts.addValueEventListener(new ValueEventListener() {
+            ArrayList<Post> posts = new ArrayList<>();
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot data : dataSnapshot.getChildren()){
+                    Log.i("POSTSDB", data.getValue(Post.class).getTitle());
+                    posts.add(data.getValue(Post.class));
+                }
+                callBack.onCallBack(posts);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.w(ERROR_TAG, "getPostsFeed:onCancelled", databaseError.toException());
             }
         });
 
