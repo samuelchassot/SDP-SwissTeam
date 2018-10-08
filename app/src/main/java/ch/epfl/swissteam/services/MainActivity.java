@@ -22,7 +22,7 @@ import android.view.MenuItem;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private Fragment servicesFragment, createPostFragment;
+    private Fragment servicesFragment, createPostFragment, homeFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,10 +51,7 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        //TODO Load home fragment
-        //showHomeFragment();
-
-
+        showHomeFragment();
     }
 
     @Override
@@ -138,6 +135,14 @@ public class MainActivity extends AppCompatActivity
     private void showCreatePostFragment(){
         if (this.createPostFragment == null) this.createPostFragment = CreatePostFragment.newInstance();
         this.startTransactionFragment(this.createPostFragment);
+    }
+
+    /**
+     * Shows the home Fragment, with the feed of spontaneous posts
+     */
+    private void showHomeFragment(){
+        if (this.homeFragment == null) this.homeFragment = HomeFragment.newInstance();
+        this.startTransactionFragment(this.homeFragment);
     }
 
     /**
