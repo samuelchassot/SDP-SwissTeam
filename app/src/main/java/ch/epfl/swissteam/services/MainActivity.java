@@ -1,5 +1,6 @@
 package ch.epfl.swissteam.services;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -11,6 +12,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 
 /**
@@ -55,9 +58,13 @@ public class MainActivity extends AppCompatActivity
         DBUtility util = DBUtility.get();
 
 
+
+
+
+
+
         //TODO Load home fragment
         //showHomeFragment();
-
 
     }
 
@@ -146,9 +153,8 @@ public class MainActivity extends AppCompatActivity
         }
 
         this.startTransactionFragment(this.profileShowerFragment_);
-
-
     }
+
 
     /**
      * Initiate the fragment transaction
