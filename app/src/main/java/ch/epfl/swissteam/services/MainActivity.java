@@ -105,8 +105,8 @@ public class MainActivity extends AppCompatActivity
             case (R.id.button_maindrawer_createpost) :
                 showCreatePostFragment();
                 break;
-            case (R.id.button_maindrawer_language) :
-                /* TODO : open a list of languages ... */
+            case (R.id.button_maindrawer_settings) :
+                showSettingsFragment();
                 break;
             case (R.id.button_maindrawer_logout) :
                 signOut();
@@ -141,6 +141,13 @@ public class MainActivity extends AppCompatActivity
     private void showCreatePostFragment(){
         if (this.createPostFragment == null) this.createPostFragment = CreatePostFragment.newInstance();
         this.startTransactionFragment(this.createPostFragment);
+    }
+
+    /**
+     * Show the settings Fragment
+     */
+    private void showSettingsFragment() {
+        // TODO : Fragment 
     }
 
     /**
