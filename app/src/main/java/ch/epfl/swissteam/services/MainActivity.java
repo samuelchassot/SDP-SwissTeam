@@ -105,6 +105,9 @@ public class MainActivity extends AppCompatActivity
             case (R.id.button_maindrawer_createpost) :
                 showCreatePostFragment();
                 break;
+            case (R.id.button_maindrawer_language) :
+                /* TODO : open a list of languages ... */
+                break;
             case (R.id.button_maindrawer_logout) :
                 signOut();
                 break;
