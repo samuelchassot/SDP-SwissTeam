@@ -32,9 +32,8 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private Fragment servicesFragment;
     private Fragment profileShowerFragment_;
-    private Fragment servicesFragment, createPostFragment;
+    private Fragment servicesFragment, createPostFragment, homeFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,15 +64,7 @@ public class MainActivity extends AppCompatActivity
 
         DBUtility util = DBUtility.get();
 
-
-
-
-
-
-
-        //TODO Load home fragment
-        //showHomeFragment();
-
+        showHomeFragment();
     }
 
     @Override
@@ -173,6 +164,14 @@ public class MainActivity extends AppCompatActivity
     private void showCreatePostFragment(){
         if (this.createPostFragment == null) this.createPostFragment = CreatePostFragment.newInstance();
         this.startTransactionFragment(this.createPostFragment);
+    }
+
+    /**
+     * Shows the home Fragment, with the feed of spontaneous posts
+     */
+    private void showHomeFragment(){
+        if (this.homeFragment == null) this.homeFragment = HomeFragment.newInstance();
+        this.startTransactionFragment(this.homeFragment);
     }
 
     /**
