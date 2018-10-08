@@ -37,7 +37,7 @@ public class User implements DBSavable{
         this.name_ = name_;
         this.surname_ = surname_;
         this.description_ = description_;
-        this.categories_ = (ArrayList) categories_.clone();
+        this.categories_ = (ArrayList<String>) categories_.clone();
     }
 
 
@@ -56,8 +56,8 @@ public class User implements DBSavable{
         return description_;
     }
 
-    public List<String> getCategories_() {
-        return (List) categories_.clone();
+    public ArrayList<String> getCategories_() {
+        return (ArrayList<String>) categories_.clone();
     }
 
     /**
