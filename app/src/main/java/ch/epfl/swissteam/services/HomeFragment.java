@@ -49,6 +49,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         DBUtility.get().getPostsFeed(new MyCallBack<ArrayList<Post>>() {
             @Override
             public void onCallBack(ArrayList<Post> value) {
+                postsList.clear();
                 postsList.addAll(value);
             }
         });
