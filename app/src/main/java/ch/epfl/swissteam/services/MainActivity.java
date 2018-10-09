@@ -22,7 +22,7 @@ import android.view.MenuItem;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private Fragment servicesFragment, createPostFragment;
+    private Fragment servicesFragment, createPostFragment, settingsFragment_;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -147,7 +147,8 @@ public class MainActivity extends AppCompatActivity
      * Show the settings Fragment
      */
     private void showSettingsFragment() {
-        // TODO : Fragment 
+        if (this.settingsFragment_ == null) this.settingsFragment_ = SettingsFragment.newInstance();
+        this.startTransactionFragment(this.settingsFragment_);
     }
 
     /**
