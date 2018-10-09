@@ -20,7 +20,7 @@ public class UserTest {
 
     @Test
     public void testUserWorks() {
-        User user = new User(googleID, email, name, surname, description, categories);
+        User user = new User(googleID, name, surname,email, description, categories);
         assertEquals(user.getGoogleId_(), googleID);
         assertEquals(user.getEmail_(), email);
         assertEquals(user.getName_(), name);
