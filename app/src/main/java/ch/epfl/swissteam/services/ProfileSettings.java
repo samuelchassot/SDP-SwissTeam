@@ -14,7 +14,6 @@ import java.util.ArrayList;
 public class ProfileSettings extends AppCompatActivity {
 
     private ArrayList<String> currentCategories;
-    private String currentUsername;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,9 +32,9 @@ public class ProfileSettings extends AppCompatActivity {
             }
         });
 
+
         String uniqueID = GoogleSignInSingleton.get().getClientUniqueID();
-        String username = "swicky";
-        loadAndShowUser(username);
+        loadAndShowUser(uniqueID);
     }
 
 
@@ -43,19 +42,18 @@ public class ProfileSettings extends AppCompatActivity {
      * Save the modification done by the user
      */
     private void save(){
-        Intent intent = new Intent(this, MainActivity.class);
         String name = ((TextView) findViewById(R.id.edittext_profilesettings_name)).getText().toString();
+        String uniqueID = GoogleSignInSingleton.get().getClientUniqueID();
         String surname =((TextView) findViewById(R.id.edittext_profilesettings_surname)).getText().toString();
         String email = ((TextView) findViewById(R.id.edittext_profilesettings_email)).getText().toString();
         String descr = ((TextView) findViewById(R.id.edittext_profilesettings_description)).getText().toString();
-        User updatedUser = new User(currentUsername, name, surname, email, descr, currentCategories);
+        User updatedUser = new User(uniqueID, name, surname, email, descr, currentCategories);
 
         DBUtility.get().setUser(updatedUser);
-        startActivity(intent);
+        finish();
     }
 
     private void loadAndShowUser(String clientUniqueID){
-        //for now we use the username
         DBUtility.get().getUser(clientUniqueID, (user)->{
             TextView nameView = (TextView) findViewById(R.id.edittext_profilesettings_name);
             nameView.setText(user.getName_());
@@ -70,7 +68,6 @@ public class ProfileSettings extends AppCompatActivity {
             descrView.setText(user.getDescription_());
 
             currentCategories = user.getCategories_();
-            currentUsername = user.getGoogleId_();
 
 
         });

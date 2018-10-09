@@ -65,10 +65,8 @@ public class ProfileDisplayFragment extends Fragment {
         });
 
         String clientUniqueID = GoogleSignInSingleton.get().getClientUniqueID();
-
-        //for now to test with actual db
-        String userName = "swicky";
-        loadAndShowUser(userName);
+        
+        loadAndShowUser(clientUniqueID);
 
 
         // Inflate the layout for this fragment
