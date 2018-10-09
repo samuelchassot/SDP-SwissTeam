@@ -53,14 +53,13 @@ public class ProfileDisplayFragment extends Fragment {
         View thisView = inflater.inflate(R.layout.fragment_profile_display, container, false);
 
         Button button = (Button) thisView.findViewById(R.id.button_profiledisplay_modify);
-        final Activity activity = getActivity();
         button.setOnClickListener(new View.OnClickListener()
         {
-            Intent intent = new Intent(activity, ProfileSettings.class);
+            Intent intent = new Intent(getActivity(), ProfileSettings.class);
             @Override
             public void onClick(View v)
             {
-                activity.startActivity(intent);
+                startActivity(intent);
 
             }
         });
