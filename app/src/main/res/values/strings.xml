@@ -42,5 +42,6 @@
     <string name="profiledisplay_nametag">Name</string>
     <string name="profilesettings_save">Save</string>
     <string name="profiledisplay_descriptiontag">Description</string>
+    <string name="profiledisplay_modify">Modify</string>
 
 </resources>
