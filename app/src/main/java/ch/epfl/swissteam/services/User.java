@@ -58,8 +58,6 @@ public class User implements DBSavable{
         return surname_;
     }
 
-    public String getEmail_() { return email_; }
-
     public String getDescription_() {
         return description_;
     }
