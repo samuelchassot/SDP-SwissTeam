@@ -12,8 +12,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 
 
 /**
@@ -25,8 +23,8 @@ import android.widget.Button;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private Fragment servicesFragment;
     private Fragment profileShowerFragment_;
+    private Fragment servicesFragment_, createPostFragment_;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,6 +114,9 @@ public class MainActivity extends AppCompatActivity
             case (R.id.button_maindrawer_profile) :
                 showProfileShowerFragment();
                 break;
+            case (R.id.button_maindrawer_createpost) :
+                showCreatePostFragment();
+                break;
             case (R.id.button_maindrawer_logout) :
                 signOut();
                 break;
@@ -140,8 +141,16 @@ public class MainActivity extends AppCompatActivity
      * Shows the services Fragment
      */
     private void showServicesFragment(){
-        if (this.servicesFragment == null) this.servicesFragment = ServicesFragment.newInstance();
-        this.startTransactionFragment(this.servicesFragment);
+        if (this.servicesFragment_ == null) this.servicesFragment_ = ServicesFragment.newInstance();
+        this.startTransactionFragment(this.servicesFragment_);
+    }
+
+    /**
+     * Shows the create post Fragment
+     */
+    private void showCreatePostFragment(){
+        if (this.createPostFragment_ == null) this.createPostFragment_ = CreatePostFragment.newInstance();
+        this.startTransactionFragment(this.createPostFragment_);
     }
 
     /**
@@ -158,12 +167,13 @@ public class MainActivity extends AppCompatActivity
 
     /**
      * Initiate the fragment transaction
+     *
      * @param fragment the fragment to show
      */
     private void startTransactionFragment(Fragment fragment){
         if (!fragment.isVisible()){
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.activity_main_frame_layout, fragment).commit();
+                    .replace(R.id.framelayout_main_fragmentcontainer, fragment).commit();
         }
     }
 }
