@@ -46,8 +46,9 @@ public class ProfileDisplayFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        View thisView = inflater.inflate(R.layout.fragment_profile_display, container, false);
 
-        Button button = (Button) this.getView().findViewById(R.id.button_profiledisplay_modifiy);
+        Button button = (Button) thisView.findViewById(R.id.button_profiledisplay_modify);
         final Context c = this.getContext();
         button.setOnClickListener(new View.OnClickListener()
         {
@@ -62,7 +63,7 @@ public class ProfileDisplayFragment extends Fragment {
 
 
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile_display, container, false);
+        return thisView;
     }
 
 
