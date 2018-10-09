@@ -30,6 +30,7 @@ public class User implements DBSavable{
      * @param googleID_ User's unique googleId
      * @param name_ User's name
      * @param surname_ User's surname
+     * @param email_ User's email
      * @param description_ User's description
      * @param categories_ User's categories of services
      */
@@ -38,6 +39,7 @@ public class User implements DBSavable{
         this.email_ = email_;
         this.name_ = name_;
         this.surname_ = surname_;
+        this.email_ = email_;
         this.description_ = description_;
         this.categories_ = (ArrayList<String>) categories_.clone();
     }
@@ -55,6 +57,8 @@ public class User implements DBSavable{
     public String getSurname_() {
         return surname_;
     }
+
+    public String getEmail_() { return email_; }
 
     public String getDescription_() {
         return description_;

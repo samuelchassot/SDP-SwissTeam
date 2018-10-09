@@ -109,4 +109,8 @@ public class DBUtility {
         });
 
     }
+
+    public void setUser(User user){
+        db_.child(user.getUsername_()).setValue(user);
+    }
 }

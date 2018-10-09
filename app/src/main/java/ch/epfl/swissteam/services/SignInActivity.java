@@ -27,7 +27,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
     //Request code for startActivityForResult
     private static final int RC_SIGN_IN = 42;
 
-    public static GoogleSignInClient mGoogleSignInClient_;
+    private GoogleSignInClient mGoogleSignInClient_;
     public static final String ACCOUNT_TAG = "ch.epfl.swissteam.services.account";
     private final String ERROR_TAG = "SignInActivity";
     private final String ERROR_MSG = "signInResult:failed code=";
@@ -49,6 +49,9 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         // Build a GoogleSignInClient with the options specified by gso.
         mGoogleSignInClient_ = GoogleSignIn.getClient(this, gso);
 
+        //put the GoogleSignInClient in the singleton
+        GoogleSignInSingleton.putGoogleSignInClient(mGoogleSignInClient_);
+
         //Listen to clicks on the signIn button
         findViewById(R.id.button_signin_googlesignin).setOnClickListener(this);
     }
@@ -62,6 +65,8 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         if(account != null ){
             // Launch main
 
+            // put uniqueID in the singleton
+            GoogleSignInSingleton.putUniqueID(account.getId());
             Intent mainIntent = new Intent(this, MainActivity.class);
             mainIntent.putExtra(ACCOUNT_TAG , account);
             startActivity(mainIntent);
