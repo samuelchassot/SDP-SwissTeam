@@ -20,6 +20,7 @@ public class DBUtility {
     private final String CATEGORIES = "Categories";
     private final String POSTS = "Posts";
     private final String ERROR_TAG = "DBUtility";
+    private final int POSTS_DISPLAY_NUMBER = 20;
 
     private DBUtility(DatabaseReference db_){
         this.db_ = db_;
@@ -94,7 +95,7 @@ public class DBUtility {
      * @param callBack the function called on the callBack
      */
     public void getPostsFeed(final MyCallBack<ArrayList<Post>> callBack){
-        Query freshestPosts = db_.child(POSTS).limitToFirst(20);
+        Query freshestPosts = db_.child(POSTS).limitToFirst(POSTS_DISPLAY_NUMBER);
         freshestPosts.addListenerForSingleValueEvent(new ValueEventListener() {
             ArrayList<Post> posts = new ArrayList<>();
             @Override

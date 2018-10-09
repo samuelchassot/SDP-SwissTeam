@@ -45,6 +45,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         super.onCreate(savedInstanceState);
 
         postsToStringList = new ArrayList<>();
+        postsToStringList.add(getContext().getString(R.string.homefragment_asktorefresh));
         adapter = new ArrayAdapter<>(
                 this.getContext(), android.R.layout.simple_list_item_1, postsToStringList);
 
@@ -88,10 +89,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
      * Refresh the feed of post shown on the main board
      */
     private void refresh(){
-        Log.e("HOMEFRAGMENT", "Beginning of refresh");
         postsToStringList.clear();
         if(postsList.isEmpty()){
-            postsToStringList.add("No posts for now...");
+            postsToStringList.add(getContext().getString(R.string.homefragment_noposts));
         }else{
             for(Post p : postsList){
                 postsToStringList.add(p.getTitle_() + "\n" + p.getBody_());
@@ -99,7 +99,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         }
         swipePostsList.invalidateViews();
         swipeRefreshLayout.setRefreshing(false);
-        Log.e("HOMEFRAGMENT", "End of refresh");
     }
 
 }
