@@ -22,7 +22,7 @@ import android.view.MenuItem;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private Fragment servicesFragment, createPostFragment;
+    private Fragment servicesFragment_, createPostFragment_;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,20 +128,21 @@ public class MainActivity extends AppCompatActivity
      * Shows the services Fragment
      */
     private void showServicesFragment(){
-        if (this.servicesFragment == null) this.servicesFragment = ServicesFragment.newInstance();
-        this.startTransactionFragment(this.servicesFragment);
+        if (this.servicesFragment_ == null) this.servicesFragment_ = ServicesFragment.newInstance();
+        this.startTransactionFragment(this.servicesFragment_);
     }
 
     /**
      * Shows the create post Fragment
      */
     private void showCreatePostFragment(){
-        if (this.createPostFragment == null) this.createPostFragment = CreatePostFragment.newInstance();
-        this.startTransactionFragment(this.createPostFragment);
+        if (this.createPostFragment_ == null) this.createPostFragment_ = CreatePostFragment.newInstance();
+        this.startTransactionFragment(this.createPostFragment_);
     }
 
     /**
      * Initiate the fragment transaction
+     *
      * @param fragment the fragment to show
      */
     private void startTransactionFragment(Fragment fragment){
