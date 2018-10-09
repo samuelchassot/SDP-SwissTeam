@@ -3,6 +3,7 @@ package ch.epfl.swissteam.services;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,20 +53,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
             }
         });
 
-        swipeRefreshLayout = getView().findViewById(R.id.swiperefresh_homefragment_refresh);
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                refresh();
-            }
-        });
-
-        swipePostsList = getView().findViewById(R.id.listview_homefragment_postslist);
-
         postsToStringList = new ArrayList<>();
         adapter = new ArrayAdapter<>(
                 this.getContext(), android.R.layout.simple_list_item_1, postsToStringList);
-        swipePostsList.setAdapter(adapter);
     }
 
     @Override
@@ -73,6 +63,18 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                              Bundle savedInstanceState) {
         View frag = inflater.inflate(R.layout.fragment_home, container, false);
         (frag.findViewById(R.id.button_homefragment_refresh)).setOnClickListener(this);
+
+        swipeRefreshLayout = frag.findViewById(R.id.swiperefresh_homefragment_refresh);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refresh();
+            }
+        });
+
+        swipePostsList = frag.findViewById(R.id.listview_homefragment_postslist);
+
+        swipePostsList.setAdapter(adapter);
         return frag;
     }
 
@@ -85,12 +87,18 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
      * Refresh the feed of post shown on the main board
      */
     private void refresh(){
+        Log.e("HOMEFRAGMENT", "Beginning of refresh");
         postsToStringList.clear();
-        for(Post p : postsList){
-            postsToStringList.add(p.getTitle() + "\n" + p.getBody());
+        if(postsList.isEmpty()){
+            postsToStringList.add("No posts for now...");
+        }else{
+            for(Post p : postsList){
+                postsToStringList.add(p.getTitle() + "\n" + p.getBody());
+            }
         }
         swipePostsList.invalidateViews();
         swipeRefreshLayout.setRefreshing(false);
+        Log.e("HOMEFRAGMENT", "End of refresh");
     }
 
 }

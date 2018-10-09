@@ -1,10 +1,8 @@
 package ch.epfl.swissteam.services;
 
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.util.Log;
 
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -13,7 +11,6 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class DBUtility {
 
@@ -97,13 +94,13 @@ public class DBUtility {
      * @param callBack the function called on the callBack
      */
     public void getPostsFeed(final MyCallBack<ArrayList<Post>> callBack){
-        Query freshestPosts = db_.child(POSTS).limitToFirst(10);
+        Query freshestPosts = db_.child(POSTS).limitToFirst(20);
         freshestPosts.addValueEventListener(new ValueEventListener() {
             ArrayList<Post> posts = new ArrayList<>();
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot data : dataSnapshot.getChildren()){
-                    Log.i("POSTSDB", data.getValue(Post.class).getTitle());
+                    Log.e("POSTSDB", "test "+data.getValue(Post.class).getTitle());
                     posts.add(data.getValue(Post.class));
                 }
                 callBack.onCallBack(posts);
