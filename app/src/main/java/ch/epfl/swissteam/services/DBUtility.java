@@ -25,6 +25,11 @@ public class DBUtility {
     private DBUtility(DatabaseReference db_){
         this.db_ = db_;
     }
+
+    /**
+     * Get the DBUtility instance
+     * @return the DBUtiliyty instance
+     */
     public static DBUtility get(){
         if (instance == null){
             instance = new DBUtility(FirebaseDatabase.getInstance().getReference());
@@ -32,12 +37,20 @@ public class DBUtility {
         return instance;
     }
 
+    /**
+     * Get the DatabaseReference of the DBUtility
+     * @return the DatabaseReference of the DBUtility
+     */
     public DatabaseReference getDb_(){
         return db_;
     }
 
 
-
+    /**
+     * Get all users' ID for a given category
+     * @param category the category
+     * @param callBack the CallBack to use
+     */
     public void getUsersFromCategory(String category, final MyCallBack<ArrayList<String>> callBack){
         db_.child(CATEGORIES).child(category).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -55,8 +68,14 @@ public class DBUtility {
         });
 
     }
-    public void getUser(String username, final MyCallBack<User> callBack) {
-        db_.child(USERS).child(username).addListenerForSingleValueEvent(new ValueEventListener() {
+
+    /**
+     * Get a user whose ID correspond to googleId
+     * @param googleId unique user'Id
+     * @param callBack the CallBack to use
+     */
+    public void getUser(String googleId, final MyCallBack<User> callBack) {
+        db_.child(USERS).child(googleId).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 callBack.onCallBack(dataSnapshot.getValue(User.class));
@@ -69,7 +88,10 @@ public class DBUtility {
         });
     }
 
-
+    /**
+     * Get all users inside the database
+     * @param callBack the callBack to use
+     */
     public void getAllUsers(final MyCallBack<ArrayList<User>> callBack){
 
         db_.child(USERS).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -114,6 +136,10 @@ public class DBUtility {
                 Log.w(ERROR_TAG, "getPostsFeed:onCancelled", databaseError.toException());
             }
         });
+
+
+    public void setUser(User user){
+        db_.child(USERS).child(user.getGoogleId_()).setValue(user);
 
     }
 }

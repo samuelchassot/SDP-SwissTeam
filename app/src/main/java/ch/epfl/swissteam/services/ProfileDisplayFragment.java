@@ -1,5 +1,6 @@
 package ch.epfl.swissteam.services;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -9,6 +10,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 
 /**
@@ -46,23 +50,45 @@ public class ProfileDisplayFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        View thisView = inflater.inflate(R.layout.fragment_profile_display, container, false);
 
-        Button button = (Button) this.getView().findViewById(R.id.button_profiledisplay_modifiy);
-        final Context c = this.getContext();
+        Button button = (Button) thisView.findViewById(R.id.button_profiledisplay_modify);
         button.setOnClickListener(new View.OnClickListener()
         {
-            Intent intent = new Intent(c, ProfileSettings.class);
+            Intent intent = new Intent(getActivity(), ProfileSettings.class);
             @Override
             public void onClick(View v)
             {
-                c.startActivity(intent);
+                startActivity(intent);
 
             }
         });
 
+        String clientUniqueID = GoogleSignInSingleton.get().getClientUniqueID();
+        
+        loadAndShowUser(clientUniqueID);
+
 
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile_display, container, false);
+        return thisView;
+    }
+
+    private void loadAndShowUser(String clientUniqueID){
+        //for now we use the username
+        DBUtility.get().getUser(clientUniqueID, (user)->{
+            TextView nameView = (TextView) getActivity().findViewById(R.id.textview_profiledisplay_name);
+            nameView.setText(user.getName_());
+
+            TextView surnameView =  (TextView) getActivity().findViewById(R.id.textview_displayprofile_surname);
+            surnameView.setText(user.getSurname_());
+
+            TextView emailView =  (TextView) getActivity().findViewById(R.id.textview_profiledisplay_email);
+            emailView.setText(user.getEmail_());
+
+            TextView descrView =  (TextView) getActivity().findViewById(R.id.textview_profiledisplay_description);
+            descrView.setText(user.getDescription_());
+
+        });
     }
 
 

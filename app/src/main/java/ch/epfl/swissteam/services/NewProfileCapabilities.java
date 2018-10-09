@@ -3,8 +3,8 @@ package ch.epfl.swissteam.services;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.TypedArray;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -17,7 +17,7 @@ import android.widget.TableRow;
 import android.widget.Toolbar;
 
 /**
- *This activity is meant to fill the user profile with service capabilities at the first connection
+ * This activity is meant to fill the user profile with service capabilities at the first connection
  *
  * @author Sébastien Gachoud
  */

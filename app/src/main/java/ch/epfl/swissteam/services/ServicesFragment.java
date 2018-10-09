@@ -9,9 +9,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
-
+/**
+ * Fragment for displaying users in form of a list
+ *
+ * @author simonwicky
+ */
 public class ServicesFragment extends Fragment {
 
     private RecyclerView mRecyclerView;
@@ -24,6 +27,10 @@ public class ServicesFragment extends Fragment {
         // Required empty public constructor
     }
 
+    /**
+     * Create a new instance of Services fragment
+     * @return the created instance
+     */
     public static ServicesFragment newInstance() {
         ServicesFragment fragment = new ServicesFragment();
         return fragment;
@@ -49,7 +56,7 @@ public class ServicesFragment extends Fragment {
     }
 
 
-    public void initDataSet(){
+    private void initDataSet(){
         users.clear();
         DBUtility.get().getAllUsers(new MyCallBack<ArrayList<User>>() {
             @Override

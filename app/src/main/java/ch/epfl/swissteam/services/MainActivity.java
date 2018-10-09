@@ -17,11 +17,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 
 /**
  * This class is the MainActivity of the application, this is
@@ -33,7 +31,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private Fragment profileShowerFragment_;
-    private Fragment servicesFragment, createPostFragment, homeFragment;
+    private Fragment servicesFragment_, createPostFragment_, homeFragment_;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,6 +116,9 @@ public class MainActivity extends AppCompatActivity
             case (R.id.button_maindrawer_profile) :
                 showProfileShowerFragment();
                 break;
+            case (R.id.button_maindrawer_createpost) :
+                showCreatePostFragment();
+                break;
             case (R.id.button_maindrawer_logout) :
                 signOut();
                 break;
@@ -133,7 +134,7 @@ public class MainActivity extends AppCompatActivity
      * Sign out the user from the application.
      */
     private void signOut() {
-        SignInActivity.mGoogleSignInClient_.signOut();
+        GoogleSignInSingleton.get().getClient().signOut();
         Intent intent = new Intent(this, SignInActivity.class);
         startActivity(intent);
     }
@@ -142,8 +143,16 @@ public class MainActivity extends AppCompatActivity
      * Shows the services Fragment
      */
     private void showServicesFragment(){
-        if (this.servicesFragment == null) this.servicesFragment = ServicesFragment.newInstance();
-        this.startTransactionFragment(this.servicesFragment);
+        if (this.servicesFragment_ == null) this.servicesFragment_ = ServicesFragment.newInstance();
+        this.startTransactionFragment(this.servicesFragment_);
+    }
+
+    /**
+     * Shows the create post Fragment
+     */
+    private void showCreatePostFragment(){
+        if (this.createPostFragment_ == null) this.createPostFragment_ = CreatePostFragment.newInstance();
+        this.startTransactionFragment(this.createPostFragment_);
     }
 
     /**
@@ -162,20 +171,21 @@ public class MainActivity extends AppCompatActivity
      * Shows the create post Fragment
      */
     private void showCreatePostFragment(){
-        if (this.createPostFragment == null) this.createPostFragment = CreatePostFragment.newInstance();
-        this.startTransactionFragment(this.createPostFragment);
+        if (this.createPostFragment_ == null) this.createPostFragment_ = CreatePostFragment.newInstance();
+        this.startTransactionFragment(this.createPostFragment_);
     }
 
     /**
      * Shows the home Fragment, with the feed of spontaneous posts
      */
     private void showHomeFragment(){
-        if (this.homeFragment == null) this.homeFragment = HomeFragment.newInstance();
-        this.startTransactionFragment(this.homeFragment);
+        if (this.homeFragment_ == null) this.homeFragment_ = HomeFragment.newInstance();
+        this.startTransactionFragment(this.homeFragment_);
     }
 
     /**
      * Initiate the fragment transaction
+     *
      * @param fragment the fragment to show
      */
     private void startTransactionFragment(Fragment fragment){

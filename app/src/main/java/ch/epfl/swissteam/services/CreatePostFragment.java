@@ -27,7 +27,7 @@ public class CreatePostFragment extends Fragment implements View.OnClickListener
     }
 
     /**
-     * Creates a new <code>CreatePostFragment</code>.
+     * Creates a new {@link CreatePostFragment}.
      * @return new instance of <code>CreatePostFragment</code>
      */
     public static CreatePostFragment newInstance() {
