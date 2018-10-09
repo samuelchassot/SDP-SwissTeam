@@ -11,8 +11,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
-import com.google.firebase.database.DatabaseReference;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -94,7 +92,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
             postsToStringList.add("No posts for now...");
         }else{
             for(Post p : postsList){
-                postsToStringList.add(p.getTitle() + "\n" + p.getBody());
+                postsToStringList.add(p.getTitle_() + "\n" + p.getBody_());
             }
         }
         swipePostsList.invalidateViews();

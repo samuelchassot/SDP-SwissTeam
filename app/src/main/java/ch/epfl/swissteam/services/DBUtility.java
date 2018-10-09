@@ -99,9 +99,11 @@ public class DBUtility {
             ArrayList<Post> posts = new ArrayList<>();
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                posts.clear();
                 for (DataSnapshot data : dataSnapshot.getChildren()){
-                    Log.e("POSTSDB", "test "+data.getValue(Post.class).getTitle());
-                    posts.add(data.getValue(Post.class));
+                    Log.e("POSTSDB", "test "+data.getValue(Post.class));
+                    Post post = data.getValue(Post.class);
+                    posts.add(post);
                 }
                 callBack.onCallBack(posts);
             }

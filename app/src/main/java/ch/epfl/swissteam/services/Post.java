@@ -9,7 +9,7 @@ import com.google.firebase.database.FirebaseDatabase;
  * @author Adrian Baudat
  * @author Julie Giunta
  */
-public class Post {
+public class Post implements DBSavable{
 
     private String title_, username_, body_;
     private long timestamp_;
@@ -38,13 +38,13 @@ public class Post {
 
     /**
      * Store a post in the Firebase database.
+     * @param databaseReference
      */
-    public void storeInDatabase() {
-        DatabaseReference mDataBase = FirebaseDatabase.getInstance().getReference();
-        mDataBase.child("Posts").push().setValue(this);
+    public void addToDB(DatabaseReference databaseReference) {
+        databaseReference.child("Posts").push().setValue(this);
     }
 
-    public String getTitle() {
+    public String getTitle_() {
         return title_;
     }
 
@@ -52,11 +52,11 @@ public class Post {
         return username_;
     }
 
-    public String getBody() {
+    public String getBody_() {
         return body_;
     }
 
-    public long getTimestamp() {
+    public long getTimestamp_() {
         return timestamp_;
     }
 }
