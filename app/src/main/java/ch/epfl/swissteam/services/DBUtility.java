@@ -113,7 +113,7 @@ public class DBUtility {
     }
 
     /**
-     * Retrieves the ten freshest post of the database
+     * Retrieves the POSTS_DISPLAY_NUMBER freshest post of the database
      * @param callBack the function called on the callBack
      */
     public void getPostsFeed(final MyCallBack<ArrayList<Post>> callBack){
@@ -136,7 +136,7 @@ public class DBUtility {
                 Log.w(ERROR_TAG, "getPostsFeed:onCancelled", databaseError.toException());
             }
         });
-
+    }
 
     public void setUser(User user){
         db_.child(USERS).child(user.getGoogleId_()).setValue(user);

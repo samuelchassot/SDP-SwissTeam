@@ -3,7 +3,6 @@ package ch.epfl.swissteam.services;
 import com.google.firebase.database.DatabaseReference;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Class representing a user in the database,

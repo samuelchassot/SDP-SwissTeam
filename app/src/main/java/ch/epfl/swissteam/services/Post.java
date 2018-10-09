@@ -1,7 +1,6 @@
 package ch.epfl.swissteam.services;
 
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 /**
  * Class representing a search for service post.

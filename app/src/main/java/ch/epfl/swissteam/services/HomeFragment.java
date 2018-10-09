@@ -3,7 +3,6 @@ package ch.epfl.swissteam.services;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,8 +35,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
      * @return new instance of <code>HomeFragment</code>
      */
     public static HomeFragment newInstance() {
-        HomeFragment fragment = new HomeFragment();
-        return fragment;
+        return new HomeFragment();
     }
 
     @Override
