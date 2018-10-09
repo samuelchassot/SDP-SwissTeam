@@ -34,7 +34,7 @@ public class User implements DBSavable{
      * @param description_ User's description
      * @param categories_ User's categories of services
      */
-    public User(String googleID_, String email_, String name_, String surname_, String description_, ArrayList<String> categories_) {
+    public User(String googleID_, String name_, String surname_, String email_, String description_, ArrayList<String> categories_) {
         this.googleId_ = googleID_;
         this.email_ = email_;
         this.name_ = name_;
@@ -45,10 +45,6 @@ public class User implements DBSavable{
     }
 
     public String getGoogleId_() { return googleId_; }
-
-    public String getEmail_() {
-        return email_;
-    }
 
     public String getName_() {
         return name_;
