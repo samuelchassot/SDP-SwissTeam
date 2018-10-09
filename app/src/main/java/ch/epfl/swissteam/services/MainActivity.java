@@ -131,7 +131,7 @@ public class MainActivity extends AppCompatActivity
      * Sign out the user from the application.
      */
     private void signOut() {
-        SignInActivity.mGoogleSignInClient_.signOut();
+        GoogleSignInSingleton.get().getClient().signOut();
         Intent intent = new Intent(this, SignInActivity.class);
         startActivity(intent);
     }
