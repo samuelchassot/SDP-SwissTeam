@@ -8,6 +8,7 @@ import org.junit.Test;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.intent.Intents.intended;
+import static android.support.test.espresso.intent.Intents.intending;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 

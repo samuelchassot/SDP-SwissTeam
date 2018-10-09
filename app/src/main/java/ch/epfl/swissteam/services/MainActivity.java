@@ -5,6 +5,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
+import android.util.Log;
+import android.view.View;
+import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -12,7 +17,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 /**
  * This class is the MainActivity of the application, this is
@@ -24,7 +31,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private Fragment profileShowerFragment_;
-    private Fragment servicesFragment_, createPostFragment_;
+    private Fragment servicesFragment_, createPostFragment_, homeFragment_;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,15 +62,7 @@ public class MainActivity extends AppCompatActivity
 
         DBUtility util = DBUtility.get();
 
-
-
-
-
-
-
-        //TODO Load home fragment
-        //showHomeFragment();
-
+        showHomeFragment();
     }
 
     @Override
@@ -110,6 +109,9 @@ public class MainActivity extends AppCompatActivity
         switch (id) {
             case (R.id.button_maindrawer_services) :
                 showServicesFragment();
+                break;
+            case (R.id.button_maindrawer_createpost) :
+                showCreatePostFragment();
                 break;
             case (R.id.button_maindrawer_profile) :
                 showProfileShowerFragment();
@@ -164,6 +166,22 @@ public class MainActivity extends AppCompatActivity
         this.startTransactionFragment(this.profileShowerFragment_);
     }
 
+
+    /**
+     * Shows the create post Fragment
+     */
+    private void showCreatePostFragment(){
+        if (this.createPostFragment_ == null) this.createPostFragment_ = CreatePostFragment.newInstance();
+        this.startTransactionFragment(this.createPostFragment_);
+    }
+
+    /**
+     * Shows the home Fragment, with the feed of spontaneous posts
+     */
+    private void showHomeFragment(){
+        if (this.homeFragment_ == null) this.homeFragment_ = HomeFragment.newInstance();
+        this.startTransactionFragment(this.homeFragment_);
+    }
 
     /**
      * Initiate the fragment transaction
