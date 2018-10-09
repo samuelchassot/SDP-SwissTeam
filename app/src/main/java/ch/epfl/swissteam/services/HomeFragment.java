@@ -44,6 +44,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        postsToStringList = new ArrayList<>();
+        adapter = new ArrayAdapter<>(
+                this.getContext(), android.R.layout.simple_list_item_1, postsToStringList);
+
         DBUtility.get().getPostsFeed(new MyCallBack<ArrayList<Post>>() {
             @Override
             public void onCallBack(ArrayList<Post> value) {
@@ -52,9 +56,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
             }
         });
 
-        postsToStringList = new ArrayList<>();
-        adapter = new ArrayAdapter<>(
-                this.getContext(), android.R.layout.simple_list_item_1, postsToStringList);
+
     }
 
     @Override

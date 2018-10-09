@@ -95,7 +95,7 @@ public class DBUtility {
      */
     public void getPostsFeed(final MyCallBack<ArrayList<Post>> callBack){
         Query freshestPosts = db_.child(POSTS).limitToFirst(20);
-        freshestPosts.addValueEventListener(new ValueEventListener() {
+        freshestPosts.addListenerForSingleValueEvent(new ValueEventListener() {
             ArrayList<Post> posts = new ArrayList<>();
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
