@@ -37,7 +37,7 @@ public class DBUtility {
 
     /**
      * Get the DatabaseReference of the DBUtility
-     * @return the DatabaseRefenrence of the DBUtility
+     * @return the DatabaseReference of the DBUtility
      */
     public DatabaseReference getDb_(){
         return db_;
