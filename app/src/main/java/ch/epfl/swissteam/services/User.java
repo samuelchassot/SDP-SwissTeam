@@ -50,6 +50,10 @@ public class User implements DBSavable{
         return name_;
     }
 
+    public String getEmail_() {
+        return email_;
+    }
+
     public String getSurname_() {
         return surname_;
     }
