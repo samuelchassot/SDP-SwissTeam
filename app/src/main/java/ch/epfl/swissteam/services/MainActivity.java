@@ -1,5 +1,6 @@
 package ch.epfl.swissteam.services;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -22,6 +23,7 @@ import android.view.MenuItem;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    private Fragment profileShowerFragment_;
     private Fragment servicesFragment_, createPostFragment_;
 
     @Override
@@ -51,9 +53,16 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        DBUtility util = DBUtility.get();
+
+
+
+
+
+
+
         //TODO Load home fragment
         //showHomeFragment();
-
 
     }
 
@@ -102,12 +111,16 @@ public class MainActivity extends AppCompatActivity
             case (R.id.button_maindrawer_services) :
                 showServicesFragment();
                 break;
+            case (R.id.button_maindrawer_profile) :
+                showProfileShowerFragment();
+                break;
             case (R.id.button_maindrawer_createpost) :
                 showCreatePostFragment();
                 break;
             case (R.id.button_maindrawer_logout) :
                 signOut();
                 break;
+
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -119,7 +132,7 @@ public class MainActivity extends AppCompatActivity
      * Sign out the user from the application.
      */
     private void signOut() {
-        SignInActivity.mGoogleSignInClient_.signOut();
+        GoogleSignInSingleton.get().getClient().signOut();
         Intent intent = new Intent(this, SignInActivity.class);
         startActivity(intent);
     }
@@ -139,6 +152,18 @@ public class MainActivity extends AppCompatActivity
         if (this.createPostFragment_ == null) this.createPostFragment_ = CreatePostFragment.newInstance();
         this.startTransactionFragment(this.createPostFragment_);
     }
+
+    /**
+     * Shows the profile shower fragment
+     */
+    private void showProfileShowerFragment(){
+        if(this.profileShowerFragment_ == null){
+            this.profileShowerFragment_ = ProfileDisplayFragment.newInstance();
+        }
+
+        this.startTransactionFragment(this.profileShowerFragment_);
+    }
+
 
     /**
      * Initiate the fragment transaction
