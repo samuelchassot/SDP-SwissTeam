@@ -14,7 +14,8 @@ public class User implements DBSavable{
 
 
 
-    private String username_, name_, surname_, description_;
+    private String googleId_, email_, name_, surname_, description_;
+
     private ArrayList<String> categories_;
 
     /**
@@ -26,24 +27,27 @@ public class User implements DBSavable{
 
     /**
      * Create a new user given its specificities
-     * @param username_ User's unique username
+     * @param googleID_ User's unique googleId
      * @param name_ User's name
      * @param surname_ User's surname
      * @param description_ User's description
      * @param categories_ User's categories of services
      */
-    public User(String username_, String name_, String surname_, String description_, ArrayList<String> categories_) {
-        this.username_ = username_;
+    public User(String googleID_, String email_, String name_, String surname_, String description_, ArrayList<String> categories_) {
+        this.googleId_ = googleID_;
+        this.email_ = email_;
         this.name_ = name_;
         this.surname_ = surname_;
         this.description_ = description_;
         this.categories_ = (ArrayList<String>) categories_.clone();
     }
 
+    public String getGoogleId_() { return googleId_; }
 
-    public String getUsername_() {
-        return username_;
+    public String getEmail_() {
+        return email_;
     }
+
     public String getName_() {
         return name_;
     }
@@ -65,9 +69,9 @@ public class User implements DBSavable{
      * @param db the database in which to add the user
      */
     public void addToDB(DatabaseReference db){
-        db.child("Users").child(username_).setValue(this);
+        db.child("Users").child(googleId_).setValue(this);
         for (String category : categories_){
-            db.child("Categories").child(category).child(username_).setValue("true");
+            db.child("Categories").child(category).child(googleId_).setValue("true");
         }
     }
 
