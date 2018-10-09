@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Socialize</string>
+
+    /* ----- GENERAL string ----- */
+    <string name="all_next">Suivant</string>
+    <string name="done_text">Terminer</string>
+    <string name="all_send">Envoyer</string>
+
+    /* ----- Profile string ----- */
+    <string name="newprofile_title">Mise en place du profil</string>
+    <string name="newprofile_name">Nom:</string>
+    <string name="newprofile_description">Description:</string>
+    <string name="newprofile_descriptionhint">Ecrivez une courte description de vous-même…</string>
+    <string name="newprofile_picture">Photo:</string>
+    <string name="newprofile_changepicture">Modifier</string>
+
+    /* ----- SignIn string ----- */
+    <string name="signin_welcomemessage">Bienvenue sur Socialize!</string>
+
+    /* ----- Navigation string ----- */
+    <string name="title_activity_main">Accueil</string>
+
+    <string name="navigation_drawer_open">Ouvrir le menu de navigation</string>
+    <string name="navigation_drawer_close">Fermer le menu de navigation</string>
+
+    <string name="nav_header_title">Samuel Chassot</string>
+    <string name="nav_header_subtitle">samuel.chassot@epfl.ch</string>
+    <string name="nav_header_desc">Navigation header</string>
+
+    <string name="navigation_drawer_button_services">Services</string>
+    <string name="navigation_drawer_newpost">Nouveau post</string>
+    <string name="navigation_drawer_section_settings">Paramètres</string>
+    <string name="navigation_drawer_button_logout">Déconnexion</string>
+
+    /* ----- Post string ----- */
+    <string name="createpostfragment_entertitle">Entrez un titre ici</string>
+    <string name="createpostfragment_enterbody">Entrez le contenu ici</string>
+    <string name="createpostfragment_titleempty">Vous devez entrer un titre!</string>
+    <string name="createpostfragment_bodyempty">Vous devez entrez un contenu!</string>
+
+    <string name="new_service">Nouveau service</string>
+    <string name="enter_key_word">Entrez des mots-clés</string>
+
+    /* ----- Settings string ----- */
+    <string name="language_prompt">Choississez une langue</string>
+
+    <string-array name="language_arrays">
+        <item>Anglais</item>
+        <item>Français</item>
+    </string-array>
+</resources>
