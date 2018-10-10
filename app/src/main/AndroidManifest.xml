@@ -27,7 +27,7 @@
         <activity
             android:name=".ChatRoom"
             android:label="@string/title_activity_chat_room"/>
-
+        <activity android:name=".ProfileSettings"></activity>
     </application>
 
 </manifest>

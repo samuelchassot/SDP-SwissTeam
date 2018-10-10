@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    android:id="@+id/fragment_news_rootview"
+<FrameLayout android:id="@+id/fragment_news_rootview"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center">
+    android:gravity="center"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <TextView
         android:id="@+id/fragment_page_news_title"
@@ -19,11 +18,11 @@
         android:textSize="30sp"
         android:textStyle="bold" />
 
-    <!--<android.support.v7.widget.RecyclerView
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/services_recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="100dip"
+        android:layout_marginTop="150dip"
         tools:listitem="@layout/recycler_view_item" />
-        -->
 
 </FrameLayout>
