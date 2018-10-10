@@ -1,6 +1,5 @@
 package ch.epfl.swissteam.services;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -13,7 +12,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-
 /**
  * This class is the MainActivity of the application, this is
  * the home activity that displays the feed of local demands
@@ -24,7 +22,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private Fragment profileShowerFragment_;
-    private Fragment servicesFragment_, createPostFragment_;
+    private Fragment servicesFragment_, createPostFragment_, homeFragment_;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,15 +53,7 @@ public class MainActivity extends AppCompatActivity
 
         DBUtility util = DBUtility.get();
 
-
-
-
-
-
-
-        //TODO Load home fragment
-        //showHomeFragment();
-
+        showHomeFragment();
     }
 
     @Override
@@ -164,6 +154,14 @@ public class MainActivity extends AppCompatActivity
         this.startTransactionFragment(this.profileShowerFragment_);
     }
 
+
+    /**
+     * Shows the home Fragment, with the feed of spontaneous posts
+     */
+    private void showHomeFragment(){
+        if (this.homeFragment_ == null) this.homeFragment_ = HomeFragment.newInstance();
+        this.startTransactionFragment(this.homeFragment_);
+    }
 
     /**
      * Initiate the fragment transaction

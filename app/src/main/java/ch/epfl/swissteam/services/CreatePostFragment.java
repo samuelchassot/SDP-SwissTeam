@@ -1,7 +1,7 @@
 package ch.epfl.swissteam.services;
 
-import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Date;
 
@@ -63,7 +65,7 @@ public class CreatePostFragment extends Fragment implements View.OnClickListener
             //TODO: replace username by actual username once the local db works.
             Post post = new Post(title, "username", body, (new Date()).getTime());
 
-            post.storeInDatabase();
+            post.addToDB(FirebaseDatabase.getInstance().getReference());
 
             getActivity().finish();
         }
