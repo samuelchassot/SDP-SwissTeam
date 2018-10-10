@@ -16,6 +16,8 @@ public class DBUtility {
 
     private DatabaseReference db_;
     private static DBUtility instance;
+
+
     private final String USERS = "Users";
     private final String CATEGORIES = "Categories";
     private final String POSTS = "Posts";
@@ -24,6 +26,19 @@ public class DBUtility {
 
     private DBUtility(DatabaseReference db_){
         this.db_ = db_;
+    }
+
+
+    public String getUSERS() {
+        return USERS;
+    }
+
+    public String getCATEGORIES() {
+        return CATEGORIES;
+    }
+
+    public String getPOSTS() {
+        return POSTS;
     }
 
     /**
@@ -141,5 +156,22 @@ public class DBUtility {
     public void setUser(User user){
         db_.child(USERS).child(user.getGoogleId_()).setValue(user);
 
+    }
+
+    public void getCategory(String category, final MyCallBack<Void> callBack){
+        db_.child(CATEGORIES).child(category).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot data : dataSnapshot.getChildren()){
+                    Categories.fromString(category).addUser(data.getKey());
+                }
+                callBack.onCallBack(null);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 }
