@@ -26,6 +26,7 @@ import org.w3c.dom.Text;
 public class ProfileDisplayFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
+    private String clientUniqueID_;
 
     public ProfileDisplayFragment() {
         // Required empty public constructor
@@ -64,9 +65,9 @@ public class ProfileDisplayFragment extends Fragment {
             }
         });
 
-        String clientUniqueID = GoogleSignInSingleton.get().getClientUniqueID();
+        clientUniqueID_ = GoogleSignInSingleton.get().getClientUniqueID();
         
-        loadAndShowUser(clientUniqueID);
+        loadAndShowUser(clientUniqueID_);
 
 
         // Inflate the layout for this fragment
@@ -91,7 +92,11 @@ public class ProfileDisplayFragment extends Fragment {
         });
     }
 
-
+    @Override
+    public void onResume() {
+        super.onResume();
+        loadAndShowUser(clientUniqueID_);
+    }
 
     /**
      * This interface must be implemented by activities that contain this
