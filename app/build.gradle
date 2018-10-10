@@ -7,7 +7,7 @@ jacoco {
 
 android {
     compileSdkVersion 28
-    buildToolsVersion "27.0.3"
+    buildToolsVersion '28.0.2'
     defaultConfig {
         applicationId "ch.epfl.swissteam.services"
         minSdkVersion 16
@@ -34,6 +34,7 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.android.support:appcompat-v7:28.0.0'
+    implementation 'com.android.support:palette-v7:28.0.0'
     implementation 'com.android.support:customtabs:28.0.0'
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
     implementation 'com.android.support:recyclerview-v7:28.0.0'
@@ -46,6 +47,9 @@ dependencies {
     implementation 'com.firebaseui:firebase-ui-auth:4.1.0'
     implementation 'com.google.firebase:firebase-core:16.0.4'
     implementation 'com.google.firebase:firebase-database:16.0.3'
+    implementation 'com.android.support:design:28.0.0'
+    implementation 'com.firebase:firebase-client-android:2.3.1'
+    implementation 'com.firebaseui:firebase-ui:0.6.0'
     testImplementation 'junit:junit:4.12'
     testImplementation "org.mockito:mockito-core:2.22.0"
     androidTestImplementation 'com.android.support.test.espresso:espresso-contrib:3.0.2'
@@ -55,9 +59,6 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     androidTestImplementation 'com.android.support.test:rules:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-intents:3.0.2'
-    compile 'com.android.support:design:28.0.0'
-    compile 'com.firebase:firebase-client-android:2.3.1'
-    compile 'com.firebaseui:firebase-ui:0.6.0'
 }
 
 tasks.withType(Test) {
