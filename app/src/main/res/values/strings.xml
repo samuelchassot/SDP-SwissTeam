@@ -16,7 +16,8 @@
     <string name="homefragment_asktorefresh">Refresh for the latest posts!</string>
     <string name="homefragment_noposts">No posts for now …</string>
 
-    <string name="title_activity_main">Main board</string>
+    <string name="title_activity_main">Socialize!
+    </string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -52,4 +53,5 @@
     <string name="profilesettings_save">Save</string>
     <string name="profiledisplay_descriptiontag">Description</string>
     <string name="profiledisplay_modify">Modify</string>
+    <string name="fragment_services_title">Users that can help you</string>
 </resources>
