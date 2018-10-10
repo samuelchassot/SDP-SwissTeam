@@ -28,7 +28,7 @@ public class ChatRoom extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_room);
-        dataBase_ = FirebaseDatabase.getInstance().getReference();
+        dataBase_ = DBUtility.get().getDb_();
 
         displayMessages();
     }
@@ -65,7 +65,7 @@ public class ChatRoom extends Activity {
         String message = textInput.getText().toString();
         //TODO set user
         ChatMessage chatMessage = new ChatMessage(message, "pablo", "pabinou");
-        dataBase_.child("chatTest").push().setValue(chatMessage);
+        chatMessage.addToDB(dataBase_);
 
         textInput.getText().clear();
     }

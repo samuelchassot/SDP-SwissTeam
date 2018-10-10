@@ -1,5 +1,7 @@
 package ch.epfl.swissteam.services;
 
+import com.google.firebase.database.DatabaseReference;
+
 import java.util.Date;
 
 /**
@@ -7,7 +9,7 @@ import java.util.Date;
  *
  * @author Sébastien Gachoud
  */
-public class ChatMessage {
+public class ChatMessage implements DBSavable{
 
 
     /**
@@ -55,9 +57,14 @@ public class ChatMessage {
         userId_ = userId;
     }
 
+
     private String user_;
     private String userId_;
     private String text_;
     private long time_;
 
+    @Override
+    public void addToDB(DatabaseReference databaseReference) {
+        databaseReference.child("chatTest").push().setValue(this);
+    }
 }

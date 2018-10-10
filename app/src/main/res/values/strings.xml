@@ -35,7 +35,7 @@
     <string name="title_activity_online_chat">OnlineChatActivity</string>
     <string name="title_activity_chat_room">ChatRoom</string>
     <string name="send_text">send</string>
-    <string name="message_hint">Write your message here</string>
+    <string name="chat_room_message_hint">Write your message here</string>
 
     <string name="navigation_drawer_button_profile">Profile</string>"
 
