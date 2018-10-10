@@ -5,6 +5,7 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,14 +30,24 @@ public class SettingsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    }
 
-        language_ = (Spinner) getView().findViewById(R.id.language_spinner);
-        adapter_ = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_spinner_dropdown_item, getResources().getStringArray(R.array.language_arrays));
+    //@Override
+    //protected void attachBaseContext(Context newBase) {
+      //  super.attachBaseContext(LanguageHelper.onAttach(newBase));
+    //}
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_settings, container, false);
+        language_ = (Spinner) view.findViewById(R.id.language_spinner);
+        adapter_ = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_dropdown_item, getResources().getStringArray(R.array.language_arrays));
         language_.setAdapter(adapter_);
 
-        if (LanguageHelper.getLanguage(MainActivity.this).equalsIgnoreCase("en")) {
+        if (LanguageHelper.getLanguage(getActivity()).equalsIgnoreCase("en")) {
             language_.setSelection(adapter_.getPosition("English"));
-        } else if (LanguageHelper.getLanguage(MainActivity.this).equalsIgnoreCase("fr")) {
+        } else if (LanguageHelper.getLanguage(getActivity()).equalsIgnoreCase("fr")) {
             language_.setSelection(adapter_.getPosition("French"));
         }
 
@@ -46,13 +57,13 @@ public class SettingsFragment extends Fragment {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 switch (i) {
                     case 0:
-                        LanguageHelper.setLocale(MainActivity.this, "en");
+                        LanguageHelper.setLocale(getActivity(), "en");
                         break;
                     case 1:
-                        LanguageHelper.setLocale(MainActivity.this, "fr");
+                        LanguageHelper.setLocale(getActivity(), "fr");
+                        Log.e("LANGUAGE", "French selected");
                         break;
                 }
-                startActivity(MainActivity.this, MainActivity.class);
             }
 
             @Override
@@ -60,17 +71,6 @@ public class SettingsFragment extends Fragment {
 
             }
         });
-    }
-
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(LanguageHelper.onAttach(newBase));
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_settings, container, false);
+        return view;
     }
 }
