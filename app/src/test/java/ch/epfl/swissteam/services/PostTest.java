@@ -13,7 +13,7 @@ public class PostTest {
     public void creationWorks() {
         Post p = new Post(title, username, body, timestamp);
         assertEquals(p.getTitle_(), title);
-        assertEquals(p.getUsername(), username);
+        assertEquals(p.getUsername_(), username);
         assertEquals(p.getBody_(), body);
         assertEquals(p.getTimestamp_(), timestamp);
     }
