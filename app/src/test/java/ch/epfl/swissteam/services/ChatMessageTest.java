@@ -1,5 +1,7 @@
 package ch.epfl.swissteam.services;
 
+import org.junit.Test;
+
 import static org.junit.Assert.assertEquals;
 
 /**
@@ -7,6 +9,7 @@ import static org.junit.Assert.assertEquals;
  *
  */
 public class ChatMessageTest {
+    @Test
     public void objectCreationYieldExpectedValueOnGets() {
         String text = "We are the champions!";
         String user = "Jean Calvin";
@@ -17,6 +20,7 @@ public class ChatMessageTest {
         assertEquals(message.getUserId_(), userId);
     }
 
+    @Test
     public void setValueGivesBackSameWhenGet() {
         String text = "We are the champions!";
         String user = "Jean Calvin";
