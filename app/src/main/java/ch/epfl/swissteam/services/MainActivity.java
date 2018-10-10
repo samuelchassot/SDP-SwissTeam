@@ -101,9 +101,6 @@ public class MainActivity extends AppCompatActivity
             case (R.id.button_maindrawer_services) :
                 showServicesFragment();
                 break;
-            case (R.id.button_maindrawer_createpost) :
-                showCreatePostFragment();
-                break;
             case (R.id.button_maindrawer_profile) :
                 showProfileShowerFragment();
                 break;
@@ -157,14 +154,6 @@ public class MainActivity extends AppCompatActivity
         this.startTransactionFragment(this.profileShowerFragment_);
     }
 
-
-    /**
-     * Shows the create post Fragment
-     */
-    private void showCreatePostFragment(){
-        if (this.createPostFragment_ == null) this.createPostFragment_ = CreatePostFragment.newInstance();
-        this.startTransactionFragment(this.createPostFragment_);
-    }
 
     /**
      * Shows the home Fragment, with the feed of spontaneous posts
