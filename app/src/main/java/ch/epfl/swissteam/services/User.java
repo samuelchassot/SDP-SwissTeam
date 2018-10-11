@@ -40,7 +40,7 @@ public class User implements DBSavable{
         this.surname_ = surname_;
         this.email_ = email_;
         this.description_ = description_;
-        this.categories_ = (ArrayList<String>) categories_.clone();
+        this.categories_ = categories_ == null ? null : (ArrayList<String>) categories_.clone();
     }
 
     public String getGoogleId_() { return googleId_; }
@@ -62,7 +62,7 @@ public class User implements DBSavable{
     }
 
     public ArrayList<String> getCategories_() {
-        return (ArrayList<String>) categories_.clone();
+        return categories_ == null? null : (ArrayList<String>) categories_.clone();
     }
 
     /**

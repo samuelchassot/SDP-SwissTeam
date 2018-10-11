@@ -47,7 +47,7 @@ public class Post implements DBSavable{
         return title_;
     }
 
-    public String getUsername() {
+    public String getUsername_() {
         return username_;
     }
 

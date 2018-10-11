@@ -35,6 +35,9 @@ public class GoogleSignInSingleton {
     }
 
     public static GoogleSignInSingleton get(){
+        if(instance_ == null){
+            instance_ = new GoogleSignInSingleton();
+        }
         return instance_;
     }
 
