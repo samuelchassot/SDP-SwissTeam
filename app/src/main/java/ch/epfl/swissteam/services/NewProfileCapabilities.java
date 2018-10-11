@@ -99,8 +99,7 @@ class CapabilitySelection extends TableLayout
     private void generateSubcat(int pos){
         //creating the spinner
 
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(NPC_,
-                subcatArray_.getResourceId(pos,R.array.empty_array), android.R.layout.simple_spinner_item);
+        ArrayAdapter<Categories> adapter = new ArrayAdapter<Categories>(getContext(), android.R.layout.simple_spinner_item, Categories.values());
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         subcatSpinner_.setAdapter(adapter);
         keyWordField_.setHint(R.string.enter_key_word);
