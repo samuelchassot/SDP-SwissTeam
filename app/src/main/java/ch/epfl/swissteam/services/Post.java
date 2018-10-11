@@ -23,16 +23,16 @@ public class Post implements DBSavable{
     /**
      * Construct a post for searching services.
      *
-     * @param title_ the title of the post
-     * @param username_ the username of the person who post the post
-     * @param body_ the body of the post
-     * @param timestamp_ the timestamp at which the post was submitted
+     * @param title the title of the post
+     * @param username the username of the person who post the post
+     * @param body the body of the post
+     * @param timestamp the timestamp at which the post was submitted
      */
-    public Post(String title_, String username_, String body_, long timestamp_) {
-        this.title_ = title_;
-        this.username_ = username_;
-        this.body_ = body_;
-        this.timestamp_ = timestamp_;
+    public Post(String title, String username, String body, long timestamp) {
+        this.title_ = title;
+        this.username_ = username;
+        this.body_ = body;
+        this.timestamp_ = timestamp;
     }
 
     /**
