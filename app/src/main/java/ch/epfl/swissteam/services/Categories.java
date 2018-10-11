@@ -84,9 +84,9 @@ public enum Categories implements DBSavable {
     @Override
     public void addToDB(DatabaseReference db) {
         if (this != ALL) {
-            db.child(DBUtility.get().getCATEGORIES()).removeValue();
+            db.child(DBUtility.get().CATEGORIES).removeValue();
             for (String googleId : users_) {
-                db.child(DBUtility.get().getCATEGORIES()).child(this.toString()).child(googleId).setValue("true");
+                db.child(DBUtility.get().CATEGORIES).child(this.toString()).child(googleId).setValue("true");
             }
         } else {
             Log.e("Category", "Cannot save category 'all' to database");
