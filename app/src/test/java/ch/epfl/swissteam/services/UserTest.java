@@ -6,6 +6,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class UserTest {
 
@@ -21,11 +22,22 @@ public class UserTest {
     @Test
     public void testUserWorks() {
         User user = new User(googleID, name, surname,email, description, categories);
-        assertEquals(user.getGoogleId_(), googleID);
-        assertEquals(user.getEmail_(), email);
-        assertEquals(user.getName_(), name);
-        assertEquals(user.getSurname_(), surname);
-        assertEquals(user.getDescription_(), description);
-        assertEquals(user.getCategories_(), categories);
+        assertEquals(googleID, user.getGoogleId_());
+        assertEquals(email, user.getEmail_());
+        assertEquals(name, user.getName_());
+        assertEquals(surname, user.getSurname_());
+        assertEquals(description, user.getDescription_());
+        assertEquals(categories, user.getCategories_());
+    }
+
+    @Test
+    public void setAndGetChatRelationWorks() {
+        User user = new User(googleID, name, surname,email, description, categories);
+        String id = "aksdjh287364ksdjbf";
+        ChatRelation cR = new ChatRelation(name, surname);
+        cR.setId_(id);
+        user.addChatRelation(cR);
+        assertEquals(1, user.getChatRelationIds_().size());
+        assertEquals(id, user.getChatRelationIds_().get(0));
     }
 }

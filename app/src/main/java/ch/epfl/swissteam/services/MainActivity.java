@@ -110,7 +110,9 @@ public class MainActivity extends AppCompatActivity
             case (R.id.button_maindrawer_logout) :
                 signOut();
                 break;
-
+            case (R.id.button_maindrawer_chats) :
+                showChatsFragment();
+                break;
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -161,6 +163,14 @@ public class MainActivity extends AppCompatActivity
     private void showHomeFragment(){
         if (this.homeFragment_ == null) this.homeFragment_ = HomeFragment.newInstance();
         this.startTransactionFragment(this.homeFragment_);
+    }
+
+
+    private void showChatsFragment(){
+        //TODO
+        Intent mainIntent = new Intent(this, ChatRoom.class);
+        startActivity(mainIntent);
+        /**********************************/
     }
 
     /**

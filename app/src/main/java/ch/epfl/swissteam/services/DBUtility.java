@@ -24,8 +24,8 @@ public class DBUtility {
     private final String ERROR_TAG = "DBUtility";
     private final int POSTS_DISPLAY_NUMBER = 20;
 
-    private DBUtility(DatabaseReference db_){
-        this.db_ = db_;
+    private DBUtility(DatabaseReference db){
+        this.db_ = db;
     }
 
 
