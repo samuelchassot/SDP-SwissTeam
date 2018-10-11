@@ -40,7 +40,7 @@ public class Post implements DBSavable{
      * @param databaseReference
      */
     public void addToDB(DatabaseReference databaseReference) {
-        databaseReference.child("Posts").push().setValue(this);
+        databaseReference.child(DBUtility.POSTS).push().setValue(this);
     }
 
     public String getTitle_() {

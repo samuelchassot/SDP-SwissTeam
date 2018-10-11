@@ -44,7 +44,7 @@ public class ProfileSettings extends AppCompatActivity {
         String surname =((TextView) findViewById(R.id.edittext_profilesettings_surname)).getText().toString();
         String email = ((TextView) findViewById(R.id.edittext_profilesettings_email)).getText().toString();
         String descr = ((TextView) findViewById(R.id.edittext_profilesettings_description)).getText().toString();
-        User updatedUser = new User(uniqueID, name, surname, email, descr, currentCategories);
+        User updatedUser = new User(uniqueID, name, email, descr, currentCategories);
 
         DBUtility.get().setUser(updatedUser);
         finish();
@@ -54,9 +54,6 @@ public class ProfileSettings extends AppCompatActivity {
         DBUtility.get().getUser(clientUniqueID, (user)->{
             TextView nameView = (TextView) findViewById(R.id.edittext_profilesettings_name);
             nameView.setText(user.getName_());
-
-            TextView surnameView =  (TextView) findViewById(R.id.edittext_profilesettings_surname);
-            surnameView.setText(user.getSurname_());
 
             TextView emailView =  (TextView) findViewById(R.id.edittext_profilesettings_email);
             emailView.setText(user.getEmail_());

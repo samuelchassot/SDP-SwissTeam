@@ -64,9 +64,11 @@ public class User implements DBSavable{
      * @param db the database in which to add the user
      */
     public void addToDB(DatabaseReference db){
-        db.child("Users").child(googleId_).setValue(this);
-        for (String category : categories_){
-            db.child("Categories").child(category).child(googleId_).setValue("true");
+        db.child(DBUtility.USERS).child(googleId_).setValue(this);
+        if(categories_ != null) {
+            for (String category : categories_) {
+                db.child(DBUtility.CATEGORIES).child(category).child(googleId_).setValue("true");
+            }
         }
     }
 
