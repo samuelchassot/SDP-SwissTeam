@@ -36,7 +36,6 @@ public class User implements DBSavable{
         this.googleId_ = googleID_;
         this.email_ = email_;
         this.name_ = name_;
-        this.email_ = email_;
         this.description_ = description_;
         this.categories_ = categories_ == null ? null : (ArrayList<String>) categories_.clone();
     }

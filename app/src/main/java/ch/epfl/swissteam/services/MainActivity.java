@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 /**
  * This class is the MainActivity of the application, this is
@@ -50,8 +51,16 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
         DBUtility util = DBUtility.get();
+
+        GoogleSignInSingleton.get().getClientUniqueID();
+        util.getUser(GoogleSignInSingleton.get().getClientUniqueID(), user -> {
+            ((TextView) findViewById(R.id.nav_header_name)).setText(user.getName_());
+            ((TextView) findViewById(R.id.nav_header_email)).setText(user.getEmail_());
+
+        });
+
+
 
         showHomeFragment();
     }
