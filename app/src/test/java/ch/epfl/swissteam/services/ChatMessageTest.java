@@ -15,9 +15,9 @@ public class ChatMessageTest {
         String user = "Jean Calvin";
         String userId = "Calvinet";
         ChatMessage message = new ChatMessage(text, user, userId);
-        assertEquals(message.getText_(), text);
-        assertEquals(message.getUser_(), user);
-        assertEquals(message.getUserId_(), userId);
+        assertEquals(text, message.getText_());
+        assertEquals(user, message.getUser_());
+        assertEquals(userId, message.getUserId_());
     }
 
     @Test
@@ -31,10 +31,10 @@ public class ChatMessageTest {
         message.setUser_(user);
         message.setUserId_(userId);
         message.setTime_(time);
-        assertEquals(message.getText_(), text);
-        assertEquals(message.getUser_(), user);
-        assertEquals(message.getUserId_(), userId);
-        assertEquals(message.getTime_(), time);
+        assertEquals(text, message.getText_());
+        assertEquals(user, message.getUser_());
+        assertEquals(userId, message.getUserId_());
+        assertEquals(time, message.getTime_());
     }
 
 }

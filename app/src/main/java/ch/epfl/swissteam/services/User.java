@@ -15,7 +15,7 @@ public class User implements DBSavable{
 
     private String googleId_, email_, name_, surname_, description_;
 
-    private ArrayList<String> categories_;
+    private ArrayList<String> categories_, chatRelationIds_;
 
     /**
      * Default constructor, needed for database
@@ -65,6 +65,10 @@ public class User implements DBSavable{
         return categories_ == null? null : (ArrayList<String>) categories_.clone();
     }
 
+    public ArrayList<String> getChatRelationIds_() {
+        return chatRelationIds_ == null ? null : (ArrayList<String>) chatRelationIds_.clone();
+    }
+
     /**
      * Add the user to a database
      * @param db the database in which to add the user
@@ -74,6 +78,29 @@ public class User implements DBSavable{
         for (String category : categories_){
             db.child("Categories").child(category).child(googleId_).setValue("true");
         }
+    }
+
+    /**
+     * Add a chatRelation to the list of chatRelationId of the user and save it into the database
+     * db
+     * @param chatRelation the id of the chatRelation
+     * @param db reference to the database to update the user
+     */
+    public void addChatRelation(ChatRelation chatRelation, DatabaseReference db){
+        if(chatRelationIds_ == null) {chatRelationIds_ = new ArrayList<>();}
+        chatRelationIds_.add(chatRelation.getId_());
+        if(db != null){
+            addToDB(db);
+        }
+    }
+
+    /**
+     * Add a chatRelationId to the list of chatRelationId of the user
+     * db
+     * @param chatRelation the id of the chatRelation
+     */
+    public void addChatRelation(ChatRelation chatRelation){
+        addChatRelation(chatRelation, null);
     }
 
 

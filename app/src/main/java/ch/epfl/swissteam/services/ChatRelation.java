@@ -17,11 +17,20 @@ public class ChatRelation implements DBSavable {
         return userIds_ == null ? null : (ArrayList<String>) userIds_.clone();
     }
 
+    public String getId_() {
+        return id_;
+    }
+
     public void setUserIds_(ArrayList<String> users) {
         userIds_ = users == null ? null : (ArrayList<String>) users.clone();
     }
 
+    public void setId_(String id) {
+        this.id_ = id;
+    }
+
     private ArrayList<String> userIds_;
+    private String id_;
 
     @Override
     public void addToDB(DatabaseReference databaseReference) {
