@@ -1,13 +1,11 @@
 <resources>
     <string name="app_name" translatable="false">Socialize</string>
-    <string name="title_activity_main">Socialize!</string>
-
 
     /* ----- GENERAL string ----- */
     <string name="all_next">Next</string>
     <string name="done_text">Done</string>
     <string name="all_send">Send</string>
-    <string name="LoremIpsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</string>
+    <string name="LoremIpsum" translatable="false">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</string>
 
     /* ----- Profile string ----- */
     <string name="newprofile_title">Profile setup</string>
@@ -29,7 +27,7 @@
 
 
     /* ----- Navigation string ----- */
-    <string name="title_activity_main">Main board</string>
+    <string name="title_activity_main">Socialize!</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -38,6 +36,7 @@
     <string name="nav_header_subtitle">samuel.chassot@epfl.ch</string>
     <string name="nav_header_desc">Navigation header</string>
 
+    <string name="navigation_drawer_button_profile">Profile</string>
     <string name="navigation_drawer_button_services">Services</string>
     <string name="navigation_drawer_newpost">New post</string>
     <string name="navigation_drawer_section_settings">Settings</string>
