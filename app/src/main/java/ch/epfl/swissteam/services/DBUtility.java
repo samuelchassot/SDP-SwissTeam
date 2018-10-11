@@ -82,6 +82,11 @@ public class DBUtility {
      * @param callBack the CallBack to use
      */
     public void getUser(String googleId, final MyCallBack<User> callBack) {
+        if (googleId == null){
+            User nullUser = new User(null, null, null, null, null);
+            callBack.onCallBack(nullUser);
+            return;
+        }
         db_.child(USERS).child(googleId).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
