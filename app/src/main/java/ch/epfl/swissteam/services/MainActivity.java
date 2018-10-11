@@ -12,7 +12,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-
 /**
  * This class is the MainActivity of the application, this is
  * the home activity that displays the feed of local demands
@@ -22,7 +21,8 @@ import android.view.MenuItem;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private Fragment servicesFragment, createPostFragment, settingsFragment_;
+    private Fragment profileShowerFragment_;
+    private Fragment homeFragment_, servicesFragment_, createPostFragment_, settingsFragment_;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,10 +51,9 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        //TODO Load home fragment
-        //showHomeFragment();
+        DBUtility util = DBUtility.get();
 
-
+        showHomeFragment();
     }
 
     @Override
@@ -102,6 +101,9 @@ public class MainActivity extends AppCompatActivity
             case (R.id.button_maindrawer_services) :
                 showServicesFragment();
                 break;
+            case (R.id.button_maindrawer_profile) :
+                showProfileShowerFragment();
+                break;
             case (R.id.button_maindrawer_createpost) :
                 showCreatePostFragment();
                 break;
@@ -111,6 +113,7 @@ public class MainActivity extends AppCompatActivity
             case (R.id.button_maindrawer_logout) :
                 signOut();
                 break;
+
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -122,7 +125,7 @@ public class MainActivity extends AppCompatActivity
      * Sign out the user from the application.
      */
     private void signOut() {
-        SignInActivity.mGoogleSignInClient_.signOut();
+        GoogleSignInSingleton.get().getClient().signOut();
         Intent intent = new Intent(this, SignInActivity.class);
         startActivity(intent);
     }
@@ -131,16 +134,36 @@ public class MainActivity extends AppCompatActivity
      * Shows the services Fragment
      */
     private void showServicesFragment(){
-        if (this.servicesFragment == null) this.servicesFragment = ServicesFragment.newInstance();
-        this.startTransactionFragment(this.servicesFragment);
+        if (this.servicesFragment_ == null) this.servicesFragment_ = ServicesFragment.newInstance();
+        this.startTransactionFragment(this.servicesFragment_);
     }
 
     /**
      * Shows the create post Fragment
      */
     private void showCreatePostFragment(){
-        if (this.createPostFragment == null) this.createPostFragment = CreatePostFragment.newInstance();
-        this.startTransactionFragment(this.createPostFragment);
+        if (this.createPostFragment_ == null) this.createPostFragment_ = CreatePostFragment.newInstance();
+        this.startTransactionFragment(this.createPostFragment_);
+    }
+
+    /**
+     * Shows the profile shower fragment
+     */
+    private void showProfileShowerFragment(){
+        if(this.profileShowerFragment_ == null){
+            this.profileShowerFragment_ = ProfileDisplayFragment.newInstance();
+        }
+
+        this.startTransactionFragment(this.profileShowerFragment_);
+    }
+
+
+    /**
+     * Shows the home Fragment, with the feed of spontaneous posts
+     */
+    private void showHomeFragment(){
+        if (this.homeFragment_ == null) this.homeFragment_ = HomeFragment.newInstance();
+        this.startTransactionFragment(this.homeFragment_);
     }
 
     /**
@@ -153,6 +176,7 @@ public class MainActivity extends AppCompatActivity
 
     /**
      * Initiate the fragment transaction
+     *
      * @param fragment the fragment to show
      */
     private void startTransactionFragment(Fragment fragment){

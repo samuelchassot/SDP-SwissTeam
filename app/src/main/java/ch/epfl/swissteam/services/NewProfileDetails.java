@@ -42,7 +42,7 @@ public class NewProfileDetails extends AppCompatActivity {
 
     /**
      * If the given Google account has a photo set, this will use Picasso to load it into the
-     * <code>ImageView</code> for the picture.
+     * {@link ImageView} for the picture.
      *
      * @param account Google account to use
      */
@@ -53,7 +53,7 @@ public class NewProfileDetails extends AppCompatActivity {
     }
 
     /**
-     * Tries to find the name used by the Google account and sets it to the name <code>PlainText</code>.
+     * Tries to find the name used by the Google account and sets it to the name {@link EditText}.
      * This will prioritize the display name of the account, and if non-existent will create a name
      * with the form "FirstName LastName". This will do nothing if both names don't exist.
      *
@@ -69,7 +69,7 @@ public class NewProfileDetails extends AppCompatActivity {
     }
 
     /**
-     * Sets the text in the name <code>TextView</code>.
+     * Sets the text in the name {@link EditText}.
      *
      * @param name new name
      */
@@ -78,7 +78,7 @@ public class NewProfileDetails extends AppCompatActivity {
     }
 
     /**
-     * Sets the picture in the <code>ImageView</code>
+     * Sets the picture in the {@link ImageView}.
      *
      * @param img new image bitmap
      */
