@@ -11,6 +11,8 @@ public class ChatRelation implements DBSavable {
         userIds_ = userIds == null ? null : new ArrayList<> (Arrays.asList(userIds));
     }
 
+    public ChatRelation(){}
+
     public ArrayList<String> getUserIds_() {
         return userIds_ == null ? null : (ArrayList<String>) userIds_.clone();
     }
