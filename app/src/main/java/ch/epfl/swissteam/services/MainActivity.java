@@ -158,7 +158,7 @@ public class MainActivity extends AppCompatActivity
     /**
      * Shows the home Fragment, with the feed of spontaneous posts
      */
-    private void showHomeFragment(){
+    public void showHomeFragment(){
         if (this.homeFragment_ == null) this.homeFragment_ = HomeFragment.newInstance();
         this.startTransactionFragment(this.homeFragment_);
     }

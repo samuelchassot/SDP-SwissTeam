@@ -13,7 +13,7 @@ public class User implements DBSavable{
 
 
 
-    private String googleId_, email_, name_, surname_, description_;
+    private String googleId_, email_, name_, description_;
 
     private ArrayList<String> categories_;
 
@@ -28,16 +28,14 @@ public class User implements DBSavable{
      * Create a new user given its specificities
      * @param googleID_ User's unique googleId
      * @param name_ User's name
-     * @param surname_ User's surname
      * @param email_ User's email
      * @param description_ User's description
      * @param categories_ User's categories of services
      */
-    public User(String googleID_, String name_, String surname_, String email_, String description_, ArrayList<String> categories_) {
+    public User(String googleID_, String name_, String email_, String description_, ArrayList<String> categories_) {
         this.googleId_ = googleID_;
         this.email_ = email_;
         this.name_ = name_;
-        this.surname_ = surname_;
         this.email_ = email_;
         this.description_ = description_;
         this.categories_ = categories_ == null ? null : (ArrayList<String>) categories_.clone();
@@ -53,10 +51,6 @@ public class User implements DBSavable{
         return email_;
     }
 
-    public String getSurname_() {
-        return surname_;
-    }
-
     public String getDescription_() {
         return description_;
     }
@@ -70,9 +64,11 @@ public class User implements DBSavable{
      * @param db the database in which to add the user
      */
     public void addToDB(DatabaseReference db){
-        db.child("Users").child(googleId_).setValue(this);
-        for (String category : categories_){
-            db.child("Categories").child(category).child(googleId_).setValue("true");
+        db.child(DBUtility.USERS).child(googleId_).setValue(this);
+        if(categories_ != null) {
+            for (String category : categories_) {
+                db.child(DBUtility.CATEGORIES).child(category).child(googleId_).setValue("true");
+            }
         }
     }
 

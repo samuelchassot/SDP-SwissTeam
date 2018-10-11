@@ -64,7 +64,7 @@ public class HomeFragmentTest {
 
         onView(withId(R.id.button_homefragment_refresh)).perform(click());
 
-        ListView listview = mActivityRule .getActivity().findViewById(R.id.listview_homefragment_postslist);
+        ListView listview = mActivityRule.getActivity().findViewById(R.id.listview_homefragment_postslist);
         if (postsList.isEmpty()){
             assertThat(listview.getCount(), is(1));
         }else{
