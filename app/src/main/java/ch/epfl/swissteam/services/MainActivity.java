@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity
 
     private Fragment profileShowerFragment_;
     private Fragment servicesFragment_, createPostFragment_, homeFragment_;
+    private DBUtility util = DBUtility.get();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,19 +52,13 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        DBUtility util = DBUtility.get();
 
-        GoogleSignInSingleton.get().getClientUniqueID();
-        util.getUser(GoogleSignInSingleton.get().getClientUniqueID(), user -> {
-            ((TextView) findViewById(R.id.nav_header_name)).setText(user.getName_());
-            ((TextView) findViewById(R.id.nav_header_email)).setText(user.getEmail_());
-
-        });
-
+        setNavUserName();
 
 
         showHomeFragment();
     }
+
 
     @Override
     public void onBackPressed() {
@@ -100,7 +95,6 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
@@ -125,6 +119,23 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        setNavUserName();
+    }
+
+    /**
+     * Set the user name and email in the nav
+     */
+    private void setNavUserName() {
+        util.getUser(GoogleSignInSingleton.get().getClientUniqueID(), user -> {
+            ((TextView) findViewById(R.id.nav_header_name)).setText(user.getName_());
+            ((TextView) findViewById(R.id.nav_header_email)).setText(user.getEmail_());
+
+        });
     }
 
     /**
