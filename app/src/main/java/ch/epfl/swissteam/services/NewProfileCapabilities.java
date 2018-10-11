@@ -52,62 +52,34 @@ public class NewProfileCapabilities extends AppCompatActivity {
 }
 
 @SuppressLint("ViewConstructor")
-class CapabilitySelection extends TableLayout
-                            implements AdapterView.OnItemSelectedListener {
+class CapabilitySelection extends TableLayout {
 
     public CapabilitySelection(NewProfileCapabilities context){
         super(context);
         NPC_ = context;
-        subcatArray_ = getResources().obtainTypedArray(R.array.subcat_array);
         generateCapability();
-    }
-
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view,
-                               int pos, long id) {
-        generateSubcat(pos);
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
     }
 
     private void generateCapability(){
 
         //main spinner
         Spinner newSpinner = new Spinner(NPC_);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(NPC_,
-                R.array.domains_array, android.R.layout.simple_spinner_item);
+        ArrayAdapter<Categories> adapter = new ArrayAdapter<Categories>(getContext(), android.R.layout.simple_spinner_item, Categories.values());
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         newSpinner.setAdapter(adapter);
-        newSpinner.setOnItemSelectedListener(this);
         addView(newSpinner);
 
 
         //creating keywords field
         keyWordField_ = new EditText(NPC_);
-        subcatSpinner_ = new Spinner(NPC_);
         keyWordField_.setHorizontallyScrolling(true);
 
         TableRow newTableRow = new TableRow(NPC_);
-        newTableRow.addView(subcatSpinner_);
         newTableRow.addView(keyWordField_);
 
         addView(newTableRow);
     }
 
-    private void generateSubcat(int pos){
-        //creating the spinner
-
-        ArrayAdapter<Categories> adapter = new ArrayAdapter<Categories>(getContext(), android.R.layout.simple_spinner_item, Categories.values());
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        subcatSpinner_.setAdapter(adapter);
-        keyWordField_.setHint(R.string.enter_key_word);
-
-    }
-
     private final NewProfileCapabilities NPC_;
-    private Spinner subcatSpinner_;
     private EditText keyWordField_;
-    private final TypedArray subcatArray_;
 }
