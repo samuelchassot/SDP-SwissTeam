@@ -42,7 +42,6 @@ public class ServicesFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initDataSet(Categories.ALL);
 
     }
 
@@ -85,16 +84,16 @@ public class ServicesFragment extends Fragment {
                 users.addAll(usersdb);
                 mAdapter.notifyDataSetChanged();
             }));
+        } else {
+            DBUtility.get().getUsersFromCategory(category, (googleIds) -> {
+                for (String googleId : googleIds) {
+                    DBUtility.get().getUser(googleId, user -> {
+                        users.add(user);
+                        mAdapter.notifyDataSetChanged();
+                    });
+                }
+            });
         }
-        DBUtility.get().getUsersFromCategory(category, (googleIds) -> {
-            for (String googleId : googleIds){
-                DBUtility.get().getUser(googleId, user->{
-                    users.add(user);
-                    mAdapter.notifyDataSetChanged();
-                });
-            }
-        });
-
 
     }
 
