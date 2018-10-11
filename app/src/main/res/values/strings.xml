@@ -54,4 +54,21 @@
     <string name="profiledisplay_descriptiontag">Description</string>
     <string name="profiledisplay_modify">Modify</string>
     <string name="fragment_services_title">Users that can help you</string>
+
+    <!-- Category strings-->
+
+    <string name ="category_IC">Computer</string>
+    <string name ="category_Maths">Maths</string>
+    <string name ="category_House">House</string>
+    <string name ="category_Cooking">Cooking</string>
+    <string name ="category_Teaching">Teaching</string>
+    <string name ="category_Gardening">Gardening</string>
+    <string name ="category_Mechanics">Mechanics</string>
+    <string name ="category_Dailylife">Daily Life</string>
+    <string name ="category_Transportation">Transportation</string>
+
+
+
+
+
 </resources>
