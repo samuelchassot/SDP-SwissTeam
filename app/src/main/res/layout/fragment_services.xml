@@ -26,4 +26,9 @@
         android:layout_marginTop="75dip"
         tools:listitem="@layout/recycler_view_item" />
 
+    <Spinner
+        android:id="@+id/services_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
 </FrameLayout>

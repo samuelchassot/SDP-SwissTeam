@@ -7,6 +7,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 
 import java.util.ArrayList;
 
@@ -39,7 +42,7 @@ public class ServicesFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initDataSet();
+        initDataSet(Categories.ALL);
 
     }
 
@@ -52,22 +55,51 @@ public class ServicesFragment extends Fragment {
         mAdapter = new UserAdapter(users);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(mLayoutManager);
+
+        Spinner filterSpinner = (Spinner) view.findViewById(R.id.services_spinner);
+        ArrayAdapter<Categories> filterSpinnerAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, Categories.values());
+        filterSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        filterSpinner.setAdapter(filterSpinnerAdapter);
+
+        filterSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                initDataSet((Categories) adapterView.getItemAtPosition(i));
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
         return view;
     }
 
 
-    private void initDataSet(){
+
+    private void initDataSet(Categories category){
         users.clear();
-        DBUtility.get().getAllUsers(new MyCallBack<ArrayList<User>>() {
-            @Override
-            public void onCallBack(ArrayList<User> value) {
-                users.addAll(value);
+        if (category == Categories.ALL){
+            DBUtility.get().getAllUsers((usersdb ->{
+                users.addAll(usersdb);
                 mAdapter.notifyDataSetChanged();
+            }));
+        }
+        DBUtility.get().getUsersFromCategory(category, (googleIds) -> {
+            for (String googleId : googleIds){
+                DBUtility.get().getUser(googleId, user->{
+                    users.add(user);
+                    mAdapter.notifyDataSetChanged();
+                });
             }
         });
 
 
     }
+
+
+
 
 
 }
