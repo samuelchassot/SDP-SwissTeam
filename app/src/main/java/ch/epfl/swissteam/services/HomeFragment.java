@@ -47,9 +47,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         adapter = new ArrayAdapter<>(
                 this.getContext(), android.R.layout.simple_list_item_1, postsToStringList);
 
-        DBUtility.get().getPostsFeed(value -> {
-            postsList.clear();
-            postsList.addAll(value);
+        DBUtility.get().getPostsFeed(new MyCallBack<ArrayList<Post>>() {
+            @Override
+            public void onCallBack(ArrayList<Post> value) {
+                postsList.clear();
+                postsList.addAll(value);
+            }
         });
 
 
@@ -62,7 +65,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         (frag.findViewById(R.id.button_homefragment_refresh)).setOnClickListener(this);
 
         swipeRefreshLayout = frag.findViewById(R.id.swiperefresh_homefragment_refresh);
-        swipeRefreshLayout.setOnRefreshListener(this::refresh);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refresh();
+            }
+        });
 
         swipePostsList = frag.findViewById(R.id.listview_homefragment_postslist);
 

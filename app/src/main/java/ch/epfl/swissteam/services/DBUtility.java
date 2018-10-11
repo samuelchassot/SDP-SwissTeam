@@ -22,7 +22,7 @@ public class DBUtility {
     public final static String CATEGORIES = "Categories";
     public final static String POSTS = "Posts";
     public final static String ERROR_TAG = "DBUtility";
-    public final static int POSTS_DISPLAY_NUMBER = 20;
+    private final int POSTS_DISPLAY_NUMBER = 20;
 
     private DBUtility(DatabaseReference db_){
         this.db_ = db_;
@@ -126,7 +126,7 @@ public class DBUtility {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 posts.clear();
                 for (DataSnapshot data : dataSnapshot.getChildren()){
-                    Log.e("POSTSDB", "test "+data.getValue(Post.class));
+                    //Log.e("POSTSDB", "test "+data.getValue(Post.class));
                     Post post = data.getValue(Post.class);
                     posts.add(post);
                 }
