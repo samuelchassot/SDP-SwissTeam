@@ -18,27 +18,14 @@ public class DBUtility {
     private static DBUtility instance;
 
 
-    private final String USERS = "Users";
-    private final String CATEGORIES = "Categories";
-    private final String POSTS = "Posts";
-    private final String ERROR_TAG = "DBUtility";
+    public final static String USERS = "Users";
+    public final static String CATEGORIES = "Categories";
+    public final static String POSTS = "Posts";
+    public final static String ERROR_TAG = "DBUtility";
     private final int POSTS_DISPLAY_NUMBER = 20;
 
     private DBUtility(DatabaseReference db_){
         this.db_ = db_;
-    }
-
-
-    public String getUSERS() {
-        return USERS;
-    }
-
-    public String getCATEGORIES() {
-        return CATEGORIES;
-    }
-
-    public String getPOSTS() {
-        return POSTS;
     }
 
     /**
@@ -139,7 +126,7 @@ public class DBUtility {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 posts.clear();
                 for (DataSnapshot data : dataSnapshot.getChildren()){
-                    Log.e("POSTSDB", "test "+data.getValue(Post.class));
+                    //Log.e("POSTSDB", "test "+data.getValue(Post.class));
                     Post post = data.getValue(Post.class);
                     posts.add(post);
                 }

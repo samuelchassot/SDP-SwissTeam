@@ -3,11 +3,14 @@ package ch.epfl.swissteam.services;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -25,6 +28,10 @@ import java.io.IOException;
  */
 public class NewProfileDetails extends AppCompatActivity {
 
+    private String googleID_, username_, email_, description_;
+    private Uri pictureURL_;
+    private boolean saveToDB = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,8 +42,32 @@ public class NewProfileDetails extends AppCompatActivity {
 
         GoogleSignInAccount account = getIntent().getParcelableExtra(SignInActivity.ACCOUNT_TAG);
         if(account != null) {
+            saveToDB = true;
+
             findAndSetName(account);
             findAndSetPicture(account);
+
+            googleID_ = account.getId();
+            pictureURL_ = account.getPhotoUrl();
+            email_ = account.getEmail();
+            description_ = "";
+
+            ((EditText)findViewById(R.id.plaintext_newprofiledetails_description)).addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                }
+
+                @Override
+                public void afterTextChanged(Editable editable) {
+                    description_ = editable.toString();
+                }
+            });
         }
     }
 
@@ -75,6 +106,7 @@ public class NewProfileDetails extends AppCompatActivity {
      */
     private void setName(String name) {
         ((EditText)findViewById(R.id.plaintext_newprofiledetails_name)).setText(name);
+        username_ = name;
     }
 
     /**
@@ -92,9 +124,19 @@ public class NewProfileDetails extends AppCompatActivity {
      * @param view view
      */
     public void nextScreen(View view) {
-        //TODO: Save changes made by the user here.
+        saveUserInDB();
         Intent intent = new Intent(this, NewProfileCapabilities.class);
         startActivity(intent);
+    }
+
+    /**
+     * Saves the newly created user in the database.
+     */
+    private void saveUserInDB() {
+        if(saveToDB) {
+            User user = new User(googleID_, username_, email_, description_, null);
+            user.addToDB(DBUtility.get().getDb_());
+        }
     }
 
     /**

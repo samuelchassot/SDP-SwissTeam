@@ -54,8 +54,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                 postsList.addAll(value);
             }
         });
-
-
     }
 
     @Override
@@ -98,5 +96,4 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         swipePostsList.invalidateViews();
         swipeRefreshLayout.setRefreshing(false);
     }
-
 }
