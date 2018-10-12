@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -89,16 +90,17 @@ public class ServicesFragment extends Fragment {
             }));
         } else {
             DBUtility.get().getUsersFromCategory(category, (googleIds) -> {
-                for (String googleId : googleIds) {
-                    DBUtility.get().getUser(googleId, user -> {
-                        users.add(user);
-                        mAdapter.notifyDataSetChanged();
-                        if (users.isEmpty()){
-                            getActivity().findViewById(R.id.services_problem_text).setVisibility(View.VISIBLE);
-                        } else {
-                            getActivity().findViewById(R.id.services_problem_text).setVisibility(View.INVISIBLE);
-                        }
-                    });
+                if (googleIds.size() == 0){
+                    getActivity().findViewById(R.id.services_problem_text).setVisibility(View.VISIBLE);
+                    mAdapter.notifyDataSetChanged();
+                } else {
+                    getActivity().findViewById(R.id.services_problem_text).setVisibility(View.INVISIBLE);
+                    for (String googleId : googleIds) {
+                        DBUtility.get().getUser(googleId, user -> {
+                            users.add(user);
+                            mAdapter.notifyDataSetChanged();
+                        });
+                    }
                 }
             });
         }
