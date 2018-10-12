@@ -21,7 +21,7 @@ public class ProfileDisplayFragmentTest {
 
     @Test
     public void openFragment() {
-        GoogleSignInSingleton.putUniqueID("106500573625141799438");
+        GoogleSignInSingleton.putUniqueID("111536165432511180130");
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_profile));
     }
