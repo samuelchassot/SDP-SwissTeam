@@ -1,6 +1,7 @@
 package ch.epfl.swissteam.services;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -20,9 +21,7 @@ import java.util.ArrayList;
  */
 public class ServicesFragment extends Fragment {
 
-    private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
     private ArrayList<User> users = new ArrayList<>();
 
 
@@ -35,8 +34,7 @@ public class ServicesFragment extends Fragment {
      * @return the created instance
      */
     public static ServicesFragment newInstance() {
-        ServicesFragment fragment = new ServicesFragment();
-        return fragment;
+        return new ServicesFragment();
     }
 
     @Override
@@ -46,11 +44,11 @@ public class ServicesFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view =  inflater.inflate(R.layout.fragment_services, container, false);
-        mRecyclerView = view.findViewById(R.id.services_recycler);
-        mLayoutManager = new LinearLayoutManager(getActivity());
+        RecyclerView mRecyclerView = view.findViewById(R.id.services_recycler);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         mAdapter = new UserAdapter(users);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -64,6 +62,11 @@ public class ServicesFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 initDataSet((Categories) adapterView.getItemAtPosition(i));
+                if (users.isEmpty()){
+                    getActivity().findViewById(R.id.services_problem_text).setVisibility(View.VISIBLE);
+                } else {
+                    getActivity().findViewById(R.id.services_problem_text).setVisibility(View.INVISIBLE);
+                }
             }
 
             @Override

@@ -54,6 +54,7 @@
     <string name="profiledisplay_descriptiontag">Description</string>
     <string name="profiledisplay_modify">Modify</string>
     <string name="fragment_services_title">Users that can help you</string>
+    <string name="fragment_services_problem">Oops! Look like no one can help you!\nSelect another category, or check your internet connection.</string>
 
     <!-- Category strings-->
 
