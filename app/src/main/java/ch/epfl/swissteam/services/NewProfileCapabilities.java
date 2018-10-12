@@ -23,12 +23,20 @@ import java.util.List;
 
 public class NewProfileCapabilities extends AppCompatActivity {
 
-    List<Categories> capabilitiesList_ = new ArrayList<>();
+    private ArrayList<Categories> capabilitiesList_ = new ArrayList<>();
+    private String googleID_, username_, email_, description_;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_profile_capabilites);
+
+        Intent intent = getIntent();
+
+        googleID_ = intent.getStringExtra(NewProfileDetails.GOOGLE_ID_TAG);
+        username_ = intent.getStringExtra(NewProfileDetails.USERNAME_TAG);
+        email_ = intent.getStringExtra(NewProfileDetails.EMAIL_TAG);
+        description_ = intent.getStringExtra(NewProfileDetails.DESCRIPTION_TAG);
 
         RecyclerView recycler = findViewById(R.id.recyclerview_newprofilecapabilities_list);
         recycler.setHasFixedSize(true);
@@ -42,12 +50,18 @@ public class NewProfileCapabilities extends AppCompatActivity {
      * @param view view
      */
     public void nextPage(View view) {
-        for(Categories capability : capabilitiesList_) {
-            DBUtility.get().getDb_().child(DBUtility.CATEGORIES).child(capability.toString()).child(GoogleSignInSingleton.get().getClientUniqueID()).setValue("true");
-        }
+        saveUserInDB();
 
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
+    }
+
+    /**
+     * Saves the newly created user in the database.
+     */
+    private void saveUserInDB() {
+        User user = new User(googleID_, username_, email_, description_, capabilitiesList_);
+        user.addToDB(DBUtility.get().getDb_());
     }
 
     /**
