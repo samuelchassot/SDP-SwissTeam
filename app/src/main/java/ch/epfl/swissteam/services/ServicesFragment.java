@@ -62,11 +62,6 @@ public class ServicesFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 initDataSet((Categories) adapterView.getItemAtPosition(i));
-                if (users.isEmpty()){
-                    getActivity().findViewById(R.id.services_problem_text).setVisibility(View.VISIBLE);
-                } else {
-                    getActivity().findViewById(R.id.services_problem_text).setVisibility(View.INVISIBLE);
-                }
             }
 
             @Override
@@ -86,6 +81,11 @@ public class ServicesFragment extends Fragment {
             DBUtility.get().getAllUsers((usersdb ->{
                 users.addAll(usersdb);
                 mAdapter.notifyDataSetChanged();
+                if (users.isEmpty()){
+                    getActivity().findViewById(R.id.services_problem_text).setVisibility(View.VISIBLE);
+                } else {
+                    getActivity().findViewById(R.id.services_problem_text).setVisibility(View.INVISIBLE);
+                }
             }));
         } else {
             DBUtility.get().getUsersFromCategory(category, (googleIds) -> {
@@ -93,6 +93,11 @@ public class ServicesFragment extends Fragment {
                     DBUtility.get().getUser(googleId, user -> {
                         users.add(user);
                         mAdapter.notifyDataSetChanged();
+                        if (users.isEmpty()){
+                            getActivity().findViewById(R.id.services_problem_text).setVisibility(View.VISIBLE);
+                        } else {
+                            getActivity().findViewById(R.id.services_problem_text).setVisibility(View.INVISIBLE);
+                        }
                     });
                 }
             });

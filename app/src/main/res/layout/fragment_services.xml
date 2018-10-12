@@ -13,38 +13,33 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="33dp"
         android:layout_marginLeft="33dp"
-        android:layout_marginBottom="482dp"
         android:text="@string/fragment_services_title"
         android:textAlignment="center"
         android:textColor="#000"
         android:textSize="30sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/services_spinner"
-        app:layout_constraintTop_toBottomOf="@+id/services_spinner" />
+        app:layout_constraintBottom_toTopOf="@+id/services_spinner"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/services_recycler"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="499dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_page_news_title"
+        app:layout_constraintTop_toBottomOf="@+id/services_spinner"
         tools:listitem="@layout/recycler_view_item" />
 
     <Spinner
         android:id="@+id/services_spinner"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="209dp"
+        android:layout_marginBottom="155dp"
         app:layout_constraintBottom_toTopOf="@+id/services_problem_text"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        app:layout_constraintVertical_chainStyle="spread_inside"/>
+        app:layout_constraintTop_toBottomOf="@+id/fragment_page_news_title" />
 
     <TextView
         android:id="@+id/services_problem_text"
@@ -52,7 +47,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
-        android:layout_marginBottom="246dp"
+        android:layout_marginBottom="259dp"
         android:text="@string/fragment_services_problem"
         android:textSize="20sp"
         android:visibility="invisible"
