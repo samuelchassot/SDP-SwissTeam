@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private Fragment profileShowerFragment_;
-    private Fragment servicesFragment_, createPostFragment_, homeFragment_;
+    private Fragment servicesFragment_, createPostFragment_, homeFragment_, onlineChatFragment_;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -167,8 +167,13 @@ public class MainActivity extends AppCompatActivity
 
 
     private void showChatsFragment(){
+        /*if (this.onlineChatFragment_ == null) this.onlineChatFragment_ = OnlineChatFragment.newInstance();
+        this.startTransactionFragment(this.onlineChatFragment_);
+        */
+
         //TODO
         Intent mainIntent = new Intent(this, ChatRoom.class);
+        mainIntent.putExtra("relationId", "-LOh0UHYAUKESvxLj6Y3");
         startActivity(mainIntent);
         /**********************************/
     }

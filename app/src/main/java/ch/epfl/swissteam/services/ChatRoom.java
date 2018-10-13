@@ -30,13 +30,13 @@ public class ChatRoom extends Activity {
         setContentView(R.layout.activity_chat_room);
         dataBase_ = DBUtility.get().getDb_();
 
-        displayMessages();
+        displayMessages(getIntent().getExtras().getString("relationId"));
     }
 
     /**
      * display messages retrieved form the database
      */
-    private void displayMessages(){
+    private void displayMessages(String relationId){
         RecyclerView chatRoom = findViewById(R.id.recycler_view_message);
         LinearLayoutManager llm = new LinearLayoutManager(this);
 
@@ -44,7 +44,7 @@ public class ChatRoom extends Activity {
         chatRoom.setLayoutManager(llm);
 
         adapter_ = new FirebaseRecyclerAdapter<ChatMessage, MessageHolder>
-                (ChatMessage.class, R.layout.chat_message_layout, MessageHolder.class, dataBase_.child("chatTest"))
+                (ChatMessage.class, R.layout.chat_message_layout, MessageHolder.class, dataBase_.child("chats").child(relationId))
         {
             @Override
             protected void populateViewHolder(MessageHolder viewHolder, ChatMessage message, int position){
@@ -64,7 +64,7 @@ public class ChatRoom extends Activity {
         TextInputEditText textInput = findViewById(R.id.message_input);
         String message = textInput.getText().toString();
         //TODO set user
-        ChatMessage chatMessage = new ChatMessage(message, "pablo", "pabinou");
+        ChatMessage chatMessage = new ChatMessage(message, "pablo", "pabinou", "-LOh0UHYAUKESvxLj6Y3");
         chatMessage.addToDB(dataBase_);
 
         textInput.getText().clear();

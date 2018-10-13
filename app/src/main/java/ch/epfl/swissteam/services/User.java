@@ -3,6 +3,8 @@ package ch.epfl.swissteam.services;
 import com.google.firebase.database.DatabaseReference;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Class representing a user in the database,
@@ -15,7 +17,9 @@ public class User implements DBSavable{
 
     private String googleId_, email_, name_, surname_, description_;
 
-    private ArrayList<String> categories_, chatRelationIds_;
+    private ArrayList<String> categories_;
+
+    private ArrayList<ChatRelation> chatRelations_;
 
     /**
      * Default constructor, needed for database
@@ -65,8 +69,8 @@ public class User implements DBSavable{
         return categories_ == null? null : (ArrayList<String>) categories_.clone();
     }
 
-    public ArrayList<String> getChatRelationIds_() {
-        return chatRelationIds_ == null ? null : (ArrayList<String>) chatRelationIds_.clone();
+    public List<ChatRelation> getChatRelations_() {
+        return Collections.unmodifiableList(chatRelations_);
     }
 
     /**
@@ -87,8 +91,9 @@ public class User implements DBSavable{
      * @param db reference to the database to update the user
      */
     public void addChatRelation(ChatRelation chatRelation, DatabaseReference db){
-        if(chatRelationIds_ == null) {chatRelationIds_ = new ArrayList<>();}
-        chatRelationIds_.add(chatRelation.getId_());
+        if(chatRelations_ == null) {
+            chatRelations_ = new ArrayList<>();}
+        chatRelations_.add(chatRelation);
         if(db != null){
             addToDB(db);
         }
@@ -102,7 +107,5 @@ public class User implements DBSavable{
     public void addChatRelation(ChatRelation chatRelation){
         addChatRelation(chatRelation, null);
     }
-
-
 
 }

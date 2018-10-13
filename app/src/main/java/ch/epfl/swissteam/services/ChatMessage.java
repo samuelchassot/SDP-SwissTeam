@@ -18,11 +18,12 @@ public class ChatMessage implements DBSavable{
      * @param user name of the user who sent the message
      * @param userId the id of the user
      */
-    public ChatMessage(String text, String user, String userId){
+    public ChatMessage(String text, String user, String userId, String relationId){
         text_ = text;
         user_ = user;
         userId_ = userId;
         time_ = new Date().getTime();
+        relationId_ = relationId;
     }
 
     public ChatMessage(){}
@@ -41,6 +42,8 @@ public class ChatMessage implements DBSavable{
         return user_;
     }
 
+    public String getRelationId_(){ return relationId_; }
+
     public void setText_(String text) {
         text_ = text;
     }
@@ -50,21 +53,23 @@ public class ChatMessage implements DBSavable{
     }
 
     public void setUser_(String user) {
-        this.user_ = user;
+        user_ = user;
     }
 
     public void setUserId_(String userId) {
         userId_ = userId;
     }
 
+    public void setRelationId_(String relationId) { relationId_ = relationId; }
 
     private String user_;
     private String userId_;
     private String text_;
     private long time_;
+    private String relationId_;
 
     @Override
     public void addToDB(DatabaseReference databaseReference) {
-        databaseReference.child("chatTest").push().setValue(this);
+        databaseReference.child(DBUtility.get().getCHATS()).child(relationId_).push().setValue(this);
     }
 }

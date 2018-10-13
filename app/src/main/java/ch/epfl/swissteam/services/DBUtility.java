@@ -22,6 +22,8 @@ public class DBUtility {
     private final String CATEGORIES = "Categories";
     private final String POSTS = "Posts";
     private final String ERROR_TAG = "DBUtility";
+    private final String CHATS = "Chats";
+    private final String CHATS_RELATIONS = "ChatRelations";
     private final int POSTS_DISPLAY_NUMBER = 20;
 
     private DBUtility(DatabaseReference db){
@@ -40,6 +42,10 @@ public class DBUtility {
     public String getPOSTS() {
         return POSTS;
     }
+
+    public String getCHATS() { return CHATS; }
+
+    public String getCHATS_RELATIONS() { return CHATS_RELATIONS; }
 
     /**
      * Get the DBUtility instance
