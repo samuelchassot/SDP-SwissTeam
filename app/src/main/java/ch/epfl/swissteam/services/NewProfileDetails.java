@@ -28,6 +28,8 @@ import java.io.IOException;
  */
 public class NewProfileDetails extends AppCompatActivity {
 
+    public static final String GOOGLE_ID_TAG = "GOOGLE_ID", USERNAME_TAG = "USERNAME", EMAIL_TAG = "EMAIL", DESCRIPTION_TAG = "DESCRIPTION";
+
     private String googleID_, username_, email_, description_;
     private Uri pictureURL_;
     private boolean saveToDB = false;
@@ -126,6 +128,10 @@ public class NewProfileDetails extends AppCompatActivity {
     public void nextScreen(View view) {
         saveUserInDB();
         Intent intent = new Intent(this, NewProfileCapabilities.class);
+        intent.putExtra(GOOGLE_ID_TAG, googleID_);
+        intent.putExtra(USERNAME_TAG, username_);
+        intent.putExtra(EMAIL_TAG, email_);
+        intent.putExtra(DESCRIPTION_TAG, description_);
         startActivity(intent);
     }
 
