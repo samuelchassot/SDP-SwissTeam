@@ -156,7 +156,7 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/textview_profiledisplay_capabilitiestag"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -174,7 +174,7 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerview_profiledisplay_categories"
         android:layout_width="356dp"
-        android:layout_height="383dp"
+        android:layout_height="319dp"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="8dp"
@@ -185,6 +185,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.347"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/textview_profiledisplay_capabilitiestag"
         app:layout_constraintVertical_bias="0.0" />
 </android.support.constraint.ConstraintLayout>

@@ -55,7 +55,7 @@ public class User implements DBSavable{
     }
 
     public ArrayList<String> getCategories_() {
-        return categories_ == null? null : (ArrayList<String>) categories_.clone();
+        return categories_ == null? new ArrayList<String>() : (ArrayList<String>) categories_.clone();
     }
 
     /**
