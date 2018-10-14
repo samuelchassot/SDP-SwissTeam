@@ -76,9 +76,6 @@ public class ProfileDisplayFragment extends Fragment {
             TextView nameView = (TextView) getActivity().findViewById(R.id.textview_profiledisplay_name);
             nameView.setText(user.getName_());
 
-            TextView surnameView =  (TextView) getActivity().findViewById(R.id.textview_displayprofile_surname);
-            surnameView.setText(user.getSurname_());
-
             TextView emailView =  (TextView) getActivity().findViewById(R.id.textview_profiledisplay_email);
             emailView.setText(user.getEmail_());
 

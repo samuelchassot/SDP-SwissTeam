@@ -29,14 +29,15 @@ public class ChatRoom extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_room);
         dataBase_ = DBUtility.get().getDb_();
+        currentRelationId_ = getIntent().getExtras().getString(ChatRelation.RELATION_ID_TEXT);
 
-        displayMessages(getIntent().getExtras().getString(ChatRelation.RELATION_ID_TEXT));
+        displayMessages();
     }
 
     /**
      * display messages retrieved form the database
      */
-    private void displayMessages(String relationId){
+    private void displayMessages(){
         RecyclerView chatRoom = findViewById(R.id.recycler_view_message);
         LinearLayoutManager llm = new LinearLayoutManager(this);
 
@@ -44,7 +45,7 @@ public class ChatRoom extends Activity {
         chatRoom.setLayoutManager(llm);
 
         adapter_ = new FirebaseRecyclerAdapter<ChatMessage, MessageHolder>
-                (ChatMessage.class, R.layout.chat_message_layout, MessageHolder.class, dataBase_.child("chats").child(relationId))
+                (ChatMessage.class, R.layout.chat_message_layout, MessageHolder.class, dataBase_.child(DBUtility.CHATS).child(currentRelationId_))
         {
             @Override
             protected void populateViewHolder(MessageHolder viewHolder, ChatMessage message, int position){
@@ -63,8 +64,8 @@ public class ChatRoom extends Activity {
     public void sendMessage(View view){
         TextInputEditText textInput = findViewById(R.id.message_input);
         String message = textInput.getText().toString();
-        //TODO set user
-        ChatMessage chatMessage = new ChatMessage(message, "pablo", "pabinou", "-LOh0UHYAUKESvxLj6Y3");
+        User user = DBUtility.get().getCurrentUser_();
+        ChatMessage chatMessage = new ChatMessage(message, user.getName_(), user.getGoogleId_(), currentRelationId_);
         chatMessage.addToDB(dataBase_);
 
         textInput.getText().clear();
@@ -72,6 +73,7 @@ public class ChatRoom extends Activity {
 
     FirebaseRecyclerAdapter<ChatMessage, MessageHolder> adapter_;
     DatabaseReference dataBase_;
+    String currentRelationId_;
 
     /**
      * ViewHolder class to handle the RecyclerView

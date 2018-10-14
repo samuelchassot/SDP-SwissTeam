@@ -9,9 +9,9 @@ public class ChatRelationTest {
     String surname1 = "Latex King"; String surname2 = "des Cailloux"; String surname3 = "Romarin";
     String userId1 = "123dfv"; String userId2 = "456dsf"; String userId3 = "789dsf";
     String email1 = "MLK@gmail.com"; String email2 = "RC@gmail.com"; String email3 = "BR@gmail.com";
-    User user1 = new User(userId1, name1, surname1, email1, "bla", null);
-    User user2 = new User(userId2, name2, surname2, email2, "bla", null);
-    User user3 = new User(userId3, name3, surname3, email3, "bla", null);
+    User user1 = new User(userId1, name1, email1, "bla", null);
+    User user2 = new User(userId2, name2, email2, "bla", null);
+    User user3 = new User(userId3, name3, email3, "bla", null);
 
     String CRId = "abu723ddl92ndk";
 

@@ -72,7 +72,7 @@ public class OnlineChatFragment extends Fragment {
             dbU.getUser(eT.getText().toString(), new MyCallBack<User>(){
                 @Override
                 public void onCallBack(User value) {
-                    openChatWith(mUser, value);
+                    openChatWith(DBUtility.get().getCurrentUser_(), value);
                 }
             } );
         }
@@ -88,21 +88,24 @@ public class OnlineChatFragment extends Fragment {
 
         if(mUser != null && other != null){
             cR = mUser.relationExists(other);
+
             if(cR == null){
                 cR = new ChatRelation(mUser, other);
                 cR.addToDB(db);
                 mUser.addChatRelation(cR, db);
                 other.addChatRelation(cR, db);
             }
+
             Intent chatIntent = new Intent(getActivity(), ChatRoom.class);
             chatIntent.putExtra(ChatRelation.RELATION_ID_TEXT, cR.getId_());
             startActivity(chatIntent);
         }
+
         if(mUser == null){
             chatErrorAlertDialog(getResources().getString(R.string.general_could_not_find_you_in_db));
         }
 
-        if( other == null){
+        if(other == null){
             chatErrorAlertDialog(getResources().getString(R.string.general_could_not_find_this_user_in_db));
 
         }

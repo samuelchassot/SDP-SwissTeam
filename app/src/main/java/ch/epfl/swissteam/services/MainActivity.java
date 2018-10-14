@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private Fragment profileShowerFragment_;
-    private Fragment servicesFragment_, createPostFragment_, homeFragment_, onlineChatFragment_;
+    private Fragment homeFragment_, servicesFragment_, createPostFragment_, settingsFragment_, onlineChatFragment_;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,6 +107,9 @@ public class MainActivity extends AppCompatActivity
             case (R.id.button_maindrawer_createpost) :
                 showCreatePostFragment();
                 break;
+            case (R.id.button_maindrawer_settings) :
+                showSettingsFragment();
+                break;
             case (R.id.button_maindrawer_logout) :
                 signOut();
                 break;
@@ -160,7 +163,7 @@ public class MainActivity extends AppCompatActivity
     /**
      * Shows the home Fragment, with the feed of spontaneous posts
      */
-    private void showHomeFragment(){
+    public void showHomeFragment(){
         if (this.homeFragment_ == null) this.homeFragment_ = HomeFragment.newInstance();
         this.startTransactionFragment(this.homeFragment_);
     }
@@ -169,6 +172,14 @@ public class MainActivity extends AppCompatActivity
     private void showChatsFragment(){
         if (this.onlineChatFragment_ == null) this.onlineChatFragment_ = OnlineChatFragment.newInstance();
         this.startTransactionFragment(this.onlineChatFragment_);
+    }
+
+    /**
+     * Show the settings Fragment
+     */
+    private void showSettingsFragment() {
+        if (this.settingsFragment_ == null) this.settingsFragment_ = SettingsFragment.newInstance();
+        this.startTransactionFragment(this.settingsFragment_);
     }
 
     /**

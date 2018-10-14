@@ -70,6 +70,6 @@ public class ChatMessage implements DBSavable{
 
     @Override
     public void addToDB(DatabaseReference databaseReference) {
-        databaseReference.child(DBUtility.get().getCHATS()).child(relationId_).push().setValue(this);
+        databaseReference.child(DBUtility.get().CHATS).child(relationId_).push().setValue(this);
     }
 }

@@ -19,36 +19,19 @@ public class DBUtility {
     private User currentUser_;
 
 
-    private final String USERS = "Users";
-    private final String CATEGORIES = "Categories";
-    private final String POSTS = "Posts";
-    private final String ERROR_TAG = "DBUtility";
-    private final String CHATS = "Chats";
-    private final String CHATS_RELATIONS = "ChatRelations";
+
+    public final static String USERS = "Users";
+    public final static String CATEGORIES = "Categories";
+    public final static String POSTS = "Posts";
+    public final static String ERROR_TAG = "DBUtility";
+    public final static String CHATS = "Chats";
+    public final static String CHATS_RELATIONS = "ChatRelations";
     private final int POSTS_DISPLAY_NUMBER = 20;
 
     private DBUtility(DatabaseReference db){
         currentUser_ = null;
-        getCurrentUser_();
         this.db_ = db;
     }
-
-
-    public String getUSERS() {
-        return USERS;
-    }
-
-    public String getCATEGORIES() {
-        return CATEGORIES;
-    }
-
-    public String getPOSTS() {
-        return POSTS;
-    }
-
-    public String getCHATS() { return CHATS; }
-
-    public String getCHATS_RELATIONS() { return CHATS_RELATIONS; }
 
     /**
      * Get the DBUtility instance
@@ -118,7 +101,7 @@ public class DBUtility {
      */
     public User getCurrentUser_(){
         String googleId = GoogleSignInSingleton.get().getClientUniqueID();
-        if(currentUser_ == null || currentUser_.getGoogleId_() != googleId) {
+        if(currentUser_ == null || currentUser_.getGoogleId_().compareTo(googleId) != 0) {
             currentUser_ = null;
             try{
                 getUser(googleId, new MyCallBack<User>() {
@@ -174,7 +157,7 @@ public class DBUtility {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 posts.clear();
                 for (DataSnapshot data : dataSnapshot.getChildren()){
-                    Log.e("POSTSDB", "test "+data.getValue(Post.class));
+                    //Log.e("POSTSDB", "test "+data.getValue(Post.class));
                     Post post = data.getValue(Post.class);
                     posts.add(post);
                 }

@@ -15,7 +15,7 @@ public class User implements DBSavable{
 
 
 
-    private String googleId_, email_, name_, surname_, description_;
+    private String googleId_, email_, name_, description_;
 
     private ArrayList<String> categories_;
 
@@ -30,21 +30,20 @@ public class User implements DBSavable{
 
     /**
      * Create a new user given its specificities
-     * @param googleID User's unique googleId
-     * @param name User's name
-     * @param surname User's surname
-     * @param email User's email
-     * @param description User's description
-     * @param categories User's categories of services
+
+     * @param googleID_ User's unique googleId
+     * @param name_ User's name
+     * @param email_ User's email
+     * @param description_ User's description
+     * @param categories_ User's categories of services
      */
-    public User(String googleID, String name, String surname, String email, String description, ArrayList<String> categories) {
-        this.googleId_ = googleID;
-        this.email_ = email;
-        this.name_ = name;
-        this.surname_ = surname;
-        this.email_ = email;
-        this.description_ = description;
-        this.categories_ = categories == null ? null : (ArrayList<String>) categories.clone();
+    public User(String googleID_, String name_, String email_, String description_, ArrayList<String> categories_) {
+        this.googleId_ = googleID_;
+        this.email_ = email_;
+        this.name_ = name_;
+        this.email_ = email_;
+        this.description_ = description_;
+        this.categories_ = categories_ == null ? null : (ArrayList<String>) categories_.clone();
     }
 
     public String getGoogleId_() { return googleId_; }
@@ -57,10 +56,6 @@ public class User implements DBSavable{
         return email_;
     }
 
-    public String getSurname_() {
-        return surname_;
-    }
-
     public String getDescription_() {
         return description_;
     }
@@ -69,8 +64,8 @@ public class User implements DBSavable{
         return categories_ == null? null : (ArrayList<String>) categories_.clone();
     }
 
-    public List<ChatRelation> getChatRelations_() {
-        return Collections.unmodifiableList(chatRelations_);
+    public ArrayList<ChatRelation> getChatRelations_() {
+        return chatRelations_ == null ? null : (ArrayList<ChatRelation>) chatRelations_.clone();//Collections.unmodifiableList(chatRelations_);
     }
 
     /**
@@ -78,9 +73,11 @@ public class User implements DBSavable{
      * @param db the database in which to add the user
      */
     public void addToDB(DatabaseReference db){
-        db.child("Users").child(googleId_).setValue(this);
-        for (String category : categories_){
-            db.child("Categories").child(category).child(googleId_).setValue("true");
+        db.child(DBUtility.USERS).child(googleId_).setValue(this);
+        if(categories_ != null) {
+            for (String category : categories_) {
+                db.child(DBUtility.CATEGORIES).child(category).child(googleId_).setValue("true");
+            }
         }
     }
 
@@ -109,6 +106,7 @@ public class User implements DBSavable{
     }
 
     public ChatRelation relationExists(User other){
+        if(chatRelations_ == null) return null;
         for(ChatRelation cR : chatRelations_){
             if(cR.getFirstUserId_() == googleId_ && cR.getSecondUserId_() == other.googleId_ ||
                     cR.getFirstUserId_() == other.googleId_ && cR.getSecondUserId_() == googleId_){

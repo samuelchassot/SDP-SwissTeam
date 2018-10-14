@@ -95,8 +95,8 @@ public class ChatRelation implements DBSavable {
     @Override
     public void addToDB(DatabaseReference databaseReference) {
         if(id_ == null) {
-            id_ = databaseReference.child(DBUtility.get().getCHATS_RELATIONS()).push().getKey();
+            id_ = databaseReference.child(DBUtility.get().CHATS_RELATIONS).push().getKey();
         }
-        databaseReference.child(DBUtility.get().getCHATS_RELATIONS()).child(id_).setValue(this);
+        databaseReference.child(DBUtility.get().CHATS_RELATIONS).child(id_).setValue(this);
     }
 }

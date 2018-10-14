@@ -78,9 +78,9 @@ public enum Categories implements DBSavable {
 
     @Override
     public void addToDB(DatabaseReference db) {
-        db.child(DBUtility.get().getCATEGORIES()).removeValue();
+        db.child(DBUtility.CATEGORIES).removeValue();
         for (String googleId : users_) {
-            db.child(DBUtility.get().getCATEGORIES()).child(this.toString()).child(googleId).setValue("true");
+            db.child(DBUtility.CATEGORIES).child(this.toString()).child(googleId).setValue("true");
         }
     }
 }

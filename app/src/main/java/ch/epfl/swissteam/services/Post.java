@@ -10,7 +10,7 @@ import com.google.firebase.database.DatabaseReference;
  */
 public class Post implements DBSavable{
 
-    private String title_, username_, body_;
+    private String title_, googleId_, body_;
     private long timestamp_;
 
     /**
@@ -23,16 +23,17 @@ public class Post implements DBSavable{
     /**
      * Construct a post for searching services.
      *
-     * @param title the title of the post
-     * @param username the username of the person who post the post
-     * @param body the body of the post
-     * @param timestamp the timestamp at which the post was submitted
+
+     * @param title_ the title of the post
+     * @param googleId_ the id of the person who post the post
+     * @param body_ the body of the post
+     * @param timestamp_ the timestamp at which the post was submitted
      */
-    public Post(String title, String username, String body, long timestamp) {
-        this.title_ = title;
-        this.username_ = username;
-        this.body_ = body;
-        this.timestamp_ = timestamp;
+    public Post(String title_, String googleId_, String body_, long timestamp_) {
+        this.title_ = title_;
+        this.googleId_ = googleId_;
+        this.body_ = body_;
+        this.timestamp_ = timestamp_;
     }
 
     /**
@@ -40,15 +41,15 @@ public class Post implements DBSavable{
      * @param databaseReference
      */
     public void addToDB(DatabaseReference databaseReference) {
-        databaseReference.child("Posts").push().setValue(this);
+        databaseReference.child(DBUtility.POSTS).push().setValue(this);
     }
 
     public String getTitle_() {
         return title_;
     }
 
-    public String getUsername_() {
-        return username_;
+    public String getGoogleId_() {
+        return googleId_;
     }
 
     public String getBody_() {
