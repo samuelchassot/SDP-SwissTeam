@@ -87,7 +87,7 @@ public class HomeFragmentTest {
 
         ListView listview = mActivityRule .getActivity().findViewById(R.id.listview_homefragment_postslist);
         if(postsList.isEmpty()){
-            assertThat((String)listview.getItemAtPosition(0), is("No posts for now ..."));
+            assertThat((String)listview.getItemAtPosition(0), is(mActivityRule.getActivity().getResources().getString(R.string.homefragment_noposts)));
         }else{
             int i = 0;
             for(Post p : postsList){
