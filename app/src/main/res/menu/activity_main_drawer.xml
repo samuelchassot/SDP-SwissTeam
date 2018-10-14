@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
@@ -47,14 +48,15 @@
     <item
         android:id="@+id/button_maindrawer_createpost"
         android:icon="@android:drawable/ic_menu_add"
-        android:title="@string/navigationdrawer_newpost" />
-    <item android:title="@string/navigation_drawer_section_settings">
-        <menu>
-            <item
-                android:id="@+id/button_maindrawer_logout"
-                android:icon="@drawable/ic_maindrawer_logout"
-                android:title="@string/navigation_drawer_button_logout" />
-        </menu>
-    </item>
+        android:title="@string/navigation_drawer_newpost" />
+    <item
+        android:id="@+id/button_maindrawer_settings"
+        android:icon="@drawable/ic_maindrawer_settings"
+        android:title="@string/navigation_drawer_section_settings" />
+
+    <item
+        android:id="@+id/button_maindrawer_logout"
+        android:icon="@drawable/ic_maindrawer_logout"
+        android:title="@string/navigation_drawer_button_logout" />
 
 </menu>

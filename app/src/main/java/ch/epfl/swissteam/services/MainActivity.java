@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private Fragment profileShowerFragment_;
-    private Fragment servicesFragment_, createPostFragment_, homeFragment_;
+    private Fragment homeFragment_, servicesFragment_, createPostFragment_, settingsFragment_;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,6 +107,9 @@ public class MainActivity extends AppCompatActivity
             case (R.id.button_maindrawer_createpost) :
                 showCreatePostFragment();
                 break;
+            case (R.id.button_maindrawer_settings) :
+                showSettingsFragment();
+                break;
             case (R.id.button_maindrawer_logout) :
                 signOut();
                 break;
@@ -161,6 +164,14 @@ public class MainActivity extends AppCompatActivity
     public void showHomeFragment(){
         if (this.homeFragment_ == null) this.homeFragment_ = HomeFragment.newInstance();
         this.startTransactionFragment(this.homeFragment_);
+    }
+
+    /**
+     * Show the settings Fragment
+     */
+    private void showSettingsFragment() {
+        if (this.settingsFragment_ == null) this.settingsFragment_ = SettingsFragment.newInstance();
+        this.startTransactionFragment(this.settingsFragment_);
     }
 
     /**
