@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.Instrumentation;
 import android.content.Intent;
 import android.support.test.espresso.intent.rule.IntentsTestRule;
-
 import android.support.test.runner.AndroidJUnit4;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;

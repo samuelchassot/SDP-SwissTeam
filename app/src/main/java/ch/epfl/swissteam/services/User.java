@@ -9,10 +9,7 @@ import java.util.ArrayList;
  * @author simonwicky
  */
 public class User implements DBSavable{
-
-
-
-
+    
     private String googleId_, email_, name_, description_;
 
     private ArrayList<Categories> categories_;
