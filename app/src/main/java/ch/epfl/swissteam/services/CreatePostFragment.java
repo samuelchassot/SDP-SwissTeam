@@ -62,12 +62,13 @@ public class CreatePostFragment extends Fragment implements View.OnClickListener
             String title = titleField.getText().toString();
             String body = bodyField.getText().toString();
 
-            //TODO: replace username by actual username once the local db works.
-            Post post = new Post(title, "username", body, (new Date()).getTime());
+            DBUtility.get().getUser(GoogleSignInSingleton.get().getClientUniqueID(), user -> {
+                Post post = new Post(title, user.getName_(), body, (new Date()).getTime());
 
-            post.addToDB(FirebaseDatabase.getInstance().getReference());
+                post.addToDB(DBUtility.get().getDb_());
+            });
 
-            getActivity().finish();
+            ((MainActivity) getActivity()).showHomeFragment();
         }
     }
 }
