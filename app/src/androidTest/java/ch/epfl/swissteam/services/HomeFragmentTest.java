@@ -14,8 +14,8 @@ import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.swipeDown;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static org.junit.Assert.assertThat;
 import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 
 @RunWith(AndroidJUnit4.class)
 public class HomeFragmentTest {
@@ -87,7 +87,7 @@ public class HomeFragmentTest {
 
         ListView listview = mActivityRule .getActivity().findViewById(R.id.listview_homefragment_postslist);
         if(postsList.isEmpty()){
-            assertThat((String)listview.getItemAtPosition(0), is("No posts for now ..."));
+            assertThat((String)listview.getItemAtPosition(0), is(mActivityRule.getActivity().getResources().getString(R.string.homefragment_noposts)));
         }else{
             int i = 0;
             for(Post p : postsList){

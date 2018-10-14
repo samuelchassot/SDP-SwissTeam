@@ -1,7 +1,7 @@
 package ch.epfl.swissteam.services;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class ProfileSettings extends AppCompatActivity {
 
-    private ArrayList<String> currentCategories;
+    private ArrayList<Categories> currentCategories;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
