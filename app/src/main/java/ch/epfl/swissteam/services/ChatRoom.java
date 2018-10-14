@@ -30,7 +30,7 @@ public class ChatRoom extends Activity {
         setContentView(R.layout.activity_chat_room);
         dataBase_ = DBUtility.get().getDb_();
 
-        displayMessages(getIntent().getExtras().getString("relationId"));
+        displayMessages(getIntent().getExtras().getString(ChatRelation.RELATION_ID_TEXT));
     }
 
     /**

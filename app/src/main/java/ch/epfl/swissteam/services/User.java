@@ -100,12 +100,22 @@ public class User implements DBSavable{
     }
 
     /**
-     * Add a chatRelationId to the list of chatRelationId of the user
+     * Add a chatRelationId to the list of chatRelation of the user
      * db
      * @param chatRelation the id of the chatRelation
      */
     public void addChatRelation(ChatRelation chatRelation){
         addChatRelation(chatRelation, null);
+    }
+
+    public ChatRelation relationExists(User other){
+        for(ChatRelation cR : chatRelations_){
+            if(cR.getFirstUserId_() == googleId_ && cR.getSecondUserId_() == other.googleId_ ||
+                    cR.getFirstUserId_() == other.googleId_ && cR.getSecondUserId_() == googleId_){
+                return cR;
+            }
+        }
+        return null;
     }
 
 }

@@ -1,6 +1,9 @@
 package ch.epfl.swissteam.services;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,6 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+
+import com.google.firebase.database.DatabaseReference;
 
 import java.util.ArrayList;
 
@@ -46,7 +51,7 @@ public class OnlineChatFragment extends Fragment {
         nextButt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                createChatWithInputUserId(view);
+                createChatWithInputUserId(thatView);
             }
         });
         displayChats();
@@ -60,14 +65,60 @@ public class OnlineChatFragment extends Fragment {
 
     public void createChatWithInputUserId(View view){
         EditText eT = view.findViewById(R.id.fragment_online_chat_text);
-        User mUser = new User("123t18", "Mami","gateau", "mg@ggmail.com", "description", new ArrayList<>());
-        User pUser = new User(eT.getText().toString(), "Papi","gateau", "pg@ggmail.com", "description", new ArrayList<>());
 
-        assert(mUser != null);
-        assert(pUser != null);
+        DBUtility dbU = DBUtility.get();
+        User mUser = dbU.getCurrentUser_();
+        try{
+            dbU.getUser(eT.getText().toString(), new MyCallBack<User>(){
+                @Override
+                public void onCallBack(User value) {
+                    openChatWith(mUser, value);
+                }
+            } );
+        }
+        catch (NullPointerException e) {
+            chatErrorAlertDialog(getResources().getString(R.string.general_could_not_find_this_user_in_db));
+        }
 
-
-        ChatRelation cR = new ChatRelation(mUser, pUser);
-        cR.addToDB(DBUtility.get().getDb_());
     }
+
+    private void openChatWith(User mUser, User other){
+        DatabaseReference db = DBUtility.get().getDb_();
+        ChatRelation cR;
+
+        if(mUser != null && other != null){
+            cR = mUser.relationExists(other);
+            if(cR == null){
+                cR = new ChatRelation(mUser, other);
+                cR.addToDB(db);
+                mUser.addChatRelation(cR, db);
+                other.addChatRelation(cR, db);
+            }
+            Intent chatIntent = new Intent(getActivity(), ChatRoom.class);
+            chatIntent.putExtra(ChatRelation.RELATION_ID_TEXT, cR.getId_());
+            startActivity(chatIntent);
+        }
+        if(mUser == null){
+            chatErrorAlertDialog(getResources().getString(R.string.general_could_not_find_you_in_db));
+        }
+
+        if( other == null){
+            chatErrorAlertDialog(getResources().getString(R.string.general_could_not_find_this_user_in_db));
+
+        }
+    }
+
+    private void chatErrorAlertDialog(String message){
+        AlertDialog aD = new AlertDialog.Builder(getActivity()).create();
+        aD.setTitle(getResources().getString(R.string.general_error));
+        aD.setMessage(message);
+        aD.setButton(AlertDialog.BUTTON_NEUTRAL, getResources().getString(R.string.general_ok), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+        aD.show();
+    }
+
 }

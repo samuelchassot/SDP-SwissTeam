@@ -8,6 +8,8 @@ import java.util.Objects;
 
 public class ChatRelation implements DBSavable {
 
+    public static final String RELATION_ID_TEXT = "relationId";
+
     public ChatRelation(User firstUser, User secondUser ){
 
         setUsers(firstUser, secondUser);

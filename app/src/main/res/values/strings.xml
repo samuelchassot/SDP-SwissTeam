@@ -62,4 +62,10 @@
     <string name="profiledisplay_descriptiontag">Description</string>
     <string name="profiledisplay_modify">Modify</string>
     <string name="fragment_services_title">Users that can help you</string>
+
+    <!-- general -->
+    <string name="general_error">Error</string>
+    <string name="general_could_not_find_you_in_db">Could not find you in the database !</string>
+    <string name="general_could_not_find_this_user_in_db">Could not find this user in the database !</string>
+    <string name="general_ok">OK</string>
 </resources>
