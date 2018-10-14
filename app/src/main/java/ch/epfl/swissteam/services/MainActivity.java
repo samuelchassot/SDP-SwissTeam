@@ -9,8 +9,10 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 /**
  * This class is the MainActivity of the application, this is
@@ -23,6 +25,7 @@ public class MainActivity extends AppCompatActivity
 
     private Fragment profileShowerFragment_;
     private Fragment homeFragment_, servicesFragment_, createPostFragment_, settingsFragment_;
+    private DBUtility util = DBUtility.get();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,10 +54,11 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        DBUtility util = DBUtility.get();
+
 
         showHomeFragment();
     }
+
 
     @Override
     public void onBackPressed() {
@@ -70,6 +74,7 @@ public class MainActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
+        setNavUserName();
         return true;
     }
 
@@ -91,7 +96,6 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
@@ -119,6 +123,18 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+
+    /**
+     * Set the user name and email in the nav
+     */
+    private void setNavUserName() {
+        util.getUser(GoogleSignInSingleton.get().getClientUniqueID(), user -> {
+            ((TextView) findViewById(R.id.nav_header_name)).setText(user.getName_());
+            ((TextView) findViewById(R.id.nav_header_email)).setText(user.getEmail_());
+
+        });
     }
 
     /**

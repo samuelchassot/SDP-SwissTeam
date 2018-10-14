@@ -53,21 +53,26 @@ public class DBUtility {
      * @param category the category
      * @param callBack the CallBack to use
      */
-    public void getUsersFromCategory(String category, final MyCallBack<ArrayList<String>> callBack){
-        db_.child(CATEGORIES).child(category).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                ArrayList<String> users = new ArrayList<>();
-                for (DataSnapshot data : dataSnapshot.getChildren()) {
-                    users.add(data.getKey());
+    public void getUsersFromCategory(Categories category, final MyCallBack<ArrayList<String>> callBack){
+        if (category == Categories.ALL){
+            Log.e("DBUtility", "Cannot retrieve all users that way");
+        } else {
+            db_.child(CATEGORIES).child(category.toString()).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    ArrayList<String> users = new ArrayList<>();
+                    for (DataSnapshot data : dataSnapshot.getChildren()) {
+                        users.add(data.getKey());
+                    }
+                    callBack.onCallBack(users);
                 }
-                callBack.onCallBack(users);
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-            }
-        });
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                }
+            });
+
+        }
 
     }
 
@@ -77,6 +82,11 @@ public class DBUtility {
      * @param callBack the CallBack to use
      */
     public void getUser(String googleId, final MyCallBack<User> callBack) {
+        if (googleId == null){
+            User nullUser = new User(null, null, null, null, null);
+            callBack.onCallBack(nullUser);
+            return;
+        }
         db_.child(USERS).child(googleId).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

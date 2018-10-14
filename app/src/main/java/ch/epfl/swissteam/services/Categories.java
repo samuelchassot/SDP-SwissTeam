@@ -1,5 +1,7 @@
 package ch.epfl.swissteam.services;
 
+import android.util.Log;
+
 import com.google.firebase.database.DatabaseReference;
 
 import java.util.ArrayList;
@@ -7,6 +9,7 @@ import java.util.Collections;
 import java.util.List;
 
 public enum Categories implements DBSavable {
+        ALL,
         IC,
         MATHS,
         GARDENING,
@@ -55,6 +58,7 @@ public enum Categories implements DBSavable {
             case MECHANICS: return "Mechanics";
             case DAILYLIFE: return "Daily Life";
             case TRANSPORTATION: return "Transportation";
+            case ALL: return "All";
         }
         return null;
 
@@ -71,6 +75,7 @@ public enum Categories implements DBSavable {
             case "Mechanics" : return MECHANICS;
             case "Daily Life" : return DAILYLIFE;
             case "Transportation" : return TRANSPORTATION;
+            case "All" : return ALL;
             default: return null;
 
         }
@@ -78,9 +83,13 @@ public enum Categories implements DBSavable {
 
     @Override
     public void addToDB(DatabaseReference db) {
-        db.child(DBUtility.CATEGORIES).removeValue();
-        for (String googleId : users_) {
-            db.child(DBUtility.CATEGORIES).child(this.toString()).child(googleId).setValue("true");
+        if (this != ALL) {
+            db.child(DBUtility.get().CATEGORIES).removeValue();
+            for (String googleId : users_) {
+                db.child(DBUtility.get().CATEGORIES).child(this.toString()).child(googleId).setValue("true");
+            }
+        } else {
+            Log.e("Category", "Cannot save category 'all' to database");
         }
     }
 }

@@ -1,12 +1,17 @@
 package ch.epfl.swissteam.services;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 
 import java.util.ArrayList;
 
@@ -17,9 +22,7 @@ import java.util.ArrayList;
  */
 public class ServicesFragment extends Fragment {
 
-    private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
     private ArrayList<User> users = new ArrayList<>();
 
 
@@ -32,42 +35,80 @@ public class ServicesFragment extends Fragment {
      * @return the created instance
      */
     public static ServicesFragment newInstance() {
-        ServicesFragment fragment = new ServicesFragment();
-        return fragment;
+        return new ServicesFragment();
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initDataSet();
 
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view =  inflater.inflate(R.layout.fragment_services, container, false);
-        mRecyclerView = view.findViewById(R.id.services_recycler);
-        mLayoutManager = new LinearLayoutManager(getActivity());
+        RecyclerView mRecyclerView = view.findViewById(R.id.services_recycler);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         mAdapter = new UserAdapter(users);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(mLayoutManager);
+
+        Spinner filterSpinner = (Spinner) view.findViewById(R.id.services_spinner);
+        ArrayAdapter<Categories> filterSpinnerAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, Categories.values());
+        filterSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        filterSpinner.setAdapter(filterSpinnerAdapter);
+
+        filterSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                initDataSet((Categories) adapterView.getItemAtPosition(i));
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
         return view;
     }
 
 
-    private void initDataSet(){
-        users.clear();
-        DBUtility.get().getAllUsers(new MyCallBack<ArrayList<User>>() {
-            @Override
-            public void onCallBack(ArrayList<User> value) {
-                users.addAll(value);
-                mAdapter.notifyDataSetChanged();
-            }
-        });
 
+    private void initDataSet(Categories category){
+        users.clear();
+        if (category == Categories.ALL){
+            DBUtility.get().getAllUsers((usersdb ->{
+                users.addAll(usersdb);
+                mAdapter.notifyDataSetChanged();
+                if (users.isEmpty()){
+                    getActivity().findViewById(R.id.services_problem_text).setVisibility(View.VISIBLE);
+                } else {
+                    getActivity().findViewById(R.id.services_problem_text).setVisibility(View.INVISIBLE);
+                }
+            }));
+        } else {
+            DBUtility.get().getUsersFromCategory(category, (googleIds) -> {
+                if (googleIds.size() == 0){
+                    getActivity().findViewById(R.id.services_problem_text).setVisibility(View.VISIBLE);
+                    mAdapter.notifyDataSetChanged();
+                } else {
+                    getActivity().findViewById(R.id.services_problem_text).setVisibility(View.INVISIBLE);
+                    for (String googleId : googleIds) {
+                        DBUtility.get().getUser(googleId, user -> {
+                            users.add(user);
+                            mAdapter.notifyDataSetChanged();
+                        });
+                    }
+                }
+            });
+        }
 
     }
+
+
+
 
 
 }
