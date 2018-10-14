@@ -16,6 +16,8 @@
     <string name="newprofile_picture">Photo:</string>
     <string name="newprofile_changepicture">Modifier</string>
 
+    <string name="profiledisplay_categoriestag">Mes capacités</string>
+
     /* ----- SignIn string ----- */
     <string name="signin_welcomemessage">Bienvenue sur Socialize!</string>
 
@@ -34,6 +36,7 @@
     <string name="navigation_drawer_newpost">Nouveau post</string>
     <string name="navigation_drawer_section_settings">Paramètres</string>
     <string name="navigation_drawer_button_logout">Déconnexion</string>
+    <string name="toolbar_profile">Profil</string>
 
     /* ----- Home string ----- */
 
@@ -55,6 +58,7 @@
 
     /* ----- Settings string ----- */
     <string name="language_prompt">Choississez une langue</string>
+
 
     <string-array name="language_arrays">
         <item>Anglais</item>
