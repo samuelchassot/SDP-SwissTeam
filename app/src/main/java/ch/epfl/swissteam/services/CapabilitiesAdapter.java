@@ -9,7 +9,7 @@ import android.widget.TextView;
 import java.util.List;
 
 public class CapabilitiesAdapter extends RecyclerView.Adapter<CapabilitiesAdapter.CapabilitiesViewHolder> {
-    private List<String> capabilities_;
+    private List<Categories> capabilities_;
 
 
     public static class CapabilitiesViewHolder extends RecyclerView.ViewHolder {
@@ -21,7 +21,7 @@ public class CapabilitiesAdapter extends RecyclerView.Adapter<CapabilitiesAdapte
         }
     }
 
-    public CapabilitiesAdapter(List<String> capabilities) {
+    public CapabilitiesAdapter(List<Categories> capabilities) {
         capabilities_ = capabilities;
 
     }
@@ -40,7 +40,7 @@ public class CapabilitiesAdapter extends RecyclerView.Adapter<CapabilitiesAdapte
 
     @Override
     public void onBindViewHolder(CapabilitiesViewHolder mViewHolder, int position) {
-        mViewHolder.mCapabilityName.setText(capabilities_.get(position));
+        mViewHolder.mCapabilityName.setText(capabilities_.get(position).toString());
 
     }
 

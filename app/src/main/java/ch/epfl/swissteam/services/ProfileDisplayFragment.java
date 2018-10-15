@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,7 +34,7 @@ public class ProfileDisplayFragment extends Fragment {
     private RecyclerView mRecyclerView_;
     private LinearLayoutManager mLayoutManager_;
     private CapabilitiesAdapter mAdapter_;
-    private List<String> mCapabilities_ = new ArrayList<String>();
+    private List<Categories> mCapabilities_ = new ArrayList<Categories>();
 
     public ProfileDisplayFragment() {
         // Required empty public constructor
@@ -111,6 +112,7 @@ public class ProfileDisplayFragment extends Fragment {
             descrView.setText(user.getDescription_());
 
             //for the recyclerview
+            Log.i("Size : ", user.getCategories_().size() + "");
             mCapabilities_.addAll(user.getCategories_());
 
         });
