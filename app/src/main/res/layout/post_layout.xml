@@ -2,24 +2,21 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/background_gradient"
     android:orientation="vertical">
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/textview_postadapter_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:text="Title"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
-        <TextView
-            android:id="@+id/textview_postadapter_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Title" />
-
-        <TextView
-            android:id="@+id/textview_postadapter_body"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="TextView" />
-    </LinearLayout>
+    <TextView
+        android:id="@+id/textview_postadapter_body"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Body"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 </LinearLayout>
