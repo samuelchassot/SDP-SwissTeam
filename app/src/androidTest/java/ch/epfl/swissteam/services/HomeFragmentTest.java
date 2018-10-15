@@ -39,20 +39,6 @@ public class HomeFragmentTest {
     }
 
     @Test
-    public void displayOneMessageOnCreate(){
-        ListView listview = mActivityRule.getActivity().findViewById(R.id.listview_homefragment_postslist);
-
-        assertThat(listview.getCount(), is(1));
-    }
-
-    @Test
-    public void displaysCorrectMessageOnCreate(){
-        ListView listview = mActivityRule.getActivity().findViewById(R.id.listview_homefragment_postslist);
-
-        assertThat((String)listview.getItemAtPosition(0), is("Refresh for the latest posts!"));
-    }
-
-    @Test
     public void canRefreshButton() {
         (mActivityRule.getActivity().findViewById(R.id.button_homefragment_refresh)).setOnClickListener(null);
         onView(withId(R.id.button_homefragment_refresh)).perform(click());
@@ -64,13 +50,58 @@ public class HomeFragmentTest {
     }
 
     @Test
-    public void correctNumberOfPosts() {
-        DBUtility.get().getPostsFeed(new MyCallBack<ArrayList<Post>>() {
-            @Override
-            public void onCallBack(ArrayList<Post> value) {
-                postsList.clear();
-                postsList.addAll(value);
+    public void displayCorrectNumberOfPostsOnCreate(){
+        DBUtility.get().getPostsFeed(value -> {
+            postsList.clear();
+            postsList.addAll(value);
+        });
+
+        ListView listview = mActivityRule.getActivity().findViewById(R.id.listview_homefragment_postslist);
+
+        try {
+            Thread.sleep(300);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        if (postsList.isEmpty()){
+            assertThat(listview.getCount(), is(1));
+        }else{
+            assertThat(listview.getCount(), is(Math.min(postsList.size(), POSTS_DISPLAY_NUMBER)));
+        }
+    }
+
+    @Test
+    public void displaysPostsCorrectlyOnCreate(){
+        ListView listview = mActivityRule.getActivity().findViewById(R.id.listview_homefragment_postslist);
+
+        DBUtility.get().getPostsFeed(value -> {
+            postsList.clear();
+            postsList.addAll(value);
+        });
+
+        try {
+            Thread.sleep(300);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        if(postsList.isEmpty()){
+            assertThat(listview.getItemAtPosition(0), is(mActivityRule.getActivity().getResources().getString(R.string.homefragment_noposts)));
+        }else{
+            int i = 0;
+            for(Post p : postsList){
+                assertThat(listview.getItemAtPosition(i), is(p.getTitle_() + "\n" + p.getBody_()));
+                i += 1;
             }
+        }
+    }
+
+    @Test
+    public void correctNumberOfPostsOnClick() {
+        DBUtility.get().getPostsFeed(value -> {
+            postsList.clear();
+            postsList.addAll(value);
         });
 
         onView(withId(R.id.button_homefragment_refresh)).perform(click());
@@ -85,29 +116,63 @@ public class HomeFragmentTest {
     }
 
     @Test
-    public void displaysPostsCorrectly(){
-        DBUtility.get().getPostsFeed(new MyCallBack<ArrayList<Post>>() {
-            @Override
-            public void onCallBack(ArrayList<Post> value) {
-                postsList.clear();
-                postsList.addAll(value);
-            }
+    public void displaysPostsCorrectlyOnClick(){
+        DBUtility.get().getPostsFeed(value -> {
+            postsList.clear();
+            postsList.addAll(value);
         });
 
         onView(withId(R.id.button_homefragment_refresh)).perform(click());
 
         ListView listview = mActivityRule .getActivity().findViewById(R.id.listview_homefragment_postslist);
         if(postsList.isEmpty()){
-            assertThat((String)listview.getItemAtPosition(0), is(mActivityRule.getActivity().getResources().getString(R.string.homefragment_noposts)));
+            assertThat(listview.getItemAtPosition(0), is(mActivityRule.getActivity().getResources().getString(R.string.homefragment_noposts)));
         }else{
             int i = 0;
             for(Post p : postsList){
-                assertThat((String)listview.getItemAtPosition(i), is(p.getTitle_() + "\n" + p.getBody_()));
+                assertThat(listview.getItemAtPosition(i), is(p.getTitle_() + "\n" + p.getBody_()));
                 i += 1;
             }
         }
+    }
 
+    @Test
+    public void correctNumberOfPostsOnSwipeDown() {
+        DBUtility.get().getPostsFeed(value -> {
+            postsList.clear();
+            postsList.addAll(value);
+        });
 
+        onView(withId(R.id.swiperefresh_homefragment_refresh)).perform(swipeDown());
+
+        ListView listview = mActivityRule.getActivity().findViewById(R.id.listview_homefragment_postslist);
+        if (postsList.isEmpty()){
+            assertThat(listview.getCount(), is(1));
+        }else{
+            assertThat(listview.getCount(), is(Math.min(postsList.size(), POSTS_DISPLAY_NUMBER)));
+        }
+
+    }
+
+    @Test
+    public void displaysPostsCorrectlyOnSwipeDown(){
+        DBUtility.get().getPostsFeed(value -> {
+            postsList.clear();
+            postsList.addAll(value);
+        });
+
+        onView(withId(R.id.swiperefresh_homefragment_refresh)).perform(swipeDown());
+
+        ListView listview = mActivityRule .getActivity().findViewById(R.id.listview_homefragment_postslist);
+        if(postsList.isEmpty()){
+            assertThat(listview.getItemAtPosition(0), is(mActivityRule.getActivity().getResources().getString(R.string.homefragment_noposts)));
+        }else{
+            int i = 0;
+            for(Post p : postsList){
+                assertThat(listview.getItemAtPosition(i), is(p.getTitle_() + "\n" + p.getBody_()));
+                i += 1;
+            }
+        }
     }
 
 }
