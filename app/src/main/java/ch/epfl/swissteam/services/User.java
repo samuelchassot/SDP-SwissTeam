@@ -108,8 +108,8 @@ public class User implements DBSavable{
     public ChatRelation relationExists(User other){
         if(chatRelations_ == null) return null;
         for(ChatRelation cR : chatRelations_){
-            if(cR.getFirstUserId_() == googleId_ && cR.getSecondUserId_() == other.googleId_ ||
-                    cR.getFirstUserId_() == other.googleId_ && cR.getSecondUserId_() == googleId_){
+            if(cR.getFirstUserId_().compareTo(googleId_) == 0 && cR.getSecondUserId_().compareTo(other.googleId_) == 0
+                    || cR.getFirstUserId_().compareTo(other.googleId_) == 0 && cR.getSecondUserId_().compareTo(googleId_) == 0){
                 return cR;
             }
         }
