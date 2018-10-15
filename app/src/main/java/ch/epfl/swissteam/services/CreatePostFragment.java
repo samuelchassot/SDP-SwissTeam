@@ -62,8 +62,10 @@ public class CreatePostFragment extends Fragment implements View.OnClickListener
             String title = titleField.getText().toString();
             String body = bodyField.getText().toString();
 
-            DBUtility.get().getUser(GoogleSignInSingleton.get().getClientUniqueID(), user -> {
-                Post post = new Post(title, user.getName_(), body, (new Date()).getTime());
+            String googleID = GoogleSignInSingleton.get().getClientUniqueID();
+
+            DBUtility.get().getUser(googleID, user -> {
+                Post post = new Post(title, googleID, body, (new Date()).getTime());
 
                 post.addToDB(DBUtility.get().getDb_());
             });
