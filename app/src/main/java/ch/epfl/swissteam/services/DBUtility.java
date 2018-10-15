@@ -130,13 +130,12 @@ public class DBUtility {
      */
     public void getPostsFeed(final MyCallBack<ArrayList<Post>> callBack){
         Query freshestPosts = db_.child(POSTS).limitToFirst(POSTS_DISPLAY_NUMBER);
-        freshestPosts.addListenerForSingleValueEvent(new ValueEventListener() {
+        freshestPosts.addValueEventListener(new ValueEventListener() {
             ArrayList<Post> posts = new ArrayList<>();
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 posts.clear();
                 for (DataSnapshot data : dataSnapshot.getChildren()){
-                    //Log.e("POSTSDB", "test "+data.getValue(Post.class));
                     Post post = data.getValue(Post.class);
                     posts.add(post);
                 }

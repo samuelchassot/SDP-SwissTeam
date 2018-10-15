@@ -131,8 +131,9 @@ public class MainActivity extends AppCompatActivity
      */
     private void setNavUserName() {
         util.getUser(GoogleSignInSingleton.get().getClientUniqueID(), user -> {
+            if(user != null){
             ((TextView) findViewById(R.id.nav_header_name)).setText(user.getName_());
-            ((TextView) findViewById(R.id.nav_header_email)).setText(user.getEmail_());
+            ((TextView) findViewById(R.id.nav_header_email)).setText(user.getEmail_());}
 
         });
     }
