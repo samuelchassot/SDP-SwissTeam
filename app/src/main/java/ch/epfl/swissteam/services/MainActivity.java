@@ -102,6 +102,9 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         switch (id) {
+            case (R.id.button_maindrawer_home) :
+                showHomeFragment();
+                break;
             case (R.id.button_maindrawer_services) :
                 showServicesFragment();
                 break;
