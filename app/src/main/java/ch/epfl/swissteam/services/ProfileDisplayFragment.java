@@ -112,14 +112,15 @@ public class ProfileDisplayFragment extends Fragment {
             descrView.setText(user.getDescription_());
 
             //for the recyclerview
-            Log.i("Size : ", user.getCategories_().size() + "");
+//            for (int i = 0 ; i < user.getCategories_().size() ; ++i){
+//                Categories c = user.getCategories_().get(i);
+//                if(!mCapabilities_.contains(c)){
+//                    mCapabilities_.add(c);
+//                }
+//            }
+            mCapabilities_.clear();
+            mCapabilities_.addAll(user.getCategories_());
 
-            for (int i = 0 ; i < user.getCategories_().size() ; ++i){
-                Categories c = user.getCategories_().get(i);
-                if(!mCapabilities_.contains(c)){
-                    mCapabilities_.add(c);
-                }
-            }
 
         });
     }
