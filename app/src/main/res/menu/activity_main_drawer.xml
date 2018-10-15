@@ -38,6 +38,10 @@
     </item>
     -->
     <item
+        android:id="@+id/button_maindrawer_home"
+        android:icon="@drawable/ic_maindrawer_profile"
+        android:title="@string/navigation_drawer_button_home" />
+    <item
         android:id="@+id/button_maindrawer_profile"
         android:icon="@drawable/ic_maindrawer_profile"
         android:title="@string/navigation_drawer_button_profile" />
