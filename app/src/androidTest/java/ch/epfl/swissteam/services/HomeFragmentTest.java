@@ -33,7 +33,7 @@ public class HomeFragmentTest {
             new ActivityTestRule<>(MainActivity.class);
 
     @Test
-    public void canOpenCreatePostFragment() {
+    public void canOpenHomeFragment() {
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_home));
     }
