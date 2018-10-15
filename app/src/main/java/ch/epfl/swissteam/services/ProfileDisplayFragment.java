@@ -113,7 +113,13 @@ public class ProfileDisplayFragment extends Fragment {
 
             //for the recyclerview
             Log.i("Size : ", user.getCategories_().size() + "");
-            mCapabilities_.addAll(user.getCategories_());
+
+            for (int i = 0 ; i < user.getCategories_().size() ; ++i){
+                Categories c = user.getCategories_().get(i);
+                if(!mCapabilities_.contains(c)){
+                    mCapabilities_.add(c);
+                }
+            }
 
         });
     }
