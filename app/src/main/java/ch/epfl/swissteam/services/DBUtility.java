@@ -24,6 +24,8 @@ public class DBUtility {
     public final static String ERROR_TAG = "DBUtility";
     private final int POSTS_DISPLAY_NUMBER = 20;
 
+    private static boolean mocked = false;
+
     private DBUtility(DatabaseReference db_){
         this.db_ = db_;
     }
@@ -82,22 +84,30 @@ public class DBUtility {
      * @param callBack the CallBack to use
      */
     public void getUser(String googleId, final MyCallBack<User> callBack) {
-        if (googleId == null){
-            User nullUser = new User(null, null, null, null, null);
-            callBack.onCallBack(nullUser);
-            return;
+        if(!mocked) {
+            if (googleId == null) {
+                User nullUser = new User(null, null, null, null, null);
+                callBack.onCallBack(nullUser);
+                return;
+            }
+            db_.child(USERS).child(googleId).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    callBack.onCallBack(dataSnapshot.getValue(User.class));
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+        }else{
+            ArrayList<Categories> testCat = new ArrayList<>();
+            testCat.add(Categories.COOKING);
+            testCat.add(Categories.GARDENING);
+            User mockedUser = new User("TestGoogleID", "TestUser", "test@gmail.com", "This is a test user in a mock DB", testCat);
+            callBack.onCallBack(mockedUser);
         }
-        db_.child(USERS).child(googleId).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                callBack.onCallBack(dataSnapshot.getValue(User.class));
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
     }
 
     /**
@@ -170,5 +180,9 @@ public class DBUtility {
 
             }
         });
+    }
+
+    public static void setMock(){
+        mocked = true;
     }
 }
