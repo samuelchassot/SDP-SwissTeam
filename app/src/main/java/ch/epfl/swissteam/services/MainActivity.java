@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private Fragment profileShowerFragment_;
-    private Fragment homeFragment_, servicesFragment_, createPostFragment_, settingsFragment_;
+    private Fragment homeFragment_, servicesFragment_, createPostFragment_, settingsFragment_, myPostsFragment_;
     private DBUtility util = DBUtility.get();
 
     @Override
@@ -114,6 +114,9 @@ public class MainActivity extends AppCompatActivity
             case (R.id.button_maindrawer_createpost) :
                 showCreatePostFragment();
                 break;
+            case (R.id.button_maindrawer_myposts) :
+                showMyPostsFragment();
+                break;
             case (R.id.button_maindrawer_settings) :
                 showSettingsFragment();
                 break;
@@ -164,6 +167,14 @@ public class MainActivity extends AppCompatActivity
     private void showCreatePostFragment(){
         if (this.createPostFragment_ == null) this.createPostFragment_ = CreatePostFragment.newInstance();
         this.startTransactionFragment(this.createPostFragment_);
+    }
+
+    /**
+     * Shows the my posts Fragment, where the user can edit and delete his posts
+     */
+    private void showMyPostsFragment(){
+        if (this.myPostsFragment_ == null) this.myPostsFragment_ = MyPostsFragment.newInstance();
+        this.startTransactionFragment(this.myPostsFragment_);
     }
 
     /**
