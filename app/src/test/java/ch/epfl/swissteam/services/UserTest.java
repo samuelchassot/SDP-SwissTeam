@@ -58,15 +58,10 @@ public class UserTest {
     public void relationExistsWorksForExistentRelation(){
         User user1 = new User(googleID, name, email, description, categories);
         User user2 = new User(googleID2, name2, email2, description2, categories);
+        User user2bis = new User("1frr", name2, email2, description2, categories);
         ChatRelation cR = new ChatRelation(user1, user2);
         user1.addChatRelation(cR);
         user2.addChatRelation(cR);
-        assertEquals(cR, user1.relationExists(user2));
-        User user = new User(googleID, name, email, description, categories);
-        assertEquals(user.getGoogleId_(), googleID);
-        assertEquals(user.getEmail_(), email);
-        assertEquals(user.getName_(), name);
-        assertEquals(user.getDescription_(), description);
-        assertEquals(user.getCategories_(), categories);
+        assertEquals(cR, user1.relationExists(user2bis));
     }
 }
