@@ -28,7 +28,7 @@ public class MyPostsFragment extends Fragment{
     private RecyclerView mRecyclerView_;
     private LinearLayoutManager mLayoutManager_;
     private RecyclerView.Adapter mAdapter_;
-    private List<Post> mPosts_ = new ArrayList<Post>();
+    private List<Post> mPosts_ = new ArrayList<>();
 
     public MyPostsFragment() {
         // Required empty public constructor
@@ -67,24 +67,7 @@ public class MyPostsFragment extends Fragment{
             mRecyclerView_.setLayoutManager(mLayoutManager_);
 
             //TODO Adapter
-            mAdapter_ = new RecyclerView.Adapter() {
-                @NonNull
-                @Override
-                public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-                    return null;
-                }
-
-                @Override
-                public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
-
-                }
-
-                @Override
-                public int getItemCount() {
-                    return 0;
-                }
-            };
-
+            mAdapter_ = new PostAdapter(mPosts_);
             mRecyclerView_.setAdapter(mAdapter_);
         }
 
