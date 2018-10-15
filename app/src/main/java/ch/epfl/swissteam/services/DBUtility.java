@@ -136,7 +136,6 @@ public class DBUtility {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 posts.clear();
                 for (DataSnapshot data : dataSnapshot.getChildren()){
-                    //Log.e("POSTSDB", "test "+data.getValue(Post.class));
                     Post post = data.getValue(Post.class);
                     posts.add(post);
                 }
@@ -168,6 +167,32 @@ public class DBUtility {
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
+            }
+        });
+    }
+
+    /**
+     * Retrieves all the posts from one user
+     * @param googleID the ID of the user
+     * @param callBack the function called on the callBack
+     */
+    public void getUsersPosts(String googleID, final MyCallBack<ArrayList<Post>> callBack){
+        Query usersPosts = db_.child(POSTS).child("googleId_").equalTo(googleID);
+        usersPosts.addListenerForSingleValueEvent(new ValueEventListener() {
+            ArrayList<Post> posts = new ArrayList<>();
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                posts.clear();
+                for (DataSnapshot data : dataSnapshot.getChildren()){
+                    Post post = data.getValue(Post.class);
+                    posts.add(post);
+                }
+                callBack.onCallBack(posts);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.w(ERROR_TAG, "getUsersPost:onCancelled", databaseError.toException());
             }
         });
     }

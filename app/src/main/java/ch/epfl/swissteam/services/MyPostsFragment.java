@@ -95,12 +95,11 @@ public class MyPostsFragment extends Fragment{
      * Load the posts from a user and display them in the recycler view
      */
     private void loadAndShowPostsFromUser(){
-        //TODO use right function in DBUtility
-        //DBUtility.get().getUser(clientUniqueID_, (user)->{
-            //mPosts_.clear();
-            //mPosts_.addAll(user.getCategories_());
-            //mAdapter_.notifyDataSetChanged();
-        //});
+        DBUtility.get().getUsersPosts(clientUniqueID_, (posts)->{
+            mPosts_.clear();
+            mPosts_.addAll(posts);
+            mAdapter_.notifyDataSetChanged();
+        });
     }
 
     @Override
