@@ -45,6 +45,7 @@
     <string name="navigation_drawer_button_logout">Logout</string>
 
     /* ----- Home string ----- */
+    <string name="homefragment_asktorefresh">Refresh for the latest posts!</string>
     <string name="homefragment_noposts">No posts for now …</string>
 
     /* ----- Service string ----- */
