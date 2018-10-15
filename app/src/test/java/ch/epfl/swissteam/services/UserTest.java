@@ -10,12 +10,12 @@ import static org.junit.Assert.assertEquals;
 public class UserTest {
 
     public static String googleID = "1337", email = "a@b.c", name = "Jean", description = "45 ans.";
-    public static ArrayList<String> categories = new ArrayList<String>();
+    public static ArrayList<Categories> categories = new ArrayList<Categories>();
 
     @Before
     public void setCats() {
-        categories.add("IT");
-        categories.add("jardinage");
+        categories.add(Categories.COOKING);
+        categories.add(Categories.DAILYLIFE);
     }
 
     @Test

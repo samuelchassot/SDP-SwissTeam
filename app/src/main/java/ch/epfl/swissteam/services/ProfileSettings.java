@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class ProfileSettings extends AppCompatActivity {
 
-    private ArrayList<String> currentCategories;
+    private ArrayList<Categories> currentCategories;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
