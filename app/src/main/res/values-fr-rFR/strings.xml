@@ -57,6 +57,7 @@
 
     /* ----- Settings string ----- */
     <string name="language_prompt">Choississez une langue</string>
+    <string name="toolbar_my_posts">Mes posts</string>
 
     <string-array name="language_arrays">
         <item>Anglais</item>

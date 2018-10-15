@@ -1,13 +1,34 @@
 package ch.epfl.swissteam.services;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
-public class MyPostsFragment extends Fragment implements View.OnClickListener{
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * MyPostsFragment, a fragment that display to the currently logged in user
+ * his posts. Depending on his interaction with his posts, sends him to
+ * {@link MyPostEdit}.
+ */
+public class MyPostsFragment extends Fragment{
+
+    private String clientUniqueID_;
+    private RecyclerView mRecyclerView_;
+    private LinearLayoutManager mLayoutManager_;
+    private RecyclerView.Adapter mAdapter_;
+    private List<Post> mPosts_ = new ArrayList<Post>();
 
     public MyPostsFragment() {
         // Required empty public constructor
@@ -25,12 +46,67 @@ public class MyPostsFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
+        toolbar.setTitle(R.string.toolbar_my_posts);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View frag = inflater.inflate(R.layout.fragment_my_posts, container, false);
+
+        clientUniqueID_ = GoogleSignInSingleton.get().getClientUniqueID();
+        loadAndShowPostsFromUser();
+
+        //setup recyclerview for posts
+        //TODO setup recyclerView
+        mRecyclerView_ = frag.findViewById(R.id.recyclerview_mypostsfragment);
+
+        if(mRecyclerView_ != null) {
+            mLayoutManager_ = new LinearLayoutManager(this.getContext());
+            mRecyclerView_.setLayoutManager(mLayoutManager_);
+
+            //TODO Adapter
+            mAdapter_ = new RecyclerView.Adapter() {
+                @NonNull
+                @Override
+                public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+                    return null;
+                }
+
+                @Override
+                public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
+
+                }
+
+                @Override
+                public int getItemCount() {
+                    return 0;
+                }
+            };
+
+            mRecyclerView_.setAdapter(mAdapter_);
+        }
+
         return frag;
     }
+
+    /**
+     * Load the posts from a user and display them in the recycler view
+     */
+    private void loadAndShowPostsFromUser(){
+        //TODO use right function in DBUtility
+        //DBUtility.get().getUser(clientUniqueID_, (user)->{
+            //mPosts_.clear();
+            //mPosts_.addAll(user.getCategories_());
+            //mAdapter_.notifyDataSetChanged();
+        //});
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        loadAndShowPostsFromUser();
+    }
 }
+

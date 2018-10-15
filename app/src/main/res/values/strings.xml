@@ -45,8 +45,6 @@
     <string name="navigation_drawer_button_logout">Logout</string>
 
     /* ----- Home string ----- */
-
-    <string name="homefragment_asktorefresh">Refresh for the latest posts!</string>
     <string name="homefragment_noposts">No posts for now …</string>
 
     /* ----- Service string ----- */
@@ -82,6 +80,7 @@
 
     /* ----- Settings string ----- */
     <string name="language_prompt">Choose a language</string>
+    <string name="toolbar_my_posts">My posts</string>
 
     <string-array name="language_arrays">
         <item>English</item>
