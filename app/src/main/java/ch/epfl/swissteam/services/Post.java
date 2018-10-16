@@ -2,7 +2,6 @@ package ch.epfl.swissteam.services;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.util.Log;
 
 import com.google.firebase.database.DatabaseReference;
 

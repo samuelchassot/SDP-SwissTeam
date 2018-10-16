@@ -31,18 +31,18 @@ public class SwipeRevealLayout extends ViewGroup {
     private static final int DEFAULT_MIN_FLING_VELOCITY = 300; // dp per second
     private static final int DEFAULT_MIN_DIST_REQUEST_DISALLOW_PARENT = 1; // dp
 
-    public static final int DRAG_EDGE_LEFT =   0x1;
-    public static final int DRAG_EDGE_RIGHT =  0x1 << 1;
+    private static final int DRAG_EDGE_LEFT =   0x1;
+    private static final int DRAG_EDGE_RIGHT =  0x1 << 1;
 
     /**
      * The secondary view will be under the main view.
      */
-    public static final int MODE_NORMAL = 0;
+    private static final int MODE_NORMAL = 0;
 
     /**
      * The secondary view will stick the edge of the main view.
      */
-    public static final int MODE_SAME_LEVEL = 1;
+    private static final int MODE_SAME_LEVEL = 1;
 
     /**
      * Main view is the view which is shown when the layout is closed.
@@ -338,7 +338,7 @@ public class SwipeRevealLayout extends ViewGroup {
     /**
      * Open the panel to show the secondary view
      */
-    public void open(boolean animation) {
+    private void open(boolean animation) {
         mIsOpenBeforeInit = true;
 
         if (animation) {
@@ -367,7 +367,7 @@ public class SwipeRevealLayout extends ViewGroup {
     /**
      * Close the panel to hide the secondary view
      */
-    public void close(boolean animation) {
+    private void close(boolean animation) {
         mIsOpenBeforeInit = false;
 
         if (animation) {
@@ -394,7 +394,7 @@ public class SwipeRevealLayout extends ViewGroup {
     /**
      * @return true if the drag/swipe motion is currently locked.
      */
-    public boolean isDragLocked() {
+    private boolean isDragLocked() {
         return mLockDrag;
     }
 

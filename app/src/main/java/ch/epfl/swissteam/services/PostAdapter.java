@@ -13,18 +13,29 @@ import android.widget.Toast;
 import java.util.List;
 
 
-
+/**
+ * Adapter for Posts in {@link MyPostsFragment}
+ *
+ * @author Julie Giunta
+ */
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder> {
 
     public static final String POST_TAG = "ch.epfl.swissteam.services.post";
 
     private List<Post> posts_;
 
+    /**
+     * ViewHolder for Posts, with hidden buttons
+     */
     static class PostViewHolder extends RecyclerView.ViewHolder{
         protected TextView postView_;
         protected ImageButton editButton_;
         protected ImageButton deleteButton_;
 
+        /**
+         * Create a PostViewHolder
+         * @param v the current View
+         */
         protected PostViewHolder(View v){
             super(v);
             postView_ = v.findViewById(R.id.textview_postadapter_post);
@@ -33,6 +44,10 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         }
     }
 
+    /**
+     * Adapter for a list of Posts
+     * @param posts the list of Posts to be managed by the adapter
+     */
     public PostAdapter(List<Post> posts){
         this.posts_ = posts;
     }

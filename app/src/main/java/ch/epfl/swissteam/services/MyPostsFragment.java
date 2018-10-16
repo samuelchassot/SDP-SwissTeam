@@ -1,36 +1,23 @@
 package ch.epfl.swissteam.services;
 
-import android.content.Intent;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Rect;
-import android.graphics.RectF;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import android.support.v7.widget.helper.ItemTouchHelper.Callback;
-
-import static android.support.v7.widget.helper.ItemTouchHelper.ACTION_STATE_SWIPE;
-import static android.support.v7.widget.helper.ItemTouchHelper.LEFT;
-import static android.support.v7.widget.helper.ItemTouchHelper.RIGHT;
-
 /**
  * MyPostsFragment, a fragment that display to the currently logged in user
  * his posts. Depending on his interaction with his posts, sends him to
  * {@link MyPostEdit}.
+ *
+ * @author Julie Giunta
  */
 public class MyPostsFragment extends Fragment {
 
@@ -48,8 +35,7 @@ public class MyPostsFragment extends Fragment {
      * @return new instance of <code>MyPostsFragment</code>
      */
     public static MyPostsFragment newInstance() {
-        MyPostsFragment fragment = new MyPostsFragment();
-        return fragment;
+        return new MyPostsFragment();
     }
 
     @Override

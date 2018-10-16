@@ -16,9 +16,8 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="100dp"
         android:ems="10"
-        android:hint="Enter the title here"
+        android:hint="@string/createpostfragment_entertitle"
         android:inputType="textAutoCorrect"
-        android:text="Title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -36,9 +35,8 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="344dp"
         android:ems="10"
-        android:hint="Enter the body here"
+        android:hint="@string/createpostfragment_enterbody"
         android:inputType="textAutoCorrect"
-        android:text="Body"
         app:layout_constraintBottom_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -61,5 +59,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edittext_mypostedit_body"
         app:layout_constraintVertical_bias="0.818"
-        android:src="@drawable/ic_post_edit" />
+        android:src="@drawable/ic_post_edit"
+        android:contentDescription="@string/post_hinteditbutton" />
 </android.support.constraint.ConstraintLayout>

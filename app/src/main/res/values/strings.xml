@@ -48,12 +48,15 @@
     /* ----- Home string ----- */
     <string name="homefragment_asktorefresh">Refresh for the latest posts!</string>
     <string name="homefragment_noposts">No posts for now …</string>
+    <string name="homefragment_hintrefreshbutton">Refresh</string>
 
     /* ----- Service string ----- */
 
     <string name="fragment_services_title">Users that can help you</string>
 
     /* ----- Post string ----- */
+    <string name="post_hinteditbutton">Edit your post</string>
+    <string name="postadapter_hintdeletebutton">Delete you post</string>
     <string name="createpostfragment_entertitle">Enter a title here</string>
     <string name="createpostfragment_enterbody">Enter the body here</string>
     <string name="createpostfragment_titleempty">You need to enter a title!</string>

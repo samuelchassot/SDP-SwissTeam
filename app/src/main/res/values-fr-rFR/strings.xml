@@ -44,12 +44,15 @@
 
     <string name="homefragment_asktorefresh">Actualisez pour les derniers messages!</string>
     <string name="homefragment_noposts">Pas de posts pour le moment …</string>
+    <string name="homefragment_hintrefreshbutton">Rafraîchir</string>
 
     /* ----- Service string ----- */
 
     <string name="fragment_services_title">Utilisateurs qui peuvent vous aider</string>
 
     /* ----- Post string ----- */
+    <string name="post_hinteditbutton">Modifiez votre post</string>
+    <string name="postadapter_hintdeletebutton">Supprimez votre post</string>
     <string name="createpostfragment_entertitle">Entrez un titre ici</string>
     <string name="createpostfragment_enterbody">Entrez le contenu ici</string>
     <string name="createpostfragment_titleempty">Vous devez entrer un titre!</string>

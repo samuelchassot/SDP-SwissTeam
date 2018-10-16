@@ -6,6 +6,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 
+/**
+ * Activity to edit a selected Post from the currently connected User
+ *
+ * @author Julie Giunta
+ */
 public class MyPostEdit extends AppCompatActivity{
     private Post post_;
     private EditText title_, body_;
@@ -25,7 +30,11 @@ public class MyPostEdit extends AppCompatActivity{
         body_.setText(post_.getBody_());
     }
 
-
+    /**
+     * Function called when the edit button is clicked.
+     * Sets the modified post in the database and finish the activity.
+     * @param view the current View
+     */
     public void editPost(View view) {
         post_.setTitle_(title_.getText().toString());
         post_.setBody_(body_.getText().toString());
