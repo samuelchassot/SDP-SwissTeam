@@ -1,5 +1,7 @@
 package ch.epfl.swissteam.services;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 
 import com.google.firebase.database.DatabaseReference;
@@ -10,7 +12,7 @@ import com.google.firebase.database.DatabaseReference;
  * @author Adrian Baudat
  * @author Julie Giunta
  */
-public class Post implements DBSavable{
+public class Post implements DBSavable, Parcelable{
 
     private String title_, googleId_, body_;
     private long timestamp_;
@@ -66,4 +68,51 @@ public class Post implements DBSavable{
     public String getKey_() {
         return key_;
     }
+
+    public void setTitle_(String title_) {
+        this.title_ = title_;
+    }
+
+    public void setBody_(String body_) {
+        this.body_ = body_;
+    }
+
+    //Implements Parcelable
+    public Post(Parcel in){
+        String[] data= new String[5];
+
+        in.readStringArray(data);
+        this.key_= data[0];
+        this.title_= data[1];
+        this.googleId_= data[2];
+        this.body_= data[3];
+        this.timestamp_= Long.parseLong(data[4]);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeStringArray(new String[]{
+                this.key_,this.title_, this.googleId_, this.body_,
+                String.valueOf(this.timestamp_)});
+    }
+
+    public static final Parcelable.Creator<Post> CREATOR= new Parcelable.Creator<Post>() {
+
+        @Override
+        public Post createFromParcel(Parcel source) {
+            return new Post(source);  //using parcelable constructor
+        }
+
+        @Override
+        public Post[] newArray(int size) {
+            return new Post[size];
+        }
+    };
+
+
 }

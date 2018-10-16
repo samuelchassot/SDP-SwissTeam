@@ -1,8 +1,8 @@
 package ch.epfl.swissteam.services;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +12,11 @@ import android.widget.Toast;
 
 import java.util.List;
 
+
+
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder> {
+
+    public static final String POST_TAG = "ch.epfl.swissteam.services.post";
 
     private List<Post> posts_;
 
@@ -46,9 +50,11 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         holder.postView_.setText(posts_.get(i).getTitle_() + "\n" + posts_.get(i).getBody_());
         holder.editButton_.setOnClickListener(new View.OnClickListener() {
             @Override
-            //TODO
             public void onClick(View v) {
-
+                Toast.makeText(v.getContext(), "EDIT CLICKED", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(holder.itemView.getContext(), MyPostEdit.class);
+                intent.putExtra(POST_TAG, posts_.get(i));
+                holder.itemView.getContext().startActivity(intent);
             }
         });
 
@@ -58,6 +64,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                 Toast.makeText(v.getContext(), "DELETE CLICKED", Toast.LENGTH_SHORT).show();
                 DBUtility.get().deletePost(posts_.get(i).getKey_());
                 posts_.remove(i);
+                ((RecyclerView)v.getParent().getParent().getParent().getParent()).getAdapter().notifyDataSetChanged();
             }
         });
     }
