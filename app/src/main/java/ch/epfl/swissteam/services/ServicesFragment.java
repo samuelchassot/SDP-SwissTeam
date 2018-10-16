@@ -98,8 +98,10 @@ public class ServicesFragment extends Fragment {
                     getActivity().findViewById(R.id.services_problem_text).setVisibility(View.INVISIBLE);
                     for (String googleId : googleIds) {
                         DBUtility.get().getUser(googleId, user -> {
-                            users.add(user);
-                            mAdapter.notifyDataSetChanged();
+                            if (!users.contains(user)) {
+                                users.add(user);
+                                mAdapter.notifyDataSetChanged();
+                            }
                         });
                     }
                 }

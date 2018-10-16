@@ -71,6 +71,11 @@ public class User implements DBSavable{
         }
     }
 
+    @Override
+    public boolean equals(Object other){
+        return this.googleId_.equals(((User) other).getGoogleId_());
+    }
+
 
 
 }
