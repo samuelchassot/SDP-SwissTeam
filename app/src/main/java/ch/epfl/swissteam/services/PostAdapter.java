@@ -5,7 +5,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -13,13 +15,16 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
     private List<Post> posts_;
 
-    public static class PostViewHolder extends RecyclerView.ViewHolder{
-        public TextView titleView_;
-        public TextView bodyView_;
-        public PostViewHolder(View v){
+    static class PostViewHolder extends RecyclerView.ViewHolder{
+        protected TextView postView_;
+        protected ImageButton editButton_;
+        protected ImageButton deleteButton_;
+
+        protected PostViewHolder(View v){
             super(v);
-            titleView_ = v.findViewById(R.id.textview_postadapter_title);
-            bodyView_ = v.findViewById(R.id.textview_postadapter_body);
+            postView_ = v.findViewById(R.id.textview_postadapter_post);
+            editButton_ = v.findViewById(R.id.button_postadapter_edit);
+            deleteButton_= v.findViewById(R.id.button_postadapter_delete);
         }
     }
 
@@ -37,8 +42,22 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
     @Override
     public void onBindViewHolder(PostViewHolder holder, int i) {
-        holder.titleView_.setText(posts_.get(i).getTitle_());
-        holder.bodyView_.setText(posts_.get(i).getBody_());
+        holder.postView_.setText(posts_.get(i).getTitle_() + "\n" + posts_.get(i).getBody_());
+        holder.editButton_.setOnClickListener(new View.OnClickListener() {
+            @Override
+            //TODO
+            public void onClick(View v) {
+                Toast.makeText(v.getContext(), "INFO CLICKED", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        holder.deleteButton_.setOnClickListener(new View.OnClickListener() {
+            @Override
+            //TODO
+            public void onClick(View v) {
+                Toast.makeText(v.getContext(), "EDIT CLICKED", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
