@@ -4,7 +4,6 @@ import android.support.test.espresso.contrib.DrawerActions;
 import android.support.test.espresso.contrib.NavigationViewActions;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import org.junit.Rule;
@@ -50,6 +49,31 @@ public class ProfileDisplayFragmentTest {
             e.printStackTrace();
         }
         onView(withId(R.id.edittext_profilesettings_name)).perform(clearText()).perform(typeText("testuser_2"));
+        onView(withId(R.id.button_profilesettings_save)).perform(click());
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        assertThat(((TextView)mainActivityRule_.getActivity().findViewById(R.id.textview_profiledisplay_name)).getText().toString(), is("testuser_2"));
+        closeSoftKeyboard();
+        onView(withId(R.id.button_profiledisplay_modify)).perform(click());
+
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        onView(withId(R.id.edittext_profilesettings_name)).perform(clearText()).perform(typeText("testuser"));
+        closeSoftKeyboard();
+        onView(withId(R.id.button_profilesettings_save)).perform(click());
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        assertThat(((TextView)mainActivityRule_.getActivity().findViewById(R.id.textview_profiledisplay_name)).getText().toString(), is("testuser"));
+
 
     }
 }
