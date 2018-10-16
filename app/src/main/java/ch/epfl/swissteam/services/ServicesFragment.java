@@ -77,9 +77,9 @@ public class ServicesFragment extends Fragment {
 
 
     private void initDataSet(Categories category){
-        users.clear();
         if (category == Categories.ALL){
             DBUtility.get().getAllUsers((usersdb ->{
+                users.clear();
                 users.addAll(usersdb);
                 mAdapter.notifyDataSetChanged();
                 if (users.isEmpty()){
@@ -90,6 +90,7 @@ public class ServicesFragment extends Fragment {
             }));
         } else {
             DBUtility.get().getUsersFromCategory(category, (googleIds) -> {
+                users.clear();
                 if (googleIds.size() == 0){
                     getActivity().findViewById(R.id.services_problem_text).setVisibility(View.VISIBLE);
                     mAdapter.notifyDataSetChanged();
