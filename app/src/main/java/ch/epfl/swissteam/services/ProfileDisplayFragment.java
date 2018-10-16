@@ -120,7 +120,7 @@ public class ProfileDisplayFragment extends Fragment {
 //            }
             mCapabilities_.clear();
             mCapabilities_.addAll(user.getCategories_());
-
+            mAdapter_.notifyDataSetChanged();
 
         });
     }
