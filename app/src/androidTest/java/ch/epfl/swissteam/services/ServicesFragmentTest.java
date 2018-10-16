@@ -13,10 +13,10 @@ import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static net.bytebuddy.matcher.ElementMatchers.is;
-import static org.hamcrest.CoreMatchers.anything;
+import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.hasToString;
 
 @RunWith(AndroidJUnit4.class)
 public class ServicesFragmentTest {
@@ -29,8 +29,8 @@ public class ServicesFragmentTest {
     public void openFragment() {
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_services));
-        //onView(withId(R.id.services_spinner)).perform(click());
-        onData(anything()).atPosition(1).perform(click());
-        onData(anything()).atPosition(9).perform(click());
+        onView(withId(R.id.services_spinner)).perform(click());
+        onData(hasToString(Categories.IC.toString())).perform(click());
+        onData(hasToString(Categories.MECHANICS.toString())).perform(click());
     }
 }
