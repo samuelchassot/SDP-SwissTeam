@@ -47,13 +47,14 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
     @Override
     public void onBindViewHolder(PostViewHolder holder, int i) {
-        holder.postView_.setText(posts_.get(i).getTitle_() + "\n" + posts_.get(i).getBody_());
+        holder.postView_.setText(posts_.get(holder.getAdapterPosition()).getTitle_()
+                + "\n" + posts_.get(holder.getAdapterPosition()).getBody_());
         holder.editButton_.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(v.getContext(), "EDIT CLICKED", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(holder.itemView.getContext(), MyPostEdit.class);
-                intent.putExtra(POST_TAG, posts_.get(i));
+                intent.putExtra(POST_TAG, posts_.get(holder.getAdapterPosition()));
                 holder.itemView.getContext().startActivity(intent);
             }
         });
@@ -62,8 +63,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             @Override
             public void onClick(View v) {
                 Toast.makeText(v.getContext(), "DELETE CLICKED", Toast.LENGTH_SHORT).show();
-                DBUtility.get().deletePost(posts_.get(i).getKey_());
-                posts_.remove(i);
+                DBUtility.get().deletePost(posts_.get(holder.getAdapterPosition()).getKey_());
+                posts_.remove(holder.getAdapterPosition());
                 ((RecyclerView)v.getParent().getParent().getParent().getParent()).getAdapter().notifyDataSetChanged();
             }
         });
