@@ -196,4 +196,12 @@ public class DBUtility {
             }
         });
     }
+
+    public void deletePost(String key){
+        db_.child(POSTS).child(key).setValue(null);
+    }
+
+    public void setPost(Post post){
+        db_.child(POSTS).child(post.getKey_()).setValue(post);
+    }
 }

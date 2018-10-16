@@ -24,14 +24,14 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:text="Info"
-                app:srcCompat="@drawable/ic_post_edit" />
+                android:src="@drawable/ic_post_edit" />
 
             <ImageButton
 
                 android:id="@+id/button_postadapter_delete"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                app:srcCompat="@drawable/ic_post_delete"
+                android:src="@drawable/ic_post_delete"
                 android:text="Edit"/>
         </LinearLayout>
     </FrameLayout>

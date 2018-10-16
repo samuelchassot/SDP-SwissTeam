@@ -97,4 +97,5 @@ public class MyPostsFragment extends Fragment {
         loadAndShowPostsFromUser();
     }
 
+
 }

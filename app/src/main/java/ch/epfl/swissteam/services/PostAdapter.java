@@ -2,6 +2,7 @@ package ch.epfl.swissteam.services;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,15 +48,16 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             @Override
             //TODO
             public void onClick(View v) {
-                Toast.makeText(v.getContext(), "INFO CLICKED", Toast.LENGTH_SHORT).show();
+
             }
         });
 
         holder.deleteButton_.setOnClickListener(new View.OnClickListener() {
             @Override
-            //TODO
             public void onClick(View v) {
-                Toast.makeText(v.getContext(), "EDIT CLICKED", Toast.LENGTH_SHORT).show();
+                Toast.makeText(v.getContext(), "DELETE CLICKED", Toast.LENGTH_SHORT).show();
+                DBUtility.get().deletePost(posts_.get(i).getKey_());
+                posts_.remove(i);
             }
         });
     }
