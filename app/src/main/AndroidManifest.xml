@@ -24,7 +24,8 @@
         </activity>
         <activity android:name=".NewProfileDetails" />
         <activity android:name=".NewProfileCapabilities" />
-        <activity android:name=".ProfileSettings" />
+        <activity android:name=".MyPostEdit" />
+        <activity android:name=".ProfileSettings"></activity>
         <activity android:name=".ProfileActivity"></activity>
     </application>
 

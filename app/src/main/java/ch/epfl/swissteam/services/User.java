@@ -37,7 +37,7 @@ public class User implements DBSavable{
         this.email_ = email_;
         this.name_ = name_;
         this.description_ = description_;
-        this.categories_ = categories_ == null ? null : (ArrayList<Categories>) categories_.clone();
+        this.categories_ = categories_ == null ? new ArrayList<Categories>() : (ArrayList<Categories>) categories_.clone();
     }
 
     public String getGoogleId_() { return googleId_; }
@@ -55,7 +55,7 @@ public class User implements DBSavable{
     }
 
     public ArrayList<Categories> getCategories_() {
-        return categories_ == null? null : (ArrayList<Categories>) categories_.clone();
+        return (ArrayList<Categories>) categories_.clone();
     }
 
     /**

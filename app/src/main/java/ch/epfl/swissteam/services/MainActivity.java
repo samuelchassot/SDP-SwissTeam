@@ -9,7 +9,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -24,7 +23,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private Fragment profileShowerFragment_;
-    private Fragment homeFragment_, servicesFragment_, createPostFragment_, settingsFragment_;
+    private Fragment homeFragment_, servicesFragment_, createPostFragment_, settingsFragment_, myPostsFragment_;
     private DBUtility util = DBUtility.get();
 
     @Override
@@ -53,6 +52,8 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        TextView navHeaderName = (TextView) findViewById(R.id.nav_header_name);
 
 
 
@@ -102,6 +103,9 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         switch (id) {
+            case (R.id.button_maindrawer_home) :
+                showHomeFragment();
+                break;
             case (R.id.button_maindrawer_services) :
                 showServicesFragment();
                 break;
@@ -110,6 +114,9 @@ public class MainActivity extends AppCompatActivity
                 break;
             case (R.id.button_maindrawer_createpost) :
                 showCreatePostFragment();
+                break;
+            case (R.id.button_maindrawer_myposts) :
+                showMyPostsFragment();
                 break;
             case (R.id.button_maindrawer_settings) :
                 showSettingsFragment();
@@ -131,8 +138,9 @@ public class MainActivity extends AppCompatActivity
      */
     private void setNavUserName() {
         util.getUser(GoogleSignInSingleton.get().getClientUniqueID(), user -> {
+            if(user != null){
             ((TextView) findViewById(R.id.nav_header_name)).setText(user.getName_());
-            ((TextView) findViewById(R.id.nav_header_email)).setText(user.getEmail_());
+            ((TextView) findViewById(R.id.nav_header_email)).setText(user.getEmail_());}
 
         });
     }
@@ -160,6 +168,14 @@ public class MainActivity extends AppCompatActivity
     private void showCreatePostFragment(){
         if (this.createPostFragment_ == null) this.createPostFragment_ = CreatePostFragment.newInstance();
         this.startTransactionFragment(this.createPostFragment_);
+    }
+
+    /**
+     * Shows the my posts Fragment, where the user can edit and delete his posts
+     */
+    private void showMyPostsFragment(){
+        if (this.myPostsFragment_ == null) this.myPostsFragment_ = MyPostsFragment.newInstance();
+        this.startTransactionFragment(this.myPostsFragment_);
     }
 
     /**

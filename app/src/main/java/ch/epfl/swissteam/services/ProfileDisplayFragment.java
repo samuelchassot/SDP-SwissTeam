@@ -4,11 +4,17 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -23,6 +29,10 @@ public class ProfileDisplayFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
     private String clientUniqueID_;
+    private RecyclerView mRecyclerView_;
+    private LinearLayoutManager mLayoutManager_;
+    private CapabilitiesAdapter mAdapter_;
+    private List<Categories> mCapabilities_ = new ArrayList<Categories>();
 
     public ProfileDisplayFragment() {
         // Required empty public constructor
@@ -42,6 +52,9 @@ public class ProfileDisplayFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
+        toolbar.setTitle(R.string.toolbar_profile);
+
     }
 
     @Override
@@ -62,8 +75,22 @@ public class ProfileDisplayFragment extends Fragment {
         });
 
         clientUniqueID_ = GoogleSignInSingleton.get().getClientUniqueID();
-        
         loadAndShowUser(clientUniqueID_);
+
+        //setup recyclerview for capabilities
+        mRecyclerView_ = (RecyclerView) thisView.findViewById(R.id.recyclerview_profiledisplay_categories);
+
+        if(mRecyclerView_ != null) {
+            mRecyclerView_.setHasFixedSize(true);
+
+            mLayoutManager_ = new LinearLayoutManager(this.getContext());
+            mRecyclerView_.setLayoutManager(mLayoutManager_);
+
+            mAdapter_ = new CapabilitiesAdapter(mCapabilities_);
+            mRecyclerView_.setAdapter(mAdapter_);
+        }
+        
+
 
 
         // Inflate the layout for this fragment
@@ -81,6 +108,17 @@ public class ProfileDisplayFragment extends Fragment {
 
             TextView descrView =  (TextView) getActivity().findViewById(R.id.textview_profiledisplay_description);
             descrView.setText(user.getDescription_());
+
+            //for the recyclerview
+//            for (int i = 0 ; i < user.getCategories_().size() ; ++i){
+//                Categories c = user.getCategories_().get(i);
+//                if(!mCapabilities_.contains(c)){
+//                    mCapabilities_.add(c);
+//                }
+//            }
+            mCapabilities_.clear();
+            mCapabilities_.addAll(user.getCategories_());
+            mAdapter_.notifyDataSetChanged();
 
         });
     }

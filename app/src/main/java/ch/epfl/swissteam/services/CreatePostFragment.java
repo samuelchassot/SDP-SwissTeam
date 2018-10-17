@@ -10,8 +10,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.firebase.database.FirebaseDatabase;
-
 import java.util.Date;
 
 
@@ -62,8 +60,12 @@ public class CreatePostFragment extends Fragment implements View.OnClickListener
             String title = titleField.getText().toString();
             String body = bodyField.getText().toString();
 
-            DBUtility.get().getUser(GoogleSignInSingleton.get().getClientUniqueID(), user -> {
-                Post post = new Post(title, user.getName_(), body, (new Date()).getTime());
+            String googleID = GoogleSignInSingleton.get().getClientUniqueID();
+            long timestamp = (new Date()).getTime();
+            String key = googleID + "_" + timestamp;
+
+            DBUtility.get().getUser(googleID, user -> {
+                Post post = new Post(key, title, googleID, body, (new Date()).getTime());
 
                 post.addToDB(DBUtility.get().getDb_());
             });
