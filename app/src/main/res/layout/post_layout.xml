@@ -30,7 +30,7 @@
                 android:fontFamily="sans-serif-smallcaps"
                 android:gravity="center_vertical"
                 android:text="Title"
-                android:textSize="15sp" />
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/textview_postadapter_body"
@@ -39,7 +39,7 @@
                 android:fontFamily="sans-serif-smallcaps"
                 android:gravity="center_vertical"
                 android:text="Body"
-                android:textSize="15sp" />
+                android:textSize="13sp" />
 
         </LinearLayout>
 
