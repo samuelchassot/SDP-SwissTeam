@@ -11,6 +11,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class DBUtility {
 
@@ -84,30 +85,25 @@ public class DBUtility {
      * @param callBack the CallBack to use
      */
     public void getUser(String googleId, final MyCallBack<User> callBack) {
-        if(!mocked) {
-            if (googleId == null) {
-                User nullUser = new User(null, null, null, null, null);
-                callBack.onCallBack(nullUser);
-                return;
-            }
-            db_.child(USERS).child(googleId).addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    callBack.onCallBack(dataSnapshot.getValue(User.class));
-                }
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                }
-            });
-        }else{
-            ArrayList<Categories> testCat = new ArrayList<>();
-            testCat.add(Categories.COOKING);
-            testCat.add(Categories.GARDENING);
-            User mockedUser = new User("TestGoogleID", "TestUser", "test@gmail.com", "This is a test user in a mock DB", testCat);
-            callBack.onCallBack(mockedUser);
+        if (googleId == null) {
+            User nullUser = new User(null, null, null, null, null);
+            callBack.onCallBack(nullUser);
+            return;
         }
+        db_.child(USERS).child(googleId).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                callBack.onCallBack(dataSnapshot.getValue(User.class));
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
     }
 
     /**
@@ -182,7 +178,11 @@ public class DBUtility {
         });
     }
 
-    public static void setMock(){
-        mocked = true;
+
+    //MOCK PART
+
+    public void setMock(){
+        db_.getDatabase().goOffline();
     }
+
 }
