@@ -2,6 +2,7 @@ package ch.epfl.swissteam.services;
 
 import android.support.test.espresso.intent.rule.IntentsTestRule;
 
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -15,6 +16,11 @@ public class ChatRoomTest {
     @Rule
     public final IntentsTestRule<ChatRoom> mActivityRule =
             new IntentsTestRule<>(ChatRoom.class);
+
+    @Before
+    public void init(){
+        mActivityRule.getActivity().getIntent().putExtra(ChatRelation.RELATION_ID_TEXT, "1234");
+    }
 
     @Test
     public void sendMessage() {
