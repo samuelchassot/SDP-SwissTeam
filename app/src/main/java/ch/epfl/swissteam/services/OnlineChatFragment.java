@@ -1,10 +1,8 @@
 package ch.epfl.swissteam.services;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -14,8 +12,6 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.google.firebase.database.DatabaseReference;
-
-import java.util.ArrayList;
 
 
 public class OnlineChatFragment extends Fragment {
