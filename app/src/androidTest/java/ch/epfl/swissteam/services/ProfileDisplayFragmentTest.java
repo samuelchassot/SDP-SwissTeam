@@ -47,7 +47,6 @@ public class ProfileDisplayFragmentTest {
                 is(testUser.getDescription_()));
 
         onView(withId(R.id.button_profiledisplay_modify)).perform(click());
-        TestUtils.unMock();
         
     }
 }

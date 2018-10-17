@@ -14,9 +14,5 @@ public class TestUtils {
     public static void setMock(){DBUtility.get().getDb_().getDatabase().goOffline();
     }
 
-    public static void unMock(){
-        DBUtility.get().getDb_().getDatabase().goOnline();
-    }
-
 }
 
