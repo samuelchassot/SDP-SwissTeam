@@ -54,6 +54,10 @@
         android:icon="@android:drawable/ic_menu_add"
         android:title="@string/navigation_drawer_newpost" />
     <item
+        android:id="@+id/button_maindrawer_myposts"
+        android:icon="@drawable/ic_maindrawer_myposts"
+        android:title="@string/navigation_drawer_myposts" />
+    <item
         android:id="@+id/button_maindrawer_settings"
         android:icon="@drawable/ic_maindrawer_settings"
         android:title="@string/navigation_drawer_section_settings" />
