@@ -28,7 +28,8 @@ public class MyPostAdapter extends RecyclerView.Adapter<MyPostAdapter.PostViewHo
      * ViewHolder for Posts, with hidden buttons
      */
     static class PostViewHolder extends RecyclerView.ViewHolder{
-        protected TextView postView_;
+        protected TextView titleView_;
+        protected TextView bodyView_;
         protected ImageButton editButton_;
         protected ImageButton deleteButton_;
 
@@ -38,7 +39,8 @@ public class MyPostAdapter extends RecyclerView.Adapter<MyPostAdapter.PostViewHo
          */
         protected PostViewHolder(View v){
             super(v);
-            postView_ = v.findViewById(R.id.textview_mypostadapter_post);
+            titleView_ = v.findViewById(R.id.textview_mypostadapter_title);
+            bodyView_ = v.findViewById(R.id.textview_mypostadapter_body);
             editButton_ = v.findViewById(R.id.button_mypostadapter_edit);
             deleteButton_= v.findViewById(R.id.button_mypostadapter_delete);
         }
@@ -62,8 +64,9 @@ public class MyPostAdapter extends RecyclerView.Adapter<MyPostAdapter.PostViewHo
 
     @Override
     public void onBindViewHolder(PostViewHolder holder, int i) {
-        holder.postView_.setText(posts_.get(holder.getAdapterPosition()).getTitle_()
-                + "\n" + posts_.get(holder.getAdapterPosition()).getBody_());
+        holder.titleView_.setText(posts_.get(holder.getAdapterPosition()).getTitle_());
+        holder.bodyView_.setText(posts_.get(holder.getAdapterPosition()).getBody_());
+
         holder.editButton_.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

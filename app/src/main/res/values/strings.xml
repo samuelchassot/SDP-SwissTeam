@@ -73,7 +73,7 @@
 
     /* ----- Post string ----- */
     <string name="post_hinteditbutton">Edit your post</string>
-    <string name="postadapter_hintdeletebutton">Delete you post</string>
+    <string name="postadapter_hintdeletebutton">Delete your post</string>
     <string name="createpostfragment_entertitle">Enter a title here</string>
     <string name="createpostfragment_enterbody">Enter the body here</string>
     <string name="createpostfragment_titleempty">You need to enter a title!</string>
