@@ -9,4 +9,10 @@ public class TestUtils {
         User testUser = new User("1234", "testuser", "test@gmail.com", "I am a test user", cat);
         return testUser;
     }
+
+
+    public static void setMock(){DBUtility.get().getDb_().getDatabase().goOffline();
+    }
+
 }
+

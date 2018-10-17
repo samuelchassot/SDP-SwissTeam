@@ -25,7 +25,7 @@ public class ProfileDisplayFragmentTest {
     @Test
     public void openFragment() {
         User testUser = TestUtils.getATestUser();
-        DBUtility.get().setMock();
+        TestUtils.setMock();
         testUser.addToDB(DBUtility.get().getDb_());
 
         GoogleSignInSingleton.putUniqueID(testUser.getGoogleId_());
