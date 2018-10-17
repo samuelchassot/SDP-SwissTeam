@@ -6,6 +6,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +30,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     static class PostViewHolder extends RecyclerView.ViewHolder{
         protected TextView titleView_;
         protected TextView bodyView_;
+        protected FrameLayout parentLayout_;
 
         /**
          * Create a PostViewHolder
@@ -37,6 +40,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             super(v);
             titleView_ = v.findViewById(R.id.textview_postadapter_title);
             bodyView_ = v.findViewById(R.id.textview_postadapter_body);
+            parentLayout_ = v.findViewById(R.id.framelayout_post);
         }
     }
 
@@ -60,6 +64,12 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     public void onBindViewHolder(PostViewHolder holder, int i) {
         holder.titleView_.setText(posts_.get(holder.getAdapterPosition()).getTitle_());
         holder.bodyView_.setText(posts_.get(holder.getAdapterPosition()).getBody_());
+
+        holder.parentLayout_.setOnClickListener((view) -> {
+            Intent intent = new Intent(holder.itemView.getContext(), PostActivity.class);
+            intent.putExtra(POST_TAG, posts_.get(holder.getAdapterPosition()));
+            holder.itemView.getContext().startActivity(intent);
+        });
     }
 
     @Override
