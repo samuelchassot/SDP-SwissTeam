@@ -14,8 +14,10 @@ import org.junit.runner.RunWith;
 import java.util.ArrayList;
 
 import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.action.ViewActions.clearText;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
+import static android.support.test.espresso.action.ViewActions.swipeLeft;
 import static android.support.test.espresso.action.ViewActions.swipeRight;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
@@ -47,74 +49,72 @@ public class MyPostFragmentTest {
     }
 
     @Test
-    public void canSwipeRight(){
-        DBUtility.get().getUsersPosts(id, new MyCallBack<ArrayList<Post>>() {
-            @Override
-            public void onCallBack(ArrayList<Post> value) {
-                posts.clear();
-                posts.addAll(value);
-            }
-        });
-
+    public void canSwipeLeft(){
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_myposts));
 
-        if(!posts.isEmpty()){
-            onView(withId(R.id.recyclerview_mypostsfragment)).perform(RecyclerViewActions.actionOnItemAtPosition(0,swipeRight()));
-        }
+        onView(withId(R.id.recyclerview_mypostsfragment)).perform(RecyclerViewActions.actionOnItemAtPosition(0,swipeLeft()));
+
     }
 
     @Test
     public void canDelete(){
-        DBUtility.get().getUsersPosts(id, new MyCallBack<ArrayList<Post>>() {
-            @Override
-            public void onCallBack(ArrayList<Post> value) {
-                posts.clear();
-                posts.addAll(value);
-            }
-        });
 
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_myposts));
 
-        if(!posts.isEmpty()){
-            onView(withId(R.id.recyclerview_mypostsfragment)).perform(RecyclerViewActions.actionOnItemAtPosition(0,swipeRight()));
-            onView(withId(R.id.button_postadapter_delete)).perform(click());
-            post.addToDB(DBUtility.get().getDb_());
+        onView(withId(R.id.recyclerview_mypostsfragment)).perform(RecyclerViewActions.actionOnItemAtPosition(0,swipeLeft()));
+        onView(withId(R.id.button_postadapter_delete)).perform(click());
+        post.addToDB(DBUtility.get().getDb_());
+        try {
+            Thread.sleep(200);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
+
     }
 
     @Test
     public void canEdit(){
-        DBUtility.get().getUsersPosts(id, new MyCallBack<ArrayList<Post>>() {
-            @Override
-            public void onCallBack(ArrayList<Post> value) {
-                posts.clear();
-                posts.addAll(value);
-            }
-        });
-
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_myposts));
 
-        if(!posts.isEmpty()){
-            onView(withId(R.id.recyclerview_mypostsfragment)).perform(RecyclerViewActions.actionOnItemAtPosition(0,swipeRight()));
-            onView(withId(R.id.button_postadapter_edit)).perform(click());
+        onView(withId(R.id.recyclerview_mypostsfragment)).perform(RecyclerViewActions.actionOnItemAtPosition(0,swipeLeft()));
+        onView(withId(R.id.button_postadapter_edit)).perform(click());
 
-            //onView(withId(R.id.edittext_mypostedit_title)).check(matches(withText("Title")));
-            //onView(withId(R.id.edittext_mypostedit_body)).check(matches(withText("Body")));
-            //onView(withId(R.id.edittext_mypostedit_title)).perform(typeText("Title from unit test")).perform(closeSoftKeyboard());
-            //onView(withId(R.id.edittext_mypostedit_body)).perform(typeText("Body from unit test")).perform(closeSoftKeyboard());
-            //onView(withId(R.id.button_mypostedit_edit)).perform(click());
-
-            //onView(withId(R.id.recyclerview_mypostsfragment)).perform(RecyclerViewActions.actionOnItemAtPosition(0,swipeRight()));
-            //onView(withId(R.id.button_postadapter_edit)).perform(click());
-            //onView(withId(R.id.edittext_mypostedit_title)).check(matches(withText("Title from unit test")));
-            //onView(withId(R.id.edittext_mypostedit_body)).check(matches(withText("Body from unit test")));
-            //onView(withId(R.id.edittext_mypostedit_title)).perform(typeText("Title")).perform(closeSoftKeyboard());
-            //onView(withId(R.id.edittext_mypostedit_body)).perform(typeText("Body")).perform(closeSoftKeyboard());
-            //onView(withId(R.id.button_mypostedit_edit)).perform(click());
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
+
+        onView(withId(R.id.edittext_mypostedit_title)).check(matches(withText("Title")));
+        onView(withId(R.id.edittext_mypostedit_body)).check(matches(withText("Body")));
+        onView(withId(R.id.edittext_mypostedit_title)).perform(typeText(" from unit test")).perform(closeSoftKeyboard());
+        onView(withId(R.id.edittext_mypostedit_body)).perform(typeText(" from unit test")).perform(closeSoftKeyboard());
+        onView(withId(R.id.button_mypostedit_edit)).perform(click());
+
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        onView(withId(R.id.recyclerview_mypostsfragment)).perform(RecyclerViewActions.actionOnItemAtPosition(0,swipeLeft()));
+        onView(withId(R.id.button_postadapter_edit)).perform(click());
+
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        onView(withId(R.id.edittext_mypostedit_title)).check(matches(withText("Title from unit test")));
+        onView(withId(R.id.edittext_mypostedit_body)).check(matches(withText("Body from unit test")));
+        onView(withId(R.id.edittext_mypostedit_title)).perform(clearText()).perform(typeText("Title")).perform(closeSoftKeyboard());
+        onView(withId(R.id.edittext_mypostedit_body)).perform(clearText()).perform(typeText("Body")).perform(closeSoftKeyboard());
+        onView(withId(R.id.button_mypostedit_edit)).perform(click());
+
     }
 
 
