@@ -13,12 +13,13 @@ public class UserTest {
     public static String googleID = "1337", email = "a@b.c", name = "Jean", description = "45 ans.";
     public static String googleID2 = "1frr", email2 = "b@a.c", name2 = "Jeanne", description2 = "45 ans.";
     public static String googleID3 = "145r", email3 = "d@a.c", name3 = "Jeannette", description3 = "45 ans.";
-    public static ArrayList<String> categories = new ArrayList<String>();
+
+    public static ArrayList<Categories> categories = new ArrayList<Categories>();
 
     @Before
     public void setCats() {
-        categories.add("IT");
-        categories.add("jardinage");
+        categories.add(Categories.COOKING);
+        categories.add(Categories.DAILYLIFE);
     }
 
     @Test

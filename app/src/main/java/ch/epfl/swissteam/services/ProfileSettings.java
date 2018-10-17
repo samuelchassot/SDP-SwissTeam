@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class ProfileSettings extends AppCompatActivity {
 
-    private ArrayList<String> currentCategories;
+    private ArrayList<Categories> currentCategories;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +41,6 @@ public class ProfileSettings extends AppCompatActivity {
     private void save(){
         String name = ((TextView) findViewById(R.id.edittext_profilesettings_name)).getText().toString();
         String uniqueID = GoogleSignInSingleton.get().getClientUniqueID();
-        String surname =((TextView) findViewById(R.id.edittext_profilesettings_surname)).getText().toString();
         String email = ((TextView) findViewById(R.id.edittext_profilesettings_email)).getText().toString();
         String descr = ((TextView) findViewById(R.id.edittext_profilesettings_description)).getText().toString();
         User updatedUser = new User(uniqueID, name, email, descr, currentCategories);

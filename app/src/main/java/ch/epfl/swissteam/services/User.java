@@ -17,7 +17,7 @@ public class User implements DBSavable{
 
     private String googleId_, email_, name_, description_;
 
-    private ArrayList<String> categories_;
+    private ArrayList<Categories> categories_;
 
     private ArrayList<ChatRelation> chatRelations_;
 
@@ -37,13 +37,12 @@ public class User implements DBSavable{
      * @param description_ User's description
      * @param categories_ User's categories of services
      */
-    public User(String googleID_, String name_, String email_, String description_, ArrayList<String> categories_) {
+    public User(String googleID_, String name_, String email_, String description_, ArrayList<Categories> categories_) {
         this.googleId_ = googleID_;
         this.email_ = email_;
         this.name_ = name_;
-        this.email_ = email_;
         this.description_ = description_;
-        this.categories_ = categories_ == null ? null : (ArrayList<String>) categories_.clone();
+        this.categories_ = categories_ == null ? new ArrayList<Categories>() : (ArrayList<Categories>) categories_.clone();
     }
 
     public String getGoogleId_() { return googleId_; }
@@ -60,8 +59,8 @@ public class User implements DBSavable{
         return description_;
     }
 
-    public ArrayList<String> getCategories_() {
-        return categories_ == null? null : (ArrayList<String>) categories_.clone();
+    public ArrayList<Categories> getCategories_() {
+        return (ArrayList<Categories>) categories_.clone();
     }
 
     public ArrayList<ChatRelation> getChatRelations_() {
@@ -75,8 +74,8 @@ public class User implements DBSavable{
     public void addToDB(DatabaseReference db){
         db.child(DBUtility.USERS).child(googleId_).setValue(this);
         if(categories_ != null) {
-            for (String category : categories_) {
-                db.child(DBUtility.CATEGORIES).child(category).child(googleId_).setValue("true");
+            for (Categories category : categories_) {
+                db.child(DBUtility.CATEGORIES).child(category.toString()).child(googleId_).setValue("true");
             }
         }
     }
