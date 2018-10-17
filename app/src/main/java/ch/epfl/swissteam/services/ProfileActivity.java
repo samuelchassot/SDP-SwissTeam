@@ -17,7 +17,6 @@ public class ProfileActivity extends AppCompatActivity {
         loadAndShowUser(clientUID);
     }
 
-    // TODO : This is nearly a duplicate from the one in ProfileDisplayFragment
     private void loadAndShowUser(String clientUniqueID){
         //for now we use the username
         DBUtility.get().getUser(clientUniqueID, (user)->{
