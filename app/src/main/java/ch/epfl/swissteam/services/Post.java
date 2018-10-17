@@ -8,7 +8,7 @@ import com.google.firebase.database.DatabaseReference;
  * @author Adrian Baudat
  * @author Julie Giunta
  */
-public class Post implements DBSavable{
+public class Post implements DBSavable {
 
     private String title_, googleId_, body_;
     private long timestamp_;
@@ -58,4 +58,5 @@ public class Post implements DBSavable{
     public long getTimestamp_() {
         return timestamp_;
     }
+
 }
