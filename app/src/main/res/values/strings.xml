@@ -104,6 +104,7 @@
     <string name="language_prompt">Choose a language</string>
     <string name="toolbar_my_posts">My posts</string>
     <string name="toolbar_profile">Profile</string>
+    <string name="toolbar_home">Home</string>
 
     <string-array name="language_arrays">
         <item>English</item>

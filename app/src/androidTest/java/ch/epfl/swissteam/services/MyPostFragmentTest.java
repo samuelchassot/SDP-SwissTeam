@@ -18,7 +18,6 @@ import static android.support.test.espresso.action.ViewActions.clearText;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static android.support.test.espresso.action.ViewActions.swipeLeft;
-import static android.support.test.espresso.action.ViewActions.swipeRight;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
@@ -64,7 +63,7 @@ public class MyPostFragmentTest {
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_myposts));
 
         onView(withId(R.id.recyclerview_mypostsfragment)).perform(RecyclerViewActions.actionOnItemAtPosition(0,swipeLeft()));
-        onView(withId(R.id.button_postadapter_delete)).perform(click());
+        onView(withId(R.id.button_mypostadapter_delete)).perform(click());
         post.addToDB(DBUtility.get().getDb_());
 
         try {
@@ -81,7 +80,7 @@ public class MyPostFragmentTest {
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_myposts));
 
         onView(withId(R.id.recyclerview_mypostsfragment)).perform(RecyclerViewActions.actionOnItemAtPosition(0,swipeLeft()));
-        onView(withId(R.id.button_postadapter_edit)).perform(click());
+        onView(withId(R.id.button_mypostadapter_edit)).perform(click());
 
         onView(withId(R.id.edittext_mypostedit_title)).check(matches(withText("Title")));
         onView(withId(R.id.edittext_mypostedit_body)).check(matches(withText("Body")));
@@ -90,7 +89,7 @@ public class MyPostFragmentTest {
         onView(withId(R.id.button_mypostedit_edit)).perform(click());
 
         onView(withId(R.id.recyclerview_mypostsfragment)).perform(RecyclerViewActions.actionOnItemAtPosition(0,swipeLeft()));
-        onView(withId(R.id.button_postadapter_edit)).perform(click());
+        onView(withId(R.id.button_mypostadapter_edit)).perform(click());
 
         onView(withId(R.id.edittext_mypostedit_title)).check(matches(withText("Title from unit test")));
         onView(withId(R.id.edittext_mypostedit_body)).check(matches(withText("Body from unit test")));
