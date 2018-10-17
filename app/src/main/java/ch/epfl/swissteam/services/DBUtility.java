@@ -16,16 +16,21 @@ public class DBUtility {
 
     private DatabaseReference db_;
     private static DBUtility instance;
+    private User currentUser_;
+
 
 
     public final static String USERS = "Users";
     public final static String CATEGORIES = "Categories";
     public final static String POSTS = "Posts";
     public final static String ERROR_TAG = "DBUtility";
+    public final static String CHATS = "Chats";
+    public final static String CHATS_RELATIONS = "ChatRelations";
     private final int POSTS_DISPLAY_NUMBER = 20;
 
-    private DBUtility(DatabaseReference db_){
-        this.db_ = db_;
+    private DBUtility(DatabaseReference db){
+        currentUser_ = null;
+        this.db_ = db;
     }
 
     /**
@@ -101,6 +106,32 @@ public class DBUtility {
     }
 
     /**
+     *
+     * @return the current logged user which is null if the db has not yet provided the user
+     */
+    public User getCurrentUser_(){
+        String googleId = GoogleSignInSingleton.get().getClientUniqueID();
+        if(currentUser_ == null || currentUser_.getGoogleId_().compareTo(googleId) != 0) {
+            currentUser_ = null;
+            try{
+                getUser(googleId, new MyCallBack<User>() {
+                    @Override
+                    public void onCallBack(User value) {
+                        if(value != null){
+                            currentUser_ = value;
+                        }
+                    }
+                });
+            }
+            catch (NullPointerException e){
+                currentUser_ = null;
+            }
+
+        }
+        return currentUser_;
+    }
+
+    /**
      * Get all users inside the database
      * @param callBack the callBack to use
      */
@@ -136,9 +167,8 @@ public class DBUtility {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 posts.clear();
                 for (DataSnapshot data : dataSnapshot.getChildren()){
-                    //Log.e("POSTSDB", "test "+data.getValue(Post.class));
                     Post post = data.getValue(Post.class);
-                    posts.add(post);
+                    posts.add(0, post);
                 }
                 callBack.onCallBack(posts);
             }
@@ -170,5 +200,39 @@ public class DBUtility {
 
             }
         });
+    }
+
+    /**
+     * Retrieves all the posts from one user
+     * @param googleID the ID of the user
+     * @param callBack the function called on the callBack
+     */
+    public void getUsersPosts(String googleID, final MyCallBack<ArrayList<Post>> callBack){
+        Query usersPosts = db_.child(POSTS).orderByChild("googleId_").equalTo(googleID);
+        usersPosts.addListenerForSingleValueEvent(new ValueEventListener() {
+            ArrayList<Post> posts = new ArrayList<>();
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                posts.clear();
+                for (DataSnapshot data : dataSnapshot.getChildren()){
+                    Post post = data.getValue(Post.class);
+                    posts.add(post);
+                }
+                callBack.onCallBack(posts);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.w(ERROR_TAG, "getUsersPost:onCancelled", databaseError.toException());
+            }
+        });
+    }
+
+    public void deletePost(String key){
+        db_.child(POSTS).child(key).setValue(null);
+    }
+
+    public void setPost(Post post){
+        db_.child(POSTS).child(post.getKey_()).setValue(post);
     }
 }

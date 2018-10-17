@@ -2,7 +2,6 @@ package ch.epfl.swissteam.services;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.TestLooperManager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
@@ -10,12 +9,9 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
 
 /**
  * This class is the MainActivity of the application, this is
@@ -27,7 +23,8 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private Fragment profileShowerFragment_;
-    private Fragment homeFragment_, servicesFragment_, createPostFragment_, settingsFragment_;
+    private Fragment homeFragment_, servicesFragment_, createPostFragment_, settingsFragment_, onlineChatFragment_, myPostsFragment_;
+
     private DBUtility util = DBUtility.get();
 
     @Override
@@ -119,13 +116,18 @@ public class MainActivity extends AppCompatActivity
             case (R.id.button_maindrawer_createpost) :
                 showCreatePostFragment();
                 break;
+            case (R.id.button_maindrawer_myposts) :
+                showMyPostsFragment();
+                break;
             case (R.id.button_maindrawer_settings) :
                 showSettingsFragment();
                 break;
             case (R.id.button_maindrawer_logout) :
                 signOut();
                 break;
-
+            case (R.id.button_maindrawer_chats) :
+                showChatsFragment();
+                break;
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -172,6 +174,14 @@ public class MainActivity extends AppCompatActivity
     }
 
     /**
+     * Shows the my posts Fragment, where the user can edit and delete his posts
+     */
+    private void showMyPostsFragment(){
+        if (this.myPostsFragment_ == null) this.myPostsFragment_ = MyPostsFragment.newInstance();
+        this.startTransactionFragment(this.myPostsFragment_);
+    }
+
+    /**
      * Shows the profile shower fragment
      */
     private void showProfileShowerFragment(){
@@ -189,6 +199,12 @@ public class MainActivity extends AppCompatActivity
     public void showHomeFragment(){
         if (this.homeFragment_ == null) this.homeFragment_ = HomeFragment.newInstance();
         this.startTransactionFragment(this.homeFragment_);
+    }
+
+
+    private void showChatsFragment(){
+        if (this.onlineChatFragment_ == null) this.onlineChatFragment_ = OnlineChatFragment.newInstance();
+        this.startTransactionFragment(this.onlineChatFragment_);
     }
 
     /**
