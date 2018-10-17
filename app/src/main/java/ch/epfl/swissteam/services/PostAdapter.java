@@ -11,6 +11,11 @@ import android.widget.Toast;
 
 import java.util.List;
 
+/**
+ * Adapter for Posts in {@link HomeFragment}
+ *
+ * @author Julie Giunta
+ */
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder> {
 
     public static final String POST_TAG = "ch.epfl.swissteam.services.post";
@@ -21,7 +26,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
      * ViewHolder for Posts
      */
     static class PostViewHolder extends RecyclerView.ViewHolder{
-        protected TextView postView_;
+        protected TextView titleView_;
+        protected TextView bodyView_;
 
         /**
          * Create a PostViewHolder
@@ -29,6 +35,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
          */
         protected PostViewHolder(View v){
             super(v);
+            titleView_ = v.findViewById(R.id.textview_postadapter_title);
+            bodyView_ = v.findViewById(R.id.textview_postadapter_body);
         }
     }
 
@@ -50,6 +58,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
     @Override
     public void onBindViewHolder(PostViewHolder holder, int i) {
+        holder.titleView_.setText(posts_.get(holder.getAdapterPosition()).getTitle_());
+        holder.bodyView_.setText(posts_.get(holder.getAdapterPosition()).getBody_());
     }
 
     @Override

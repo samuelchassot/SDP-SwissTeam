@@ -20,7 +20,7 @@ import java.util.List;
  */
 public class MyPostAdapter extends RecyclerView.Adapter<MyPostAdapter.PostViewHolder> {
 
-    public static final String POST_TAG = "ch.epfl.swissteam.services.post";
+    public static final String MYPOST_TAG = "ch.epfl.swissteam.services.mypost";
 
     private List<Post> posts_;
 
@@ -72,7 +72,7 @@ public class MyPostAdapter extends RecyclerView.Adapter<MyPostAdapter.PostViewHo
             public void onClick(View v) {
                 Toast.makeText(v.getContext(), "EDIT CLICKED", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(holder.itemView.getContext(), MyPostEdit.class);
-                intent.putExtra(POST_TAG, posts_.get(holder.getAdapterPosition()));
+                intent.putExtra(MYPOST_TAG, posts_.get(holder.getAdapterPosition()));
                 holder.itemView.getContext().startActivity(intent);
                 ((RecyclerView)v.getParent().getParent().getParent().getParent()).getAdapter().notifyDataSetChanged();
             }

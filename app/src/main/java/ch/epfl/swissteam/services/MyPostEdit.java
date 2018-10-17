@@ -21,7 +21,7 @@ public class MyPostEdit extends AppCompatActivity{
         setContentView(R.layout.activity_my_post_edit);
 
         Intent intent = getIntent();
-        post_ = intent.getParcelableExtra(MyPostAdapter.POST_TAG);
+        post_ = intent.getParcelableExtra(MyPostAdapter.MYPOST_TAG);
 
         title_ = findViewById(R.id.edittext_mypostedit_title);
         body_ = findViewById(R.id.edittext_mypostedit_body);
