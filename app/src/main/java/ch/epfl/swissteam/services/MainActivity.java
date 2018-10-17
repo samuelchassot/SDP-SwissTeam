@@ -23,7 +23,8 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private Fragment profileShowerFragment_;
-    private Fragment homeFragment_, servicesFragment_, createPostFragment_, settingsFragment_, myPostsFragment_;
+    private Fragment homeFragment_, servicesFragment_, createPostFragment_, settingsFragment_, onlineChatFragment_, myPostsFragment_;
+
     private DBUtility util = DBUtility.get();
 
     @Override
@@ -124,7 +125,9 @@ public class MainActivity extends AppCompatActivity
             case (R.id.button_maindrawer_logout) :
                 signOut();
                 break;
-
+            case (R.id.button_maindrawer_chats) :
+                showChatsFragment();
+                break;
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -196,6 +199,12 @@ public class MainActivity extends AppCompatActivity
     public void showHomeFragment(){
         if (this.homeFragment_ == null) this.homeFragment_ = HomeFragment.newInstance();
         this.startTransactionFragment(this.homeFragment_);
+    }
+
+
+    private void showChatsFragment(){
+        if (this.onlineChatFragment_ == null) this.onlineChatFragment_ = OnlineChatFragment.newInstance();
+        this.startTransactionFragment(this.onlineChatFragment_);
     }
 
     /**

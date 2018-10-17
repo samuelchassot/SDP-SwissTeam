@@ -3,6 +3,8 @@ package ch.epfl.swissteam.services;
 import com.google.firebase.database.DatabaseReference;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Class representing a user in the database,
@@ -17,6 +19,8 @@ public class User implements DBSavable{
 
     private ArrayList<Categories> categories_;
 
+    private ArrayList<ChatRelation> chatRelations_;
+
     /**
      * Default constructor, needed for database
      */
@@ -26,6 +30,7 @@ public class User implements DBSavable{
 
     /**
      * Create a new user given its specificities
+
      * @param googleID_ User's unique googleId
      * @param name_ User's name
      * @param email_ User's email
@@ -58,6 +63,10 @@ public class User implements DBSavable{
         return (ArrayList<Categories>) categories_.clone();
     }
 
+    public ArrayList<ChatRelation> getChatRelations_() {
+        return chatRelations_ == null ? null : (ArrayList<ChatRelation>) chatRelations_.clone();//Collections.unmodifiableList(chatRelations_);
+    }
+
     /**
      * Add the user to a database
      * @param db the database in which to add the user
@@ -71,6 +80,39 @@ public class User implements DBSavable{
         }
     }
 
+    /**
+     * Add a chatRelation to the list of chatRelationId of the user and save it into the database
+     * db
+     * @param chatRelation the id of the chatRelation
+     * @param db reference to the database to update the user
+     */
+    public void addChatRelation(ChatRelation chatRelation, DatabaseReference db){
+        if(chatRelations_ == null) {
+            chatRelations_ = new ArrayList<>();}
+        chatRelations_.add(chatRelation);
+        if(db != null){
+            addToDB(db);
+        }
+    }
 
+    /**
+     * Add a chatRelationId to the list of chatRelation of the user
+     * db
+     * @param chatRelation the id of the chatRelation
+     */
+    public void addChatRelation(ChatRelation chatRelation){
+        addChatRelation(chatRelation, null);
+    }
+
+    public ChatRelation relationExists(User other){
+        if(chatRelations_ == null) return null;
+        for(ChatRelation cR : chatRelations_){
+            if(cR.getFirstUserId_().compareTo(googleId_) == 0 && cR.getSecondUserId_().compareTo(other.googleId_) == 0
+                    || cR.getFirstUserId_().compareTo(other.googleId_) == 0 && cR.getSecondUserId_().compareTo(googleId_) == 0){
+                return cR;
+            }
+        }
+        return null;
+    }
 
 }

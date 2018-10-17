@@ -27,6 +27,7 @@ public class Post implements DBSavable, Parcelable{
     /**
      * Construct a post for searching services.
      *
+
      * @param title_ the title of the post
      * @param googleId_ the id of the person who post the post
      * @param body_ the body of the post
