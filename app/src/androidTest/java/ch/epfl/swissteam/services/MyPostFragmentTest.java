@@ -66,6 +66,7 @@ public class MyPostFragmentTest {
         onView(withId(R.id.recyclerview_mypostsfragment)).perform(RecyclerViewActions.actionOnItemAtPosition(0,swipeLeft()));
         onView(withId(R.id.button_postadapter_delete)).perform(click());
         post.addToDB(DBUtility.get().getDb_());
+
         try {
             Thread.sleep(200);
         } catch (InterruptedException e) {
@@ -82,38 +83,26 @@ public class MyPostFragmentTest {
         onView(withId(R.id.recyclerview_mypostsfragment)).perform(RecyclerViewActions.actionOnItemAtPosition(0,swipeLeft()));
         onView(withId(R.id.button_postadapter_edit)).perform(click());
 
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
         onView(withId(R.id.edittext_mypostedit_title)).check(matches(withText("Title")));
         onView(withId(R.id.edittext_mypostedit_body)).check(matches(withText("Body")));
         onView(withId(R.id.edittext_mypostedit_title)).perform(typeText(" from unit test")).perform(closeSoftKeyboard());
         onView(withId(R.id.edittext_mypostedit_body)).perform(typeText(" from unit test")).perform(closeSoftKeyboard());
         onView(withId(R.id.button_mypostedit_edit)).perform(click());
 
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
         onView(withId(R.id.recyclerview_mypostsfragment)).perform(RecyclerViewActions.actionOnItemAtPosition(0,swipeLeft()));
         onView(withId(R.id.button_postadapter_edit)).perform(click());
-
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
 
         onView(withId(R.id.edittext_mypostedit_title)).check(matches(withText("Title from unit test")));
         onView(withId(R.id.edittext_mypostedit_body)).check(matches(withText("Body from unit test")));
         onView(withId(R.id.edittext_mypostedit_title)).perform(clearText()).perform(typeText("Title")).perform(closeSoftKeyboard());
         onView(withId(R.id.edittext_mypostedit_body)).perform(clearText()).perform(typeText("Body")).perform(closeSoftKeyboard());
         onView(withId(R.id.button_mypostedit_edit)).perform(click());
+
+        try {
+            Thread.sleep(200);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
     }
 
