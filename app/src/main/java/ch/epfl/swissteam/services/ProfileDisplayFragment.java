@@ -62,7 +62,6 @@ public class ProfileDisplayFragment extends Fragment {
                              Bundle savedInstanceState) {
         View thisView = inflater.inflate(R.layout.fragment_profile_display, container, false);
 
-        DBUtility.setMock();
 
         Button button = (Button) thisView.findViewById(R.id.button_profiledisplay_modify);
         button.setOnClickListener(new View.OnClickListener()
