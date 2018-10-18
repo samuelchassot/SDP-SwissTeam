@@ -1,6 +1,10 @@
 package ch.epfl.swissteam.services;
 
+import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -11,6 +15,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.TextView;
 
 /**
@@ -24,6 +30,7 @@ public class MainActivity extends AppCompatActivity
 
     private Fragment profileShowerFragment_;
     private Fragment homeFragment_, servicesFragment_, createPostFragment_, settingsFragment_, onlineChatFragment_, myPostsFragment_;
+    private NetworkStatusReceiver br;
 
     private DBUtility util = DBUtility.get();
 
@@ -55,10 +62,25 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         TextView navHeaderName = (TextView) findViewById(R.id.nav_header_name);
-
+        br = new NetworkStatusReceiver();
+        br.setActivity_(this);
 
 
         showHomeFragment();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        IntentFilter intentFilter= new IntentFilter();
+        intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
+        registerReceiver(br, intentFilter);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        unregisterReceiver(br);
     }
 
 
