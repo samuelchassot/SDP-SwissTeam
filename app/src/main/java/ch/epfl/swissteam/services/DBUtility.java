@@ -96,7 +96,7 @@ public class DBUtility {
 
 
         if (googleId == null) {
-            User nullUser = new User(null, null, null, null, null);
+            User nullUser = new User(null, null, null, null, null, null);
             callBack.onCallBack(nullUser);
             return;
         }

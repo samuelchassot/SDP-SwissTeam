@@ -19,7 +19,7 @@ import java.util.ArrayList;
 public class NewProfileCapabilities extends AppCompatActivity {
 
     private ArrayList<Categories> capabilitiesList_ = new ArrayList<>();
-    private String googleID_, username_, email_, description_;
+    private String googleID_, username_, email_, description_, imageUrl_;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +32,7 @@ public class NewProfileCapabilities extends AppCompatActivity {
         username_ = intent.getStringExtra(NewProfileDetails.USERNAME_TAG);
         email_ = intent.getStringExtra(NewProfileDetails.EMAIL_TAG);
         description_ = intent.getStringExtra(NewProfileDetails.DESCRIPTION_TAG);
+        imageUrl_ = intent.getStringExtra(NewProfileDetails.IMAGE_TAG);
 
         RecyclerView recycler = findViewById(R.id.recyclerview_newprofilecapabilities_list);
         recycler.setHasFixedSize(true);
@@ -55,7 +56,7 @@ public class NewProfileCapabilities extends AppCompatActivity {
      * Saves the newly created user in the database.
      */
     private void saveUserInDB() {
-        User user = new User(googleID_, username_, email_, description_, capabilitiesList_);
+        User user = new User(googleID_, username_, email_, description_, capabilitiesList_, imageUrl_);
         user.addToDB(DBUtility.get().getDb_());
     }
 

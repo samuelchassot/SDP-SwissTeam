@@ -6,7 +6,7 @@ public class TestUtils {
     public static User getATestUser(){
         ArrayList<Categories> cat = new ArrayList<>();
         cat.add(Categories.IC);
-        User testUser = new User("1234", "testuser", "test@gmail.com", "I am a test user", cat);
+        User testUser = new User("1234", "testuser", "test@gmail.com", "I am a test user", cat, "www.imageURL.com");
         return testUser;
     }
 
