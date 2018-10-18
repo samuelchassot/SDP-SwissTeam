@@ -38,7 +38,7 @@ public class DBUtility {
     /**
      * Get the DBUtility instance
      *
-     * @return the DBUtiliyty instance
+     * @return the DBUtility instance
      */
     public static DBUtility get() {
         if (instance == null) {
