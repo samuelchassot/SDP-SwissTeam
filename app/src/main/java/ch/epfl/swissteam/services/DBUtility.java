@@ -42,6 +42,7 @@ public class DBUtility {
      */
     public static DBUtility get() {
         if (instance == null) {
+            FirebaseDatabase.getInstance().setPersistenceEnabled(true);
             instance = new DBUtility(FirebaseDatabase.getInstance().getReference());
         }
         return instance;
