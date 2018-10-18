@@ -58,7 +58,6 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         TextView navHeaderName = (TextView) findViewById(R.id.nav_header_name);
-        setNavUserName();
 
         showHomeFragment();
     }

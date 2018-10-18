@@ -68,4 +68,10 @@ public class NewProfileCapabilities extends AppCompatActivity {
     public void addCapability(Categories capability) {
         capabilitiesList_.add(capability);
     }
+
+    public void removeCapability(Categories capability) {
+        if(capabilitiesList_.contains(capability)){
+            capabilitiesList_.remove(capability);
+        }
+    }
 }
