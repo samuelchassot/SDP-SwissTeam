@@ -172,7 +172,7 @@ public class DBUtility {
      * @param callBack the function called on the callBack
      */
     public void getPostsFeed(final MyCallBack<ArrayList<Post>> callBack) {
-        Query freshestPosts = db_.child(POSTS).limitToFirst(POSTS_DISPLAY_NUMBER);
+        Query freshestPosts = db_.child(POSTS).orderByChild("timestamp_").limitToLast(POSTS_DISPLAY_NUMBER);
         freshestPosts.addListenerForSingleValueEvent(new ValueEventListener() {
             ArrayList<Post> posts = new ArrayList<>();
 

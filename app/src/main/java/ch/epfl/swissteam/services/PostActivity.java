@@ -7,6 +7,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -55,9 +57,11 @@ public class PostActivity extends AppCompatActivity {
         DBUtility.get().getUser(post_.getGoogleId_(), (user -> {
             user_ = user;
             username_.setText(user_.getName_());
+            //Picasso.get().load(user_.getImageUrl_()).into(picture_);
         }));
         title_.setText(post_.getTitle_());
         body_.setText(post_.getBody_());
         date_.setText((new SimpleDateFormat("dd/MM/yyyy", Locale.FRENCH)).format(new Date(post_.getTimestamp_()).getTime()));
+
     }
 }

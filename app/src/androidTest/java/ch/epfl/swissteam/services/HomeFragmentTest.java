@@ -6,6 +6,8 @@ import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.widget.ListView;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -28,6 +30,16 @@ public class HomeFragmentTest {
     @Rule
     public final ActivityTestRule<MainActivity> mActivityRule =
             new ActivityTestRule<>(MainActivity.class);
+
+    @Before
+    public void init(){
+        TestUtils.setMock();
+    }
+
+    @After
+    public void end(){
+        TestUtils.endMock();
+    }
 
     @Test
     public void canOpenHomeFragment() {
