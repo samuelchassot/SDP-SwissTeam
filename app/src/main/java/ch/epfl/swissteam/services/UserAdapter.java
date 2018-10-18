@@ -24,7 +24,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
         public TextView nameView_;
         public TextView surnameView_;
         public TextView bodyView_;
-        LinearLayout parentLayout;
+        private LinearLayout parentLayout;
 
         public UserViewHolder(View v) {
             super(v);
