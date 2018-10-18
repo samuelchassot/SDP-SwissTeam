@@ -6,6 +6,7 @@ import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.widget.ListView;
 
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -28,6 +29,12 @@ public class HomeFragmentTest {
     @Rule
     public final ActivityTestRule<MainActivity> mActivityRule =
             new ActivityTestRule<>(MainActivity.class);
+
+    @Before
+    public void setUpDb() {
+        TestUtils.setMock();
+        DBUtility.get().setPost(TestUtils.getTestPost());
+    }
 
     @Test
     public void canOpenHomeFragment() {

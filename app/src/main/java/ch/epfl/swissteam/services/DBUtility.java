@@ -42,6 +42,7 @@ public class DBUtility {
      */
     public static DBUtility get() {
         if (instance == null) {
+            FirebaseDatabase.getInstance().setPersistenceEnabled(true);
             instance = new DBUtility(FirebaseDatabase.getInstance().getReference());
         }
         return instance;
@@ -222,7 +223,7 @@ public class DBUtility {
      * @param callBack the function called on the callBack
      */
     public void getUsersPosts(String googleID, final MyCallBack<ArrayList<Post>> callBack){
-        Query usersPosts = db_.child(POSTS).orderByChild("googleId_").equalTo(googleID);
+        Query usersPosts = db_.child(POSTS).orderByChild("googleId_").startAt(googleID);
         usersPosts.addListenerForSingleValueEvent(new ValueEventListener() {
             ArrayList<Post> posts = new ArrayList<>();
             @Override
