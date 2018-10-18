@@ -4,6 +4,7 @@
     android:layout_height="72dp"
     android:background="@drawable/border_top"
     android:orientation="horizontal">
+    android:id="@+id/parent_layout">
     <ImageView
         android:layout_width="72dp"
         android:layout_height="match_parent"

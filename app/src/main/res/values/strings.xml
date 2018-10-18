@@ -29,6 +29,8 @@
     <string name="profiledisplay_modify">Modify</string>
     <string name="profiledisplay_categoriestag">My capabilities</string>
 
+    <string name="show_profile">See the profile</string>
+
     /* ----- SignIn string ----- */
     <string name="signin_welcomemessage">Welcome in Socialize!</string>
 
@@ -80,25 +82,21 @@
     <string name="createpostfragment_bodyempty">You need to enter a body!</string>
     <string name="fragment_services_problem">Oops! Look like no one can help you!\nSelect another category, or check your internet connection.</string>
 
-    <!-- Category strings-->
-
-    <string name ="category_IC">Computer</string>
-    <string name ="category_Maths">Maths</string>
-    <string name ="category_House">House</string>
-    <string name ="category_Cooking">Cooking</string>
-    <string name ="category_Teaching">Teaching</string>
-    <string name ="category_Gardening">Gardening</string>
-    <string name ="category_Mechanics">Mechanics</string>
-    <string name ="category_Dailylife">Daily Life</string>
-    <string name ="category_Transportation">Transportation</string>
-
-
-
-
-
-
     <string name="new_service">New Service</string>
     <string name="enter_key_word">Enter key words</string>
+
+    /* ----- Category strings ----- */
+
+    <string name="category_IC">Computer</string>
+    <string name="category_Maths">Maths</string>
+    <string name="category_House">House</string>
+    <string name="category_Cooking">Cooking</string>
+    <string name="category_Teaching">Teaching</string>
+    <string name="category_Gardening">Gardening</string>
+    <string name="category_Mechanics">Mechanics</string>
+    <string name="category_Dailylife">Daily Life</string>
+    <string name="category_Transportation">Transportation</string>
+
 
     /* ----- Settings string ----- */
     <string name="language_prompt">Choose a language</string>

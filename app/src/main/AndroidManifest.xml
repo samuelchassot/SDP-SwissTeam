@@ -30,6 +30,7 @@
             android:label="@string/title_activity_chat_room"/>
         <activity android:name=".MyPostEdit" />
         <activity android:name=".ProfileSettings"></activity>
+        <activity android:name=".ProfileActivity"></activity>
     </application>
 
 </manifest>
