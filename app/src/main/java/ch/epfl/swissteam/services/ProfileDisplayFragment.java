@@ -100,15 +100,18 @@ public class ProfileDisplayFragment extends Fragment {
 
     private void loadAndShowUser(String clientUniqueID){
         //for now we use the username
+        View view= getView();
         DBUtility.get().getUser(clientUniqueID, (user)->{
-            TextView nameView = (TextView) this.getView().findViewById(R.id.textview_profiledisplay_name);
-            nameView.setText(user.getName_());
+            if (view != null) {
+                TextView nameView = (TextView) view.findViewById(R.id.textview_profiledisplay_name);
+                nameView.setText(user.getName_());
 
-            TextView emailView =  (TextView) getView().findViewById(R.id.textview_profiledisplay_email);
-            emailView.setText(user.getEmail_());
+                TextView emailView = (TextView) view.findViewById(R.id.textview_profiledisplay_email);
+                emailView.setText(user.getEmail_());
 
-            TextView descrView =  (TextView) getView().findViewById(R.id.textview_profiledisplay_description);
-            descrView.setText(user.getDescription_());
+                TextView descrView = (TextView) view.findViewById(R.id.textview_profiledisplay_description);
+                descrView.setText(user.getDescription_());
+            }
 
             //for the recyclerview
 //            for (int i = 0 ; i < user.getCategories_().size() ; ++i){
