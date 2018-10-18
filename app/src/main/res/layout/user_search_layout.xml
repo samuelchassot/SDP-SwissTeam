@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="72dp"
     android:background="@drawable/border_top"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
     android:id="@+id/parent_layout">
     <ImageView
         android:layout_width="72dp"
