@@ -5,7 +5,11 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -49,7 +53,7 @@ public class ServicesFragment extends Fragment {
         View view =  inflater.inflate(R.layout.fragment_services, container, false);
         RecyclerView mRecyclerView = view.findViewById(R.id.services_recycler);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
-        mAdapter = new UserAdapter(users);
+        mAdapter = new UserAdapter(users, getContext());
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
@@ -69,6 +73,7 @@ public class ServicesFragment extends Fragment {
 
             }
         });
+
 
         return view;
     }
@@ -105,9 +110,5 @@ public class ServicesFragment extends Fragment {
         }
 
     }
-
-
-
-
 
 }

@@ -62,6 +62,7 @@ public class ProfileDisplayFragment extends Fragment {
                              Bundle savedInstanceState) {
         View thisView = inflater.inflate(R.layout.fragment_profile_display, container, false);
 
+
         Button button = (Button) thisView.findViewById(R.id.button_profiledisplay_modify);
         button.setOnClickListener(new View.OnClickListener()
         {
@@ -100,13 +101,13 @@ public class ProfileDisplayFragment extends Fragment {
     private void loadAndShowUser(String clientUniqueID){
         //for now we use the username
         DBUtility.get().getUser(clientUniqueID, (user)->{
-            TextView nameView = (TextView) getActivity().findViewById(R.id.textview_profiledisplay_name);
+            TextView nameView = (TextView) this.getView().findViewById(R.id.textview_profiledisplay_name);
             nameView.setText(user.getName_());
 
-            TextView emailView =  (TextView) getActivity().findViewById(R.id.textview_profiledisplay_email);
+            TextView emailView =  (TextView) getView().findViewById(R.id.textview_profiledisplay_email);
             emailView.setText(user.getEmail_());
 
-            TextView descrView =  (TextView) getActivity().findViewById(R.id.textview_profiledisplay_description);
+            TextView descrView =  (TextView) getView().findViewById(R.id.textview_profiledisplay_description);
             descrView.setText(user.getDescription_());
 
             //for the recyclerview
@@ -120,6 +121,7 @@ public class ProfileDisplayFragment extends Fragment {
             mCapabilities_.addAll(user.getCategories_());
             mAdapter_.notifyDataSetChanged();
 
+
         });
     }
 
@@ -127,6 +129,7 @@ public class ProfileDisplayFragment extends Fragment {
     public void onResume() {
         super.onResume();
         loadAndShowUser(clientUniqueID_);
+
     }
 
     /**
