@@ -65,6 +65,7 @@ public class Post implements DBSavable, Parcelable{
         return timestamp_;
     }
 
+
     public String getKey_() {
         return key_;
     }
@@ -113,6 +114,4 @@ public class Post implements DBSavable, Parcelable{
             return new Post[size];
         }
     };
-
-
 }
