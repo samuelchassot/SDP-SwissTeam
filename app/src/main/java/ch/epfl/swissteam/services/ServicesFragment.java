@@ -76,25 +76,19 @@ public class ServicesFragment extends Fragment {
 
 
     private void initDataSet(Categories category){
+        View view = getView();
         if (category == Categories.ALL){
             DBUtility.get().getAllUsers((usersdb ->{
                 users.clear();
                 users.addAll(usersdb);
                 mAdapter.notifyDataSetChanged();
-                if (users.isEmpty()){
-                    getActivity().findViewById(R.id.services_problem_text).setVisibility(View.VISIBLE);
-                } else {
-                    getActivity().findViewById(R.id.services_problem_text).setVisibility(View.INVISIBLE);
-                }
+                services_problem_text_udpate(view, users.isEmpty());
             }));
         } else {
             DBUtility.get().getUsersFromCategory(category, (googleIds) -> {
                 users.clear();
-                if (googleIds.size() == 0){
-                    getActivity().findViewById(R.id.services_problem_text).setVisibility(View.VISIBLE);
-                    mAdapter.notifyDataSetChanged();
-                } else {
-                    getActivity().findViewById(R.id.services_problem_text).setVisibility(View.INVISIBLE);
+                services_problem_text_udpate(view, googleIds.isEmpty());
+
                     for (String googleId : googleIds) {
                         DBUtility.get().getUser(googleId, user -> {
                             if (!users.contains(user)) {
@@ -103,10 +97,19 @@ public class ServicesFragment extends Fragment {
                             }
                         });
                     }
-                }
             });
         }
 
+    }
+
+    private void services_problem_text_udpate(View view, boolean empty){
+        if (view != null) {
+            if (empty) {
+                view.findViewById(R.id.services_problem_text).setVisibility(View.VISIBLE);
+            } else {
+                view.findViewById(R.id.services_problem_text).setVisibility(View.INVISIBLE);
+            }
+        }
     }
 
 
