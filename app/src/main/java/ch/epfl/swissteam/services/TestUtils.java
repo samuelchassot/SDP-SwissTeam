@@ -7,7 +7,7 @@ public class TestUtils {
     public static User getATestUser(){
         ArrayList<Categories> cat = new ArrayList<>();
         cat.add(Categories.IC);
-        User testUser = new User("1234", "testuser", "test@gmail.com", "I am a test user", cat, "www.imageURL.com");
+        User testUser = new User("1234", "testuser", "test@gmail.com", "I am a test user", cat, "https://lh5.googleusercontent.com/-SYTkc6TIZHI/AAAAAAAAAAI/AAAAAAAAABc/EBrA4sSVWQc/photo.jpg");
         return testUser;
     }
 
