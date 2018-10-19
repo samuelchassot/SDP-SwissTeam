@@ -53,16 +53,14 @@ public class PostActivity extends AppCompatActivity {
 
         //Set the different fields
 
+        title_.setText(post_.getTitle_());
+        body_.setText(post_.getBody_());
+        date_.setText((new SimpleDateFormat("dd/MM/yyyy", Locale.FRENCH)).format(new Date(post_.getTimestamp_()).getTime()));
         //Retrieve the user
         DBUtility.get().getUser(post_.getGoogleId_(), (user -> {
             user_ = user;
             username_.setText(user_.getName_());
-            //TODO decomment line
-            //Picasso.get().load(user_.getImageUrl_()).into(picture_);
+            Picasso.get().load(user_.getImageUrl_()).into(picture_);
         }));
-        title_.setText(post_.getTitle_());
-        body_.setText(post_.getBody_());
-        date_.setText((new SimpleDateFormat("dd/MM/yyyy", Locale.FRENCH)).format(new Date(post_.getTimestamp_()).getTime()));
-
     }
 }

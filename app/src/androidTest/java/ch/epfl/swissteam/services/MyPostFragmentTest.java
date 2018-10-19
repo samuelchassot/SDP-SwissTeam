@@ -79,7 +79,7 @@ public class MyPostFragmentTest {
         }
 
         onView(withId(R.id.recyclerview_mypostsfragment)).perform(RecyclerViewActions.actionOnItemAtPosition(0,swipeLeft()));
-        onView(withId(R.id.recyclerview_mypostsfragment)).perform(RecyclerViewActions.actionOnItemAtPosition(0, clickChildViewWithId(R.id.button_postadapter_delete)));
+        onView(withId(R.id.recyclerview_mypostsfragment)).perform(RecyclerViewActions.actionOnItemAtPosition(0, clickChildViewWithId(R.id.button_mypostadapter_delete)));
     }
 
     @Test
@@ -94,7 +94,7 @@ public class MyPostFragmentTest {
         }
 
         onView(withId(R.id.recyclerview_mypostsfragment)).perform(RecyclerViewActions.actionOnItemAtPosition(0,swipeLeft()));
-        onView(withId(R.id.recyclerview_mypostsfragment)).perform(RecyclerViewActions.actionOnItemAtPosition(0, clickChildViewWithId(R.id.button_postadapter_edit)));
+        onView(withId(R.id.recyclerview_mypostsfragment)).perform(RecyclerViewActions.actionOnItemAtPosition(0, clickChildViewWithId(R.id.button_mypostadapter_edit)));
 
         onView(withId(R.id.edittext_mypostedit_title)).check(matches(withText("Title")));
         onView(withId(R.id.edittext_mypostedit_body)).check(matches(withText("Body")));
@@ -103,7 +103,7 @@ public class MyPostFragmentTest {
         onView(withId(R.id.button_mypostedit_edit)).perform(click());
 
         onView(withId(R.id.recyclerview_mypostsfragment)).perform(RecyclerViewActions.actionOnItemAtPosition(0,swipeLeft()));
-        onView(withId(R.id.recyclerview_mypostsfragment)).perform(RecyclerViewActions.actionOnItemAtPosition(0, clickChildViewWithId(R.id.button_postadapter_edit)));
+        onView(withId(R.id.recyclerview_mypostsfragment)).perform(RecyclerViewActions.actionOnItemAtPosition(0, clickChildViewWithId(R.id.button_mypostadapter_edit)));
 
         onView(withId(R.id.edittext_mypostedit_title)).check(matches(withText("Title from unit test")));
         onView(withId(R.id.edittext_mypostedit_body)).check(matches(withText("Body from unit test")));

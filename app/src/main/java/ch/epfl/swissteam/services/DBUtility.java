@@ -43,6 +43,7 @@ public class DBUtility {
     public static DBUtility get() {
         if (instance == null) {
             FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+            FirebaseDatabase.getInstance().getReference().keepSynced(true);
             instance = new DBUtility(FirebaseDatabase.getInstance().getReference());
         }
         return instance;
@@ -173,7 +174,7 @@ public class DBUtility {
      * @param callBack the function called on the callBack
      */
     public void getPostsFeed(final MyCallBack<ArrayList<Post>> callBack) {
-        Query freshestPosts = db_.child(POSTS).orderByChild("timestamp_").limitToLast(POSTS_DISPLAY_NUMBER);
+        Query freshestPosts = db_.child(POSTS).orderByChild("timestamp_");
         freshestPosts.addListenerForSingleValueEvent(new ValueEventListener() {
             ArrayList<Post> posts = new ArrayList<>();
 
