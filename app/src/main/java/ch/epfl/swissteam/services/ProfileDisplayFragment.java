@@ -79,19 +79,22 @@ public class ProfileDisplayFragment extends Fragment {
         });
 
         clientUniqueID_ = GoogleSignInSingleton.get().getClientUniqueID();
-        loadAndShowUser(clientUniqueID_);
 
-        //setup recyclerview for capabilities
-        mRecyclerView_ = (RecyclerView) thisView.findViewById(R.id.recyclerview_profiledisplay_categories);
+        if(clientUniqueID_ != null && !clientUniqueID_.equals("")) {
+            loadAndShowUser(clientUniqueID_);
 
-        if(mRecyclerView_ != null) {
-            mRecyclerView_.setHasFixedSize(true);
+            //setup recyclerview for capabilities
+            mRecyclerView_ = (RecyclerView) thisView.findViewById(R.id.recyclerview_profiledisplay_categories);
 
-            mLayoutManager_ = new LinearLayoutManager(this.getContext());
-            mRecyclerView_.setLayoutManager(mLayoutManager_);
+            if (mRecyclerView_ != null) {
+                mRecyclerView_.setHasFixedSize(true);
 
-            mAdapter_ = new CapabilitiesAdapter(mCapabilities_);
-            mRecyclerView_.setAdapter(mAdapter_);
+                mLayoutManager_ = new LinearLayoutManager(this.getContext());
+                mRecyclerView_.setLayoutManager(mLayoutManager_);
+
+                mAdapter_ = new CapabilitiesAdapter(mCapabilities_);
+                mRecyclerView_.setAdapter(mAdapter_);
+            }
         }
         
 

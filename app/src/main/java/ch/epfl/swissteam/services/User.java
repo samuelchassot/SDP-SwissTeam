@@ -65,6 +65,9 @@ public class User implements DBSavable{
     public String getImageUrl_() { return imageUrl_; }
 
     public ArrayList<Categories> getCategories_() {
+        if(categories_ == null){
+            return new ArrayList<>();
+        }
         return (ArrayList<Categories>) categories_.clone();
     }
 
