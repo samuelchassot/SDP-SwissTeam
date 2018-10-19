@@ -48,7 +48,7 @@ public class ProfileDisplayFragmentTest extends FirebaseTest {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        onView(withId(R.id.button_profiledisplay_modify)).perform(click());
+        //onView(withId(R.id.button_profiledisplay_modify)).perform(click());
         
     }
 
