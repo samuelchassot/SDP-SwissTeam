@@ -6,6 +6,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
         android:orientation="vertical">
 
         <Space
@@ -53,13 +55,12 @@
                 tools:text="@string/profiledisplay_emailtag" />
 
 
-            <EditText
-                android:id="@+id/edittext_profilesettings_email"
+            <TextView
+                android:id="@+id/textview_profilesettings_email"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:inputType="textEmailAddress"
                 tools:text="TESTEMAIL@gmail.com"/>
 
 
@@ -123,11 +124,25 @@
             android:layout_width="wrap_content"
             android:layout_height="@dimen/profile_settings_space_height" />
 
-        <Button
-            android:id="@+id/button_profilesettings_save"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/profilesettings_save" />
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/button_profilesettings_cancel"
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Cancel" />
+
+            <Button
+                android:id="@+id/button_profilesettings_save"
+                android:layout_width="0px"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="@string/profilesettings_save" />
+        </LinearLayout>
 
     </LinearLayout>
 

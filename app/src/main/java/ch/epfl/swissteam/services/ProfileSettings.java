@@ -33,6 +33,20 @@ public class ProfileSettings extends AppCompatActivity {
             }
         });
 
+        Button cancelButton = (Button)findViewById(R.id.button_profilesettings_cancel);
+
+        cancelButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                cancel();
+
+            }
+        });
+
+
+
         String uniqueID = GoogleSignInSingleton.get().getClientUniqueID();
         loadAndShowUser(uniqueID);
 
@@ -52,12 +66,16 @@ public class ProfileSettings extends AppCompatActivity {
     private void save(){
         String name = ((TextView) findViewById(R.id.edittext_profilesettings_name)).getText().toString();
         String uniqueID = GoogleSignInSingleton.get().getClientUniqueID();
-        String email = ((TextView) findViewById(R.id.edittext_profilesettings_email)).getText().toString();
+        String email = ((TextView) findViewById(R.id.textview_profilesettings_email)).getText().toString();
         String descr = ((TextView) findViewById(R.id.edittext_profilesettings_description)).getText().toString();
         User updatedUser = new User(uniqueID, name, email, descr, userCapabilities_);
 
         DBUtility.get().setUser(updatedUser);
         finish();
+    }
+
+    private void cancel(){
+        this.finish();
     }
 
     public void updateUserCapabilities(Categories cat, boolean checked){
@@ -81,7 +99,7 @@ public class ProfileSettings extends AppCompatActivity {
             TextView nameView = (TextView) findViewById(R.id.edittext_profilesettings_name);
             nameView.setText(user.getName_());
 
-            TextView emailView =  (TextView) findViewById(R.id.edittext_profilesettings_email);
+            TextView emailView =  (TextView) findViewById(R.id.textview_profilesettings_email);
             emailView.setText(user.getEmail_());
 
             TextView descrView =  (TextView) findViewById(R.id.edittext_profilesettings_description);
