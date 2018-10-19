@@ -61,7 +61,7 @@ public class MyPostsFragment extends Fragment {
             LinearLayoutManager layoutManager = new LinearLayoutManager(this.getContext());
             mRecyclerView_.setLayoutManager(layoutManager);
 
-            mAdapter_ = new PostAdapter(mPosts_);
+            mAdapter_ = new MyPostAdapter(mPosts_);
             mRecyclerView_.setAdapter(mAdapter_);
         }
 
