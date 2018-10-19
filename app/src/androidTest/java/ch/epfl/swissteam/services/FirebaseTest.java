@@ -14,7 +14,7 @@ import org.junit.runner.RunWith;
  * @author Adrian Baudat
  */
 @RunWith(AndroidJUnit4.class)
-public class FirebaseTest {
+public abstract class FirebaseTest {
 
     @Before
     public void setUp() {
