@@ -14,9 +14,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Adapter for categories used in {@link RecyclerView}.
+ * Adapter for categories used in the {@link RecyclerView} on the ProfileSettings page.
  *
- * @author Adrian Baudat
+ * @author Samuel Chassot
  */
 public class CategoriesAdapterProfileSettings extends RecyclerView.Adapter<CategoriesAdapterProfileSettings.CategoriesViewHolder> {
 
