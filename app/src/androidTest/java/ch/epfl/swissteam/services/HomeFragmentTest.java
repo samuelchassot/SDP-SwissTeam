@@ -107,26 +107,6 @@ public class HomeFragmentTest {
                 (new SimpleDateFormat("dd/MM/yyyy", Locale.FRENCH)).format(new Date(post.getTimestamp_()).getTime()))));
         onView(withId(R.id.textview_postactivity_username)).check(matches(withText(user.getName_())));
     }
-
-    @Test
-    public void canClickOnPostAndThenClickToSeeProfile(){
-        onView(withId(R.id.swiperefresh_homefragment_refresh)).perform(swipeDown());
-        try {
-            Thread.sleep(300);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        onView(withId(R.id.recyclerview_homefragment_posts)).perform(RecyclerViewActions.actionOnItemAtPosition(0,click()));
-
-        try {
-            Thread.sleep(300);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        onView(withId(R.id.linearlayout_postactivity_user)).perform(click());
-        onView(withId(R.id.textView_profile_nameTag)).check(matches(withText(user.getName_())));
-    }
-
-
+    
 
 }
