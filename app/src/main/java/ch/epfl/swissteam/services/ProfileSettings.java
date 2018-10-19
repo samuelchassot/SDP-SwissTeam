@@ -72,7 +72,7 @@ public class ProfileSettings extends AppCompatActivity {
         String uniqueID = GoogleSignInSingleton.get().getClientUniqueID();
         String email = ((TextView) findViewById(R.id.textview_profilesettings_email)).getText().toString();
         String descr = ((TextView) findViewById(R.id.edittext_profilesettings_description)).getText().toString();
-        User updatedUser = new User(uniqueID, name, email, descr, currentCategories, imageUrl_);
+        User updatedUser = new User(uniqueID, name, email, descr, userCapabilities_, imageUrl_);
 
         DBUtility.get().setUser(updatedUser);
         finish();
