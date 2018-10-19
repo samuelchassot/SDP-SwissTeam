@@ -42,16 +42,6 @@ public class CreatePostFragmentTest {
     }
 
     @Test
-    public void cantSendWithoutTitle() {
-        onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
-        onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_createpost));
-        onView(withId(R.id.plaintext_createpostfragment_title)).perform(typeText("")).check(matches(withText("")));
-        onView(withId(R.id.plaintext_createpostfragment_body)).perform(typeText(body), ViewActions.closeSoftKeyboard()).check(matches(withText(body)));
-        onView(withId(R.id.button_createpostfragment_send)).perform(click());
-        onView(withText(R.string.createpostfragment_titleempty)).inRoot(withDecorView(not(mActivityRule.getActivity().getWindow().getDecorView()))) .check(matches(isDisplayed()));
-    }
-
-    @Test
     public void cantSendWithoutBody() {
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_createpost));
@@ -62,11 +52,11 @@ public class CreatePostFragmentTest {
 
     @Test
     public void canClickButtonWithLongBody() {
+        TestUtils.setMock();
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_createpost));
         onView(withId(R.id.plaintext_createpostfragment_title)).perform(replaceText(longBody)).check(matches(withText(longBody)));
         onView(withId(R.id.plaintext_createpostfragment_body)).perform(replaceText(longBody), ViewActions.closeSoftKeyboard()).check(matches(withText(longBody)));
-        ((Button)mActivityRule.getActivity().findViewById(R.id.button_createpostfragment_send)).setOnClickListener(null);
         onView(withId(R.id.button_createpostfragment_send)).perform(click());
     }
 }

@@ -30,13 +30,28 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Ca
     @Override
     public void onBindViewHolder(@NonNull CategoriesViewHolder categoriesViewHolder, int i) {
         categoriesViewHolder.nameView.setText(capabilities_[i].toString());
-        categoriesViewHolder.checkBox.setOnClickListener(v -> ((NewProfileCapabilities)v.getContext()).addCapability(capabilities_[i]));
+        addAddListener(categoriesViewHolder.checkBox, capabilities_[i]);
     }
 
     @Override
     public int getItemCount() {
         return capabilities_.length;
     }
+
+    private void addAddListener(View view, Categories capability) {
+        view.setOnClickListener(v -> {
+            ((NewProfileCapabilities)v.getContext()).addCapability(capability);
+            addRemoveListener(view, capability);
+        });
+    }
+
+    private void addRemoveListener(View view, Categories capability) {
+        view.setOnClickListener(v -> {
+            ((NewProfileCapabilities)v.getContext()).removeCapability(capability);
+            addAddListener(view, capability);
+        });
+    }
+
 
     public static class CategoriesViewHolder extends  RecyclerView.ViewHolder {
 

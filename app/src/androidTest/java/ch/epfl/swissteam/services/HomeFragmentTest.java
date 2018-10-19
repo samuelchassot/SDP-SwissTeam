@@ -32,13 +32,9 @@ public class HomeFragmentTest {
             new ActivityTestRule<>(MainActivity.class);
 
     @Before
-    public void init(){
+    public void setUpDb() {
         TestUtils.setMock();
-    }
-
-    @After
-    public void end(){
-        TestUtils.endMock();
+        DBUtility.get().setPost(TestUtils.getTestPost());
     }
 
     @Test
