@@ -2,6 +2,8 @@ package ch.epfl.swissteam.services;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -11,12 +13,21 @@ import static ch.epfl.swissteam.services.NewProfileDetails.GOOGLE_ID_TAG;
 
 public class ProfileActivity extends AppCompatActivity {
 
+    Button chatButton_;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
         String clientUID = getIntent().getStringExtra(GOOGLE_ID_TAG);
+
+        chatButton_ = findViewById(R.id.button_profile_toChat);
+        if (clientUID.equals(GoogleSignInSingleton.get().getClientUniqueID())) {
+            chatButton_.setVisibility(View.INVISIBLE);
+        }
+
+
         loadAndShowUser(clientUID);
     }
 
