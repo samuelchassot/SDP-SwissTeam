@@ -49,8 +49,9 @@ public class HomeFragmentTest extends FirebaseTest{
             Thread.sleep(400);
         } catch (InterruptedException e) {
             e.printStackTrace();
+        }
     }
-
+        
     @Test
     public void canOpenHomeFragment() {
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
