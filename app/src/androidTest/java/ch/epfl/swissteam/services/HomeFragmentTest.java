@@ -21,7 +21,7 @@ import static org.junit.Assert.assertThat;
 import static org.hamcrest.CoreMatchers.is;
 
 @RunWith(AndroidJUnit4.class)
-public class HomeFragmentTest {
+public class HomeFragmentTest extends FirebaseTest{
 
     private ArrayList<Post> postsList = new ArrayList<>();
     private final int POSTS_DISPLAY_NUMBER = 20;
@@ -30,10 +30,9 @@ public class HomeFragmentTest {
     public final ActivityTestRule<MainActivity> mActivityRule =
             new ActivityTestRule<>(MainActivity.class);
 
-    @Before
-    public void setUpDb() {
-        TestUtils.setMock();
-        DBUtility.get().setPost(TestUtils.getTestPost());
+    @Override
+    public void initialize() {
+        TestUtils.addTestPost();
     }
 
     @Test
