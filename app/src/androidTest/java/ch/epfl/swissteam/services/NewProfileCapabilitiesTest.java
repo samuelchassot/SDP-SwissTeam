@@ -18,15 +18,10 @@ import static android.support.test.espresso.intent.Intents.intending;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 
-public class NewProfileCapabilitiesTest {
+public class NewProfileCapabilitiesTest extends FirebaseTest{
     @Rule
     public final IntentsTestRule<NewProfileCapabilities> mActivityRule =
             new IntentsTestRule<>(NewProfileCapabilities.class);
-
-    @Before
-    public void setDbOffline() {
-        TestUtils.setMock();
-    }
 
     @Test
     public void canCheckCapability() {
