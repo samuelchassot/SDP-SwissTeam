@@ -6,6 +6,7 @@ import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.widget.ListView;
 
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,7 +21,7 @@ import static org.junit.Assert.assertThat;
 import static org.hamcrest.CoreMatchers.is;
 
 @RunWith(AndroidJUnit4.class)
-public class HomeFragmentTest {
+public class HomeFragmentTest extends FirebaseTest{
 
     private ArrayList<Post> postsList = new ArrayList<>();
     private final int POSTS_DISPLAY_NUMBER = 20;
@@ -28,6 +29,11 @@ public class HomeFragmentTest {
     @Rule
     public final ActivityTestRule<MainActivity> mActivityRule =
             new ActivityTestRule<>(MainActivity.class);
+
+    @Override
+    public void initialize() {
+        TestUtils.addTestPost();
+    }
 
     @Test
     public void canOpenHomeFragment() {

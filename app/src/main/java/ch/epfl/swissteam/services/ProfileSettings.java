@@ -7,12 +7,16 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 public class ProfileSettings extends AppCompatActivity {
 
+    private String imageUrl_; //TODO: Allow user to change picture in his profile.
     private ArrayList<Categories> userCapabilities_ = new ArrayList<>();
     private RecyclerView recycler;
 
@@ -68,7 +72,7 @@ public class ProfileSettings extends AppCompatActivity {
         String uniqueID = GoogleSignInSingleton.get().getClientUniqueID();
         String email = ((TextView) findViewById(R.id.textview_profilesettings_email)).getText().toString();
         String descr = ((TextView) findViewById(R.id.edittext_profilesettings_description)).getText().toString();
-        User updatedUser = new User(uniqueID, name, email, descr, userCapabilities_);
+        User updatedUser = new User(uniqueID, name, email, descr, currentCategories, imageUrl_);
 
         DBUtility.get().setUser(updatedUser);
         finish();
@@ -105,6 +109,8 @@ public class ProfileSettings extends AppCompatActivity {
             TextView descrView =  (TextView) findViewById(R.id.edittext_profilesettings_description);
             descrView.setText(user.getDescription_());
 
+            Picasso.get().load(user.getImageUrl_()).into((ImageView)findViewById(R.id.imageview_profilesettings_picture));
+            imageUrl_ = user.getImageUrl_();
             userCapabilities_.clear();
             userCapabilities_.addAll(user.getCategories_());
             

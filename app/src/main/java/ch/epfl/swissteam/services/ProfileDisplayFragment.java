@@ -11,7 +11,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -109,6 +112,8 @@ public class ProfileDisplayFragment extends Fragment {
 
             TextView descrView =  (TextView) getView().findViewById(R.id.textview_profiledisplay_description);
             descrView.setText(user.getDescription_());
+
+            Picasso.get().load(user.getImageUrl_()).into((ImageView)getView().findViewById(R.id.imageview_profiledisplay_picture));
 
             //for the recyclerview
 //            for (int i = 0 ; i < user.getCategories_().size() ; ++i){

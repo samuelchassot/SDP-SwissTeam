@@ -2,7 +2,10 @@ package ch.epfl.swissteam.services;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import static ch.epfl.swissteam.services.NewProfileDetails.GOOGLE_ID_TAG;
 
@@ -29,6 +32,7 @@ public class ProfileActivity extends AppCompatActivity {
             TextView descrView =  findViewById(R.id.textView_profile_description);
             descrView.setText(user.getDescription_());
 
+            Picasso.get().load(user.getImageUrl_()).into((ImageView)findViewById(R.id.imageview_profile_picture));
         });
     }
 }

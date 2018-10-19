@@ -7,6 +7,7 @@ import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.widget.Button;
 
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,7 +24,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.not;
 
 @RunWith(AndroidJUnit4.class)
-public class CreatePostFragmentTest {
+public class CreatePostFragmentTest extends FirebaseTest{
 
     public static String title = "Searching for someone to mow my lawn before Friday!",
     body = "I need someone fast please!!",
@@ -42,16 +43,6 @@ public class CreatePostFragmentTest {
     }
 
     @Test
-    public void cantSendWithoutTitle() {
-        onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
-        onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_createpost));
-        onView(withId(R.id.plaintext_createpostfragment_title)).perform(typeText("")).check(matches(withText("")));
-        onView(withId(R.id.plaintext_createpostfragment_body)).perform(typeText(body), ViewActions.closeSoftKeyboard()).check(matches(withText(body)));
-        onView(withId(R.id.button_createpostfragment_send)).perform(click());
-        onView(withText(R.string.createpostfragment_titleempty)).inRoot(withDecorView(not(mActivityRule.getActivity().getWindow().getDecorView()))) .check(matches(isDisplayed()));
-    }
-
-    @Test
     public void cantSendWithoutBody() {
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_createpost));
@@ -66,7 +57,6 @@ public class CreatePostFragmentTest {
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_createpost));
         onView(withId(R.id.plaintext_createpostfragment_title)).perform(replaceText(longBody)).check(matches(withText(longBody)));
         onView(withId(R.id.plaintext_createpostfragment_body)).perform(replaceText(longBody), ViewActions.closeSoftKeyboard()).check(matches(withText(longBody)));
-        ((Button)mActivityRule.getActivity().findViewById(R.id.button_createpostfragment_send)).setOnClickListener(null);
         onView(withId(R.id.button_createpostfragment_send)).perform(click());
     }
 }
