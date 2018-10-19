@@ -40,6 +40,7 @@ public class MyPostFragmentTest extends FirebaseTest{
 
     @Override
     public void initialize(){
+        TestUtils.setMock();
         id = "1234";
         GoogleSignInSingleton.putUniqueID(id);
         post = new Post("1234_1539704399119", "Title", "1234", "Body", 1539704399119L);
