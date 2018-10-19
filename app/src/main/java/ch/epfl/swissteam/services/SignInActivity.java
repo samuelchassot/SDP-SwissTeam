@@ -61,8 +61,6 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         // the GoogleSignInAccount will be non-null.
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
 
-        FirebaseDatabase.getInstance().goOnline();
-
         if(account != null ){
             // Launch main
 

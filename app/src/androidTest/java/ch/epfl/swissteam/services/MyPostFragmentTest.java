@@ -53,7 +53,6 @@ public class MyPostFragmentTest extends FirebaseTest{
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_myposts));
     }
 
-    /*
     @Test
     public void canSwipeLeft(){
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
@@ -114,7 +113,6 @@ public class MyPostFragmentTest extends FirebaseTest{
         onView(withId(R.id.edittext_mypostedit_body)).perform(clearText()).perform(typeText("Body")).perform(closeSoftKeyboard());
         onView(withId(R.id.button_mypostedit_edit)).perform(click());
     }
-    */
 
     public static ViewAction clickChildViewWithId(final int id) {
         return new ViewAction() {
