@@ -17,7 +17,7 @@ import org.junit.runner.RunWith;
 public abstract class FirebaseTest {
 
     @Before
-    public void setUp() {
+    final void setUp() {
         FirebaseDatabase.getInstance().goOffline();
         initialize();
     }
