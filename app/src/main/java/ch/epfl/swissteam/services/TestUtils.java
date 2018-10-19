@@ -16,7 +16,9 @@ public class TestUtils {
         String key = "1234" + "_" + timestamp;
         DBUtility.get().setPost(new Post(key, "Hello there", "1234", "General Kenobi", timestamp));
 
+
     }
+
     public static Post getTestPost() {
         long timestamp = (new Date()).getTime();
         String key = "1234" + "_" + timestamp;

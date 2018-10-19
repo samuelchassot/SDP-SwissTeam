@@ -45,8 +45,10 @@ public class ProfileDisplayFragmentTest extends FirebaseTest {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
         onView(withId(R.id.textview_profiledisplay_name)).check(matches(withText(testUser.getName_())));
         onView(withId(R.id.textview_profiledisplay_description)).check(matches(withText(testUser.getDescription_())));
+
 
         onView(withId(R.id.button_profiledisplay_modify)).perform(click());
 

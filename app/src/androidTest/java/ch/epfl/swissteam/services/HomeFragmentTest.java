@@ -38,8 +38,9 @@ public class HomeFragmentTest extends FirebaseTest{
     public final ActivityTestRule<MainActivity> mActivityRule =
             new ActivityTestRule<>(MainActivity.class);
 
-    @Before
-    public void init() {
+    @Override
+    public void initialize() {
+        TestUtils.addTestPost();
         user = TestUtils.getATestUser();
         post = TestUtils.getTestPost();
         post.addToDB(DBUtility.get().getDb_());
@@ -50,12 +51,7 @@ public class HomeFragmentTest extends FirebaseTest{
             e.printStackTrace();
         }
     }
-
-    @After
-    public void end(){
-        DBUtility.get().deletePost(post.getKey_());
-    }
-
+        
     @Test
     public void canOpenHomeFragment() {
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());

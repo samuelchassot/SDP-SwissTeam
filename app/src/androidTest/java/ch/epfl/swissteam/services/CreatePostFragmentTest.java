@@ -53,7 +53,6 @@ public class CreatePostFragmentTest extends FirebaseTest{
 
     @Test
     public void canClickButtonWithLongBody() {
-        TestUtils.setMock();
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_createpost));
         onView(withId(R.id.plaintext_createpostfragment_title)).perform(replaceText(longBody)).check(matches(withText(longBody)));
