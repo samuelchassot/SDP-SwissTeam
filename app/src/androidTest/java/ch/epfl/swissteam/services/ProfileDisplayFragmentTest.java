@@ -34,7 +34,7 @@ public class ProfileDisplayFragmentTest extends FirebaseTest {
             new ActivityTestRule<>(MainActivity.class);
 
     @Test
-    public void openFragment() {
+    public void openFragmentAndChangeName() {
         User testUser = TestUtils.getATestUser();
 
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
@@ -53,14 +53,14 @@ public class ProfileDisplayFragmentTest extends FirebaseTest {
         onView(withId(R.id.button_profiledisplay_modify)).perform(click());
 
         try {
-            Thread.sleep(1000);
+            Thread.sleep(3000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
         String newName = "newTestUser";
         String newDescr = "It's a new description";
         onView(withId(R.id.edittext_profilesettings_name)).perform(clearText()).perform(typeText(newName)).perform(closeSoftKeyboard());
-        //onView(withText(R.id.edittext_profilesettings_description)).perform(clearText()).perform(typeText(newDescr)).perform(closeSoftKeyboard());
+        //onView(withText(R.id.edittext_profilesettings_description)).perform(scrollTo()).perform(clearText()).perform(typeText(newDescr)).perform(closeSoftKeyboard());
         onView(withId(R.id.button_profilesettings_save)).perform(scrollTo()).perform(click());
         try {
             Thread.sleep(1000);
