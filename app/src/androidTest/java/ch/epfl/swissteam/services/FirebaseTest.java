@@ -17,13 +17,13 @@ import org.junit.runner.RunWith;
 public abstract class FirebaseTest {
 
     @Before
-    final void setUp() {
+    public final void setUp() {
         FirebaseDatabase.getInstance().goOffline();
         initialize();
     }
 
     @After
-    public void tearDown() {
+    public final void tearDown() {
         FirebaseDatabase.getInstance().purgeOutstandingWrites();
         FirebaseDatabase.getInstance().goOnline();
     }
