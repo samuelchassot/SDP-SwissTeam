@@ -65,8 +65,7 @@ public class CreatePostFragment extends Fragment implements View.OnClickListener
             String key = googleID + "_" + timestamp;
 
             DBUtility.get().getUser(googleID, user -> {
-                Post post = new Post(key, title, googleID, body, (new Date()).getTime());
-
+                Post post = new Post(key, title, googleID, body, timestamp);
                 post.addToDB(DBUtility.get().getDb_());
             });
 

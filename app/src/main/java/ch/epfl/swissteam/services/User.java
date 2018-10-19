@@ -1,5 +1,7 @@
 package ch.epfl.swissteam.services;
 
+import android.util.Log;
+
 import com.google.firebase.database.DatabaseReference;
 
 import java.util.ArrayList;
@@ -81,6 +83,8 @@ public class User implements DBSavable{
                 db.child(DBUtility.CATEGORIES).child(category.toString()).child(googleId_).setValue("true");
             }
         }
+
+        Log.e("USER", "ADDED");
     }
 
     /**
