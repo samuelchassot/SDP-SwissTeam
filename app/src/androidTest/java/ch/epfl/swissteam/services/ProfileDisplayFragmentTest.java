@@ -15,7 +15,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.action.ViewActions.clearText;
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
+import static android.support.test.espresso.action.ViewActions.scrollTo;
+import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.assertThat;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
@@ -43,13 +47,26 @@ public class ProfileDisplayFragmentTest extends FirebaseTest {
         }
         onView(withId(R.id.textview_profiledisplay_name)).check(matches(withText(testUser.getName_())));
         onView(withId(R.id.textview_profiledisplay_description)).check(matches(withText(testUser.getDescription_())));
+
+        onView(withId(R.id.button_profiledisplay_modify)).perform(click());
+
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        onView(withId(R.id.button_profiledisplay_modify)).perform(click());
-        
+        String newName = "newTestUser";
+        String newDescr = "It's a new description";
+        onView(withId(R.id.edittext_profilesettings_name)).perform(clearText()).perform(typeText(newName)).perform(closeSoftKeyboard());
+        onView(withText(R.id.edittext_profilesettings_description)).perform(clearText()).perform(typeText(newDescr)).perform(closeSoftKeyboard());
+        onView(withId(R.id.button_profilesettings_save)).perform(scrollTo()).perform(click());
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        onView(withId(R.id.textview_profiledisplay_name)).check(matches(withText(newName)));
+        onView(withText(R.id.textview_profiledisplay_description)).check(matches(withText(newDescr)));
     }
 
     @Override
