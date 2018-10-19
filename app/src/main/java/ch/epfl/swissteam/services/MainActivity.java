@@ -11,7 +11,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 /**
  * This class is the MainActivity of the application, this is
@@ -23,7 +26,8 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private Fragment profileShowerFragment_;
-    private Fragment homeFragment_, servicesFragment_, createPostFragment_, settingsFragment_, myPostsFragment_;
+    private Fragment homeFragment_, servicesFragment_, createPostFragment_, settingsFragment_, onlineChatFragment_, myPostsFragment_;
+
     private DBUtility util = DBUtility.get();
 
     @Override
@@ -54,8 +58,6 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         TextView navHeaderName = (TextView) findViewById(R.id.nav_header_name);
-
-
 
         showHomeFragment();
     }
@@ -124,7 +126,9 @@ public class MainActivity extends AppCompatActivity
             case (R.id.button_maindrawer_logout) :
                 signOut();
                 break;
-
+            case (R.id.button_maindrawer_chats) :
+                showChatsFragment();
+                break;
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -141,7 +145,7 @@ public class MainActivity extends AppCompatActivity
             if(user != null){
             ((TextView) findViewById(R.id.nav_header_name)).setText(user.getName_());
             ((TextView) findViewById(R.id.nav_header_email)).setText(user.getEmail_());}
-
+            Picasso.get().load(user.getImageUrl_()).into((ImageView)findViewById(R.id.nav_header_profileimage));
         });
     }
 
@@ -196,6 +200,12 @@ public class MainActivity extends AppCompatActivity
     public void showHomeFragment(){
         if (this.homeFragment_ == null) this.homeFragment_ = HomeFragment.newInstance();
         this.startTransactionFragment(this.homeFragment_);
+    }
+
+
+    private void showChatsFragment(){
+        if (this.onlineChatFragment_ == null) this.onlineChatFragment_ = OnlineChatFragment.newInstance();
+        this.startTransactionFragment(this.onlineChatFragment_);
     }
 
     /**

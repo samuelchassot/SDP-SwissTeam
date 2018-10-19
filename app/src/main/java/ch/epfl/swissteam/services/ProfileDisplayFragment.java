@@ -11,7 +11,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,6 +65,7 @@ public class ProfileDisplayFragment extends Fragment {
                              Bundle savedInstanceState) {
         View thisView = inflater.inflate(R.layout.fragment_profile_display, container, false);
 
+
         Button button = (Button) thisView.findViewById(R.id.button_profiledisplay_modify);
         button.setOnClickListener(new View.OnClickListener()
         {
@@ -100,14 +104,16 @@ public class ProfileDisplayFragment extends Fragment {
     private void loadAndShowUser(String clientUniqueID){
         //for now we use the username
         DBUtility.get().getUser(clientUniqueID, (user)->{
-            TextView nameView = (TextView) getActivity().findViewById(R.id.textview_profiledisplay_name);
+            TextView nameView = (TextView) this.getView().findViewById(R.id.textview_profiledisplay_name);
             nameView.setText(user.getName_());
 
-            TextView emailView =  (TextView) getActivity().findViewById(R.id.textview_profiledisplay_email);
+            TextView emailView =  (TextView) getView().findViewById(R.id.textview_profiledisplay_email);
             emailView.setText(user.getEmail_());
 
-            TextView descrView =  (TextView) getActivity().findViewById(R.id.textview_profiledisplay_description);
+            TextView descrView =  (TextView) getView().findViewById(R.id.textview_profiledisplay_description);
             descrView.setText(user.getDescription_());
+
+            Picasso.get().load(user.getImageUrl_()).into((ImageView)getView().findViewById(R.id.imageview_profiledisplay_picture));
 
             //for the recyclerview
 //            for (int i = 0 ; i < user.getCategories_().size() ; ++i){
@@ -120,6 +126,7 @@ public class ProfileDisplayFragment extends Fragment {
             mCapabilities_.addAll(user.getCategories_());
             mAdapter_.notifyDataSetChanged();
 
+
         });
     }
 
@@ -127,6 +134,7 @@ public class ProfileDisplayFragment extends Fragment {
     public void onResume() {
         super.onResume();
         loadAndShowUser(clientUniqueID_);
+
     }
 
     /**

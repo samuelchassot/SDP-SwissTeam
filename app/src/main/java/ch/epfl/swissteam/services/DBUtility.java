@@ -11,29 +11,39 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class DBUtility {
 
     private DatabaseReference db_;
     private static DBUtility instance;
+    private User currentUser_;
+
 
 
     public final static String USERS = "Users";
     public final static String CATEGORIES = "Categories";
     public final static String POSTS = "Posts";
     public final static String ERROR_TAG = "DBUtility";
+    public final static String CHATS = "Chats";
+    public final static String CHATS_RELATIONS = "ChatRelations";
     private final int POSTS_DISPLAY_NUMBER = 20;
 
-    private DBUtility(DatabaseReference db_){
-        this.db_ = db_;
+
+    private DBUtility(DatabaseReference db){
+        currentUser_ = null;
+        this.db_ = db;
     }
 
     /**
      * Get the DBUtility instance
-     * @return the DBUtiliyty instance
+     *
+     * @return the DBUtility instance
      */
-    public static DBUtility get(){
-        if (instance == null){
+    public static DBUtility get() {
+        if (instance == null) {
+            FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+            FirebaseDatabase.getInstance().getReference().keepSynced(true);
             instance = new DBUtility(FirebaseDatabase.getInstance().getReference());
         }
         return instance;
@@ -41,20 +51,22 @@ public class DBUtility {
 
     /**
      * Get the DatabaseReference of the DBUtility
+     *
      * @return the DatabaseReference of the DBUtility
      */
-    public DatabaseReference getDb_(){
+    public DatabaseReference getDb_() {
         return db_;
     }
 
 
     /**
      * Get all users' ID for a given category
+     *
      * @param category the category
      * @param callBack the CallBack to use
      */
-    public void getUsersFromCategory(Categories category, final MyCallBack<ArrayList<String>> callBack){
-        if (category == Categories.ALL){
+    public void getUsersFromCategory(Categories category, final MyCallBack<ArrayList<String>> callBack) {
+        if (category == Categories.ALL) {
             Log.e("DBUtility", "Cannot retrieve all users that way");
         } else {
             db_.child(CATEGORIES).child(category.toString()).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -78,12 +90,15 @@ public class DBUtility {
 
     /**
      * Get a user whose ID correspond to googleId
+     *
      * @param googleId unique user'Id
      * @param callBack the CallBack to use
      */
     public void getUser(String googleId, final MyCallBack<User> callBack) {
-        if (googleId == null){
-            User nullUser = new User(null, null, null, null, null);
+
+
+        if (googleId == null) {
+            User nullUser = new User(null, null, null, null, null, null);
             callBack.onCallBack(nullUser);
             return;
         }
@@ -98,19 +113,48 @@ public class DBUtility {
 
             }
         });
+
+    }
+
+    /**
+     *
+     * @return the current logged user which is null if the db has not yet provided the user
+     */
+    public User getCurrentUser_(){
+        String googleId = GoogleSignInSingleton.get().getClientUniqueID();
+        if(currentUser_ == null || currentUser_.getGoogleId_().compareTo(googleId) != 0) {
+            currentUser_ = null;
+            try{
+                getUser(googleId, new MyCallBack<User>() {
+                    @Override
+                    public void onCallBack(User value) {
+                        if(value != null){
+                            currentUser_ = value;
+                        }
+                    }
+                });
+            }
+            catch (NullPointerException e){
+                currentUser_ = null;
+            }
+
+        }
+        return currentUser_;
     }
 
     /**
      * Get all users inside the database
+     *
      * @param callBack the callBack to use
      */
-    public void getAllUsers(final MyCallBack<ArrayList<User>> callBack){
+    public void getAllUsers(final MyCallBack<ArrayList<User>> callBack) {
 
         db_.child(USERS).addListenerForSingleValueEvent(new ValueEventListener() {
             ArrayList<User> users = new ArrayList<>();
+
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot data : dataSnapshot.getChildren()){
+                for (DataSnapshot data : dataSnapshot.getChildren()) {
                     Log.i("USERSDB", data.getValue(User.class).getName_());
                     users.add(data.getValue(User.class));
                 }
@@ -126,15 +170,18 @@ public class DBUtility {
 
     /**
      * Retrieves the POSTS_DISPLAY_NUMBER freshest post of the database
+     *
      * @param callBack the function called on the callBack
      */
-    public void getPostsFeed(final MyCallBack<ArrayList<Post>> callBack){
-        Query freshestPosts = db_.child(POSTS).limitToFirst(POSTS_DISPLAY_NUMBER);
+    public void getPostsFeed(final MyCallBack<ArrayList<Post>> callBack) {
+        Query freshestPosts = db_.child(POSTS).orderByChild("timestamp_");
         freshestPosts.addListenerForSingleValueEvent(new ValueEventListener() {
             ArrayList<Post> posts = new ArrayList<>();
+
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 posts.clear();
+
                 for (DataSnapshot data : dataSnapshot.getChildren()){
                     Post post = data.getValue(Post.class);
                     posts.add(0, post);
@@ -149,16 +196,16 @@ public class DBUtility {
         });
     }
 
-    public void setUser(User user){
+    public void setUser(User user) {
         db_.child(USERS).child(user.getGoogleId_()).setValue(user);
 
     }
 
-    public void getCategory(String category, final MyCallBack<Void> callBack){
+    public void getCategory(String category, final MyCallBack<Void> callBack) {
         db_.child(CATEGORIES).child(category).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot data : dataSnapshot.getChildren()){
+                for (DataSnapshot data : dataSnapshot.getChildren()) {
                     Categories.fromString(category).addUser(data.getKey());
                 }
                 callBack.onCallBack(null);

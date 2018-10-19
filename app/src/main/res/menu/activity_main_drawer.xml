@@ -63,8 +63,11 @@
         android:title="@string/navigation_drawer_section_settings" />
 
     <item
+        android:id="@+id/button_maindrawer_chats"
+        android:title="@string/navigation_drawer_button_chats" />
+
+    <item
         android:id="@+id/button_maindrawer_logout"
         android:icon="@drawable/ic_maindrawer_logout"
         android:title="@string/navigation_drawer_button_logout" />
-
 </menu>

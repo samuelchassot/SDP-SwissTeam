@@ -10,6 +10,9 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.matcher.ViewMatchers.assertThat;
@@ -25,7 +28,13 @@ public class ProfileDisplayFragmentTest {
 
     @Test
     public void openFragment() {
-        GoogleSignInSingleton.putUniqueID("1234");
+
+        User testUser = TestUtils.getATestUser();
+        TestUtils.setMock();
+        testUser.addToDB(DBUtility.get().getDb_());
+
+        GoogleSignInSingleton.putUniqueID(testUser.getGoogleId_());
+
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_profile));
         try {
@@ -33,9 +42,9 @@ public class ProfileDisplayFragmentTest {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        assertThat(((TextView)mainActivityRule_.getActivity().findViewById(R.id.textview_profiledisplay_name)).getText().toString(), is("testuser"));
+        assertThat(((TextView)mainActivityRule_.getActivity().findViewById(R.id.textview_profiledisplay_name)).getText().toString(), is(testUser.getName_()));
         assertThat(((TextView)mainActivityRule_.getActivity().findViewById(R.id.textview_profiledisplay_description)).getText().toString(),
-                is("I am the test user"));
+                is(testUser.getDescription_()));
 
         onView(withId(R.id.button_profiledisplay_modify)).perform(click());
         
