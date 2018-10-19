@@ -10,6 +10,11 @@ public class TestUtils {
         return testUser;
     }
 
+    public static Post getATestPost(){
+        Post testPost = new Post("1234_1539885363773", "TestTitle", "1234", "TestBody", 1539885363773l);
+        return testPost;
+    }
+
 
     public static void setMock(){DBUtility.get().getDb_().getDatabase().goOffline();
     }

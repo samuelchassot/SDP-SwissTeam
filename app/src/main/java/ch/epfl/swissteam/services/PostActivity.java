@@ -57,6 +57,7 @@ public class PostActivity extends AppCompatActivity {
         DBUtility.get().getUser(post_.getGoogleId_(), (user -> {
             user_ = user;
             username_.setText(user_.getName_());
+            //TODO decomment line
             //Picasso.get().load(user_.getImageUrl_()).into(picture_);
         }));
         title_.setText(post_.getTitle_());
