@@ -28,9 +28,10 @@ import java.io.IOException;
  */
 public class NewProfileDetails extends AppCompatActivity {
 
-    public static final String GOOGLE_ID_TAG = "GOOGLE_ID", USERNAME_TAG = "USERNAME", EMAIL_TAG = "EMAIL", DESCRIPTION_TAG = "DESCRIPTION";
+    public static final String GOOGLE_ID_TAG = "GOOGLE_ID", USERNAME_TAG = "USERNAME", EMAIL_TAG = "EMAIL", DESCRIPTION_TAG = "DESCRIPTION", IMAGE_TAG = "IMAGE";
+    public static final String DEFAULT_IMAGE_URL = "https://i.stack.imgur.com/34AD2.jpg";
 
-    private String googleID_, username_, email_, description_;
+    private String googleID_, username_, email_, description_, imageUrl_;
     private Uri pictureURL_;
     private boolean saveToDB = false;
 
@@ -53,6 +54,12 @@ public class NewProfileDetails extends AppCompatActivity {
             pictureURL_ = account.getPhotoUrl();
             email_ = account.getEmail();
             description_ = "";
+            if(account.getPhotoUrl() != null) {
+                imageUrl_ = account.getPhotoUrl().toString();
+            }
+            else{
+                imageUrl_ = DEFAULT_IMAGE_URL;
+            }
 
             ((EditText)findViewById(R.id.plaintext_newprofiledetails_description)).addTextChangedListener(new TextWatcher() {
                 @Override
@@ -126,23 +133,13 @@ public class NewProfileDetails extends AppCompatActivity {
      * @param view view
      */
     public void nextScreen(View view) {
-        saveUserInDB();
         Intent intent = new Intent(this, NewProfileCapabilities.class);
         intent.putExtra(GOOGLE_ID_TAG, googleID_);
         intent.putExtra(USERNAME_TAG, username_);
         intent.putExtra(EMAIL_TAG, email_);
         intent.putExtra(DESCRIPTION_TAG, description_);
+        intent.putExtra(IMAGE_TAG, imageUrl_);
         startActivity(intent);
-    }
-
-    /**
-     * Saves the newly created user in the database.
-     */
-    private void saveUserInDB() {
-        if(saveToDB) {
-            User user = new User(googleID_, username_, email_, description_, null);
-            user.addToDB(DBUtility.get().getDb_());
-        }
     }
 
     /**

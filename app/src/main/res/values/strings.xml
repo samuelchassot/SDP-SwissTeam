@@ -42,7 +42,7 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="nav_header_title">Samuel Chassot</string>
-    <string name="nav_header_subtitle">samuel.chassot@epfl.ch</string>
+    <string name="nav_header_subtitle">baudatadrian@gmail.com</string>
     <string name="nav_header_desc">Navigation header</string>
 
     <string name="navigation_drawer_button_home">Home</string>
@@ -75,7 +75,7 @@
 
     /* ----- Post string ----- */
     <string name="post_hinteditbutton">Edit your post</string>
-    <string name="postadapter_hintdeletebutton">Delete you post</string>
+    <string name="postadapter_hintdeletebutton">Delete your post</string>
     <string name="createpostfragment_entertitle">Enter a title here</string>
     <string name="createpostfragment_enterbody">Enter the body here</string>
     <string name="createpostfragment_titleempty">You need to enter a title!</string>
@@ -102,6 +102,7 @@
     <string name="language_prompt">Choose a language</string>
     <string name="toolbar_my_posts">My posts</string>
     <string name="toolbar_profile">Profile</string>
+    <string name="toolbar_home">Home</string>
 
     <string-array name="language_arrays">
         <item>English</item>

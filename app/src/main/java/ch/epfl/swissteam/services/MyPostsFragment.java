@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,7 +61,7 @@ public class MyPostsFragment extends Fragment {
             LinearLayoutManager layoutManager = new LinearLayoutManager(this.getContext());
             mRecyclerView_.setLayoutManager(layoutManager);
 
-            mAdapter_ = new PostAdapter(mPosts_);
+            mAdapter_ = new MyPostAdapter(mPosts_);
             mRecyclerView_.setAdapter(mAdapter_);
         }
 

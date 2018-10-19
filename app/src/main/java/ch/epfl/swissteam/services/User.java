@@ -1,5 +1,7 @@
 package ch.epfl.swissteam.services;
 
+import android.util.Log;
+
 import com.google.firebase.database.DatabaseReference;
 
 import java.util.ArrayList;
@@ -15,7 +17,7 @@ public class User implements DBSavable{
 
 
 
-    private String googleId_, email_, name_, description_;
+    private String googleId_, email_, name_, description_, imageUrl_;
 
     private ArrayList<Categories> categories_;
 
@@ -37,11 +39,12 @@ public class User implements DBSavable{
      * @param description_ User's description
      * @param categories_ User's categories of services
      */
-    public User(String googleID_, String name_, String email_, String description_, ArrayList<Categories> categories_) {
+    public User(String googleID_, String name_, String email_, String description_, ArrayList<Categories> categories_, String imageUrl_) {
         this.googleId_ = googleID_;
         this.email_ = email_;
         this.name_ = name_;
         this.description_ = description_;
+        this.imageUrl_ = imageUrl_;
         this.categories_ = categories_ == null ? new ArrayList<Categories>() : (ArrayList<Categories>) categories_.clone();
     }
 
@@ -58,6 +61,8 @@ public class User implements DBSavable{
     public String getDescription_() {
         return description_;
     }
+
+    public String getImageUrl_() { return imageUrl_; }
 
     public ArrayList<Categories> getCategories_() {
         return (ArrayList<Categories>) categories_.clone();
@@ -78,6 +83,8 @@ public class User implements DBSavable{
                 db.child(DBUtility.CATEGORIES).child(category.toString()).child(googleId_).setValue("true");
             }
         }
+
+        Log.e("USER", "ADDED");
     }
 
     /**
@@ -114,5 +121,4 @@ public class User implements DBSavable{
         }
         return null;
     }
-
 }
