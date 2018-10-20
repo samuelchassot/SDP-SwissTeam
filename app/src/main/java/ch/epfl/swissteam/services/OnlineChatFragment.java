@@ -69,7 +69,7 @@ public class OnlineChatFragment extends Fragment {
         if (mRecyclerView_ != null) {
             mRecyclerView_.setLayoutManager(new LinearLayoutManager(this.getContext()));
 
-            adapter_ = new ChatRelationAdapter(relations);
+            adapter_ = new ChatRelationAdapter(relations, GoogleSignInSingleton.get().getClientUniqueID());
             mRecyclerView_.setAdapter(adapter_);
         }
     }

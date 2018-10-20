@@ -10,6 +10,12 @@ public class ChatRelation implements DBSavable {
 
     public static final String RELATION_ID_TEXT = "relationId";
 
+
+    //Attributes
+    private String firstUserId_;
+    private String secondUserId_;
+    private String id_;
+
     public ChatRelation(User firstUser, User secondUser ){
 
         setUsers(firstUser, secondUser);
@@ -85,10 +91,15 @@ public class ChatRelation implements DBSavable {
         }
     }
 
-    //Attributes
-    private String firstUserId_;
-    private String secondUserId_;
-    private String id_;
+    public String getOtherId(String currentUserId){
+        if(firstUserId_.compareTo(currentUserId) == 0){
+            return secondUserId_;
+        }
+        else{
+            return firstUserId_;
+        }
+    }
+
 
     //Overrides
     @Override
