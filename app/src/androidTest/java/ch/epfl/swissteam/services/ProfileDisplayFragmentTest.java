@@ -36,7 +36,7 @@ public class ProfileDisplayFragmentTest extends FirebaseTest {
     @Test
     public void openFragmentAndChangeName() {
         User testUser = TestUtils.getATestUser();
-        DBUtility.get().setUser(testUser);
+//        DBUtility.get().setUser(testUser);
 
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_profile));
@@ -56,7 +56,7 @@ public class ProfileDisplayFragmentTest extends FirebaseTest {
             e.printStackTrace();
         }
 
-        onView(withId(R.id.button_profiledisplay_modify)).perform(click());
+        onView(withId(R.id.button_profiledisplay_modify)).perform(scrollTo()).perform(click());
 
         try {
             Thread.sleep(1000);
