@@ -1,5 +1,7 @@
 package ch.epfl.swissteam.services;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -13,7 +15,7 @@ import static ch.epfl.swissteam.services.NewProfileDetails.GOOGLE_ID_TAG;
 
 public class ProfileActivity extends AppCompatActivity {
 
-    Button chatButton_;
+    private Button chatButton_;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +29,11 @@ public class ProfileActivity extends AppCompatActivity {
             chatButton_.setVisibility(View.INVISIBLE);
         }
 
+        chatButton_.setOnClickListener(v -> {
+            Intent intent = new Intent(this, ChatRoom.class);
+            intent.putExtra(GOOGLE_ID_TAG, clientUID);
+            this.startActivity(intent);
+        });
 
         loadAndShowUser(clientUID);
     }
