@@ -65,7 +65,7 @@ public class ProfileDisplayFragmentTest extends FirebaseTest {
         }
         String newName = "newTestUser";
         String newDescr = "It's a new description";
-        onView(withId(R.id.edittext_profilesettings_name)).perform(clearText()).perform(typeText(newName)).perform(closeSoftKeyboard());
+        onView(withId(R.id.edittext_profilesettings_name)).perform(scrollTo()).perform(clearText()).perform(typeText(newName)).perform(closeSoftKeyboard());
         //onView(withText(R.id.edittext_profilesettings_description)).perform(scrollTo()).perform(clearText()).perform(typeText(newDescr)).perform(closeSoftKeyboard());
         onView(withId(R.id.button_profilesettings_save)).perform(scrollTo()).perform(click());
         try {
