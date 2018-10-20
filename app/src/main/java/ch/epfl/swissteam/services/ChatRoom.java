@@ -24,6 +24,7 @@ import com.google.firebase.database.FirebaseDatabase;
  */
 public class ChatRoom extends Activity {
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
