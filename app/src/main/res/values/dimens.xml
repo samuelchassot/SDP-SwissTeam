@@ -11,6 +11,8 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="newprofiledetails_picture_maxheigth">150dp</dimen>
     <dimen name="navheader_image_size">100dp</dimen>
+    <dimen name="profile_settings_tags_width">90dp</dimen>
+    <dimen name="profile_settings_space_height">25dp</dimen>
 </resources>
 
     

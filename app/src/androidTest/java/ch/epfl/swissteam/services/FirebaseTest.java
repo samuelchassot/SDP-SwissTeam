@@ -23,6 +23,7 @@ public abstract class FirebaseTest {
     }
 
     @After
+
     public final void tearDown() {
         FirebaseDatabase.getInstance().purgeOutstandingWrites();
         FirebaseDatabase.getInstance().goOnline();
