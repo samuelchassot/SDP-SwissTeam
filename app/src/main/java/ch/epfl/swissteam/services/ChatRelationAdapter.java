@@ -15,6 +15,11 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Adapter for ChatRelations in {@link OnlineChatFragment}
+ *
+ * @author Sébastien gachoud
+ */
 public class ChatRelationAdapter extends RecyclerView.Adapter<ChatRelationAdapter.ChatRelationsViewHolder> {
 
 

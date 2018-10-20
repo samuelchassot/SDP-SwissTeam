@@ -92,12 +92,19 @@ public class ChatRelation implements DBSavable {
     }
 
     public String getOtherId(String currentUserId){
+        if(!isInThisRelation(currentUserId)) {
+            throw new IllegalArgumentException("The current user does not belong to this ChatRelation");
+        }
         if(firstUserId_.compareTo(currentUserId) == 0){
             return secondUserId_;
         }
         else{
             return firstUserId_;
         }
+    }
+
+    private Boolean isInThisRelation(String id){
+        return firstUserId_.compareTo(id) == 0 || secondUserId_.compareTo(id) == 0;
     }
 
 

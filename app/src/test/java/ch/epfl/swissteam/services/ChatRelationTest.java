@@ -42,7 +42,7 @@ public class ChatRelationTest {
         ChatRelation relation = new ChatRelation(user1, null);
     }
 
-    //setUsers
+    //setUsers(User,User)
     @Test
     public void setUsersYieldSortedIds() {
         ChatRelation relation = new ChatRelation();
@@ -134,5 +134,20 @@ public class ChatRelationTest {
 
         relation.setId_(CRId);
         assertEquals(CRId, relation.getId_());
+    }
+
+    //getOtherId
+    @Test
+    public void getOtherIdWorks(){
+        ChatRelation relation = new ChatRelation(user1, user2);
+
+        assertEquals(userId1, relation.getOtherId(userId2));
+        assertEquals(userId2, relation.getOtherId(userId1));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void getOtherIdThrowsWhenWrongUser(){
+        ChatRelation relation = new ChatRelation(user1, user2);
+        relation.getOtherId(userId3);
     }
 }
