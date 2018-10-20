@@ -25,7 +25,7 @@ public class ChatRelationAdapter extends RecyclerView.Adapter<ChatRelationAdapte
             protected FrameLayout parentLayout_;
 
             /**
-             * Create a ChatRelatinsViewHolder
+             * Create a ChatRelationsViewHolder
              * @param view the current View
              */
             protected ChatRelationsViewHolder(View view){
@@ -56,7 +56,7 @@ public class ChatRelationAdapter extends RecyclerView.Adapter<ChatRelationAdapte
             holder.contactName_.setText(relations_.get(holder.getAdapterPosition()).getFirstUserId_());
 
             holder.parentLayout_.setOnClickListener((view) -> {
-                Intent intent = new Intent(holder.itemView.getContext(), PostActivity.class);
+                Intent intent = new Intent(holder.itemView.getContext(), ChatRoom.class);
                 intent.putExtra(ChatRelation.RELATION_ID_TEXT, relations_.get(holder.getAdapterPosition()).getId_());
                 holder.itemView.getContext().startActivity(intent);
             });

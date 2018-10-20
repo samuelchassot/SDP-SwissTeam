@@ -11,11 +11,13 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseListAdapter;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
 
 /**
  * This activity is a chat room, it display messages and allow to write and send messages
@@ -24,17 +26,47 @@ import com.google.firebase.database.FirebaseDatabase;
  */
 public class ChatRoom extends Activity {
 
+    FirebaseRecyclerAdapter<ChatMessage, MessageHolder> adapter_;
+    DatabaseReference dataBase_;
+    String currentRelationId_;
+    User mUser_;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_room);
         dataBase_ = DBUtility.get().getDb_();
-        currentRelationId_ = getIntent().getExtras().getString(ChatRelation.RELATION_ID_TEXT);
+        setCurrentRelationId_(getIntent().getExtras().getString(ChatRelation.RELATION_ID_TEXT, null));
+        DBUtility.get().getUser(GoogleSignInSingleton.get().getClientUniqueID(), new MyCallBack<User>(){
+            @Override
+            public void onCallBack(User mUser) {
+                if(mUser == null){
+                    toastUser(getResources().getString(R.string.general_could_not_find_you_in_db));
+                    return;
+                }
+                mUser_ = mUser;
+                String contactId = getIntent().getExtras().getString(NewProfileDetails.GOOGLE_ID_TAG, null);
 
-        displayMessages();
+                if(currentRelationId_ == null){
+                    ChatRelation cR = mUser_.relationExists(contactId);
+                    if(cR == null) {
+                        newRelationWith(contactId);
+                    }
+                    else {
+                        setCurrentRelationId_(cR.getId_());
+                        displayMessages();
+                    }
+                }
+                else {
+                    displayMessages();
+                }
+            }
+        } );
     }
 
+    private void setCurrentRelationId_(String relationId){
+        currentRelationId_ = relationId;
+    }
     /**
      * display messages retrieved form the database
      */
@@ -65,17 +97,41 @@ public class ChatRoom extends Activity {
     public void sendMessage(View view){
         TextInputEditText textInput = findViewById(R.id.message_input);
         String message = textInput.getText().toString();
-        User user = DBUtility.get().getCurrentUser_();
-        ChatMessage chatMessage = new ChatMessage(message, user.getName_(), user.getGoogleId_(), currentRelationId_);
+        if(mUser_ == null){
+            toastUser(getResources().getString(R.string.general_could_not_find_you_in_db));
+            return;
+        }
+        if(message.isEmpty()){
+            return;
+        }
+        ChatMessage chatMessage = new ChatMessage(message, mUser_.getName_(), mUser_.getGoogleId_(), currentRelationId_);
         chatMessage.addToDB(dataBase_);
 
         textInput.getText().clear();
     }
 
-    FirebaseRecyclerAdapter<ChatMessage, MessageHolder> adapter_;
-    DatabaseReference dataBase_;
-    String currentRelationId_;
+    private void newRelationWith(String contactId ){
 
+        DBUtility.get().getUser(contactId, new MyCallBack<User>(){
+            @Override
+            public void onCallBack(User cUser) {
+                if(cUser == null){
+                    toastUser(getResources().getString(R.string.general_could_not_find_this_user_in_db));
+                    return;
+                }
+                ChatRelation newRelation = new ChatRelation(mUser_, cUser);
+                newRelation.addToDB(DBUtility.get().getDb_());
+                mUser_.addChatRelation(newRelation,  DBUtility.get().getDb_());
+                cUser.addChatRelation(newRelation, DBUtility.get().getDb_());
+                currentRelationId_ = newRelation.getId_();
+                displayMessages();
+            }
+        } );
+    }
+
+    private void toastUser(String text){
+        Toast.makeText(this, text, Toast.LENGTH_SHORT);
+    }
     /**
      * ViewHolder class to handle the RecyclerView
      */

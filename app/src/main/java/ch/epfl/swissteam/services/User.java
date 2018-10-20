@@ -27,7 +27,7 @@ public class User implements DBSavable{
      * Default constructor, needed for database
      */
     public User(){
-
+        chatRelations_ = new ArrayList<>();
     }
 
     /**
@@ -40,6 +40,7 @@ public class User implements DBSavable{
      * @param categories_ User's categories of services
      */
     public User(String googleID_, String name_, String email_, String description_, ArrayList<Categories> categories_, String imageUrl_) {
+        this();
         this.googleId_ = googleID_;
         this.email_ = email_;
         this.name_ = name_;
@@ -65,11 +66,11 @@ public class User implements DBSavable{
     public String getImageUrl_() { return imageUrl_; }
 
     public ArrayList<Categories> getCategories_() {
-        return (ArrayList<Categories>) categories_.clone();
+        return categories_ == null ? new ArrayList<>() : (ArrayList<Categories>) categories_.clone();
     }
 
     public ArrayList<ChatRelation> getChatRelations_() {
-        return chatRelations_ == null ? null : (ArrayList<ChatRelation>) chatRelations_.clone();//Collections.unmodifiableList(chatRelations_);
+        return chatRelations_ == null ? new ArrayList<>() : (ArrayList<ChatRelation>) chatRelations_.clone();
     }
 
     /**
@@ -112,10 +113,14 @@ public class User implements DBSavable{
     }
 
     public ChatRelation relationExists(User other){
+        return relationExists(other.getGoogleId_());
+    }
+
+    public ChatRelation relationExists(String otherId){
         if(chatRelations_ == null) return null;
         for(ChatRelation cR : chatRelations_){
-            if(cR.getFirstUserId_().compareTo(googleId_) == 0 && cR.getSecondUserId_().compareTo(other.googleId_) == 0
-                    || cR.getFirstUserId_().compareTo(other.googleId_) == 0 && cR.getSecondUserId_().compareTo(googleId_) == 0){
+            if(cR.getFirstUserId_().compareTo(getGoogleId_()) == 0 && cR.getSecondUserId_().compareTo(otherId) == 0
+                    || cR.getFirstUserId_().compareTo(otherId) == 0 && cR.getSecondUserId_().compareTo(getGoogleId_()) == 0){
                 return cR;
             }
         }
