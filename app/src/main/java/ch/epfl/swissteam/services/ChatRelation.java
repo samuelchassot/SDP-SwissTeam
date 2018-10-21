@@ -17,9 +17,8 @@ public class ChatRelation implements DBSavable {
     private String id_;
 
     public ChatRelation(User firstUser, User secondUser ){
-
+        this();
         setUsers(firstUser, secondUser);
-        id_ = null;
     }
 
     public ChatRelation(){

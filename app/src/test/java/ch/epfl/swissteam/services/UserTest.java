@@ -24,7 +24,7 @@ public class UserTest {
 
     @Test
     public void testUserWorks() {
-        User user = new User(googleID, name,email, description, categories, imageUrl);
+        User user = new User(googleID, name, email, description, categories, imageUrl);
         assertEquals(googleID, user.getGoogleId_());
         assertEquals(email, user.getEmail_());
         assertEquals(name, user.getName_());

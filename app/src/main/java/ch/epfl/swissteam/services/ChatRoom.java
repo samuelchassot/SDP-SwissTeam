@@ -37,6 +37,7 @@ public class ChatRoom extends Activity {
         setContentView(R.layout.activity_chat_room);
         dataBase_ = DBUtility.get().getDb_();
         setCurrentRelationId_(getIntent().getExtras().getString(ChatRelation.RELATION_ID_TEXT, null));
+
         DBUtility.get().getUser(GoogleSignInSingleton.get().getClientUniqueID(), new MyCallBack<User>(){
             @Override
             public void onCallBack(User mUser) {
@@ -62,6 +63,16 @@ public class ChatRoom extends Activity {
                 }
             }
         } );
+
+        //If nothing works to establish the chat
+        if(currentRelationId_ == null) {
+            findViewById(R.id.message_send_button).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    toastUser(getResources().getString(R.string.general_could_not_establish_relation));
+                }
+            });
+        }
     }
 
     private void setCurrentRelationId_(String relationId){
@@ -123,7 +134,7 @@ public class ChatRoom extends Activity {
                 newRelation.addToDB(DBUtility.get().getDb_());
                 mUser_.addChatRelation(newRelation,  DBUtility.get().getDb_());
                 cUser.addChatRelation(newRelation, DBUtility.get().getDb_());
-                currentRelationId_ = newRelation.getId_();
+                setCurrentRelationId_(newRelation.getId_());
                 displayMessages();
             }
         } );
