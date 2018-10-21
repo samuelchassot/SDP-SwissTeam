@@ -225,6 +225,7 @@ public class DBUtility {
      */
     public void getUsersPosts(String googleID, final MyCallBack<ArrayList<Post>> callBack){
         Query usersPosts = db_.child(POSTS).orderByChild("googleId_").equalTo(googleID);
+        Log.e("ID", googleID);
         usersPosts.addListenerForSingleValueEvent(new ValueEventListener() {
             ArrayList<Post> posts = new ArrayList<>();
             @Override

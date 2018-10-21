@@ -29,7 +29,7 @@ import static org.junit.Assert.assertThat;
 import static org.hamcrest.CoreMatchers.is;
 
 @RunWith(AndroidJUnit4.class)
-public class HomeFragmentTest {
+public class HomeFragmentTest extends FirebaseTest{
 
     private Post post;
     private User user;
@@ -38,8 +38,9 @@ public class HomeFragmentTest {
     public final ActivityTestRule<MainActivity> mActivityRule =
             new ActivityTestRule<>(MainActivity.class);
 
-    @Before
-    public void init() {
+    @Override
+    public void initialize() {
+        TestUtils.addTestPost();
         user = TestUtils.getATestUser();
         post = TestUtils.getTestPost();
         post.addToDB(DBUtility.get().getDb_());
@@ -50,12 +51,7 @@ public class HomeFragmentTest {
             e.printStackTrace();
         }
     }
-
-    @After
-    public void end(){
-        DBUtility.get().deletePost(post.getKey_());
-    }
-
+        
     @Test
     public void canOpenHomeFragment() {
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());

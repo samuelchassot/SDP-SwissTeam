@@ -9,6 +9,8 @@ import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.view.View;
 
+import com.google.firebase.database.FirebaseDatabase;
+
 import org.hamcrest.Matcher;
 import org.junit.Before;
 import org.junit.Rule;
@@ -28,7 +30,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
 @RunWith(AndroidJUnit4.class)
-public class MyPostFragmentTest {
+public class MyPostFragmentTest extends FirebaseTest{
     private Post post;
     private String id;
 
@@ -36,9 +38,8 @@ public class MyPostFragmentTest {
     public final ActivityTestRule<MainActivity> mActivityRule =
             new ActivityTestRule<>(MainActivity.class);
 
-    @Before
+    @Override
     public void initialize(){
-        TestUtils.setMock();
         id = "1234";
         GoogleSignInSingleton.putUniqueID(id);
         post = new Post("1234_1539704399119", "Title", "1234", "Body", 1539704399119L);

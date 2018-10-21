@@ -66,11 +66,17 @@ public class User implements DBSavable{
     public String getImageUrl_() { return imageUrl_; }
 
     public ArrayList<Categories> getCategories_() {
-        return categories_ == null ? new ArrayList<>() : (ArrayList<Categories>) categories_.clone();
+        if(categories_ == null){
+            return new ArrayList<>();
+        }
+        return (ArrayList<Categories>) categories_.clone();
     }
 
     public ArrayList<ChatRelation> getChatRelations_() {
-        return chatRelations_ == null ? new ArrayList<>() : (ArrayList<ChatRelation>) chatRelations_.clone();
+        if(chatRelations_ == null){
+            return new ArrayList<>();
+        }
+        return (ArrayList<ChatRelation>) chatRelations_.clone();
     }
 
     /**
