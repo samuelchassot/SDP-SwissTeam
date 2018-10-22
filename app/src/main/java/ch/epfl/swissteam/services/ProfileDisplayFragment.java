@@ -11,7 +11,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -76,19 +79,22 @@ public class ProfileDisplayFragment extends Fragment {
         });
 
         clientUniqueID_ = GoogleSignInSingleton.get().getClientUniqueID();
-        loadAndShowUser(clientUniqueID_);
 
-        //setup recyclerview for capabilities
-        mRecyclerView_ = (RecyclerView) thisView.findViewById(R.id.recyclerview_profiledisplay_categories);
+        if(clientUniqueID_ != null && !clientUniqueID_.equals("")) {
+            loadAndShowUser(clientUniqueID_);
 
-        if(mRecyclerView_ != null) {
-            mRecyclerView_.setHasFixedSize(true);
+            //setup recyclerview for capabilities
+            mRecyclerView_ = (RecyclerView) thisView.findViewById(R.id.recyclerview_profiledisplay_categories);
 
-            mLayoutManager_ = new LinearLayoutManager(this.getContext());
-            mRecyclerView_.setLayoutManager(mLayoutManager_);
+            if (mRecyclerView_ != null) {
+                mRecyclerView_.setHasFixedSize(true);
 
-            mAdapter_ = new CapabilitiesAdapter(mCapabilities_);
-            mRecyclerView_.setAdapter(mAdapter_);
+                mLayoutManager_ = new LinearLayoutManager(this.getContext());
+                mRecyclerView_.setLayoutManager(mLayoutManager_);
+
+                mAdapter_ = new CapabilitiesAdapter(mCapabilities_);
+                mRecyclerView_.setAdapter(mAdapter_);
+            }
         }
         
 
@@ -113,6 +119,8 @@ public class ProfileDisplayFragment extends Fragment {
                 descrView.setText(user.getDescription_());
             }
 
+            Picasso.get().load(user.getImageUrl_()).into((ImageView)getView().findViewById(R.id.imageview_profiledisplay_picture));
+
             //for the recyclerview
 //            for (int i = 0 ; i < user.getCategories_().size() ; ++i){
 //                Categories c = user.getCategories_().get(i);
@@ -122,8 +130,9 @@ public class ProfileDisplayFragment extends Fragment {
 //            }
             mCapabilities_.clear();
             mCapabilities_.addAll(user.getCategories_());
-            mAdapter_.notifyDataSetChanged();
-
+            if(mAdapter_ != null) {
+                mAdapter_.notifyDataSetChanged();
+            }
 
         });
     }

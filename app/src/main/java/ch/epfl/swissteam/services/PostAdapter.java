@@ -6,15 +6,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
+import android.widget.FrameLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.List;
 
-
 /**
- * Adapter for Posts in {@link MyPostsFragment}
+ * Adapter for Posts in {@link HomeFragment}
  *
  * @author Julie Giunta
  */
@@ -25,12 +23,12 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     private List<Post> posts_;
 
     /**
-     * ViewHolder for Posts, with hidden buttons
+     * ViewHolder for Posts
      */
     static class PostViewHolder extends RecyclerView.ViewHolder{
-        protected TextView postView_;
-        protected ImageButton editButton_;
-        protected ImageButton deleteButton_;
+        protected TextView titleView_;
+        protected TextView bodyView_;
+        protected FrameLayout parentLayout_;
 
         /**
          * Create a PostViewHolder
@@ -38,9 +36,9 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
          */
         protected PostViewHolder(View v){
             super(v);
-            postView_ = v.findViewById(R.id.textview_postadapter_post);
-            editButton_ = v.findViewById(R.id.button_postadapter_edit);
-            deleteButton_= v.findViewById(R.id.button_postadapter_delete);
+            titleView_ = v.findViewById(R.id.textview_postadapter_title);
+            bodyView_ = v.findViewById(R.id.textview_postadapter_body);
+            parentLayout_ = v.findViewById(R.id.framelayout_post);
         }
     }
 
@@ -62,27 +60,13 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
     @Override
     public void onBindViewHolder(PostViewHolder holder, int i) {
-        holder.postView_.setText(posts_.get(holder.getAdapterPosition()).getTitle_()
-                + "\n" + posts_.get(holder.getAdapterPosition()).getBody_());
-        holder.editButton_.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(v.getContext(), "EDIT CLICKED", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(holder.itemView.getContext(), MyPostEdit.class);
-                intent.putExtra(POST_TAG, posts_.get(holder.getAdapterPosition()));
-                holder.itemView.getContext().startActivity(intent);
-                ((RecyclerView)v.getParent().getParent().getParent().getParent()).getAdapter().notifyDataSetChanged();
-            }
-        });
+        holder.titleView_.setText(posts_.get(holder.getAdapterPosition()).getTitle_());
+        holder.bodyView_.setText(posts_.get(holder.getAdapterPosition()).getBody_());
 
-        holder.deleteButton_.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(v.getContext(), "DELETE CLICKED", Toast.LENGTH_SHORT).show();
-                DBUtility.get().deletePost(posts_.get(holder.getAdapterPosition()).getKey_());
-                posts_.remove(holder.getAdapterPosition());
-                ((RecyclerView)v.getParent().getParent().getParent().getParent()).getAdapter().notifyDataSetChanged();
-            }
+        holder.parentLayout_.setOnClickListener((view) -> {
+            Intent intent = new Intent(holder.itemView.getContext(), PostActivity.class);
+            intent.putExtra(POST_TAG, posts_.get(holder.getAdapterPosition()));
+            holder.itemView.getContext().startActivity(intent);
         });
     }
 
@@ -91,3 +75,4 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         return posts_.size();
     }
 }
+

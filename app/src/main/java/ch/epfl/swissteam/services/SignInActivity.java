@@ -12,6 +12,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.FirebaseDatabase;
 
 /**
  * This class is an activity created to make the user authenticate with Google.
@@ -59,6 +60,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         // Check for existing Google Sign In account, if the user is already signed in
         // the GoogleSignInAccount will be non-null.
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+
         if(account != null ){
             // Launch main
 

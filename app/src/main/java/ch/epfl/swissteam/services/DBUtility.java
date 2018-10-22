@@ -38,11 +38,12 @@ public class DBUtility {
     /**
      * Get the DBUtility instance
      *
-     * @return the DBUtiliyty instance
+     * @return the DBUtility instance
      */
     public static DBUtility get() {
         if (instance == null) {
             FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+            FirebaseDatabase.getInstance().getReference().keepSynced(true);
             instance = new DBUtility(FirebaseDatabase.getInstance().getReference());
         }
         return instance;
@@ -97,7 +98,7 @@ public class DBUtility {
 
 
         if (googleId == null) {
-            User nullUser = new User(null, null, null, null, null);
+            User nullUser = new User(null, null, null, null, null, null);
             callBack.onCallBack(nullUser);
             return;
         }
@@ -173,7 +174,7 @@ public class DBUtility {
      * @param callBack the function called on the callBack
      */
     public void getPostsFeed(final MyCallBack<ArrayList<Post>> callBack) {
-        Query freshestPosts = db_.child(POSTS).limitToFirst(POSTS_DISPLAY_NUMBER);
+        Query freshestPosts = db_.child(POSTS).orderByChild("timestamp_");
         freshestPosts.addListenerForSingleValueEvent(new ValueEventListener() {
             ArrayList<Post> posts = new ArrayList<>();
 
@@ -224,6 +225,7 @@ public class DBUtility {
      */
     public void getUsersPosts(String googleID, final MyCallBack<ArrayList<Post>> callBack){
         Query usersPosts = db_.child(POSTS).orderByChild("googleId_").equalTo(googleID);
+        Log.e("ID", googleID);
         usersPosts.addListenerForSingleValueEvent(new ValueEventListener() {
             ArrayList<Post> posts = new ArrayList<>();
             @Override

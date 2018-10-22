@@ -1,6 +1,8 @@
 package ch.epfl.swissteam.services;
 
+import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,50 +10,48 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
- * Adapter for categories used in {@link RecyclerView}.
+ * Adapter for categories used in the {@link RecyclerView} on the ProfileSettings page.
  *
- * @author Adrian Baudat
+ * @author Samuel Chassot
  */
-public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.CategoriesViewHolder> {
+public class CategoriesAdapterProfileSettings extends RecyclerView.Adapter<CategoriesAdapterProfileSettings.CategoriesViewHolder> {
 
     private Categories[] capabilities_;
+    private ArrayList<Categories> userCapabilities_;
 
-    public  CategoriesAdapter(Categories[] capabilities) {
+    public  CategoriesAdapterProfileSettings(Categories[] capabilities, ArrayList<Categories> userCapabilities) {
         this.capabilities_ = capabilities;
+        if(userCapabilities != null){
+            this.userCapabilities_ = userCapabilities;
+        }
+
     }
 
     @NonNull
     @Override
     public CategoriesViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        return new CategoriesViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.capability_layout, viewGroup, false));
+        return  new CategoriesViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.capability_layout, viewGroup, false));
+
     }
 
     @Override
     public void onBindViewHolder(@NonNull CategoriesViewHolder categoriesViewHolder, int i) {
         categoriesViewHolder.nameView.setText(capabilities_[i].toString());
-        addAddListener(categoriesViewHolder.checkBox, capabilities_[i]);
+        categoriesViewHolder.checkBox.setChecked(userCapabilities_.contains(capabilities_[i]));
+        categoriesViewHolder.checkBox.setOnClickListener(v -> {
+            ((ProfileSettings) v.getContext()).updateUserCapabilities(capabilities_[i], ((CheckBox)v).isChecked());
+        });
+
     }
 
     @Override
     public int getItemCount() {
         return capabilities_.length;
     }
-
-    private void addAddListener(View view, Categories capability) {
-        view.setOnClickListener(v -> {
-            ((NewProfileCapabilities)v.getContext()).addCapability(capability);
-            addRemoveListener(view, capability);
-        });
-    }
-
-    private void addRemoveListener(View view, Categories capability) {
-        view.setOnClickListener(v -> {
-            ((NewProfileCapabilities)v.getContext()).removeCapability(capability);
-            addAddListener(view, capability);
-        });
-    }
-
 
     public static class CategoriesViewHolder extends  RecyclerView.ViewHolder {
 

@@ -17,7 +17,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 /**
  * This class is the MainActivity of the application, this is
@@ -64,7 +67,6 @@ public class MainActivity extends AppCompatActivity
         TextView navHeaderName = (TextView) findViewById(R.id.nav_header_name);
         br = new NetworkStatusReceiver();
         br.setActivity_(this);
-
 
         showHomeFragment();
     }
@@ -166,7 +168,7 @@ public class MainActivity extends AppCompatActivity
             if(user != null){
             ((TextView) findViewById(R.id.nav_header_name)).setText(user.getName_());
             ((TextView) findViewById(R.id.nav_header_email)).setText(user.getEmail_());}
-
+            Picasso.get().load(user.getImageUrl_()).into((ImageView)findViewById(R.id.nav_header_profileimage));
         });
     }
 
