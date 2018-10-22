@@ -5,8 +5,9 @@
     android:id="@+id/parent_layout"
     android:layout_width="match_parent"
     android:layout_height="72dp"
-    android:background="@drawable/border_top_bottom">
-
+    android:background="@drawable/border_top"
+    android:orientation="horizontal"
+    android:id="@+id/parent_layout">
     <ImageView
         android:id="@+id/imageview_usersearchlayout_image"
         android:layout_width="72dp"
