@@ -122,7 +122,6 @@ public class ChatRoom extends Activity {
     }
 
     private void newRelationWith(String contactId ){
-
         DBUtility.get().getUser(contactId, new MyCallBack<User>(){
             @Override
             public void onCallBack(User cUser) {
@@ -141,7 +140,7 @@ public class ChatRoom extends Activity {
     }
 
     private void toastUser(String text){
-        Toast.makeText(this, text, Toast.LENGTH_SHORT);
+        Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
     }
     /**
      * ViewHolder class to handle the RecyclerView
