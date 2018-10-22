@@ -26,10 +26,10 @@ import com.google.firebase.database.FirebaseDatabase;
  */
 public class ChatRoom extends Activity {
 
-    FirebaseRecyclerAdapter<ChatMessage, MessageHolder> adapter_;
-    DatabaseReference dataBase_;
-    String currentRelationId_;
-    User mUser_;
+    private FirebaseRecyclerAdapter<ChatMessage, MessageHolder> adapter_;
+    private DatabaseReference dataBase_;
+    private String currentRelationId_;
+    private User mUser_;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,7 +105,7 @@ public class ChatRoom extends Activity {
      * Send message to the database
      * @param view
      */
-    public void sendMessage(View view){
+    private void sendMessage(View view){
         TextInputEditText textInput = findViewById(R.id.message_input);
         String message = textInput.getText().toString();
         if(mUser_ == null){
@@ -145,7 +145,7 @@ public class ChatRoom extends Activity {
     /**
      * ViewHolder class to handle the RecyclerView
      */
-    public static class MessageHolder extends RecyclerView.ViewHolder{
+    private static class MessageHolder extends RecyclerView.ViewHolder{
         TextView messageText_;
         TextView timeUserText_;
 

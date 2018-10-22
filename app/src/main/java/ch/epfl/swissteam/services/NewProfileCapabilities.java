@@ -45,7 +45,7 @@ public class NewProfileCapabilities extends AppCompatActivity {
      *
      * @param view view
      */
-    public void nextPage(View view) {
+    private void nextPage(View view) {
         saveUserInDB();
 
         Intent intent = new Intent(this, MainActivity.class);
@@ -69,7 +69,7 @@ public class NewProfileCapabilities extends AppCompatActivity {
         capabilitiesList_.add(capability);
     }
 
-    public void removeCapability(Categories capability) {
+    private void removeCapability(Categories capability) {
         if(capabilitiesList_.contains(capability)){
             capabilitiesList_.remove(capability);
         }
