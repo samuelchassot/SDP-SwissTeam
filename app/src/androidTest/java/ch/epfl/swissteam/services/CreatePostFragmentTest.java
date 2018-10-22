@@ -51,12 +51,5 @@ public class CreatePostFragmentTest extends FirebaseTest{
         onView(withText(R.string.createpostfragment_bodyempty)).inRoot(withDecorView(not(mActivityRule.getActivity().getWindow().getDecorView()))) .check(matches(isDisplayed()));
     }
 
-    @Test
-    public void canClickButtonWithLongBody() {
-        onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
-        onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_createpost));
-        onView(withId(R.id.plaintext_createpostfragment_title)).perform(replaceText(longBody)).check(matches(withText(longBody)));
-        onView(withId(R.id.plaintext_createpostfragment_body)).perform(replaceText(longBody), ViewActions.closeSoftKeyboard()).check(matches(withText(longBody)));
-        onView(withId(R.id.button_createpostfragment_send)).perform(click());
-    }
+
 }
