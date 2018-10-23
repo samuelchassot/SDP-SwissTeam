@@ -25,6 +25,7 @@ script:
 after_script:
   # Report test coverage to Code Climate
   - export JACOCO_SOURCE_PATH=app/src/main/java/
+  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
   - ./cc-test-reporter format-coverage ./app/build/reports/coverage/debugt/report.xml --input-type jacoco
   - ./cc-test-reporter upload-coverage
 
