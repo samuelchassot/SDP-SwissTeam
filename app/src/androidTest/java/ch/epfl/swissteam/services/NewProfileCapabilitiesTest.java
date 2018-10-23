@@ -28,6 +28,13 @@ public class NewProfileCapabilitiesTest extends FirebaseTest{
         onView(withId(R.id.recyclerview_newprofilecapabilities_list)).perform(RecyclerViewActions.actionOnItemAtPosition(1, clickChildViewWithId(R.id.checkbox_capabilitylayout_check)));
     }
 
+    @Test
+    public void canGoToNext() {
+        onView(withId(R.id.recyclerview_newprofilecapabilities_list)).perform(RecyclerViewActions.actionOnItemAtPosition(1, clickChildViewWithId(R.id.checkbox_capabilitylayout_check)));
+        onView(withId(R.id.button_newprofilecapabilites_done)).perform(click());
+        intended(hasComponent(MainActivity.class.getName()));
+    }
+
     public static ViewAction clickChildViewWithId(final int id) {
         return new ViewAction() {
             @Override

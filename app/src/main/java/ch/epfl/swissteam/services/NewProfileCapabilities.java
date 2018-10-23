@@ -69,6 +69,11 @@ public class NewProfileCapabilities extends AppCompatActivity {
         capabilitiesList_.add(capability);
     }
 
+    /**
+     * Remove a capability to the user.
+     *
+     * @param capability capability to remove.
+     */
     public void removeCapability(Categories capability) {
         if(capabilitiesList_.contains(capability)){
             capabilitiesList_.remove(capability);
