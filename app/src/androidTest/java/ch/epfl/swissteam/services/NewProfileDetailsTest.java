@@ -36,7 +36,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @RunWith(AndroidJUnit4.class)
-public class NewProfileDetailsTest {
+public class NewProfileDetailsTest extends FirebaseTest{
 
     private static final String username = "Jean-Claude",
             firstName = "Jean",
