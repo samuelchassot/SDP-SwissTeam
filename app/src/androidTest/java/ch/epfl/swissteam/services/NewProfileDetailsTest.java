@@ -76,7 +76,7 @@ public class NewProfileDetailsTest {
         onView(withId(R.id.button_newprofiledetails_next)).check(matches(isDisplayed())).perform(click());
         intended(hasComponent(NewProfileCapabilities.class.getName()));
     }
-    
+
     @Test
     public void connectWithNullAccount() {
         GoogleSignInAccount acc = null;

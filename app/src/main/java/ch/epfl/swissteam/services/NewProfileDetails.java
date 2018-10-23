@@ -46,7 +46,6 @@ public class NewProfileDetails extends AppCompatActivity {
 
             findAndSetName(account);
 
-            imageUrl_ = account.getPhotoUrl().toString();
             googleID_ = account.getId();
             email_ = account.getEmail();
             description_ = "";
@@ -56,6 +55,8 @@ public class NewProfileDetails extends AppCompatActivity {
             else{
                 imageUrl_ = DEFAULT_IMAGE_URL;
             }
+
+            Picasso.get().load(imageUrl_).into((ImageView)findViewById(R.id.imageview_newprofiledetails_picture));
 
             ((EditText)findViewById(R.id.plaintext_newprofiledetails_description)).addTextChangedListener(new TextWatcher() {
                 @Override
