@@ -6,6 +6,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.runner.RunWith;
 
 /**
@@ -23,7 +24,6 @@ public abstract class FirebaseTest {
     }
 
     @After
-
     public final void tearDown() {
         FirebaseDatabase.getInstance().purgeOutstandingWrites();
         FirebaseDatabase.getInstance().goOnline();

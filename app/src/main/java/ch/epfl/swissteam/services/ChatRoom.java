@@ -105,7 +105,7 @@ public class ChatRoom extends Activity {
      * Send message to the database
      * @param view
      */
-    private void sendMessage(View view){
+    public void sendMessage(View view){
         TextInputEditText textInput = findViewById(R.id.message_input);
         String message = textInput.getText().toString();
         if(mUser_ == null){
