@@ -45,7 +45,7 @@ public class NewProfileCapabilities extends AppCompatActivity {
      *
      * @param view view
      */
-    private void nextPage(View view) {
+    public void nextPage(View view) {
         saveUserInDB();
 
         Intent intent = new Intent(this, MainActivity.class);

@@ -5,8 +5,6 @@ import android.support.test.espresso.contrib.NavigationViewActions;
 import android.support.test.espresso.intent.Intents;
 import android.support.test.rule.ActivityTestRule;
 
-import com.google.firebase.database.FirebaseDatabase;
-
 import org.junit.Rule;
 import org.junit.Test;
 
