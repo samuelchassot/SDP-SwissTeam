@@ -21,6 +21,7 @@ import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static ch.epfl.swissteam.services.UtilityTest.sleep;
 
 @RunWith(AndroidJUnit4.class)
 public class ProfileActivityTest extends FirebaseTest {
@@ -31,6 +32,7 @@ public class ProfileActivityTest extends FirebaseTest {
     private static final ArrayList<Categories> cats = new ArrayList<>(Arrays.asList(Categories.COOKING));
     private static final User mUser_ = new User(M_GOOGLE_ID_,"Bear", "polar@north.nth","",null, URL_);
     private static final User oUser_ = new User(O_GOOGLE_ID_, "Raeb", "hairy@north.nth", "", cats, URL_);
+    private static final int SLEEP_TIME = 500;
 
     @Rule
     public final ActivityTestRule<MainActivity> mActivityRule =
@@ -43,77 +45,48 @@ public class ProfileActivityTest extends FirebaseTest {
         mUser_.addToDB(FirebaseDatabase.getInstance().getReference());
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_services));
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        sleep(SLEEP_TIME);
     }
 
     @Test
     public void isTheNameInTheAssociatedTextView() {
         onView(withText(oUser_.getName_())).perform(click());
-        try {
-            Thread.sleep(200);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        sleep(SLEEP_TIME);
         onView(withId(R.id.textView_profile_nameTag)).check(matches(withText(oUser_.getName_())));
     }
 
     @Test
     public void isTheEmailInTheAssociatedTextView() {
         onView(withText(oUser_.getName_())).perform(click());
-        try {
-            Thread.sleep(200);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        sleep(SLEEP_TIME);
         onView(withId(R.id.textView_profile_email)).check(matches(withText(oUser_.getEmail_())));
     }
 
     @Test
     public void isTheDescriptionInTheAssociatedTextView() {
         onView(withText(oUser_.getName_())).perform(click());
-        try {
-            Thread.sleep(200);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        sleep(SLEEP_TIME);
         onView(withId(R.id.textView_profile_description)).check(matches(withText(oUser_.getDescription_())));
     }
 /*
     @Test
     public void isTheImageInTheAssociatedTextView() {
         onView(withText(oUser_.getName_())).perform(click());
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        sleep(5*SLEEP_TIME);
         onView(withId(R.id.imageview_profile_picture)).check(matches(withText(oUser_.getImageUrl_())));
     }
 */
     @Test
     public void canAccessToChatButtonIfOtherProfile() {
         onView(withText(oUser_.getName_())).perform(click());
-        try {
-            Thread.sleep(200);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        sleep(SLEEP_TIME);
         onView(withId(R.id.button_profile_toChat)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
     }
 
     @Test
     public void cantAccessToChatButtonIfMyProfile() {
         onView(withText(mUser_.getName_())).perform(click());
-        try {
-            Thread.sleep(200);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        sleep(SLEEP_TIME);
         onView(withId(R.id.button_profile_toChat)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.INVISIBLE)));
-
     }
 }

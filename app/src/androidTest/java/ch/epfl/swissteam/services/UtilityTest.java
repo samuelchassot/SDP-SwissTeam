@@ -15,6 +15,15 @@ import org.hamcrest.TypeSafeMatcher;
  * @author Sébastien Gachoud
  */
 public class UtilityTest {
+
+    public static void sleep(int ms){
+        try {
+            Thread.sleep(ms);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static Matcher<View> nthChildOf(final Matcher<View> parentMatcher, final int childPosition) {
         return new TypeSafeMatcher<View>() {
             @Override

@@ -16,6 +16,7 @@ import static android.support.test.espresso.intent.matcher.IntentMatchers.hasCom
 import static android.support.test.espresso.matcher.ViewMatchers.hasDescendant;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static ch.epfl.swissteam.services.UtilityTest.sleep;
 
 /**
  * Tests for OnlineChatFragment.
@@ -48,30 +49,13 @@ public class OnlineChatFragmentTest extends FirebaseTest {
     @Test
     public void relationIsDisplayed() {
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
-        try {
-            Thread.sleep(100);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        sleep(100);
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_chats));
-        try {
-            Thread.sleep(100);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        sleep(100);
         onView(withId(R.id.fragment_online_chats_recycler_view)).check(matches(hasDescendant(withText(oUser.getName_()))));
-
-        try {
-            Thread.sleep(100);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        sleep(100);
         onView(withText(oUser.getName_())).perform(click());
-        try {
-            Thread.sleep(100);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        sleep(100);
         intended(hasComponent(ChatRoom.class.getName()));
     }
 
