@@ -26,7 +26,6 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
     public static class UserViewHolder extends RecyclerView.ViewHolder{
 
         public TextView nameView_;
-        public TextView surnameView_;
         public TextView bodyView_;
         public ImageView imageView_;
         private View parentLayout;

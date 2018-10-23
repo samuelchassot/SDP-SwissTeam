@@ -14,9 +14,6 @@ import java.util.List;
  */
 public class User implements DBSavable{
 
-
-
-
     private String googleId_, email_, name_, description_, imageUrl_;
 
     private ArrayList<Categories> categories_;
