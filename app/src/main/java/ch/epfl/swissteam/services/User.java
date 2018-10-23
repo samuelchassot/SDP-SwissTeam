@@ -104,6 +104,10 @@ public class User implements DBSavable{
             addToDB(db);
         }
     }
+    @Override
+    public boolean equals(Object other){
+        return this.googleId_.equals(((User) other).getGoogleId_());
+    }
 
     /**
      * Add a chatRelationId to the list of chatRelation of the user
