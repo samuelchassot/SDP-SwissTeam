@@ -56,9 +56,24 @@ public class ChatRoomTest extends FirebaseTest{
         GoogleSignInSingleton.putUniqueID(mGoogleId);
         oUser.addToDB(FirebaseDatabase.getInstance().getReference());
         mUser.addToDB(FirebaseDatabase.getInstance().getReference());
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_services));
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         onView(withText(oUser.getName_())).perform(click());
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         onView(withId(R.id.button_profile_toChat)).perform(click());
     }
 
@@ -68,7 +83,6 @@ public class ChatRoomTest extends FirebaseTest{
         onView(withId(R.id.message_input)).perform(typeText(text)).check(matches(withText(text)));
         onView(withId(R.id.message_send_button)).perform(click());
         onView(withId(R.id.recycler_view_message)).check(matches(hasDescendant(withText(text))));
-
     }
 
     /* Examples

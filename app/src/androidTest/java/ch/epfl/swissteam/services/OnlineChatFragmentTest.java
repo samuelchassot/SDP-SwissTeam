@@ -2,15 +2,19 @@ package ch.epfl.swissteam.services;
 
 import android.support.test.espresso.contrib.DrawerActions;
 import android.support.test.espresso.contrib.NavigationViewActions;
+import android.support.test.espresso.intent.Intents;
 import android.support.test.rule.ActivityTestRule;
+
+import com.google.firebase.database.FirebaseDatabase;
 
 import org.junit.Rule;
 import org.junit.Test;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.intent.Intents.intended;
+import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static android.support.test.espresso.matcher.ViewMatchers.hasDescendant;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
@@ -34,15 +38,38 @@ public class OnlineChatFragmentTest extends FirebaseTest {
         chatRelation.addToDB(DBUtility.get().getDb_());
         mUser.addChatRelation(chatRelation, DBUtility.get().getDb_());
         oUser.addChatRelation(chatRelation, DBUtility.get().getDb_());
+
+        Intents.init();
     }
 
     @Test
     public void relationIsDisplayed() {
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_chats));
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        onView(withId(R.id.fragment_online_chats_recycler_view)).check(matches(hasDescendant(withText(oUser.getName_()))));
 
-        //onView(withId(R.id.recycler_view_message)).check(matches(hasDescendant(withText(oUser.getName_()))));
-
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        onView(withText(oUser.getName_())).perform(click());
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        intended(hasComponent(ChatRoom.class.getName()));
     }
 
     /* Examples

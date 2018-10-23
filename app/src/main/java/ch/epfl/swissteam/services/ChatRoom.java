@@ -63,16 +63,6 @@ public class ChatRoom extends Activity {
                 }
             }
         } );
-
-        //If nothing works to establish the chat
-        if(currentRelationId_ == null) {
-            findViewById(R.id.message_send_button).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    toastUser(getResources().getString(R.string.general_could_not_establish_relation));
-                }
-            });
-        }
     }
 
     private void setCurrentRelationId_(String relationId){
@@ -115,6 +105,10 @@ public class ChatRoom extends Activity {
         if(message.isEmpty()){
             return;
         }
+        //If nothing works to establish the chat
+        if(currentRelationId_ == null) {
+            toastUser(getResources().getString(R.string.general_could_not_establish_relation));
+        }
         ChatMessage chatMessage = new ChatMessage(message, mUser_.getName_(), mUser_.getGoogleId_(), currentRelationId_);
         chatMessage.addToDB(dataBase_);
 
@@ -129,6 +123,7 @@ public class ChatRoom extends Activity {
                     toastUser(getResources().getString(R.string.general_could_not_find_this_user_in_db));
                     return;
                 }
+
                 ChatRelation newRelation = new ChatRelation(mUser_, cUser);
                 newRelation.addToDB(DBUtility.get().getDb_());
                 mUser_.addChatRelation(newRelation,  DBUtility.get().getDb_());
