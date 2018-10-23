@@ -1,6 +1,7 @@
 package ch.epfl.swissteam.services;
 
 
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -8,6 +9,11 @@ import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
 
+/**
+ * To put utility methods or class.
+ *
+ * @author Sébastien Gachoud
+ */
 public class UtilityTest {
     public static Matcher<View> nthChildOf(final Matcher<View> parentMatcher, final int childPosition) {
         return new TypeSafeMatcher<View>() {

@@ -1,11 +1,13 @@
 package ch.epfl.swissteam.services;
 
-import android.annotation.TargetApi;
 
 import com.google.firebase.database.DatabaseReference;
 
-import java.util.Objects;
-
+/**
+ * Class to represent chatRelation between users.
+ *
+ * @author Sébastien Gachoud
+ */
 public class ChatRelation implements DBSavable {
 
     public static final String RELATION_ID_TEXT = "relationId";

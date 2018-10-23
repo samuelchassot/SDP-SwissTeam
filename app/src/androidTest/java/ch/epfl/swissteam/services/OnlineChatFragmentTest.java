@@ -17,6 +17,11 @@ import static android.support.test.espresso.matcher.ViewMatchers.hasDescendant;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
+/**
+ * Tests for OnlineChatFragment.
+ *
+ * @author Sébastien Gachoud
+ */
 public class OnlineChatFragmentTest extends FirebaseTest {
 
     private static final String mGoogleId = "1234";

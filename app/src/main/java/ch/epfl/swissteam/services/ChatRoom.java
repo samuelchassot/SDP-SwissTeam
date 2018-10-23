@@ -6,17 +6,12 @@ import android.support.design.widget.TextInputEditText;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateFormat;
-import android.view.Gravity;
 import android.view.View;
-import android.widget.ListView;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.firebase.ui.database.FirebaseListAdapter;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 
 /**
@@ -37,7 +32,10 @@ public class ChatRoom extends Activity {
         setContentView(R.layout.activity_chat_room);
         dataBase_ = DBUtility.get().getDb_();
         setCurrentRelationId_(getIntent().getExtras().getString(ChatRelation.RELATION_ID_TEXT, null));
+        retrieveUserAndSetRelationId();
+    }
 
+    private void retrieveUserAndSetRelationId(){
         DBUtility.get().getUser(GoogleSignInSingleton.get().getClientUniqueID(), new MyCallBack<User>(){
             @Override
             public void onCallBack(User mUser) {
