@@ -44,6 +44,7 @@ public class HomeFragmentTest extends FirebaseTest{
         user = TestUtils.getATestUser();
         post = TestUtils.getTestPost();
         post.addToDB(DBUtility.get().getDb_());
+        DBUtility.get().setUser(user);
 
         try {
             Thread.sleep(400);
