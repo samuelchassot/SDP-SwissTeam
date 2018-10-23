@@ -81,34 +81,44 @@ public class ServicesFragment extends Fragment {
 
 
     private void initDataSet(Categories category){
-        users.clear();
+        View view = getView();
         if (category == Categories.ALL){
             DBUtility.get().getAllUsers((usersdb ->{
+                users.clear();
                 users.addAll(usersdb);
                 mAdapter.notifyDataSetChanged();
-                if (users.isEmpty()){
-                    getActivity().findViewById(R.id.services_problem_text).setVisibility(View.VISIBLE);
-                } else {
-                    getActivity().findViewById(R.id.services_problem_text).setVisibility(View.INVISIBLE);
-                }
+                services_problem_text_udpate(view, users.isEmpty());
             }));
         } else {
             DBUtility.get().getUsersFromCategory(category, (googleIds) -> {
-                if (googleIds.size() == 0){
-                    getActivity().findViewById(R.id.services_problem_text).setVisibility(View.VISIBLE);
-                    mAdapter.notifyDataSetChanged();
-                } else {
-                    getActivity().findViewById(R.id.services_problem_text).setVisibility(View.INVISIBLE);
+                users.clear();
+                services_problem_text_udpate(view, googleIds.isEmpty());
+
                     for (String googleId : googleIds) {
                         DBUtility.get().getUser(googleId, user -> {
-                            users.add(user);
-                            mAdapter.notifyDataSetChanged();
+                            if (!users.contains(user)) {
+                                users.add(user);
+                                mAdapter.notifyDataSetChanged();
+                            }
                         });
                     }
-                }
             });
         }
 
     }
+
+    private void services_problem_text_udpate(View view, boolean empty){
+        if (view != null) {
+            if (empty) {
+                view.findViewById(R.id.services_problem_text).setVisibility(View.VISIBLE);
+            } else {
+                view.findViewById(R.id.services_problem_text).setVisibility(View.INVISIBLE);
+            }
+        }
+    }
+
+
+
+
 
 }
