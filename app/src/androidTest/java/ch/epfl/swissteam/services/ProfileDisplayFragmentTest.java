@@ -42,7 +42,7 @@ public class ProfileDisplayFragmentTest extends FirebaseTest {
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_profile));
 
         try {
-            Thread.sleep(200);
+            Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -55,7 +55,7 @@ public class ProfileDisplayFragmentTest extends FirebaseTest {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
+        onView(withId(R.id.button_profiledisplay_modify)).perform(scrollTo()).perform(click());
 
     }
 
@@ -65,13 +65,13 @@ public class ProfileDisplayFragmentTest extends FirebaseTest {
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_profile));
         try {
-            Thread.sleep(200);
+            Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
         onView(withId(R.id.button_profiledisplay_modify)).perform(scrollTo()).perform(click());
         try {
-            Thread.sleep(200);
+            Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -83,7 +83,7 @@ public class ProfileDisplayFragmentTest extends FirebaseTest {
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_profile));
         try {
-            Thread.sleep(200);
+            Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -94,14 +94,16 @@ public class ProfileDisplayFragmentTest extends FirebaseTest {
             e.printStackTrace();
         }
         String newName = "test New Name";
-        onView(withId(R.id.edittext_profilesettings_name)).perform(clearText()).perform(typeText(newName));
+        onView(withId(R.id.edittext_profilesettings_name)).perform(clearText()).perform(typeText(newName)).perform(closeSoftKeyboard());
         onView(withId(R.id.button_profilesettings_save)).perform(scrollTo()).perform(click());
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        onView(withId(R.id.textview_profiledisplay_name)).check(matches(withText(newName)));
+        onView(withId(R.id.textview_profiledisplay_name)).perform(scrollTo()).check(matches(withText(newName)));
+        User testUser = TestUtils.getATestUser();
+        testUser.addToDB(DBUtility.get().getDb_());
     }
 
 
