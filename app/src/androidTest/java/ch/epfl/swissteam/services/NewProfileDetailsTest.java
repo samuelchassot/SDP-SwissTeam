@@ -41,6 +41,7 @@ public class NewProfileDetailsTest {
     private static final String username = "Jean-Claude",
             firstName = "Jean",
             lastName = "Claude",
+            id = "1234",
             description = "J'ai 65 ans et j'aime les pommes.",
     photoUrl = "http://static.javadoc.io/org.mockito/mockito-core/2.22.0/org/mockito/logo@2x.png",
     longDescription = "\n" +
@@ -88,16 +89,21 @@ public class NewProfileDetailsTest {
     }
 
     @Test
-    public void connectWithMockedAccount() {
+    public void createNewAccount() {
         GoogleSignInAccount acc = mock(GoogleSignInAccount.class);
         when(acc.getDisplayName()).thenReturn(username);
         when(acc.getPhotoUrl()).thenReturn(Uri.parse(photoUrl));
+        when(acc.getId()).thenReturn(id);
         doCallRealMethod().when(acc).writeToParcel(any(Parcel.class), anyInt());
         Intent i = new Intent();
         i.putExtra(SignInActivity.ACCOUNT_TAG, acc);
         mActivityRule.finishActivity();
         mActivityRule.launchActivity(i);
         onView(withId(R.id.plaintext_newprofiledetails_name)).check(matches(withText(username)));
+        onView(withId(R.id.button_newprofiledetails_next)).perform(click());
+        intended(hasComponent(NewProfileCapabilities.class.getName()));
+        onView(withId(R.id.button_newprofilecapabilites_done)).perform(click());
+        intended(hasComponent(MainActivity.class.getName()));
     }
 
     @Test
