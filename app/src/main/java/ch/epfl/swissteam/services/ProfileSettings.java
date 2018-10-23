@@ -6,6 +6,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -14,6 +15,12 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
+/**
+ * Activity to modify the profile in the database
+ * It shows the user infos and they can be edited
+ *
+ * @Author Samuel Chassot
+ */
 public class ProfileSettings extends AppCompatActivity {
 
     private String imageUrl_; //TODO: Allow user to change picture in his profile.
@@ -58,8 +65,9 @@ public class ProfileSettings extends AppCompatActivity {
         recycler.setHasFixedSize(true);
         recycler.setLayoutManager(new LinearLayoutManager(this));
 
-
-
+        //don't want the keyboad automatically opens when activity starts
+        getWindow().setSoftInputMode(
+                WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
     }
 
