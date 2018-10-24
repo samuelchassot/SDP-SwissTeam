@@ -44,7 +44,7 @@ public class MyPostFragmentTest extends FirebaseTest{
         DBUtility.get().setUser(TestUtils.getATestUser());
         id = "1234";
         GoogleSignInSingleton.putUniqueID(id);
-        post = new Post("1234_1539704399119", "Title", "1234", "Body", 1539704399119L, new Location(""));
+        post = new Post("1234_1539704399119", "Title", "1234", "Body", 1539704399119L,  10, 20);
         DBUtility.get().setPost(post);
 
         try {

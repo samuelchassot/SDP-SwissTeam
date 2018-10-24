@@ -17,7 +17,7 @@ public class Post implements DBSavable, Parcelable{
     private String title_, googleId_, body_;
     private long timestamp_;
     private String key_;
-    private Location location_;
+    private double longitude_, latitude_;
 
     /**
      * Default constructor required for database.
@@ -34,15 +34,17 @@ public class Post implements DBSavable, Parcelable{
      * @param googleId_ the id of the person who post the post
      * @param body_ the body of the post
      * @param timestamp_ the timestamp at which the post was submitted
-     * @param location_ location of the post
+     * @param longitude_ longitude of the location of the post
+     * @param latitude_ latitude of the location of the post
      */
-    public Post(String key_, String title_, String googleId_, String body_, long timestamp_, Location location_) {
+    public Post(String key_, String title_, String googleId_, String body_, long timestamp_, double longitude_, double latitude_) {
         this.key_ = key_;
         this.title_ = title_;
         this.googleId_ = googleId_;
         this.body_ = body_;
         this.timestamp_ = timestamp_;
-        this.location_ = location_;
+        this.longitude_ = longitude_;
+        this.latitude_ = latitude_;
     }
 
     /**
@@ -73,7 +75,9 @@ public class Post implements DBSavable, Parcelable{
         return key_;
     }
 
-    public Location getLocation_() { return location_; }
+    public double getLatitude_() { return latitude_; }
+
+    public double getLongitude_() { return longitude_; }
 
     public void setTitle_(String title_) {
         this.title_ = title_;
@@ -85,7 +89,7 @@ public class Post implements DBSavable, Parcelable{
 
     //Implements Parcelable
     public Post(Parcel in){
-        String[] data= new String[5];
+        String[] data= new String[7];
 
         in.readStringArray(data);
         this.key_= data[0];
@@ -93,7 +97,8 @@ public class Post implements DBSavable, Parcelable{
         this.googleId_= data[2];
         this.body_= data[3];
         this.timestamp_= Long.parseLong(data[4]);
-        this.location_ = Location.CREATOR.createFromParcel(in);
+        this.longitude_ = Double.parseDouble(data[5]);
+        this.latitude_ = Double.parseDouble(data[6]);
     }
 
     @Override
@@ -105,8 +110,7 @@ public class Post implements DBSavable, Parcelable{
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeStringArray(new String[]{
                 this.key_,this.title_, this.googleId_, this.body_,
-                String.valueOf(this.timestamp_)});
-        location_.writeToParcel(dest, flags);
+                String.valueOf(this.timestamp_), ((Double)this.longitude_).toString(), ((Double)this.latitude_).toString()});
     }
 
     public static final Parcelable.Creator<Post> CREATOR= new Parcelable.Creator<Post>() {

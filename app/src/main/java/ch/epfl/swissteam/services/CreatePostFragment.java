@@ -77,7 +77,7 @@ public class CreatePostFragment extends Fragment implements View.OnClickListener
                 LocationServices.getFusedLocationProviderClient(getActivity()).getLastLocation()
                         .addOnSuccessListener(location -> {
                             DBUtility.get().getUser(googleID, user -> {
-                                Post post = new Post(key, title, googleID, body, timestamp, location);
+                                Post post = new Post(key, title, googleID, body, timestamp, location.getLongitude(), location.getLatitude());
                                 post.addToDB(DBUtility.get().getDb_());
                             });
                         });
