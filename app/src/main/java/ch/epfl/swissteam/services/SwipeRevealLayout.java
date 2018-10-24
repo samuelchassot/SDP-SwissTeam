@@ -95,18 +95,9 @@ public class SwipeRevealLayout extends ViewGroup {
     private ViewDragHelper mDragHelper;
     private GestureDetectorCompat mGestureDetector;
 
-    public SwipeRevealLayout(Context context) {
-        super(context);
-        init(context, null);
-    }
-
     public SwipeRevealLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context, attrs);
-    }
-
-    public SwipeRevealLayout(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
     }
 
     @Nullable
