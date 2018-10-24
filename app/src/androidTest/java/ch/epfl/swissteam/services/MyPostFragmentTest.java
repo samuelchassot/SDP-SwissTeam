@@ -1,5 +1,6 @@
 package ch.epfl.swissteam.services;
 
+import android.location.Location;
 import android.support.test.espresso.UiController;
 import android.support.test.espresso.ViewAction;
 import android.support.test.espresso.contrib.DrawerActions;
@@ -43,7 +44,7 @@ public class MyPostFragmentTest extends FirebaseTest{
         DBUtility.get().setUser(TestUtils.getATestUser());
         id = "1234";
         GoogleSignInSingleton.putUniqueID(id);
-        post = new Post("1234_1539704399119", "Title", "1234", "Body", 1539704399119L);
+        post = new Post("1234_1539704399119", "Title", "1234", "Body", 1539704399119L, new Location(""));
         DBUtility.get().setPost(post);
 
         try {

@@ -33,7 +33,6 @@ import com.squareup.picasso.Picasso;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private FusedLocationProviderClient fusedLocationProviderClient;
     private Fragment profileShowerFragment_;
     private Fragment homeFragment_, servicesFragment_, createPostFragment_, settingsFragment_, onlineChatFragment_, myPostsFragment_;
     private NetworkStatusReceiver br;
@@ -70,8 +69,6 @@ public class MainActivity extends AppCompatActivity
         TextView navHeaderName = (TextView) findViewById(R.id.nav_header_name);
         br = new NetworkStatusReceiver();
         br.setActivity_(this);
-
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
         showHomeFragment();
     }
@@ -254,9 +251,5 @@ public class MainActivity extends AppCompatActivity
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.framelayout_main_fragmentcontainer, fragment).commit();
         }
-    }
-
-    public FusedLocationProviderClient getFusedLocationProviderClient() {
-        return fusedLocationProviderClient;
     }
 }

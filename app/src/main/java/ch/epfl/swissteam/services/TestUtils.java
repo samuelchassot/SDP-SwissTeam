@@ -1,5 +1,7 @@
 package ch.epfl.swissteam.services;
 
+import android.location.Location;
+
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -14,7 +16,7 @@ public class TestUtils {
     public static void addTestPost() {
         long timestamp = (new Date()).getTime();
         String key = "1234" + "_" + timestamp;
-        DBUtility.get().setPost(new Post(key, "Hello there", "1234", "General Kenobi", timestamp));
+        DBUtility.get().setPost(new Post(key, "Hello there", "1234", "General Kenobi", timestamp, new Location("")));
 
 
     }
@@ -22,7 +24,7 @@ public class TestUtils {
     public static Post getTestPost() {
         long timestamp = (new Date()).getTime();
         String key = "1234" + "_" + timestamp;
-        return new Post(key, "Hello there", "1234", "General Kenobi", timestamp);
+        return new Post(key, "Hello there", "1234", "General Kenobi", timestamp, new Location(""));
     }
 
 
