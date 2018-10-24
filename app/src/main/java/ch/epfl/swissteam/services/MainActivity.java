@@ -20,6 +20,8 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.squareup.picasso.Picasso;
 
 /**
@@ -30,6 +32,8 @@ import com.squareup.picasso.Picasso;
  */
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    public FusedLocationProviderClient fusedLocationProviderClient;
 
     private Fragment profileShowerFragment_;
     private Fragment homeFragment_, servicesFragment_, createPostFragment_, settingsFragment_, onlineChatFragment_, myPostsFragment_;
@@ -67,6 +71,8 @@ public class MainActivity extends AppCompatActivity
         TextView navHeaderName = (TextView) findViewById(R.id.nav_header_name);
         br = new NetworkStatusReceiver();
         br.setActivity_(this);
+
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
         showHomeFragment();
     }

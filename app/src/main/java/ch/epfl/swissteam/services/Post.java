@@ -1,5 +1,6 @@
 package ch.epfl.swissteam.services;
 
+import android.location.Location;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -16,6 +17,7 @@ public class Post implements DBSavable, Parcelable{
     private String title_, googleId_, body_;
     private long timestamp_;
     private String key_;
+    private Location location_;
 
     /**
      * Default constructor required for database.
@@ -32,13 +34,15 @@ public class Post implements DBSavable, Parcelable{
      * @param googleId_ the id of the person who post the post
      * @param body_ the body of the post
      * @param timestamp_ the timestamp at which the post was submitted
+     * @param location_ location of the post
      */
-    public Post(String key_, String title_, String googleId_, String body_, long timestamp_) {
+    public Post(String key_, String title_, String googleId_, String body_, long timestamp_, Location location_) {
         this.key_ = key_;
         this.title_ = title_;
         this.googleId_ = googleId_;
         this.body_ = body_;
         this.timestamp_ = timestamp_;
+        this.location_ = location_
     }
 
     /**
@@ -65,10 +69,11 @@ public class Post implements DBSavable, Parcelable{
         return timestamp_;
     }
 
-
     public String getKey_() {
         return key_;
     }
+
+    public Location getLocation_() { return location_; }
 
     public void setTitle_(String title_) {
         this.title_ = title_;
@@ -88,6 +93,7 @@ public class Post implements DBSavable, Parcelable{
         this.googleId_= data[2];
         this.body_= data[3];
         this.timestamp_= Long.parseLong(data[4]);
+        this.location_ = Location.CREATOR.createFromParcel(in);
     }
 
     @Override
@@ -100,6 +106,7 @@ public class Post implements DBSavable, Parcelable{
         dest.writeStringArray(new String[]{
                 this.key_,this.title_, this.googleId_, this.body_,
                 String.valueOf(this.timestamp_)});
+        location_.writeToParcel(dest, flags);
     }
 
     public static final Parcelable.Creator<Post> CREATOR= new Parcelable.Creator<Post>() {
