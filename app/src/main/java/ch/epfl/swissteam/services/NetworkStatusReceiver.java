@@ -23,7 +23,6 @@ public class NetworkStatusReceiver extends BroadcastReceiver {
                 Toast.makeText(context, "No Internet connection!", Toast.LENGTH_SHORT).show();
                 setStatusBarColor(R.color.no_network);
             } else {
-                Toast.makeText(context, "Internet connection is back!", Toast.LENGTH_SHORT).show();
                 setStatusBarColor(R.color.colorPrimaryDark);
 
             }
