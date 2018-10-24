@@ -37,7 +37,7 @@ public class ProfileActivityTest extends FirebaseTest {
     private static final ArrayList<Categories> cats = new ArrayList<>(Arrays.asList(Categories.COOKING));
     private static final User mUser_ = new User(M_GOOGLE_ID_,"Bear", "polar@north.nth","",null, URL_);
     private static final User oUser_ = new User(O_GOOGLE_ID_, "Raeb", "hairy@north.nth", "", cats, URL_);
-    private static final int SLEEP_TIME = 500;
+    private static final int SLEEP_TIME = 1000;
 
     @Rule
     public final ActivityTestRule<MainActivity> mActivityRule =
@@ -77,7 +77,7 @@ public class ProfileActivityTest extends FirebaseTest {
     @Test
     public void isTheImageInTheAssociatedTextView() {
         onView(withText(oUser_.getName_())).perform(click());
-        sleep(5*SLEEP_TIME);
+        sleep(SLEEP_TIME);
         onView(withId(R.id.imageview_profile_picture)).check(matches(withText(oUser_.getImageUrl_())));
     }
 */
