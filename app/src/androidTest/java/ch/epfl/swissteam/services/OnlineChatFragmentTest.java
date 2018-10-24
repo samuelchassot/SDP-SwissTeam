@@ -5,6 +5,7 @@ import android.support.test.espresso.contrib.NavigationViewActions;
 import android.support.test.espresso.intent.Intents;
 import android.support.test.rule.ActivityTestRule;
 
+import org.junit.After;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -57,6 +58,11 @@ public class OnlineChatFragmentTest extends FirebaseTest {
         onView(withText(oUser.getName_())).perform(click());
         sleep(100);
         intended(hasComponent(ChatRoom.class.getName()));
+    }
+
+    @Override
+    public void terminate(){
+        Intents.release();
     }
 
     /* Examples

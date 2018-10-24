@@ -25,6 +25,7 @@ public abstract class FirebaseTest {
 
     @After
     public final void tearDown() {
+        terminate();
         FirebaseDatabase.getInstance().purgeOutstandingWrites();
         FirebaseDatabase.getInstance().goOnline();
     }
@@ -33,6 +34,13 @@ public abstract class FirebaseTest {
      * Use this method to initialize the DB before your tests.
      */
     public void initialize() {
+
+    }
+
+    /**
+     * Use this method to terminate correctly your tests.
+     */
+    public void terminate() {
 
     }
 }
