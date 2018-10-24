@@ -21,8 +21,13 @@ import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
-import static ch.epfl.swissteam.services.UtilityTest.sleep;
+import static ch.epfl.swissteam.services.TestUtils.sleep;
 
+/**
+ * A class to test elements of the ProfileActivity
+ *
+ * @author Ghali Chraibi
+ */
 @RunWith(AndroidJUnit4.class)
 public class ProfileActivityTest extends FirebaseTest {
 
