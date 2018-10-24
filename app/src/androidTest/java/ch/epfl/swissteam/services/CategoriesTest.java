@@ -23,10 +23,4 @@ public class CategoriesTest extends FirebaseTest{
         Categories.fromString("Transportation");
         Categories.fromString("All");
     }
-
-    @Test
-    public void addToDbTest() {
-        Categories.fromString("Computer").addToDB(FirebaseDatabase.getInstance().getReference());
-        Categories.fromString("All").addToDB(FirebaseDatabase.getInstance().getReference());
-    }
 }
