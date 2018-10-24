@@ -2,6 +2,8 @@ package ch.epfl.swissteam.services;
 
 import android.support.test.runner.AndroidJUnit4;
 
+import com.google.firebase.database.FirebaseDatabase;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -24,7 +26,7 @@ public class CategoriesTest extends FirebaseTest{
 
     @Test
     public void addToDbTest() {
-        Categories.fromString("Computer").addToDB(DBUtility.get().getDb_());
-        Categories.fromString("All").addToDB(DBUtility.get().getDb_());
+        Categories.fromString("Computer").addToDB(FirebaseDatabase.getInstance().getReference());
+        Categories.fromString("All").addToDB(FirebaseDatabase.getInstance().getReference());
     }
 }
