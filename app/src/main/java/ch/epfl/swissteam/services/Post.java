@@ -42,7 +42,7 @@ public class Post implements DBSavable, Parcelable{
         this.googleId_ = googleId_;
         this.body_ = body_;
         this.timestamp_ = timestamp_;
-        this.location_ = location_
+        this.location_ = location_;
     }
 
     /**

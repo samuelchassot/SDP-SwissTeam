@@ -1,5 +1,8 @@
 package ch.epfl.swissteam.services;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -18,7 +21,7 @@ import java.util.Date;
  *
  * @author Adrian Baudat
  */
-public class CreatePostFragment extends Fragment implements View.OnClickListener{
+public class CreatePostFragment extends Fragment implements View.OnClickListener {
 
     public CreatePostFragment() {
         // Required empty public constructor
@@ -42,21 +45,19 @@ public class CreatePostFragment extends Fragment implements View.OnClickListener
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View frag = inflater.inflate(R.layout.fragment_create_post, container, false);
-        ((Button)frag.findViewById(R.id.button_createpostfragment_send)).setOnClickListener(this);
+        ((Button) frag.findViewById(R.id.button_createpostfragment_send)).setOnClickListener(this);
         return frag;
     }
 
     @Override
     public void onClick(View v) {
-        EditText titleField = ((EditText)getView().findViewById(R.id.plaintext_createpostfragment_title));
-        EditText bodyField = ((EditText)getView().findViewById(R.id.plaintext_createpostfragment_body));
-        if(TextUtils.isEmpty(titleField.getText())) {
+        EditText titleField = ((EditText) getView().findViewById(R.id.plaintext_createpostfragment_title));
+        EditText bodyField = ((EditText) getView().findViewById(R.id.plaintext_createpostfragment_body));
+        if (TextUtils.isEmpty(titleField.getText())) {
             Toast.makeText(getActivity(), R.string.createpostfragment_titleempty, Toast.LENGTH_SHORT).show();
-        }
-        else if(TextUtils.isEmpty(bodyField.getText())) {
+        } else if (TextUtils.isEmpty(bodyField.getText())) {
             Toast.makeText(getActivity(), R.string.createpostfragment_bodyempty, Toast.LENGTH_SHORT).show();
-        }
-        else {
+        } else {
             String title = titleField.getText().toString();
             String body = bodyField.getText().toString();
 
@@ -64,10 +65,24 @@ public class CreatePostFragment extends Fragment implements View.OnClickListener
             long timestamp = (new Date()).getTime();
             String key = googleID + "_" + timestamp;
 
-            DBUtility.get().getUser(googleID, user -> {
-                Post post = new Post(key, title, googleID, body, timestamp);
-                post.addToDB(DBUtility.get().getDb_());
-            });
+            if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                return;
+            }
+            else {
+                ((MainActivity) getActivity()).getFusedLocationProviderClient().getLastLocation().addOnSuccessListener(location -> {
+                    DBUtility.get().getUser(googleID, user -> {
+                        Post post = new Post(key, title, googleID, body, timestamp, location);
+                        post.addToDB(DBUtility.get().getDb_());
+                    });
+                });
+            }
 
             ((MainActivity) getActivity()).showHomeFragment();
         }
