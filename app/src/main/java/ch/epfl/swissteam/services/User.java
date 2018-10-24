@@ -47,6 +47,7 @@ public class User implements DBSavable{
         this.name_ = name_;
         this.description_ = description_;
         this.imageUrl_ = imageUrl_;
+        this.rating_ = 0;
         this.categories_ = categories_ == null ? new ArrayList<Categories>() : (ArrayList<Categories>) categories_.clone();
     }
 
