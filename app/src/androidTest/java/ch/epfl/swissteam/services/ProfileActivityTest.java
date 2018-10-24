@@ -54,6 +54,17 @@ public class ProfileActivityTest extends FirebaseTest {
     }
 
     @Test
+    public void isProfileCorrectlyDisplayed(){
+        sleep(SLEEP_TIME);
+        onView(withText(oUser_.getName_())).perform(click());
+        sleep(SLEEP_TIME);
+        onView(withId(R.id.textView_profile_nameTag)).check(matches(withText(oUser_.getName_())));
+        onView(withId(R.id.textView_profile_email)).check(matches(withText(oUser_.getEmail_())));
+        onView(withId(R.id.textView_profile_description)).check(matches(withText(oUser_.getDescription_())));
+        //onView(withId(R.id.imageview_profile_picture)).check(matches(withText(oUser_.getImageUrl_())));
+    }
+
+    /*@Test
     public void isTheNameInTheAssociatedTextView() {
         onView(withText(oUser_.getName_())).perform(click());
         sleep(SLEEP_TIME);
@@ -72,7 +83,7 @@ public class ProfileActivityTest extends FirebaseTest {
         onView(withText(oUser_.getName_())).perform(click());
         sleep(SLEEP_TIME);
         onView(withId(R.id.textView_profile_description)).check(matches(withText(oUser_.getDescription_())));
-    }
+    }*/
 /*
     @Test
     public void isTheImageInTheAssociatedTextView() {
