@@ -69,6 +69,7 @@ public class ProfileDisplayFragmentTest extends FirebaseTest {
         sleep(1000);
         String newName = "test New Name";
         onView(withId(R.id.edittext_profilesettings_name)).perform(clearText()).perform(typeText(newName)).perform(closeSoftKeyboard());
+        sleep(1000);
         onView(withId(R.id.button_profilesettings_save)).perform(scrollTo()).perform(click());
         sleep(1000);
         onView(withId(R.id.textview_profiledisplay_name)).perform(scrollTo()).check(matches(withText(newName)));
