@@ -1,7 +1,12 @@
 package ch.epfl.swissteam.services;
 
+import android.Manifest;
+import android.app.Activity;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,6 +15,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.google.android.gms.location.LocationServices;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,7 +66,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
 
         if (mRecyclerView_ != null) {
             mRecyclerView_.setLayoutManager(new LinearLayoutManager(this.getContext()));
-
             adapter_ = new PostAdapter(posts_);
             mRecyclerView_.setAdapter(adapter_);
         }
@@ -77,13 +83,26 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
      * Refresh the feed of post shown on the main board
      */
     private void refresh(){
-        DBUtility.get().getPostsFeed(value -> {
-            posts_.clear();
-            posts_.addAll(value);
-            adapter_.notifyDataSetChanged();
-            swipeRefreshLayout_.setRefreshing(false);
-        });
-
+        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(getActivity(),
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION},
+                    1);
+        }
+        else {
+            LocationServices.getFusedLocationProviderClient(getActivity()).getLastLocation()
+                    .addOnSuccessListener(location -> {
+                        DBUtility.get().getPostsFeed(new MyCallBack<ArrayList<Post>>() {
+                            @Override
+                            public void onCallBack(ArrayList<Post> value) {
+                                posts_.clear();
+                                posts_.addAll(value);
+                                adapter_.notifyDataSetChanged();
+                                swipeRefreshLayout_.setRefreshing(false);
+                            }
+                        }, location);
+                        ((MainActivity) getActivity()).showHomeFragment();
+            });
+        }
     }
 
     @Override

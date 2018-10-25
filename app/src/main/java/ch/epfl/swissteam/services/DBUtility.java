@@ -1,5 +1,6 @@
 package ch.epfl.swissteam.services;
 
+import android.location.Location;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
@@ -169,11 +170,12 @@ public class DBUtility {
     }
 
     /**
-     * Retrieves the POSTS_DISPLAY_NUMBER freshest post of the database
+     * Retrieves the POSTS_DISPLAY_NUMBER freshest post of the database in range of the user.
      *
      * @param callBack the function called on the callBack
+     * @param userLocation the location of the user
      */
-    public void getPostsFeed(final MyCallBack<ArrayList<Post>> callBack) {
+    public void getPostsFeed(final MyCallBack<ArrayList<Post>> callBack, Location userLocation) {
         Query freshestPosts = db_.child(POSTS).orderByChild("timestamp_");
         freshestPosts.addListenerForSingleValueEvent(new ValueEventListener() {
             ArrayList<Post> posts = new ArrayList<>();
@@ -184,7 +186,12 @@ public class DBUtility {
 
                 for (DataSnapshot data : dataSnapshot.getChildren()){
                     Post post = data.getValue(Post.class);
-                    posts.add(0, post);
+                    Location postLocation = new Location("");
+                    postLocation.setLongitude(post.getLongitude_());
+                    postLocation.setLatitude(post.getLatitude_());
+                    if(postLocation.distanceTo(userLocation) <= User.MAX_POST_DISTANCE){
+                        posts.add(0, post);
+                    }
                 }
                 callBack.onCallBack(posts);
             }
