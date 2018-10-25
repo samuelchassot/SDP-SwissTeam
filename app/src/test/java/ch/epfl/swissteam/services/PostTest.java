@@ -12,7 +12,7 @@ public class PostTest {
 
     @Test
     public void creationWorks() {
-        Post p = new Post(key, title, id, body, timestamp);
+        Post p = new Post(key, title, id, body, timestamp, 10, 20);
         assertEquals(p.getTitle_(), title);
         assertEquals(p.getGoogleId_(), id);
         assertEquals(p.getBody_(), body);
@@ -22,7 +22,7 @@ public class PostTest {
 
     @Test
     public void setTitle(){
-        Post p = new Post(key, title, id, body, timestamp);
+        Post p = new Post(key, title, id, body, timestamp, 10, 20);
         String test = "testTitle";
         p.setTitle_(test);
         assertEquals(p.getTitle_(), test);
@@ -30,7 +30,7 @@ public class PostTest {
 
     @Test
     public void setBody(){
-        Post p = new Post(key, title, id, body, timestamp);
+        Post p = new Post(key, title, id, body, timestamp, 10, 20);
         String test = "testBody";
         p.setBody_(test);
         assertEquals(p.getBody_(), test);
