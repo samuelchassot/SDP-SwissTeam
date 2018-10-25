@@ -170,7 +170,7 @@ public class DBUtility {
     }
 
     /**
-     * Retrieves the POSTS_DISPLAY_NUMBER freshest post of the database in range of the user.
+     * Retrieves the POSTS_DISPLAY_NUMBER freshest post of the database in geographical range of the user.
      *
      * @param callBack the function called on the callBack
      * @param userLocation the location of the user
