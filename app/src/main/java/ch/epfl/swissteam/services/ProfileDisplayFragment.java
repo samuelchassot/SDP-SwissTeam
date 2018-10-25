@@ -122,12 +122,6 @@ public class ProfileDisplayFragment extends Fragment {
             Picasso.get().load(user.getImageUrl_()).into((ImageView)getView().findViewById(R.id.imageview_profiledisplay_picture));
 
             //for the recyclerview
-//            for (int i = 0 ; i < user.getCategories_().size() ; ++i){
-//                Categories c = user.getCategories_().get(i);
-//                if(!mCapabilities_.contains(c)){
-//                    mCapabilities_.add(c);
-//                }
-//            }
             mCapabilities_.clear();
             mCapabilities_.addAll(user.getCategories_());
             if(mAdapter_ != null) {
