@@ -61,7 +61,7 @@ public class User implements DBSavable{
      * @param categories_ User's categories of services
      * @param rating_ User's rating score
      */
-    @Deprecated
+
     public User(String googleID_, String name_, String email_, String description_, ArrayList<Categories> categories_, String imageUrl_, int rating_) {
         this.googleId_ = googleID_;
         this.email_ = email_;
@@ -73,7 +73,7 @@ public class User implements DBSavable{
     }
 
 
-
+    
     public String getGoogleId_() { return googleId_; }
 
     public String getName_() {
