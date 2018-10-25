@@ -1,5 +1,6 @@
 package ch.epfl.swissteam.services;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -17,41 +18,73 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-public class NavigationDrawer extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
-    private Fragment profileShowerFragment_, homeFragment_,
-            servicesFragment_, createPostFragment_, settingsFragment_,
-            onlineChatFragment_, myPostsFragment_;
+import static ch.epfl.swissteam.services.NewProfileDetails.GOOGLE_ID_TAG;
 
-    private DBUtility util = DBUtility.get();
+public class NavigationDrawer extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+    public static final String NAVIGATION_TAG = "NAV_DRAWER_CLICKED";
+    public static final String CANCEL = "Cancel";
+    public static final String MAIN = "Main";
+    public static final String BACK = "Back";
+
+    private DBUtility util_ = DBUtility.get();
+
+    private DrawerLayout drawer_;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 
-    protected void onCreateDrawer() {
-        Log.e("NAVDRAWER", "BEGIN CREATE DRAWER");
+    protected void onCreateDrawer(String toggleButton) {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer_ = (DrawerLayout) findViewById(R.id.drawer_layout);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
+                this, drawer_, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer_.addDrawerListener(toggle);
         toggle.syncState();
+
+        switch(toggleButton){
+            case (CANCEL) :
+                toggle.setDrawerIndicatorEnabled(false);
+                toggle.setHomeAsUpIndicator(R.drawable.ic_toggle_cancel);
+                toggle.setToolbarNavigationClickListener(view -> {
+                    finish();
+                });
+                break;
+            case (BACK) :
+                toggle.setDrawerIndicatorEnabled(false);
+                toggle.setHomeAsUpIndicator(R.drawable.ic_toggle_backarrow);
+                toggle.setToolbarNavigationClickListener(view -> {
+                    finish();
+                });
+                break;
+        }
+
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        /*
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
+        */
 
         //TextView navHeaderName = (TextView) findViewById(R.id.nav_header_name);
     }
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
+        if (drawer_.isDrawerOpen(GravityCompat.START)) {
+            drawer_.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
         }
@@ -88,35 +121,10 @@ public class NavigationDrawer extends AppCompatActivity implements NavigationVie
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        switch (id) {
-            case (R.id.button_maindrawer_home) :
-                showHomeFragment();
-                break;
-            case (R.id.button_maindrawer_services) :
-                showServicesFragment();
-                break;
-            case (R.id.button_maindrawer_profile) :
-                showProfileShowerFragment();
-                break;
-            case (R.id.button_maindrawer_createpost) :
-                showCreatePostFragment();
-                break;
-            case (R.id.button_maindrawer_myposts) :
-                showMyPostsFragment();
-                break;
-            case (R.id.button_maindrawer_settings) :
-                showSettingsFragment();
-                break;
-            case (R.id.button_maindrawer_logout) :
-                signOut();
-                break;
-            case (R.id.button_maindrawer_chats) :
-                showChatsFragment();
-                break;
-        }
+        startActivity(new Intent(this, MainActivity.class).putExtra(NAVIGATION_TAG, id));
+        drawer_.closeDrawer(GravityCompat.START);
+        finish();
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
@@ -125,7 +133,7 @@ public class NavigationDrawer extends AppCompatActivity implements NavigationVie
      * Set the user name and email in the nav
      */
     private void setNavUserName() {
-        util.getUser(GoogleSignInSingleton.get().getClientUniqueID(), user -> {
+        util_.getUser(GoogleSignInSingleton.get().getClientUniqueID(), user -> {
             if(user != null){
                 ((TextView) findViewById(R.id.nav_header_name)).setText(user.getName_());
                 ((TextView) findViewById(R.id.nav_header_email)).setText(user.getEmail_());}
@@ -133,83 +141,8 @@ public class NavigationDrawer extends AppCompatActivity implements NavigationVie
         });
     }
 
-    /**
-     * Sign out the user from the application.
-     */
-    private void signOut() {
-        GoogleSignInSingleton.get().getClient().signOut();
-        Intent intent = new Intent(this, SignInActivity.class);
-        startActivity(intent);
-    }
-
-    /**
-     * Shows the services Fragment
-     */
-    private void showServicesFragment(){
-        if (this.servicesFragment_ == null) this.servicesFragment_ = ServicesFragment.newInstance();
-        this.startTransactionFragment(this.servicesFragment_);
-    }
-
-    /**
-     * Shows the create post Fragment
-     */
-    private void showCreatePostFragment(){
-        if (this.createPostFragment_ == null) this.createPostFragment_ = CreatePostFragment.newInstance();
-        this.startTransactionFragment(this.createPostFragment_);
-    }
-
-    /**
-     * Shows the my posts Fragment, where the user can edit and delete his posts
-     */
-    private void showMyPostsFragment(){
-        if (this.myPostsFragment_ == null) this.myPostsFragment_ = MyPostsFragment.newInstance();
-        this.startTransactionFragment(this.myPostsFragment_);
-    }
-
-    /**
-     * Shows the profile shower fragment
-     */
-    private void showProfileShowerFragment(){
-        if(this.profileShowerFragment_ == null){
-            this.profileShowerFragment_ = ProfileDisplayFragment.newInstance();
-        }
-
-        this.startTransactionFragment(this.profileShowerFragment_);
-    }
 
 
-    /**
-     * Shows the home Fragment, with the feed of spontaneous posts
-     */
-    public void showHomeFragment(){
-        if (this.homeFragment_ == null) this.homeFragment_ = HomeFragment.newInstance();
-        this.startTransactionFragment(this.homeFragment_);
-    }
 
-
-    private void showChatsFragment(){
-        if (this.onlineChatFragment_ == null) this.onlineChatFragment_ = OnlineChatFragment.newInstance();
-        this.startTransactionFragment(this.onlineChatFragment_);
-    }
-
-    /**
-     * Show the settings Fragment
-     */
-    private void showSettingsFragment() {
-        if (this.settingsFragment_ == null) this.settingsFragment_ = SettingsFragment.newInstance();
-        this.startTransactionFragment(this.settingsFragment_);
-    }
-
-    /**
-     * Initiate the fragment transaction
-     *
-     * @param fragment the fragment to show
-     */
-    private void startTransactionFragment(Fragment fragment){
-        if (!fragment.isVisible()){
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.framelayout_main_fragmentcontainer, fragment).commit();
-        }
-    }
 
 }

@@ -2,7 +2,9 @@ package ch.epfl.swissteam.services;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
@@ -11,7 +13,7 @@ import android.widget.EditText;
  *
  * @author Julie Giunta
  */
-public class MyPostEdit extends AppCompatActivity{
+public class MyPostEdit extends NavigationDrawer{
     private Post post_;
     private EditText title_, body_;
 
@@ -19,6 +21,7 @@ public class MyPostEdit extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_post_edit);
+        super.onCreateDrawer(CANCEL);
 
         Intent intent = getIntent();
         post_ = intent.getParcelableExtra(MyPostAdapter.MYPOST_TAG);
@@ -41,4 +44,9 @@ public class MyPostEdit extends AppCompatActivity{
         DBUtility.get().setPost(post_);
         finish();
     }
+
+    //@Override
+    //public boolean onNavigationItemSelected(MenuItem item) {
+    //    Intent intent = new Intent()
+    //}
 }
