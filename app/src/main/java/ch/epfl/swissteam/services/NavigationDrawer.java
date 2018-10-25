@@ -1,16 +1,13 @@
 package ch.epfl.swissteam.services;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
@@ -18,8 +15,12 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import static ch.epfl.swissteam.services.NewProfileDetails.GOOGLE_ID_TAG;
-
+/**
+ * Activity which contains the navigation drawer.
+ * Every activity that needs the drawer menu must extend this class.
+ *
+ * @author Julie Giunta
+ */
 public class NavigationDrawer extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     public static final String NAVIGATION_TAG = "NAV_DRAWER_CLICKED";
     public static final String CANCEL = "Cancel";
@@ -35,6 +36,13 @@ public class NavigationDrawer extends AppCompatActivity implements NavigationVie
         super.onCreate(savedInstanceState);
     }
 
+    /**
+     * Create a NavigationDrawer
+     * @param toggleButton a string that tells which toggle button you want for
+     *                     the menu (MAIN : normal hamburger menu,
+     *                     CANCEL : cross image and disables button to draw the menu,
+     *                     BACK : arrow image and disables button tu draw the menu)
+     */
     protected void onCreateDrawer(String toggleButton) {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -128,7 +136,6 @@ public class NavigationDrawer extends AppCompatActivity implements NavigationVie
         return true;
     }
 
-
     /**
      * Set the user name and email in the nav
      */
@@ -140,9 +147,5 @@ public class NavigationDrawer extends AppCompatActivity implements NavigationVie
             Picasso.get().load(user.getImageUrl_()).into((ImageView)findViewById(R.id.nav_header_profileimage));
         });
     }
-
-
-
-
 
 }
