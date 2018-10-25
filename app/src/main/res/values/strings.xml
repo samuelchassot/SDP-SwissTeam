@@ -108,4 +108,5 @@
         <item>English</item>
         <item>French</item>
     </string-array>
+    <string name="homefragment_postdistance">%1.0fkm away</string>
 </resources>
