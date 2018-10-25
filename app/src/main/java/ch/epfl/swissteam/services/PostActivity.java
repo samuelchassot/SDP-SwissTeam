@@ -1,12 +1,19 @@
 package ch.epfl.swissteam.services;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.android.gms.location.LocationServices;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
@@ -23,7 +30,7 @@ import static ch.epfl.swissteam.services.NewProfileDetails.GOOGLE_ID_TAG;
 public class PostActivity extends AppCompatActivity {
     private Post post_;
     private User user_;
-    private LinearLayout linearLayout_;
+    private View headerLayout_;
     private TextView username_, title_, body_, date_;
     private ImageView picture_;
 
@@ -37,7 +44,7 @@ public class PostActivity extends AppCompatActivity {
         post_ = callingIntent.getParcelableExtra(PostAdapter.POST_TAG);
 
         //Connect the element of the layout with the corresponding attribute
-        linearLayout_ = findViewById(R.id.linearlayout_postactivity_user);
+        headerLayout_ = findViewById(R.id.framelayout_postactivity_header);
         username_ = findViewById(R.id.textview_postactivity_username);
         title_ = findViewById(R.id.textview_postactivity_title);
         body_ = findViewById(R.id.textview_postactivity_body);
@@ -45,7 +52,7 @@ public class PostActivity extends AppCompatActivity {
         picture_ = findViewById(R.id.imageview_postactivity_picture);
 
         //Set the onClickListener of the linearLayout
-        linearLayout_.setOnClickListener(view -> {
+        headerLayout_.setOnClickListener(view -> {
             Intent profileIntent = new Intent(this, ProfileActivity.class);
             profileIntent.putExtra(GOOGLE_ID_TAG, post_.getGoogleId_());
             startActivity(profileIntent);
@@ -62,5 +69,24 @@ public class PostActivity extends AppCompatActivity {
             username_.setText(user_.getName_());
             Picasso.get().load(user_.getImageUrl_()).into(picture_);
         }));
+
+        Location postLocation = new Location("");
+        postLocation.setLongitude(post_.getLongitude_());
+        postLocation.setLatitude(post_.getLatitude_());
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION},
+                    1);
+        }
+        else {
+            LocationServices.getFusedLocationProviderClient(this).getLastLocation()
+                    .addOnSuccessListener(location -> {
+                        if(location != null ) {
+                            float distance = postLocation.distanceTo(location)/1000;
+                            ((TextView)findViewById(R.id.textview_postactivity_distance)).setText(this.getResources().getString(R.string.homefragment_postdistance, distance));
+                        }
+                    });
+        }
     }
 }
