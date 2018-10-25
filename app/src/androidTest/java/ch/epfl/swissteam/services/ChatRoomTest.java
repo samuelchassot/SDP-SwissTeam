@@ -2,13 +2,15 @@ package ch.epfl.swissteam.services;
 
 import android.support.test.espresso.contrib.DrawerActions;
 import android.support.test.espresso.contrib.NavigationViewActions;
-import android.support.test.espresso.contrib.RecyclerViewActions;
 import android.support.test.rule.ActivityTestRule;
 
 import com.google.firebase.database.FirebaseDatabase;
 
+import android.support.test.runner.AndroidJUnit4;
+
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -28,6 +30,7 @@ import static ch.epfl.swissteam.services.TestUtils.sleep;
  *
  * @author Sébastien Gachoud
  */
+@RunWith(AndroidJUnit4.class)
 public class ChatRoomTest extends FirebaseTest{
 
     private static final String mGoogleId = "1234";

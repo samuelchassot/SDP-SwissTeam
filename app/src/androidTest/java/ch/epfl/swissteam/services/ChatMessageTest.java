@@ -1,6 +1,9 @@
 package ch.epfl.swissteam.services;
 
+import android.support.test.runner.AndroidJUnit4;
+
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import static org.junit.Assert.assertEquals;
 
@@ -8,6 +11,7 @@ import static org.junit.Assert.assertEquals;
  * tests for ChatMessage
  *
  */
+@RunWith(AndroidJUnit4.class)
 public class ChatMessageTest {
     //constructor
     @Test
