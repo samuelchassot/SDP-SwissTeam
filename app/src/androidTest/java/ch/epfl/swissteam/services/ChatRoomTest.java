@@ -2,6 +2,7 @@ package ch.epfl.swissteam.services;
 
 import android.support.test.espresso.contrib.DrawerActions;
 import android.support.test.espresso.contrib.NavigationViewActions;
+import android.support.test.espresso.contrib.RecyclerViewActions;
 import android.support.test.rule.ActivityTestRule;
 
 import com.google.firebase.database.FirebaseDatabase;
@@ -19,6 +20,7 @@ import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.hasDescendant;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static ch.epfl.swissteam.services.TestUtils.recyclerScrollToItemWithTextAndPerformClickItem;
 import static ch.epfl.swissteam.services.TestUtils.sleep;
 
 /**
@@ -48,8 +50,8 @@ public class ChatRoomTest extends FirebaseTest{
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
         sleep(100);
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_services));
-        sleep(500);
-        onView(withText(oUser.getName_())).perform(click());
+        sleep(1000);
+        recyclerScrollToItemWithTextAndPerformClickItem(R.id.services_recycler, oUser.getName_());
         sleep(100);
         onView(withId(R.id.button_profile_toChat)).perform(click());
     }

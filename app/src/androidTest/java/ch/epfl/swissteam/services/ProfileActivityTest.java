@@ -22,6 +22,7 @@ import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static ch.epfl.swissteam.services.TestUtils.recyclerScrollToItemWithTextAndPerformClickItem;
 import static ch.epfl.swissteam.services.TestUtils.sleep;
 
 /**
@@ -38,7 +39,7 @@ public class ProfileActivityTest extends FirebaseTest {
     private static final ArrayList<Categories> cats = new ArrayList<>(Arrays.asList(Categories.COOKING));
     private static final User mUser_ = new User(M_GOOGLE_ID_,"Bear", "polar@north.nth","",null, URL_);
     private static final User oUser_ = new User(O_GOOGLE_ID_, "Raeb", "hairy@north.nth", "", cats, URL_);
-    private static final int SLEEP_TIME = 8000;
+    private static final int SLEEP_TIME = 1000;
 
     @Rule
     public final ActivityTestRule<MainActivity> mActivityRule =
@@ -58,7 +59,7 @@ public class ProfileActivityTest extends FirebaseTest {
     @Test
     public void isProfileCorrectlyDisplayed(){
         sleep(SLEEP_TIME);
-        onView(withText(oUser_.getName_())).perform(click());
+        recyclerScrollToItemWithTextAndPerformClickItem(R.id.services_recycler, oUser_.getName_());
         sleep(SLEEP_TIME);
         onView(withId(R.id.textView_profile_nameTag)).check(matches(withText(oUser_.getName_())));
         onView(withId(R.id.textView_profile_email)).check(matches(withText(oUser_.getEmail_())));
@@ -97,7 +98,7 @@ public class ProfileActivityTest extends FirebaseTest {
     @Test
     public void canAccessToChatButtonIfOtherProfile() {
         sleep(SLEEP_TIME);
-        onView(withText(oUser_.getName_())).perform(click());
+        recyclerScrollToItemWithTextAndPerformClickItem(R.id.services_recycler, oUser_.getName_());
         sleep(SLEEP_TIME);
         onView(withId(R.id.button_profile_toChat)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
     }
@@ -105,7 +106,7 @@ public class ProfileActivityTest extends FirebaseTest {
     @Test
     public void cantAccessToChatButtonIfMyProfile() {
         sleep(SLEEP_TIME);
-        onView(withText(mUser_.getName_())).perform(click());
+        recyclerScrollToItemWithTextAndPerformClickItem(R.id.services_recycler, mUser_.getName_());
         sleep(SLEEP_TIME);
         onView(withId(R.id.button_profile_toChat)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.INVISIBLE)));
     }

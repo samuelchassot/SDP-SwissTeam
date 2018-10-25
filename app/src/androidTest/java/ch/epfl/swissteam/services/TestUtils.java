@@ -1,5 +1,8 @@
 package ch.epfl.swissteam.services;
 
+import android.support.test.espresso.ViewAction;
+import android.support.test.espresso.ViewInteraction;
+import android.support.test.espresso.contrib.RecyclerViewActions;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -9,6 +12,12 @@ import org.hamcrest.TypeSafeMatcher;
 
 import java.util.ArrayList;
 import java.util.Date;
+
+import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.matcher.ViewMatchers.hasDescendant;
+import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
 public class TestUtils {
     public static User getATestUser(){
@@ -64,6 +73,16 @@ public class TestUtils {
 
     public static void setMock(){
         DBUtility.get().getDb_().getDatabase().goOffline();
+    }
+
+    public static ViewInteraction recyclerScrollToItemWithTextAndPerformOnItem(int recyclerViewId, String text, ViewAction perform){
+        return onView(withId(recyclerViewId)).
+                perform(RecyclerViewActions.scrollTo(hasDescendant(withText(text)))).
+                perform(RecyclerViewActions.actionOnItem(hasDescendant(withText(text)), perform));
+    }
+
+    public static ViewInteraction recyclerScrollToItemWithTextAndPerformClickItem(int recyclerViewId, String text){
+        return recyclerScrollToItemWithTextAndPerformOnItem(recyclerViewId, text, click());
     }
 
 }
