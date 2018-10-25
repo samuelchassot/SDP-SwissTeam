@@ -18,6 +18,7 @@ public class User implements DBSavable{
 
 
     private String googleId_, email_, name_, description_, imageUrl_;
+    private int rating_;
 
     private ArrayList<Categories> categories_;
 
@@ -39,14 +40,38 @@ public class User implements DBSavable{
      * @param description_ User's description
      * @param categories_ User's categories of services
      */
+    @Deprecated
     public User(String googleID_, String name_, String email_, String description_, ArrayList<Categories> categories_, String imageUrl_) {
         this.googleId_ = googleID_;
         this.email_ = email_;
         this.name_ = name_;
         this.description_ = description_;
         this.imageUrl_ = imageUrl_;
+        this.rating_ = 0;
         this.categories_ = categories_ == null ? new ArrayList<Categories>() : (ArrayList<Categories>) categories_.clone();
     }
+    /**
+     * Create a new user given its specificities
+
+     * @param googleID_ User's unique googleId
+     * @param name_ User's name
+     * @param email_ User's email
+     * @param description_ User's description
+     * @param categories_ User's categories of services
+     * @param rating_ User's rating score
+     */
+    public User(String googleID_, String name_, String email_, String description_, ArrayList<Categories> categories_, String imageUrl_, int rating_) {
+        this.googleId_ = googleID_;
+        this.email_ = email_;
+        this.name_ = name_;
+        this.description_ = description_;
+        this.imageUrl_ = imageUrl_;
+        this.rating_ = rating_;
+        this.categories_ = categories_ == null ? new ArrayList<Categories>() : (ArrayList<Categories>) categories_.clone();
+    }
+
+
+
 
     public String getGoogleId_() { return googleId_; }
 
@@ -64,10 +89,9 @@ public class User implements DBSavable{
 
     public String getImageUrl_() { return imageUrl_; }
 
+    public int getRating_() { return rating_; }
+
     public ArrayList<Categories> getCategories_() {
-        if(categories_ == null){
-            return new ArrayList<>();
-        }
         return (ArrayList<Categories>) categories_.clone();
     }
 
@@ -127,5 +151,19 @@ public class User implements DBSavable{
             }
         }
         return null;
+    }
+
+    /**
+     * Increments user's rating by 1
+     */
+    public void upvote(){
+        rating_ += 1;
+    }
+
+    /**
+     * Decrements user's rating by 1
+     */
+    public void downvote(){
+        rating_ -= 1;
     }
 }
