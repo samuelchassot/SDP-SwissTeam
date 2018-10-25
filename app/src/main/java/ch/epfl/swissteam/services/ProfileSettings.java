@@ -21,7 +21,7 @@ import java.util.ArrayList;
  *
  * @Author Samuel Chassot
  */
-public class ProfileSettings extends AppCompatActivity {
+public class ProfileSettings extends NavigationDrawer {
 
     private String imageUrl_; //TODO: Allow user to change picture in his profile.
     private ArrayList<Categories> userCapabilities_ = new ArrayList<>();
@@ -31,6 +31,7 @@ public class ProfileSettings extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_settings);
+        super.onCreateDrawer(CANCEL);
 
         Button saveButton = (Button)findViewById(R.id.button_profilesettings_save);
 
