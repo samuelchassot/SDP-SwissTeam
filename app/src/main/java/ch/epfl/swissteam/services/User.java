@@ -1,5 +1,6 @@
 package ch.epfl.swissteam.services;
 
+import android.location.Location;
 import android.util.Log;
 
 import com.google.firebase.database.DatabaseReference;
@@ -19,7 +20,7 @@ public class User implements DBSavable{
 
     private String googleId_, email_, name_, description_, imageUrl_;
     private int rating_;
-
+    private Location lastLocation_;
     private ArrayList<Categories> categories_;
 
     private ArrayList<ChatRelation> chatRelations_;
@@ -59,9 +60,10 @@ public class User implements DBSavable{
      * @param description_ User's description
      * @param categories_ User's categories of services
      * @param rating_ User's rating score
+     * @param lastLocation_ User's last location
      */
     @Deprecated
-    public User(String googleID_, String name_, String email_, String description_, ArrayList<Categories> categories_, String imageUrl_, int rating_) {
+    public User(String googleID_, String name_, String email_, String description_, ArrayList<Categories> categories_, String imageUrl_, int rating_, Location lastLocation_) {
         this.googleId_ = googleID_;
         this.email_ = email_;
         this.name_ = name_;
@@ -69,6 +71,7 @@ public class User implements DBSavable{
         this.imageUrl_ = imageUrl_;
         this.rating_ = rating_;
         this.categories_ = categories_ == null ? new ArrayList<Categories>() : (ArrayList<Categories>) categories_.clone();
+        this.lastLocation_ = lastLocation_;
     }
 
 
@@ -90,6 +93,15 @@ public class User implements DBSavable{
     public String getImageUrl_() { return imageUrl_; }
 
     public int getRating_() { return rating_; }
+
+    public Location getLastLocation_() {
+        return lastLocation_;
+    }
+    public void setLastLocation_(Location lastLocation_){
+        if(lastLocation_ != null){
+            this.lastLocation_ = lastLocation_;
+        }
+    }
 
     public ArrayList<Categories> getCategories_() {
         if(categories_ == null){
