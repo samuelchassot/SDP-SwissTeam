@@ -12,9 +12,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.typeText;
@@ -33,28 +30,21 @@ import static ch.epfl.swissteam.services.TestUtils.sleep;
 @RunWith(AndroidJUnit4.class)
 public class ChatRoomTest extends FirebaseTest{
 
-    private static final String mGoogleId = "1234";
-    private static final String oGoogleId = "5678";
-    private static final String url = TestUtils.getATestUser().getImageUrl_();
-    private static final ArrayList<Categories> cats = new ArrayList<>(Arrays.asList(Categories.COOKING));
-    private static final User mUser = new User(mGoogleId,"Bear", "polar@north.nth","",null,url);
-    private static final User oUser = new User(oGoogleId, "Raeb", "hairy@north.nth", "", cats, url);
-
     @Rule
     public final ActivityTestRule<MainActivity> mActivityRule =
             new ActivityTestRule<>(MainActivity.class);
 
     @Override
     public void initialize(){
-        GoogleSignInSingleton.putUniqueID(mGoogleId);
-        oUser.addToDB(FirebaseDatabase.getInstance().getReference());
-        mUser.addToDB(FirebaseDatabase.getInstance().getReference());
+        GoogleSignInSingleton.putUniqueID(TestUtils.M_GOOGLE_ID);
+        TestUtils.O_USER.addToDB(FirebaseDatabase.getInstance().getReference());
+        TestUtils.M_USER.addToDB(FirebaseDatabase.getInstance().getReference());
         sleep(100);
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
         sleep(100);
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_services));
         sleep(1000);
-        recyclerScrollToItemWithTextAndPerformClickItem(R.id.services_recycler, oUser.getName_());
+        recyclerScrollToItemWithTextAndPerformClickItem(R.id.services_recycler, TestUtils.O_USER.getName_());
         sleep(100);
         onView(withId(R.id.button_profile_toChat)).perform(click());
     }

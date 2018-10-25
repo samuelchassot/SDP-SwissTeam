@@ -11,6 +11,7 @@ import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 
 import static android.support.test.espresso.Espresso.onView;
@@ -20,14 +21,21 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
 public class TestUtils {
-    public static User getATestUser(){
+    protected static final String M_GOOGLE_ID = "1234";
+    protected static final String O_GOOGLE_ID = "456";
+    protected static final String URL = TestUtils.getATestUser().getImageUrl_();
+    protected static final ArrayList<Categories> CATS = new ArrayList<>(Arrays.asList(Categories.COOKING));
+    protected static final User M_USER = new User(M_GOOGLE_ID,"Bear", "polar@north.nth","",null, URL);
+    protected static final User O_USER = new User(O_GOOGLE_ID, "Raeb", "hairy@north.nth", "", CATS, URL);
+
+    protected static User getATestUser(){
         ArrayList<Categories> cat = new ArrayList<>();
         cat.add(Categories.IC);
         User testUser = new User("1234", "testuser", "test@gmail.com", "I am a test user", cat, "https://lh5.googleusercontent.com/-SYTkc6TIZHI/AAAAAAAAAAI/AAAAAAAAABc/EBrA4sSVWQc/photo.jpg");
         return testUser;
     }
 
-    public static void addTestPost() {
+    protected static void addTestPost() {
         long timestamp = (new Date()).getTime();
         String key = "1234" + "_" + timestamp;
         DBUtility.get().setPost(new Post(key, "Hello there", "1234", "General Kenobi", timestamp));
@@ -35,13 +43,13 @@ public class TestUtils {
 
     }
 
-    public static Post getTestPost() {
+    protected static Post getTestPost() {
         long timestamp = (new Date()).getTime();
         String key = "1234" + "_" + timestamp;
         return new Post(key, "Hello there", "1234", "General Kenobi", timestamp);
     }
 
-    public static void sleep(int ms){
+    protected static void sleep(int ms){
         try {
             Thread.sleep(ms);
         } catch (InterruptedException e) {
@@ -49,7 +57,7 @@ public class TestUtils {
         }
     }
 
-    public static Matcher<View> nthChildOf(final Matcher<View> parentMatcher, final int childPosition) {
+    protected static Matcher<View> nthChildOf(final Matcher<View> parentMatcher, final int childPosition) {
         return new TypeSafeMatcher<View>() {
             @Override
             public void describeTo(Description description) {
@@ -71,17 +79,17 @@ public class TestUtils {
 
 
 
-    public static void setMock(){
+    protected static void setMock(){
         DBUtility.get().getDb_().getDatabase().goOffline();
     }
 
-    public static ViewInteraction recyclerScrollToItemWithTextAndPerformOnItem(int recyclerViewId, String text, ViewAction perform){
+    protected static ViewInteraction recyclerScrollToItemWithTextAndPerformOnItem(int recyclerViewId, String text, ViewAction perform){
         return onView(withId(recyclerViewId)).
                 perform(RecyclerViewActions.scrollTo(hasDescendant(withText(text)))).
                 perform(RecyclerViewActions.actionOnItem(hasDescendant(withText(text)), perform));
     }
 
-    public static ViewInteraction recyclerScrollToItemWithTextAndPerformClickItem(int recyclerViewId, String text){
+    protected static ViewInteraction recyclerScrollToItemWithTextAndPerformClickItem(int recyclerViewId, String text){
         return recyclerScrollToItemWithTextAndPerformOnItem(recyclerViewId, text, click());
     }
 
