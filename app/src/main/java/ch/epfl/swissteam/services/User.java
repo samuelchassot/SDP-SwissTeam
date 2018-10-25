@@ -50,7 +50,7 @@ public class User implements DBSavable{
         this.rating_ = 0;
         this.categories_ = categories_ == null ? new ArrayList<Categories>() : (ArrayList<Categories>) categories_.clone();
     }
-
+    /**
      * Create a new user given its specificities
 
      * @param googleID_ User's unique googleId
@@ -72,7 +72,7 @@ public class User implements DBSavable{
 
 
 
-    /**
+
     public String getGoogleId_() { return googleId_; }
 
     public String getName_() {
