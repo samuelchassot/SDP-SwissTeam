@@ -51,7 +51,6 @@ public class User implements DBSavable{
         this.categories_ = categories_ == null ? new ArrayList<Categories>() : (ArrayList<Categories>) categories_.clone();
     }
 
-    /**
      * Create a new user given its specificities
 
      * @param googleID_ User's unique googleId
@@ -61,7 +60,6 @@ public class User implements DBSavable{
      * @param categories_ User's categories of services
      * @param rating_ User's rating score
      */
-
     public User(String googleID_, String name_, String email_, String description_, ArrayList<Categories> categories_, String imageUrl_, int rating_) {
         this.googleId_ = googleID_;
         this.email_ = email_;
@@ -73,7 +71,8 @@ public class User implements DBSavable{
     }
 
 
-    
+
+    /**
     public String getGoogleId_() { return googleId_; }
 
     public String getName_() {
