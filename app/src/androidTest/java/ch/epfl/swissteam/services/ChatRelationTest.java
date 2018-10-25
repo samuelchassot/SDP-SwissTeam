@@ -1,9 +1,13 @@
 package ch.epfl.swissteam.services;
 
+import android.support.test.runner.AndroidJUnit4;
+
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import static org.junit.Assert.assertEquals;
 
+@RunWith(AndroidJUnit4.class)
 public class ChatRelationTest {
     String name1 = "Martin"; String name2 = "Robin"; String name3 = "Badass";
     String surname1 = "Latex King"; String surname2 = "des Cailloux"; String surname3 = "Romarin";
