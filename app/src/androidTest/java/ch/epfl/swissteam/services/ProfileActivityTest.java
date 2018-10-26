@@ -32,7 +32,7 @@ import static ch.epfl.swissteam.services.TestUtils.sleep;
 public class ProfileActivityTest extends FirebaseTest {
 
     
-    private static final int SLEEP_TIME = 1000;
+    private static final int SLEEP_TIME = 2000;
 
     @Rule
     public final ActivityTestRule<MainActivity> mActivityRule =
