@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -124,8 +125,19 @@ public class ServicesFragment extends Fragment {
     private int compareUsersUsingDistanceWithRef(User u1, User u2){
         Location ref = GoogleSignInSingleton.get().getLastLocation();
         int result = 0;
-        if(u1.getLastLocation_() != null && u2.getLastLocation_() != null){
-            result = (int)u1.getLastLocation_().distanceTo(ref) - (int)u2.getLastLocation_().distanceTo(ref);
+        Location u1Location = new Location("");
+        u1Location.setLatitude(u1.getLatitude_());
+        u1Location.setLongitude(u1.getLongitude_());
+
+        Log.i("U1Latitude", u1.getLatitude_() + "");
+
+        Location u2Location = new Location("");
+        u2Location.setLatitude(u2.getLatitude_());
+        u2Location.setLongitude(u2.getLongitude_());
+
+        if(ref != null) {
+            result = (int) u1Location.distanceTo(ref) - (int) u2Location.distanceTo(ref);
+            Log.i("Ref", "not null");
         }
         return result;
     }
