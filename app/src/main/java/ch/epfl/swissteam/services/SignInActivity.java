@@ -49,8 +49,6 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         //put the GoogleSignInClient in the singleton
         GoogleSignInSingleton.putGoogleSignInClient(mGoogleSignInClient_);
 
-        //put the current Location in the singleton
-        GoogleSignInSingleton.putCurrentLocation(this);
 
         //Listen to clicks on the signIn button
         findViewById(R.id.button_signin_googlesignin).setOnClickListener(this);
@@ -113,6 +111,9 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
             // Signed in successfully, show authenticated UI
             GoogleSignInSingleton.putUniqueID(account.getId());
             Intent newProfileIntent = new Intent(this, NewProfileDetails.class);
+
+            GoogleSignInSingleton.putCurrentLocation(this);
+
             newProfileIntent.putExtra(ACCOUNT_TAG , account);
             startActivity(newProfileIntent);
 
