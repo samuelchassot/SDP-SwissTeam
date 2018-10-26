@@ -20,6 +20,8 @@ import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static ch.epfl.swissteam.services.TestUtils.O_USER;
+import static ch.epfl.swissteam.services.TestUtils.URL;
 import static ch.epfl.swissteam.services.TestUtils.recyclerScrollToItemWithTextAndPerformClickItem;
 import static ch.epfl.swissteam.services.TestUtils.sleep;
 
@@ -51,21 +53,21 @@ public class ProfileActivityTest extends FirebaseTest {
 
     @Test
     public void isProfileCorrectlyDisplayed(){
-        /*sleep(SLEEP_TIME);
+        sleep(SLEEP_TIME);
         recyclerScrollToItemWithTextAndPerformClickItem(R.id.services_recycler, TestUtils.O_USER.getName_());
         sleep(SLEEP_TIME);
         onView(withId(R.id.textView_profile_nameTag)).check(matches(withText(TestUtils.O_USER.getName_())));
         onView(withId(R.id.textView_profile_email)).check(matches(withText(TestUtils.O_USER.getEmail_())));
-        onView(withId(R.id.textView_profile_description)).check(matches(withText(TestUtils.O_USER.getDescription_())));*/
-        //onView(withId(R.id.imageview_profile_picture)).check(matches(withText(oUser_.getImageUrl_())));
+        onView(withId(R.id.textView_profile_description)).check(matches(withText(TestUtils.O_USER.getDescription_())));
+        //onView(withId(R.id.imageview_profile_picture)).check(matches(withText(URL)));
     }
 
     @Test
     public void canAccessToChatButtonIfOtherProfile() {
-        /*sleep(SLEEP_TIME);
+        sleep(SLEEP_TIME);
         recyclerScrollToItemWithTextAndPerformClickItem(R.id.services_recycler, TestUtils.O_USER.getName_());
         sleep(SLEEP_TIME);
-        onView(withId(R.id.button_profile_toChat)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));*/
+        onView(withId(R.id.button_profile_toChat)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
     }
 
     @Test
@@ -75,8 +77,7 @@ public class ProfileActivityTest extends FirebaseTest {
         sleep(SLEEP_TIME);
         onView(withId(R.id.button_profile_toChat)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.INVISIBLE)));
     }
-
-
+    
 
     @Override
     public void terminate(){
