@@ -25,8 +25,8 @@ public class TestUtils {
     protected static final String O_GOOGLE_ID = "456";
     protected static final String URL = TestUtils.getATestUser().getImageUrl_();
     protected static final ArrayList<Categories> CATS = new ArrayList<>(Arrays.asList(Categories.COOKING));
-    protected static final User M_USER = new User(M_GOOGLE_ID,"Bear", "polar@north.nth","",null, URL);
-    protected static final User O_USER = new User(O_GOOGLE_ID, "Raeb", "hairy@north.nth", "", CATS, URL);
+    protected static final User M_USER = new User(M_GOOGLE_ID,"Bear", "polar@north.nth","",null, URL,0);
+    protected static final User O_USER = new User(O_GOOGLE_ID, "Raeb", "hairy@north.nth", "", CATS, URL, 0);
 
     protected static User getATestUser(){
         ArrayList<Categories> cat = new ArrayList<>();

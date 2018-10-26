@@ -90,6 +90,9 @@ public class User implements DBSavable{
     public int getRating_() { return rating_; }
 
     public ArrayList<Categories> getCategories_() {
+        if(categories_ == null){
+            return new ArrayList<>();
+        }
         return (ArrayList<Categories>) categories_.clone();
     }
 
