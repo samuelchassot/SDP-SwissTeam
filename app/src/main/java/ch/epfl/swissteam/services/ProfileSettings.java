@@ -80,7 +80,7 @@ public class ProfileSettings extends AppCompatActivity {
         String email = ((TextView) findViewById(R.id.textview_profilesettings_email)).getText().toString();
         String descr = ((TextView) findViewById(R.id.edittext_profilesettings_description)).getText().toString();
         User updatedUser = new User(uniqueID, name, email, descr, userCapabilities_, imageUrl_, oldUser_.getRating_(),
-                oldUser_.getLastLocation_().getLatitude(), oldUser_.getLastLocation_().getLongitude());
+                oldUser_.getLatitude_(), oldUser_.getLongitude_());
 
 
         ArrayList<Categories> categoriesThatHaveBeenRemoved = oldUser_.getCategories_();
