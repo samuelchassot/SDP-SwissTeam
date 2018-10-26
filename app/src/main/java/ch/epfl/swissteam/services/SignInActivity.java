@@ -103,12 +103,22 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
 
-            // Signed in successfully, show authenticated UI
-            GoogleSignInSingleton.putUniqueID(account.getId());
-            Intent newProfileIntent = new Intent(this, NewProfileDetails.class);
-            newProfileIntent.putExtra(ACCOUNT_TAG , account);
-            startActivity(newProfileIntent);
-
+            //TODO: Maybe load a list of all users while the user is connecting then check here if the googleId is in it to avoid the wait time.
+            DBUtility.get().getUser(account.getId(), user -> {
+                if(user != null){
+                    GoogleSignInSingleton.putUniqueID(account.getId());
+                    Intent mainIntent = new Intent(this, MainActivity.class);
+                    mainIntent.putExtra(ACCOUNT_TAG , account);
+                    startActivity(mainIntent);
+                }
+                else{
+                    // Signed in successfully, show authenticated UI
+                    GoogleSignInSingleton.putUniqueID(account.getId());
+                    Intent newProfileIntent = new Intent(this, NewProfileDetails.class);
+                    newProfileIntent.putExtra(ACCOUNT_TAG , account);
+                    startActivity(newProfileIntent);
+                }
+            });
         } catch (ApiException e) {
             // The ApiException status code indicates the detailed failure reason.
             // Please refer to the GoogleSignInStatusCodes class reference for more information.
