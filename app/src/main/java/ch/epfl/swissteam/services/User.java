@@ -1,6 +1,5 @@
 package ch.epfl.swissteam.services;
 
-import android.location.Location;
 import android.util.Log;
 
 import com.google.firebase.database.DatabaseReference;
@@ -112,17 +111,26 @@ public class User implements DBSavable{
 
     public int getRating_() { return rating_; }
 
-    public Location getLastLocation() {
-        Location lastLocation = new Location("");
-        lastLocation.setLongitude(longitude_);
-        lastLocation.setLatitude(latitude_);
-        return lastLocation;
+//    public Location getLastLocation() {
+//        Location lastLocation = new Location("");
+//        lastLocation.setLongitude(longitude_);
+//        lastLocation.setLatitude(latitude_);
+//        return lastLocation;
+//    }
+//    public void setLastLocation_(Location lastLocation){
+//        if(lastLocation != null){
+//          this.latitude_ = lastLocation.getLatitude();
+//          this.longitude_ = lastLocation.getLongitude();
+//        }
+//    }
+
+
+    public double getLatitude_() {
+        return latitude_;
     }
-    public void setLastLocation_(Location lastLocation){
-        if(lastLocation != null){
-          this.latitude_ = lastLocation.getLatitude();
-          this.longitude_ = lastLocation.getLongitude();
-        }
+
+    public double getLongitude_() {
+        return longitude_;
     }
 
     public ArrayList<Categories> getCategories_() {
