@@ -62,7 +62,6 @@ public class User implements DBSavable{
      * @param rating_ User's rating score
      * @param lastLocation_ User's last location
      */
-    @Deprecated
     public User(String googleID_, String name_, String email_, String description_, ArrayList<Categories> categories_, String imageUrl_, int rating_, Location lastLocation_) {
         this.googleId_ = googleID_;
         this.email_ = email_;
