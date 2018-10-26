@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class TestUtils {
-    public static User getATestUser(){
+    public static User getTestUser(){
         ArrayList<Categories> cat = new ArrayList<>();
         cat.add(Categories.IC);
         User testUser = new User("1234", "testuser", "test@gmail.com", "I am a test user", cat, "https://lh5.googleusercontent.com/-SYTkc6TIZHI/AAAAAAAAAAI/AAAAAAAAABc/EBrA4sSVWQc/photo.jpg");

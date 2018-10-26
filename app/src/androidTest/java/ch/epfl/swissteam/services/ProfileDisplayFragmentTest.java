@@ -1,18 +1,13 @@
 package ch.epfl.swissteam.services;
 
-import android.support.test.espresso.action.ViewActions;
 import android.support.test.espresso.contrib.DrawerActions;
 import android.support.test.espresso.contrib.NavigationViewActions;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
-import android.widget.TextView;
 
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.clearText;
@@ -35,7 +30,7 @@ public class ProfileDisplayFragmentTest extends FirebaseTest {
 
     @Test
     public void openFragmentAndChangeName() {
-        User testUser = TestUtils.getATestUser();
+        User testUser = TestUtils.getTestUser();
 //        DBUtility.get().setUser(testUser);
 
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
@@ -102,7 +97,7 @@ public class ProfileDisplayFragmentTest extends FirebaseTest {
             e.printStackTrace();
         }
         onView(withId(R.id.textview_profiledisplay_name)).perform(scrollTo()).check(matches(withText(newName)));
-        User testUser = TestUtils.getATestUser();
+        User testUser = TestUtils.getTestUser();
         testUser.addToDB(DBUtility.get().getDb_());
     }
 
@@ -110,7 +105,7 @@ public class ProfileDisplayFragmentTest extends FirebaseTest {
     @Override
     public void initialize() {
         super.initialize();
-        User testUser = TestUtils.getATestUser();
+        User testUser = TestUtils.getTestUser();
         testUser.addToDB(DBUtility.get().getDb_());
         GoogleSignInSingleton.putUniqueID(testUser.getGoogleId_());
     }

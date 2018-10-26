@@ -9,15 +9,10 @@ import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.view.View;
 
-import com.google.firebase.database.FirebaseDatabase;
-
 import org.hamcrest.Matcher;
-import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import java.util.ArrayList;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.clearText;
@@ -40,7 +35,7 @@ public class MyPostFragmentTest extends FirebaseTest{
 
     @Override
     public void initialize(){
-        DBUtility.get().setUser(TestUtils.getATestUser());
+        DBUtility.get().setUser(TestUtils.getTestUser());
         id = "1234";
         GoogleSignInSingleton.putUniqueID(id);
         post = new Post("1234_1539704399119", "Title", "1234", "Body", 1539704399119L);
