@@ -69,9 +69,9 @@ public class CreatePostFragment extends Fragment implements View.OnClickListener
             String key = googleID + "_" + timestamp;
 
             if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(getActivity(),
+                /*ActivityCompat.requestPermissions(getActivity(),
                         new String[]{Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION},
-                        1);
+                        1);*/
             }
             else {
                 LocationServices.getFusedLocationProviderClient(getActivity()).getLastLocation()
