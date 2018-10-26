@@ -93,10 +93,11 @@ public class ServicesFragment extends Fragment {
             DBUtility.get().getUsersFromCategory(category, (googleIds) -> {
                 users.clear();
                 services_problem_text_udpate(view, googleIds.isEmpty());
+                mAdapter.notifyDataSetChanged();
 
                     for (String googleId : googleIds) {
                         DBUtility.get().getUser(googleId, user -> {
-                            if (!users.contains(user)) {
+                            if (user != null && !users.contains(user)) {
                                 users.add(user);
                                 mAdapter.notifyDataSetChanged();
                             }
