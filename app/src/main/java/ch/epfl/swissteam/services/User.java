@@ -14,9 +14,6 @@ import java.util.List;
  */
 public class User implements DBSavable{
 
-
-
-
     private String googleId_, email_, name_, description_, imageUrl_;
     private int rating_;
 
@@ -28,7 +25,7 @@ public class User implements DBSavable{
      * Default constructor, needed for database
      */
     public User(){
-
+        categories_ = new ArrayList<>(); chatRelations_ = new ArrayList<>();
     }
 
     /**
@@ -42,6 +39,7 @@ public class User implements DBSavable{
      */
     @Deprecated
     public User(String googleID_, String name_, String email_, String description_, ArrayList<Categories> categories_, String imageUrl_) {
+        this();
         this.googleId_ = googleID_;
         this.email_ = email_;
         this.name_ = name_;
@@ -92,11 +90,17 @@ public class User implements DBSavable{
     public int getRating_() { return rating_; }
 
     public ArrayList<Categories> getCategories_() {
+        if(categories_ == null){
+            return new ArrayList<>();
+        }
         return (ArrayList<Categories>) categories_.clone();
     }
 
     public ArrayList<ChatRelation> getChatRelations_() {
-        return chatRelations_ == null ? null : (ArrayList<ChatRelation>) chatRelations_.clone();//Collections.unmodifiableList(chatRelations_);
+        if(chatRelations_ == null){
+            return new ArrayList<>();
+        }
+        return (ArrayList<ChatRelation>) chatRelations_.clone();
     }
 
     /**
@@ -143,10 +147,14 @@ public class User implements DBSavable{
     }
 
     public ChatRelation relationExists(User other){
+        return relationExists(other.getGoogleId_());
+    }
+
+    public ChatRelation relationExists(String otherId){
         if(chatRelations_ == null) return null;
         for(ChatRelation cR : chatRelations_){
-            if(cR.getFirstUserId_().compareTo(googleId_) == 0 && cR.getSecondUserId_().compareTo(other.googleId_) == 0
-                    || cR.getFirstUserId_().compareTo(other.googleId_) == 0 && cR.getSecondUserId_().compareTo(googleId_) == 0){
+            if(cR.getFirstUserId_().compareTo(getGoogleId_()) == 0 && cR.getSecondUserId_().compareTo(otherId) == 0
+                    || cR.getFirstUserId_().compareTo(otherId) == 0 && cR.getSecondUserId_().compareTo(getGoogleId_()) == 0){
                 return cR;
             }
         }

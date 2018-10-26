@@ -84,4 +84,25 @@ public class UserTest {
         user2.addChatRelation(cR);
         assertEquals(cR, user1.relationExists(user2bis));
     }
+
+    @Test
+    public void idRelationExistsWorksForInexistentRelation(){
+        User user1 = new User(googleID, name, email, description, categories, imageUrl);
+        User user2 = new User(googleID2, name2,  email2, description2, categories, imageUrl);
+        User user3 = new User(googleID3, name3,  email3, description3, categories, imageUrl);
+        ChatRelation cR = new ChatRelation(user1, user2);
+        user1.addChatRelation(cR);
+        user2.addChatRelation(cR);
+        assertEquals(null, user1.relationExists(googleID3));
+    }
+
+    @Test
+    public void idRelationExistsWorksForExistentRelation(){
+        User user1 = new User(googleID, name, email, description, categories, imageUrl);
+        User user2 = new User(googleID2, name2, email2, description2, categories, imageUrl);
+        ChatRelation cR = new ChatRelation(user1, user2);
+        user1.addChatRelation(cR);
+        user2.addChatRelation(cR);
+        assertEquals(cR, user1.relationExists(googleID2));
+    }
 }
