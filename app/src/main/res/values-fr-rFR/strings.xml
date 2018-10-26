@@ -65,6 +65,9 @@
     <string name="language_prompt">Choississez une langue</string>
     <string name="toolbar_my_posts">Mes posts</string>
     <string name="toolbar_home">Accueil</string>
+    <string name="toolbar_chats">Chats</string>
+    <string name="toolbar_settings">Paramètres</string>
+    <string name="toolbar_services">Services</string>
 
 
     <string-array name="language_arrays">
