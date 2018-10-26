@@ -37,6 +37,7 @@ public class UserTest {
         assertEquals(categories, user.getCategories_());
         assertEquals(imageUrl, user.getImageUrl_());
         assertEquals(rating, user.getRating_());
+        assertEquals(true, user.equals(user));
     }
 
     @Test
