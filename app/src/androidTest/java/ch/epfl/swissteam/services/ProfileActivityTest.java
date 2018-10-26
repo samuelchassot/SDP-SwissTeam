@@ -32,7 +32,7 @@ import static ch.epfl.swissteam.services.TestUtils.sleep;
 public class ProfileActivityTest extends FirebaseTest {
 
     
-    private static final int SLEEP_TIME = 2000;
+    private static final int SLEEP_TIME = 1000;
 
     @Rule
     public final ActivityTestRule<MainActivity> mActivityRule =
@@ -59,7 +59,7 @@ public class ProfileActivityTest extends FirebaseTest {
         onView(withId(R.id.textView_profile_description)).check(matches(withText(TestUtils.O_USER.getDescription_())));*/
         //onView(withId(R.id.imageview_profile_picture)).check(matches(withText(oUser_.getImageUrl_())));
     }
-    
+
     @Test
     public void canAccessToChatButtonIfOtherProfile() {
         /*sleep(SLEEP_TIME);
