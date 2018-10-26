@@ -1,8 +1,7 @@
 package ch.epfl.swissteam.services;
 
-import android.location.Location;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -14,7 +13,6 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Activity to modify the profile in the database
@@ -81,7 +79,8 @@ public class ProfileSettings extends AppCompatActivity {
         String uniqueID = GoogleSignInSingleton.get().getClientUniqueID();
         String email = ((TextView) findViewById(R.id.textview_profilesettings_email)).getText().toString();
         String descr = ((TextView) findViewById(R.id.edittext_profilesettings_description)).getText().toString();
-        User updatedUser = new User(uniqueID, name, email, descr, userCapabilities_, imageUrl_, oldUser_.getRating_(), oldUser_.getLastLocation_());
+        User updatedUser = new User(uniqueID, name, email, descr, userCapabilities_, imageUrl_, oldUser_.getRating_(),
+                oldUser_.getLastLocation_().getLatitude(), oldUser_.getLastLocation_().getLongitude());
 
 
         ArrayList<Categories> categoriesThatHaveBeenRemoved = oldUser_.getCategories_();
@@ -93,7 +92,7 @@ public class ProfileSettings extends AppCompatActivity {
                 cat.addToDB(DBUtility.get().getDb_());
             });
         }
-        
+
 
         updatedUser.addToDB(DBUtility.get().getDb_());
         finish();
@@ -137,7 +136,7 @@ public class ProfileSettings extends AppCompatActivity {
             userCapabilities_.clear();
             userCapabilities_.addAll(user.getCategories_());
             
-            recycler.setAdapter(new CategoriesAdapterProfileSettings(Categories.values(), userCapabilities_));
+            recycler.setAdapter(new CategoriesAdapterProfileSettings(Categories.realCategories(), userCapabilities_));
 
 
 

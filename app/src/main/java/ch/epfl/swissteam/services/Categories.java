@@ -5,6 +5,7 @@ import android.util.Log;
 import com.google.firebase.database.DatabaseReference;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -24,6 +25,10 @@ public enum Categories implements DBSavable {
 
     Categories(){
         users_ = new ArrayList<>();
+    }
+
+    public static Categories[] realCategories(){
+        return  Arrays.copyOfRange(Categories.values(),1, Categories.values().length);
     }
 
     public void addUser(User user){

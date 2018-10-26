@@ -1,15 +1,12 @@
 package ch.epfl.swissteam.services;
 
+import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -17,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Fragment for displaying users in form of a list
@@ -27,6 +25,7 @@ public class ServicesFragment extends Fragment {
 
     private RecyclerView.Adapter mAdapter;
     private ArrayList<User> users = new ArrayList<>();
+    private Location currentUserLocation_;
 
 
     public ServicesFragment() {
@@ -86,6 +85,9 @@ public class ServicesFragment extends Fragment {
             DBUtility.get().getAllUsers((usersdb ->{
                 users.clear();
                 users.addAll(usersdb);
+
+
+                Collections.sort(users, this::compareUsersUsingDistanceWithRef);
                 mAdapter.notifyDataSetChanged();
                 services_problem_text_udpate(view, users.isEmpty());
             }));
@@ -98,10 +100,12 @@ public class ServicesFragment extends Fragment {
                         DBUtility.get().getUser(googleId, user -> {
                             if (!users.contains(user)) {
                                 users.add(user);
+                                Collections.sort(users, this::compareUsersUsingDistanceWithRef);
                                 mAdapter.notifyDataSetChanged();
                             }
                         });
                     }
+
             });
         }
 
@@ -115,6 +119,15 @@ public class ServicesFragment extends Fragment {
                 view.findViewById(R.id.services_problem_text).setVisibility(View.INVISIBLE);
             }
         }
+    }
+
+    private int compareUsersUsingDistanceWithRef(User u1, User u2){
+        Location ref = GoogleSignInSingleton.get().getLastLocation();
+        int result = 0;
+        if(u1.getLastLocation_() != null && u2.getLastLocation_() != null){
+            result = (int)u1.getLastLocation_().distanceTo(ref) - (int)u2.getLastLocation_().distanceTo(ref);
+        }
+        return result;
     }
 
 
