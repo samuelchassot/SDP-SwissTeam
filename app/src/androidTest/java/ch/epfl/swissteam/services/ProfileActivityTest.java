@@ -49,7 +49,7 @@ public class ProfileActivityTest extends FirebaseTest {
         Intents.init();
     }
 
-    @Test
+    /*@Test
     public void isProfileCorrectlyDisplayed(){
         sleep(SLEEP_TIME);
         recyclerScrollToItemWithTextAndPerformClickItem(R.id.services_recycler, TestUtils.O_USER.getName_());
@@ -66,7 +66,7 @@ public class ProfileActivityTest extends FirebaseTest {
         recyclerScrollToItemWithTextAndPerformClickItem(R.id.services_recycler, TestUtils.O_USER.getName_());
         sleep(SLEEP_TIME);
         onView(withId(R.id.button_profile_toChat)).perform(scrollTo()).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
-    }
+    }*/
 
     @Test
     public void cantAccessToChatButtonIfMyProfile() {
