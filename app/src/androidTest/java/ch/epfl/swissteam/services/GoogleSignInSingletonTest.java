@@ -31,7 +31,7 @@ public class GoogleSignInSingletonTest extends FirebaseTest {
     public void getLocationInSingletonAndCheckNotNull(){
         GoogleSignInSingleton.putCurrentLocation(mActivityRule.getActivity());
         try {
-            Thread.sleep(5000);
+            Thread.sleep(10000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -42,10 +42,11 @@ public class GoogleSignInSingletonTest extends FirebaseTest {
     public void getLocationAndPutInDB(){
         GoogleSignInSingleton.putCurrentLocation(mActivityRule.getActivity());
         try {
-            Thread.sleep(5000);
+            Thread.sleep(10000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        assertTrue(GoogleSignInSingleton.get().getLastLocation() != null);
 
         GoogleSignInSingleton.updateLastLocationUserInDB();
         try {
