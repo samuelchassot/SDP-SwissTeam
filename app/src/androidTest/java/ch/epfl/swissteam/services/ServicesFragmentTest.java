@@ -33,6 +33,6 @@ public class ServicesFragmentTest {
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_services));
         onView(withId(R.id.services_spinner)).perform(scrollTo()).perform(click());
-        onData(allOf(is(instanceOf(Categories.class)), is(Categories.HOUSE))).perform(click());
+        onData(allOf(is(instanceOf(Categories.class)), is(Categories.HOUSE))).perform(scrollTo()).perform(click());
     }
 }
