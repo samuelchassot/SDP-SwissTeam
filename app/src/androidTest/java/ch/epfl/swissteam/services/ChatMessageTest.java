@@ -13,6 +13,7 @@ import static org.junit.Assert.assertEquals;
  */
 @RunWith(AndroidJUnit4.class)
 public class ChatMessageTest {
+    //constructor
     @Test
     public void objectCreationYieldExpectedValueOnGets() {
         String text = "We are the champions!";
@@ -23,8 +24,19 @@ public class ChatMessageTest {
         assertEquals(text, message.getText_());
         assertEquals(user, message.getUser_());
         assertEquals(userId, message.getUserId_());
+        assertEquals(relationId, message.getRelationId_());
     }
 
+    @Test
+    public void defaultObjectCreationYieldExpectedValueOnGets() {
+        ChatMessage message = new ChatMessage();
+        assertEquals(null, message.getText_());
+        assertEquals(null, message.getUser_());
+        assertEquals(null, message.getUserId_());
+        assertEquals(null, message.getRelationId_());
+    }
+
+    //setter and getters
     @Test
     public void setValueGivesBackSameWhenGet() {
         String text = "I'm white";

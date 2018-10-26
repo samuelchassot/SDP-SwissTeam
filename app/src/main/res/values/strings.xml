@@ -12,6 +12,7 @@
     /* ----- Database string ----- */
     <string name="general_could_not_find_you_in_db">Could not find you in the database !</string>
     <string name="general_could_not_find_this_user_in_db">Could not find this user in the database !</string>
+    <string name="general_could_not_establish_relation">Could not establish relation !</string>
 
     /* ----- Profile string ----- */
     <string name="newprofile_title">Profile setup</string>
