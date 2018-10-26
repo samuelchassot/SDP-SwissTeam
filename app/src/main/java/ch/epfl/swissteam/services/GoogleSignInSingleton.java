@@ -53,8 +53,9 @@ public class GoogleSignInSingleton {
             if(instance_.clientUniqueID_ != null && instance_.currentLocation != null){
                 DBUtility.get().getUser(instance_.clientUniqueID_, (u)->{
                     if(u != null){
-                        u.setLastLocation_(instance_.currentLocation);
-                        u.addToDB(DBUtility.get().getDb_());
+                        User newUser = new User(u.getGoogleId_(), u.getName_(), u.getEmail_(), u.getDescription_(), u.getCategories_(), u.getImageUrl_(), u.getRating_(),
+                                instance_.getLastLocation().getLatitude(), instance_.getLastLocation().getLongitude());
+                        newUser.addToDB(DBUtility.get().getDb_());
 
                     }
                 });
@@ -83,7 +84,7 @@ public class GoogleSignInSingleton {
                 LocationServices.getFusedLocationProviderClient(activity).getLastLocation()
                         .addOnSuccessListener((location) -> {
                             if(location != null ) {
-                                instance_.currentLocation = location;
+                                instance_.currentLocation = new Location(location);
                                 Log.i("NewLocation", location.toString());
                             }
                         });
