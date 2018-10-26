@@ -47,7 +47,7 @@ public class ChatRoomTest extends FirebaseTest{
         sleep(1000);
         recyclerScrollToItemWithTextAndPerformClickItem(R.id.services_recycler, TestUtils.O_USER.getName_());
         sleep(100);
-        onView(withId(R.id.button_profile_toChat)).perform(click());
+        onView(withId(R.id.button_profile_toChat)).perform(scrollTo()).perform(click());
     }
 
     @Test
