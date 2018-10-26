@@ -25,7 +25,7 @@ public class User implements DBSavable{
      * Default constructor, needed for database
      */
     public User(){
-        chatRelations_ = new ArrayList<>();
+        categories_ = new ArrayList<>(); chatRelations_ = new ArrayList<>();
     }
 
     /**
