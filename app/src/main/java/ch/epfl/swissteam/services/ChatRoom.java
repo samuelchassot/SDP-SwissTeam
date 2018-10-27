@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.format.DateFormat;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -85,6 +86,12 @@ public class ChatRoom extends Activity {
                 viewHolder.messageText_.setText(message.getText_());
                 viewHolder.timeUserText_.setText(DateFormat.format("dd-mm-yyyy (hh:mm:ss)", message.getTime_()) +
                         message.getUser_());
+                viewHolder.parentLayout_.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        askToDeleteMessage
+                    }
+                });
             }
         };
         chatRoom.setAdapter(adapter_);
@@ -140,13 +147,15 @@ public class ChatRoom extends Activity {
      * ViewHolder class to handle the RecyclerView
      */
     private static class MessageHolder extends RecyclerView.ViewHolder{
-        TextView messageText_;
-        TextView timeUserText_;
+        protected TextView messageText_;
+        protected TextView timeUserText_;
+        protected FrameLayout parentLayout_;
 
         public MessageHolder(View view) {
             super(view);
             messageText_ = view.findViewById(R.id.message_message);
             timeUserText_ = view.findViewById(R.id.message_time_stamp_user);
+            parentLayout_ = view.findViewById(R.id.chat_message_parent_layout);
         }
 
     }
