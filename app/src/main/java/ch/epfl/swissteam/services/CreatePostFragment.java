@@ -70,7 +70,6 @@ public class CreatePostFragment extends Fragment implements View.OnClickListener
             long timestamp = (new Date()).getTime();
             String key = googleID + "_" + timestamp;
 
-            /*
             if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     ActivityCompat.requestPermissions(getActivity(),
@@ -85,6 +84,7 @@ public class CreatePostFragment extends Fragment implements View.OnClickListener
                         Post post = new Post(key, title, googleID, body, timestamp, zeroLocation.getLongitude(), zeroLocation.getLatitude());
                         post.addToDB(DBUtility.get().getDb_());
                     });
+                    ((MainActivity) getActivity()).showHomeFragment();
                 }
             }
             else {
@@ -98,14 +98,6 @@ public class CreatePostFragment extends Fragment implements View.OnClickListener
 
                 ((MainActivity) getActivity()).showHomeFragment();
             }
-            */
-            Location zeroLocation = new Location("");
-            zeroLocation.setLongitude(0);
-            zeroLocation.setLatitude(0);
-            DBUtility.get().getUser(googleID, user -> {
-                Post post = new Post(key, title, googleID, body, timestamp, zeroLocation.getLongitude(), zeroLocation.getLatitude());
-                post.addToDB(DBUtility.get().getDb_());
-            });
         }
     }
 }
