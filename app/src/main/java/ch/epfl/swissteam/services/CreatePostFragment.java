@@ -2,6 +2,7 @@ package ch.epfl.swissteam.services;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Build;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -74,6 +75,13 @@ public class CreatePostFragment extends Fragment implements View.OnClickListener
                     ActivityCompat.requestPermissions(getActivity(),
                         new String[]{Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION},
                         1);
+                }
+                else{
+                    Location zeroLocation = new Location("");
+                    DBUtility.get().getUser(googleID, user -> {
+                        Post post = new Post(key, title, googleID, body, timestamp, zeroLocation.getLongitude(), zeroLocation.getLatitude());
+                        post.addToDB(DBUtility.get().getDb_());
+                    });
                 }
             }
             else {

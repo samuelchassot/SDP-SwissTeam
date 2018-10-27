@@ -90,6 +90,21 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                         new String[]{Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION},
                         1);
             }
+            else{
+                Location zeroLocation = new Location("");
+                zeroLocation.setLongitude(0);
+                zeroLocation.setLatitude(0);
+                DBUtility.get().getPostsFeed(new MyCallBack<ArrayList<Post>>() {
+                    @Override
+                    public void onCallBack(ArrayList<Post> value) {
+                        posts_.clear();
+                        posts_.addAll(value);
+                        adapter_.notifyDataSetChanged();
+                        swipeRefreshLayout_.setRefreshing(false);
+                    }
+                }, zeroLocation);
+                ((MainActivity) getActivity()).showHomeFragment();
+            }
         }
         else {
             LocationServices.getFusedLocationProviderClient(getActivity()).getLastLocation()
