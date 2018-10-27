@@ -85,14 +85,15 @@ public class TestUtils {
         DBUtility.get().getDb_().getDatabase().goOffline();
     }
 
-    protected static ViewInteraction recyclerScrollToItemWithTextAndPerformOnItem(int recyclerViewId, String text, ViewAction perform){
-        return onView(withId(recyclerViewId)).
-                perform(RecyclerViewActions.scrollTo(hasDescendant(withText(text)))).
-                perform(RecyclerViewActions.actionOnItem(hasDescendant(withText(text)), perform));
+    protected static void recyclerScrollToItemWithTextAndPerformOnItem(int recyclerViewId, String text, ViewAction perform){
+        onView(withId(recyclerViewId)).
+                perform(RecyclerViewActions.scrollTo(hasDescendant(withText(text))));
+        sleep(2000);
+        onView(withId(recyclerViewId)).perform(RecyclerViewActions.actionOnItem(hasDescendant(withText(text)), perform));
     }
 
-    protected static ViewInteraction recyclerScrollToItemWithTextAndPerformClickItem(int recyclerViewId, String text){
-        return recyclerScrollToItemWithTextAndPerformOnItem(recyclerViewId, text, click());
+    protected static void recyclerScrollToItemWithTextAndPerformClickItem(int recyclerViewId, String text){
+        recyclerScrollToItemWithTextAndPerformOnItem(recyclerViewId, text, click());
     }
 
     protected static ViewAction personalClick(){
