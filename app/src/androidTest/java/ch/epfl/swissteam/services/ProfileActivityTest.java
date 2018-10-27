@@ -2,6 +2,7 @@ package ch.epfl.swissteam.services;
 
 import android.support.test.espresso.contrib.DrawerActions;
 import android.support.test.espresso.contrib.NavigationViewActions;
+import android.support.test.espresso.contrib.RecyclerViewActions;
 import android.support.test.espresso.intent.Intents;
 import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.rule.ActivityTestRule;
@@ -17,6 +18,7 @@ import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.scrollTo;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.ViewMatchers.hasDescendant;
 import static android.support.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
@@ -54,7 +56,8 @@ public class ProfileActivityTest extends FirebaseTest {
     @Test
     public void isProfileCorrectlyDisplayed(){
         sleep(SLEEP_TIME);
-        recyclerScrollToItemWithTextAndPerformClickItem(R.id.services_recycler, TestUtils.O_USER.getName_());
+        onView(withId(R.id.services_recycler)).
+                perform(RecyclerViewActions.actionOnItem(hasDescendant(withText(TestUtils.O_USER.getName_())), click()));
         sleep(SLEEP_TIME);
         onView(withId(R.id.textView_profile_nameTag)).check(matches(withText(TestUtils.O_USER.getName_())));
         onView(withId(R.id.textView_profile_email)).check(matches(withText(TestUtils.O_USER.getEmail_())));
@@ -63,18 +66,20 @@ public class ProfileActivityTest extends FirebaseTest {
 
     @Test
     public void canAccessToChatButtonIfOtherProfile() {
-        /*sleep(SLEEP_TIME);
-        recyclerScrollToItemWithTextAndPerformClickItem(R.id.services_recycler, TestUtils.O_USER.getName_());
         sleep(SLEEP_TIME);
-        onView(withId(R.id.button_profile_toChat)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));*/
+        onView(withId(R.id.services_recycler)).
+                perform(RecyclerViewActions.actionOnItem(hasDescendant(withText(TestUtils.O_USER.getName_())), click()));
+        sleep(SLEEP_TIME);
+        onView(withId(R.id.button_profile_toChat)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
     }
 
     @Test
     public void cantAccessToChatButtonIfMyProfile() {
-        /*sleep(SLEEP_TIME);
-        recyclerScrollToItemWithTextAndPerformClickItem(R.id.services_recycler, TestUtils.M_USER.getName_());
         sleep(SLEEP_TIME);
-        onView(withId(R.id.button_profile_toChat)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.INVISIBLE)));*/
+        onView(withId(R.id.services_recycler)).
+                perform(RecyclerViewActions.actionOnItem(hasDescendant(withText(TestUtils.M_USER.getName_())), click()));
+        sleep(SLEEP_TIME);
+        onView(withId(R.id.button_profile_toChat)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.INVISIBLE)));
     }
 
 
