@@ -18,10 +18,13 @@ import static android.support.test.espresso.action.ViewActions.scrollTo;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.hasDescendant;
+import static android.support.test.espresso.matcher.ViewMatchers.isClickable;
+import static android.support.test.espresso.matcher.ViewMatchers.isEnabled;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static ch.epfl.swissteam.services.TestUtils.recyclerScrollToItemWithTextAndPerformClickItem;
 import static ch.epfl.swissteam.services.TestUtils.sleep;
+import static org.hamcrest.CoreMatchers.allOf;
 
 /**
  * Tests for ChatRoom
@@ -47,7 +50,7 @@ public class ChatRoomTest extends FirebaseTest{
         sleep(2000);
         recyclerScrollToItemWithTextAndPerformClickItem(R.id.services_recycler, TestUtils.O_USER.getName_());
         sleep(1000);
-        onView(withId(R.id.button_profile_toChat)).perform(click());
+        onView(withId(R.id.button_profile_toChat)).check(matches(allOf(isEnabled(), isClickable()))).perform(TestUtils.personalClick());
     }
 
     @Test

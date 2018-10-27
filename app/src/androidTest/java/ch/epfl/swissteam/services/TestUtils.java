@@ -1,8 +1,10 @@
 package ch.epfl.swissteam.services;
 
+import android.support.test.espresso.UiController;
 import android.support.test.espresso.ViewAction;
 import android.support.test.espresso.ViewInteraction;
 import android.support.test.espresso.contrib.RecyclerViewActions;
+import android.support.test.espresso.matcher.ViewMatchers;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -93,5 +95,23 @@ public class TestUtils {
         return recyclerScrollToItemWithTextAndPerformOnItem(recyclerViewId, text, click());
     }
 
+    protected static ViewAction personalClick(){
+        return new ViewAction() {
+            @Override
+            public Matcher<View> getConstraints() {
+                return ViewMatchers.isEnabled(); // no constraints, they are checked above
+            }
+
+            @Override
+            public String getDescription() {
+                return "click plus button";
+            }
+
+            @Override
+            public void perform(UiController uiController, View view) {
+                view.performClick();
+            }
+        };
+    }
 }
 
