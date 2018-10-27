@@ -75,6 +75,7 @@ public class PostActivity extends AppCompatActivity {
         postLocation.setLongitude(post_.getLongitude_());
         postLocation.setLatitude(post_.getLatitude_());
 
+        /*
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 ActivityCompat.requestPermissions(this,
@@ -95,5 +96,6 @@ public class PostActivity extends AppCompatActivity {
                         }
                     });
         }
+        */
     }
 }

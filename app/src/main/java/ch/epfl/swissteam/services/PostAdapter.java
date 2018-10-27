@@ -85,6 +85,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         postLocation.setLongitude(posts_.get(holder.getAdapterPosition()).getLongitude_());
         postLocation.setLatitude(posts_.get(holder.getAdapterPosition()).getLatitude_());
 
+        /*
         if (ActivityCompat.checkSelfPermission(holder.parentLayout_.getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(holder.parentLayout_.getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 ActivityCompat.requestPermissions((Activity)holder.parentLayout_.getContext(),
@@ -105,6 +106,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                         }
                     });
         }
+        */
 
         holder.parentLayout_.setOnClickListener((view) -> {
             Intent intent = new Intent(holder.itemView.getContext(), PostActivity.class);
