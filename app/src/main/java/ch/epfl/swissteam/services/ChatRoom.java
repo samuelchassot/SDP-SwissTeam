@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -88,9 +89,10 @@ public class ChatRoom extends Activity {
                 viewHolder.timeUserText_.setText(DateFormat.format("dd-mm-yyyy (hh:mm:ss)", message.getTime_()) +
                         message.getUser_());
                 viewHolder.parentLayout_.setOnLongClickListener(new View.OnLongClickListener(){
+                    private String ref_ = getRef(position).getKey();
                     @Override
                     public boolean onLongClick(View view) {
-                        askToDeleteMessage(message, getRef(position).getKey());
+                        askToDeleteMessage(message, ref_);
                         return true;
                     }
                 });
@@ -171,7 +173,7 @@ public class ChatRoom extends Activity {
     private static class MessageHolder extends RecyclerView.ViewHolder{
         protected TextView messageText_;
         protected TextView timeUserText_;
-        protected FrameLayout parentLayout_;
+        protected LinearLayout parentLayout_;
 
         public MessageHolder(View view) {
             super(view);
