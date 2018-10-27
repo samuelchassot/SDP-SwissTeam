@@ -71,6 +71,7 @@ public class PostActivity extends AppCompatActivity {
             Picasso.get().load(user_.getImageUrl_()).into(picture_);
         }));
 
+        /*
         Location postLocation = new Location("");
         postLocation.setLongitude(post_.getLongitude_());
         postLocation.setLatitude(post_.getLatitude_());
@@ -95,5 +96,6 @@ public class PostActivity extends AppCompatActivity {
                         }
                     });
         }
+        */
     }
 }
