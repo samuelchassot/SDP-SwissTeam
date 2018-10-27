@@ -84,7 +84,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
      * Refresh the feed of post shown on the main board
      */
     private void refresh(){
-        /*
         if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 ActivityCompat.requestPermissions(getActivity(),
@@ -122,19 +121,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                         ((MainActivity) getActivity()).showHomeFragment();
             });
         }
-        */
-        Location zeroLocation = new Location("");
-        zeroLocation.setLongitude(0);
-        zeroLocation.setLatitude(0);
-        DBUtility.get().getPostsFeed(new MyCallBack<ArrayList<Post>>() {
-            @Override
-            public void onCallBack(ArrayList<Post> value) {
-                posts_.clear();
-                posts_.addAll(value);
-                adapter_.notifyDataSetChanged();
-                swipeRefreshLayout_.setRefreshing(false);
-            }
-        }, zeroLocation);
     }
 
     @Override
