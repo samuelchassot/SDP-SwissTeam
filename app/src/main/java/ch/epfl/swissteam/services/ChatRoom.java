@@ -1,11 +1,12 @@
 package ch.epfl.swissteam.services;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.app.Activity;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -86,10 +87,11 @@ public class ChatRoom extends Activity {
                 viewHolder.messageText_.setText(message.getText_());
                 viewHolder.timeUserText_.setText(DateFormat.format("dd-mm-yyyy (hh:mm:ss)", message.getTime_()) +
                         message.getUser_());
-                viewHolder.parentLayout_.setOnClickListener(new View.OnClickListener() {
+                viewHolder.parentLayout_.setOnLongClickListener(new View.OnLongClickListener(){
                     @Override
-                    public void onClick(View view) {
-                        askToDeleteMessage
+                    public boolean onLongClick(View view) {
+                        askToDeleteMessage(message, getRef(position).getKey());
+                        return true;
                     }
                 });
             }
@@ -138,6 +140,26 @@ public class ChatRoom extends Activity {
                 displayMessages();
             }
         } );
+    }
+
+    private void askToDeleteMessage(ChatMessage message, String key){
+        AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+        alertDialog.setTitle(getResources().getString(R.string.chat_delete_alert_title));
+        alertDialog.setMessage(getResources().getString(R.string.chat_delete_alert_text));
+        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, getResources().getString(R.string.general_delete),
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        message.removeFromDB(DBUtility.get().getDb_(), key);
+                    }
+                });
+        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, getResources().getString(R.string.general_cancel),
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        alertDialog.show();
     }
 
     private void toastUser(String text){

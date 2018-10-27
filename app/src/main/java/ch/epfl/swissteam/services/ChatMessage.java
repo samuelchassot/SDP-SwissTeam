@@ -72,4 +72,8 @@ public class ChatMessage implements DBSavable{
     public void addToDB(DatabaseReference databaseReference) {
         databaseReference.child(DBUtility.CHATS).child(relationId_).push().setValue(this);
     }
+
+    public void removeFromDB(DatabaseReference databaseReference, String key){
+        databaseReference.child(DBUtility.CHATS).child(relationId_).child(key).removeValue();
+    }
 }
