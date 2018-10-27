@@ -5,7 +5,6 @@ import android.support.test.espresso.contrib.NavigationViewActions;
 import android.support.test.espresso.intent.Intents;
 import android.support.test.rule.ActivityTestRule;
 
-import org.junit.After;
 import org.junit.Rule;
 import org.junit.Test;
 

@@ -2,6 +2,7 @@ package ch.epfl.swissteam.services;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -69,9 +70,11 @@ public class CreatePostFragment extends Fragment implements View.OnClickListener
             String key = googleID + "_" + timestamp;
 
             if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                /*ActivityCompat.requestPermissions(getActivity(),
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    ActivityCompat.requestPermissions(getActivity(),
                         new String[]{Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION},
-                        1);*/
+                        1);
+                }
             }
             else {
                 LocationServices.getFusedLocationProviderClient(getActivity()).getLastLocation()
