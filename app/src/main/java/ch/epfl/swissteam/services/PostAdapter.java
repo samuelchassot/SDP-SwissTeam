@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.RecyclerView;
@@ -85,9 +86,15 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         postLocation.setLatitude(posts_.get(holder.getAdapterPosition()).getLatitude_());
 
         if (ActivityCompat.checkSelfPermission(holder.parentLayout_.getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(holder.parentLayout_.getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions((Activity)holder.parentLayout_.getContext(),
-                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION},
-                    1);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                ActivityCompat.requestPermissions((Activity)holder.parentLayout_.getContext(),
+                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION},
+                        1);
+            }
+            else {
+                float distance = 9999;
+                holder.distanceView_.setText(holder.parentLayout_.getContext().getResources().getString(R.string.homefragment_postdistance, distance));
+            }
         }
         else {
             LocationServices.getFusedLocationProviderClient((Activity)holder.parentLayout_.getContext()).getLastLocation()
