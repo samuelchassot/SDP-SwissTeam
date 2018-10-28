@@ -23,8 +23,6 @@ import java.util.List;
  */
 public class MyPostsFragment extends Fragment {
 
-    private Fragment createPostFragment_;
-
     private String clientUniqueID_;
     private RecyclerView.Adapter mAdapter_;
     private List<Post> mPosts_ = new ArrayList<>();
@@ -68,14 +66,14 @@ public class MyPostsFragment extends Fragment {
             mRecyclerView_.setAdapter(mAdapter_);
         }
 
-        FloatingActionButton addPost = getActivity().findViewById(R.id.floatingbutton_addpost);
-        /*addPost.setOnClickListener(new View.OnClickListener() {
+        //set the button to add new post
+        FloatingActionButton addPost = frag.findViewById(R.id.floatingbutton_addpost);
+        addPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //if (createPostFragment_ == null) createPostFragment_ = CreatePostFragment.newInstance();
-                //getFragmentManager().beginTransaction().replace(R.id.fragment_myposts, createPostFragment_).commit();
+                ((MainActivity) getActivity()).showCreatePostFragment();
             }
-        });*/
+        });
 
         return frag;
     }
