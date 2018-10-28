@@ -16,8 +16,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 
+import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.scrollTo;
 import static android.support.test.espresso.matcher.ViewMatchers.hasDescendant;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
@@ -86,8 +88,8 @@ public class TestUtils {
     }
 
     protected static void recyclerScrollToItemWithTextAndPerformOnItem(int recyclerViewId, String text, ViewAction perform){
-        onView(withId(recyclerViewId)).
-                perform(RecyclerViewActions.scrollTo(hasDescendant(withText(text))));
+        /*onView(withId(recyclerViewId)).
+                perform(RecyclerViewActions.scrollTo(hasDescendant(withText(text))));*/
         sleep(2000);
         onView(withId(recyclerViewId)).perform(RecyclerViewActions.actionOnItem(hasDescendant(withText(text)), perform));
     }
