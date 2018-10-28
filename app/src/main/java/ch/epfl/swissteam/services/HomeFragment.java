@@ -84,57 +84,29 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
      * Refresh the feed of post shown on the main board
      */
     private void refresh(){
-        /*
-        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                ActivityCompat.requestPermissions(getActivity(),
-                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION},
-                        1);
-            }
-            else{
-                Location zeroLocation = new Location("");
-                zeroLocation.setLongitude(0);
-                zeroLocation.setLatitude(0);
-                DBUtility.get().getPostsFeed(new MyCallBack<ArrayList<Post>>() {
-                    @Override
-                    public void onCallBack(ArrayList<Post> value) {
-                        posts_.clear();
-                        posts_.addAll(value);
-                        adapter_.notifyDataSetChanged();
-                        swipeRefreshLayout_.setRefreshing(false);
-                    }
-                }, zeroLocation);
-                ((MainActivity) getActivity()).showHomeFragment();
-            }
+        Location userLocation = LocationManager.get().getCurrentLocation_();
+        if(userLocation != null) {
+            DBUtility.get().getPostsFeed(new MyCallBack<ArrayList<Post>>() {
+                @Override
+                public void onCallBack(ArrayList<Post> value) {
+                    posts_.clear();
+                    posts_.addAll(value);
+                    adapter_.notifyDataSetChanged();
+                    swipeRefreshLayout_.setRefreshing(false);
+                }
+            }, userLocation);
         }
-        else {
-            LocationServices.getFusedLocationProviderClient(getActivity()).getLastLocation()
-                    .addOnSuccessListener(location -> {
-                        DBUtility.get().getPostsFeed(new MyCallBack<ArrayList<Post>>() {
-                            @Override
-                            public void onCallBack(ArrayList<Post> value) {
-                                posts_.clear();
-                                posts_.addAll(value);
-                                adapter_.notifyDataSetChanged();
-                                swipeRefreshLayout_.setRefreshing(false);
-                            }
-                        }, location);
-                        ((MainActivity) getActivity()).showHomeFragment();
-            });
+        else{
+            DBUtility.get().getPostsFeed(new MyCallBack<ArrayList<Post>>() {
+                @Override
+                public void onCallBack(ArrayList<Post> value) {
+                    posts_.clear();
+                    posts_.addAll(value);
+                    adapter_.notifyDataSetChanged();
+                    swipeRefreshLayout_.setRefreshing(false);
+                }
+            }, LocationManager.get().getZeroLocation());
         }
-        */
-        Location zeroLocation = new Location("");
-        zeroLocation.setLongitude(0);
-        zeroLocation.setLatitude(0);
-        DBUtility.get().getPostsFeed(new MyCallBack<ArrayList<Post>>() {
-            @Override
-            public void onCallBack(ArrayList<Post> value) {
-                posts_.clear();
-                posts_.addAll(value);
-                adapter_.notifyDataSetChanged();
-                swipeRefreshLayout_.setRefreshing(false);
-            }
-        }, zeroLocation);
         ((MainActivity) getActivity()).showHomeFragment();
     }
 

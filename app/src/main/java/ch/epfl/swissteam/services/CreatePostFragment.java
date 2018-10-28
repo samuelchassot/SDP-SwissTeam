@@ -70,34 +70,21 @@ public class CreatePostFragment extends Fragment implements View.OnClickListener
             long timestamp = (new Date()).getTime();
             String key = googleID + "_" + timestamp;
 
-            if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    ActivityCompat.requestPermissions(getActivity(),
-                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION},
-                        1);
-                }
-                else{
-                    Location zeroLocation = new Location("");
-                    zeroLocation.setLongitude(0);
-                    zeroLocation.setLatitude(0);
-                    DBUtility.get().getUser(googleID, user -> {
-                        Post post = new Post(key, title, googleID, body, timestamp, zeroLocation.getLongitude(), zeroLocation.getLatitude());
-                        post.addToDB(DBUtility.get().getDb_());
-                    });
-                    ((MainActivity) getActivity()).showHomeFragment();
-                }
-            }
-            else {
-                LocationServices.getFusedLocationProviderClient(getActivity()).getLastLocation()
-                        .addOnSuccessListener(location -> {
-                            DBUtility.get().getUser(googleID, user -> {
-                                Post post = new Post(key, title, googleID, body, timestamp, location.getLongitude(), location.getLatitude());
-                                post.addToDB(DBUtility.get().getDb_());
-                            });
-                        });
+            Location location = LocationManager.get().getCurrentLocation_();
 
-                ((MainActivity) getActivity()).showHomeFragment();
+            if(location != null) {
+                DBUtility.get().getUser(googleID, user -> {
+                    Post post = new Post(key, title, googleID, body, timestamp, location.getLongitude(), location.getLatitude());
+                    post.addToDB(DBUtility.get().getDb_());
+                });
             }
+            else{
+                DBUtility.get().getUser(googleID, user -> {
+                    Post post = new Post(key, title, googleID, body, timestamp, 0, 0);
+                    post.addToDB(DBUtility.get().getDb_());
+                });
+            }
+            ((MainActivity) getActivity()).showHomeFragment();
         }
     }
 }

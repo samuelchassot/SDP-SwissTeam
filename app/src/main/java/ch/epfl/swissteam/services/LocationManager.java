@@ -66,7 +66,25 @@ public class LocationManager {
         isMock = false;
     }
 
+    /**
+     * Returns the current location. This location can be null if the Manager is not initialized
+     * or the user turned off location services!
+     *
+     * @return current location
+     */
     public Location getCurrentLocation_(){
         return currentLocation_;
+    }
+
+    /**
+     * Returns a location at longitude 0 and latitude 0.
+     *
+     * @return 0',0' location
+     */
+    public Location getZeroLocation() {
+        Location zero = new Location("");
+        zero.setLongitude(0);
+        zero.setLatitude(0);
+        return zero;
     }
 }

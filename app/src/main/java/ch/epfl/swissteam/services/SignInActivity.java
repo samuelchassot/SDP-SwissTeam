@@ -65,6 +65,8 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         // the GoogleSignInAccount will be non-null.
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
 
+        LocationManager.get().initialize(this);
+
         if(account != null ){
             // Launch main
 

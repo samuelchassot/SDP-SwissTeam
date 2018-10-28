@@ -85,28 +85,15 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         postLocation.setLongitude(posts_.get(holder.getAdapterPosition()).getLongitude_());
         postLocation.setLatitude(posts_.get(holder.getAdapterPosition()).getLatitude_());
 
-        /*
-        if (ActivityCompat.checkSelfPermission(holder.parentLayout_.getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(holder.parentLayout_.getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                ActivityCompat.requestPermissions((Activity)holder.parentLayout_.getContext(),
-                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION},
-                        1);
-            }
-            else {
-                float distance = 9999;
-                holder.distanceView_.setText(holder.parentLayout_.getContext().getResources().getString(R.string.homefragment_postdistance, distance));
-            }
+        Location userLocation = LocationManager.get().getCurrentLocation_();
+
+        if(userLocation != null) {
+            float distance = postLocation.distanceTo(userLocation) / 1000;
+            holder.distanceView_.setText(holder.parentLayout_.getContext().getResources().getString(R.string.homefragment_postdistance, distance));
         }
-        else {
-            LocationServices.getFusedLocationProviderClient((Activity)holder.parentLayout_.getContext()).getLastLocation()
-                    .addOnSuccessListener(location -> {
-                        if(location != null ) {
-                            float distance = postLocation.distanceTo(location)/1000;
-                            holder.distanceView_.setText(holder.parentLayout_.getContext().getResources().getString(R.string.homefragment_postdistance, distance));
-                        }
-                    });
+        else{
+            holder.distanceView_.setText(holder.parentLayout_.getContext().getResources().getString(R.string.homefragment_postdistance, 9999));
         }
-        */
 
         holder.parentLayout_.setOnClickListener((view) -> {
             Intent intent = new Intent(holder.itemView.getContext(), PostActivity.class);

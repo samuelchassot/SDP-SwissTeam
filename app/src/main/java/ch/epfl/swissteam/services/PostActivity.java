@@ -75,27 +75,14 @@ public class PostActivity extends AppCompatActivity {
         postLocation.setLongitude(post_.getLongitude_());
         postLocation.setLatitude(post_.getLatitude_());
 
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                /*
-                ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION},
-                        1);
-                        */
-            }
-            else{
-                float distance = 9999;
-                ((TextView)findViewById(R.id.textview_postactivity_distance)).setText(this.getResources().getString(R.string.homefragment_postdistance, distance));
-            }
+        Location userLocation = LocationManager.get().getCurrentLocation_();
+
+        if(userLocation != null) {
+            float distance = postLocation.distanceTo(userLocation) / 1000;
+            ((TextView)findViewById(R.id.textview_postactivity_distance)).setText(this.getResources().getString(R.string.homefragment_postdistance, distance));
         }
         else {
-            LocationServices.getFusedLocationProviderClient(this).getLastLocation()
-                    .addOnSuccessListener(location -> {
-                        if(location != null ) {
-                            float distance = postLocation.distanceTo(location)/1000;
-                            ((TextView)findViewById(R.id.textview_postactivity_distance)).setText(this.getResources().getString(R.string.homefragment_postdistance, distance));
-                        }
-                    });
+            ((TextView)findViewById(R.id.textview_postactivity_distance)).setText(this.getResources().getString(R.string.homefragment_postdistance, 9999));
         }
     }
 }
