@@ -59,7 +59,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         (frag.findViewById(R.id.button_homefragment_refresh)).setOnClickListener(this);
 
         swipeRefreshLayout_ = frag.findViewById(R.id.swiperefresh_homefragment_refresh);
-        swipeRefreshLayout_.setOnRefreshListener(() -> refresh());
+        swipeRefreshLayout_.setOnRefreshListener(() -> {
+            LocationManager.get().refresh(getActivity());
+            refresh();
+        });
         swipeRefreshLayout_.setColorSchemeResources(R.color.colorAccent);
 
         //setup recyclerview for posts
@@ -84,7 +87,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
      * Refresh the feed of post shown on the main board
      */
     private void refresh(){
-        LocationManager.get().refresh(getActivity());
         Location userLocation = LocationManager.get().getCurrentLocation_();
         if(userLocation != null) {
             DBUtility.get().getPostsFeed(new MyCallBack<ArrayList<Post>>() {

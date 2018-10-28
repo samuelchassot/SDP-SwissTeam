@@ -15,7 +15,7 @@ import com.google.android.gms.location.LocationServices;
  */
 public class LocationManager {
 
-    private Location currentLocation_;
+    private Location currentLocation_; //TODO: Maybe make this observable and remove getter, replace by onChangeListener
     private boolean isMock = false;
     private static LocationManager instance;
 
@@ -38,7 +38,7 @@ public class LocationManager {
      * @param activity calling activity
      */
     public void refresh(Activity activity) {
-        if(!isMock) {
+        if(false/*!isMock*/) {
             if (ActivityCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(activity,
                         new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION},
