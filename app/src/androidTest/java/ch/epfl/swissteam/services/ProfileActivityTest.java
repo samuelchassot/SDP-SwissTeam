@@ -35,6 +35,7 @@ public class ProfileActivityTest extends FirebaseTest {
 
     @Override
     public void initialize() {
+        LocationManager.get().setMock();
         GoogleSignInSingleton.putUniqueID(TestUtils.M_GOOGLE_ID);
         TestUtils.O_USER.addToDB(FirebaseDatabase.getInstance().getReference());
         TestUtils.M_USER.addToDB(FirebaseDatabase.getInstance().getReference());
@@ -73,6 +74,7 @@ public class ProfileActivityTest extends FirebaseTest {
 
     @Override
     public void terminate(){
+        LocationManager.get().unsetMock();
         Intents.release();
     }
 }

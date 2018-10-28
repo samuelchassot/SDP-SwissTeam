@@ -37,6 +37,16 @@ public class CreatePostFragmentTest extends FirebaseTest{
     public final ActivityTestRule<MainActivity> mActivityRule =
             new ActivityTestRule<>(MainActivity.class);
 
+    @Override
+    public void initialize() {
+        LocationManager.get().setMock();
+    }
+
+    @Override
+    public void terminate() {
+        LocationManager.get().unsetMock();
+    }
+
     @Test
     public void canOpenCreatePostFragment() {
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());

@@ -60,6 +60,16 @@ public class NewProfileDetailsTest extends FirebaseTest{
     public final IntentsTestRule<NewProfileDetails> mActivityRule =
             new IntentsTestRule<>(NewProfileDetails.class);
 
+    @Override
+    public void initialize() {
+        LocationManager.get().setMock();
+    }
+
+    @Override
+    public void terminate() {
+        LocationManager.get().unsetMock();
+    }
+
     @Test
     public void testTypingName() {
         onView(withId(R.id.plaintext_newprofiledetails_name)).perform(typeText(username)).check(matches(withText(username)));

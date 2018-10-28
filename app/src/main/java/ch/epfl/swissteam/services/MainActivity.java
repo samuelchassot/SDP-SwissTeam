@@ -253,4 +253,9 @@ public class MainActivity extends AppCompatActivity
                     .replace(R.id.framelayout_main_fragmentcontainer, fragment).commit();
         }
     }
+
+    @Override
+    public void onUserInteraction() {
+        LocationManager.get().refresh(this);
+    }
 }

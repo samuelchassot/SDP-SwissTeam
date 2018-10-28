@@ -60,7 +60,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
 
         swipeRefreshLayout_ = frag.findViewById(R.id.swiperefresh_homefragment_refresh);
         swipeRefreshLayout_.setOnRefreshListener(() -> {
-            LocationManager.get().refresh(getActivity());
             refresh();
         });
         swipeRefreshLayout_.setColorSchemeResources(R.color.colorAccent);

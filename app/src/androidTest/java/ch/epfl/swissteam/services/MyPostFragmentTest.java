@@ -35,7 +35,13 @@ public class MyPostFragmentTest extends FirebaseTest{
             new ActivityTestRule<>(MainActivity.class);
 
     @Override
+    public void terminate() {
+        LocationManager.get().unsetMock();
+    }
+
+    @Override
     public void initialize(){
+        LocationManager.get().setMock();
         DBUtility.get().setUser(TestUtils.getATestUser());
         id = "1234";
         GoogleSignInSingleton.putUniqueID(id);
