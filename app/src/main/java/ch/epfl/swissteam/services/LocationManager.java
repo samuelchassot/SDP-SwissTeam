@@ -33,11 +33,11 @@ public class LocationManager {
     }
 
     /**
-     * Initialize the LocationManager, which will fetch the current location asynchronously.
+     * Refreshes the LocationManager, which will fetch the current location asynchronously.
      *
      * @param activity calling activity
      */
-    public void initialize(Activity activity) {
+    public void refresh(Activity activity) {
         if(!isMock) {
             if (ActivityCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(activity,

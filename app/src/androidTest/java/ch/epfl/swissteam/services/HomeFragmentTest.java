@@ -34,12 +34,18 @@ public class HomeFragmentTest extends FirebaseTest{
 
     @Override
     public void initialize() {
+        LocationManager.get().setMock();
         TestUtils.addTestPost();
         user = TestUtils.getATestUser();
         post = TestUtils.getTestPost();
         post.addToDB(DBUtility.get().getDb_());
         DBUtility.get().setUser(user);
         sleep(400);
+    }
+
+    @Override
+    public void terminate() {
+        LocationManager.get().unsetMock();
     }
         
     @Test

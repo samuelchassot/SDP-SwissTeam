@@ -84,6 +84,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
      * Refresh the feed of post shown on the main board
      */
     private void refresh(){
+        LocationManager.get().refresh(getActivity());
         Location userLocation = LocationManager.get().getCurrentLocation_();
         if(userLocation != null) {
             DBUtility.get().getPostsFeed(new MyCallBack<ArrayList<Post>>() {

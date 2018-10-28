@@ -79,7 +79,6 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
     //Starting the intent prompts the user to select a Google account to sign in with
     @Override
     public void onClick(View v) {
-        LocationManager.get().initialize(this);
         Intent signInIntent = mGoogleSignInClient_.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
