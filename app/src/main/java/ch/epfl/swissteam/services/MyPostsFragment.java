@@ -1,6 +1,7 @@
 package ch.epfl.swissteam.services;
 
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -21,6 +22,8 @@ import java.util.List;
  * @author Julie Giunta
  */
 public class MyPostsFragment extends Fragment {
+
+    private Fragment createPostFragment_;
 
     private String clientUniqueID_;
     private RecyclerView.Adapter mAdapter_;
@@ -64,6 +67,15 @@ public class MyPostsFragment extends Fragment {
             mAdapter_ = new MyPostAdapter(mPosts_);
             mRecyclerView_.setAdapter(mAdapter_);
         }
+
+        FloatingActionButton addPost = getActivity().findViewById(R.id.floatingbutton_addpost);
+        /*addPost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //if (createPostFragment_ == null) createPostFragment_ = CreatePostFragment.newInstance();
+                //getFragmentManager().beginTransaction().replace(R.id.fragment_myposts, createPostFragment_).commit();
+            }
+        });*/
 
         return frag;
     }

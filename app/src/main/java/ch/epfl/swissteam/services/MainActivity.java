@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private Fragment profileShowerFragment_;
-    private Fragment homeFragment_, servicesFragment_, createPostFragment_, settingsFragment_, onlineChatFragment_, myPostsFragment_;
+    private Fragment homeFragment_, servicesFragment_, settingsFragment_, onlineChatFragment_, myPostsFragment_;
     private NetworkStatusReceiver br;
 
     private DBUtility util = DBUtility.get();
@@ -185,14 +185,6 @@ public class MainActivity extends AppCompatActivity
     private void showServicesFragment(){
         if (this.servicesFragment_ == null) this.servicesFragment_ = ServicesFragment.newInstance();
         this.startTransactionFragment(this.servicesFragment_);
-    }
-
-    /**
-     * Shows the create post Fragment
-     */
-    private void showCreatePostFragment(){
-        if (this.createPostFragment_ == null) this.createPostFragment_ = CreatePostFragment.newInstance();
-        this.startTransactionFragment(this.createPostFragment_);
     }
 
     /**
