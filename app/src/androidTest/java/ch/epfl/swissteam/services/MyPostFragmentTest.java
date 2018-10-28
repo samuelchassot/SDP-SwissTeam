@@ -23,6 +23,7 @@ import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static ch.epfl.swissteam.services.TestUtils.sleep;
 
 @RunWith(AndroidJUnit4.class)
 public class MyPostFragmentTest extends FirebaseTest{
@@ -40,12 +41,7 @@ public class MyPostFragmentTest extends FirebaseTest{
         GoogleSignInSingleton.putUniqueID(id);
         post = new Post("1234_1539704399119", "Title", "1234", "Body", 1539704399119L);
         DBUtility.get().setPost(post);
-
-        try {
-            Thread.sleep(400);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        sleep(400);
     }
 
     @Test
@@ -58,13 +54,7 @@ public class MyPostFragmentTest extends FirebaseTest{
     public void canSwipeLeft(){
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_myposts));
-
-        try {
-            Thread.sleep(200);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
+        sleep(200);
         onView(withId(R.id.recyclerview_mypostsfragment)).perform(RecyclerViewActions.actionOnItemAtPosition(0,swipeLeft()));
 
     }
@@ -74,13 +64,7 @@ public class MyPostFragmentTest extends FirebaseTest{
 
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_myposts));
-
-        try {
-            Thread.sleep(200);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
+        sleep(200);
         onView(withId(R.id.recyclerview_mypostsfragment)).perform(RecyclerViewActions.actionOnItemAtPosition(0,swipeLeft()));
         onView(withId(R.id.recyclerview_mypostsfragment)).perform(RecyclerViewActions.actionOnItemAtPosition(0, clickChildViewWithId(R.id.button_mypostadapter_delete)));
     }
@@ -89,13 +73,7 @@ public class MyPostFragmentTest extends FirebaseTest{
     public void canEdit(){
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_myposts));
-
-        try {
-            Thread.sleep(200);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
+        sleep(200);
         onView(withId(R.id.recyclerview_mypostsfragment)).perform(RecyclerViewActions.actionOnItemAtPosition(0,swipeLeft()));
         onView(withId(R.id.recyclerview_mypostsfragment)).perform(RecyclerViewActions.actionOnItemAtPosition(0, clickChildViewWithId(R.id.button_mypostadapter_edit)));
 

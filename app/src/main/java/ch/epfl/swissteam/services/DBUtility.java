@@ -11,7 +11,6 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class DBUtility {
 
@@ -98,7 +97,7 @@ public class DBUtility {
 
 
         if (googleId == null) {
-            User nullUser = new User(null, null, null, null, null, null);
+            User nullUser = null;//new User(null, null, null, null, null, null);
             callBack.onCallBack(nullUser);
             return;
         }
