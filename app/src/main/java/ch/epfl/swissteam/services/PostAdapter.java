@@ -92,7 +92,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             holder.distanceView_.setText(holder.parentLayout_.getContext().getResources().getString(R.string.homefragment_postdistance, distance));
         }
         else{
-            holder.distanceView_.setText(holder.parentLayout_.getContext().getResources().getString(R.string.homefragment_postdistance, 9999));
+            holder.distanceView_.setText(holder.parentLayout_.getContext().getResources().getString(R.string.homefragment_postdistance, 9999f));
         }
 
         holder.parentLayout_.setOnClickListener((view) -> {

@@ -82,7 +82,7 @@ public class PostActivity extends AppCompatActivity {
             ((TextView)findViewById(R.id.textview_postactivity_distance)).setText(this.getResources().getString(R.string.homefragment_postdistance, distance));
         }
         else {
-            ((TextView)findViewById(R.id.textview_postactivity_distance)).setText(this.getResources().getString(R.string.homefragment_postdistance, 9999));
+            ((TextView)findViewById(R.id.textview_postactivity_distance)).setText(this.getResources().getString(R.string.homefragment_postdistance, 9999f));
         }
     }
 }
