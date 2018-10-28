@@ -137,9 +137,6 @@ public class MainActivity extends AppCompatActivity
             case (R.id.button_maindrawer_profile) :
                 showProfileShowerFragment();
                 break;
-            case (R.id.button_maindrawer_createpost) :
-                showCreatePostFragment();
-                break;
             case (R.id.button_maindrawer_myposts) :
                 showMyPostsFragment();
                 break;
