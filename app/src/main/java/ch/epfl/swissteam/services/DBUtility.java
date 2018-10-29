@@ -25,8 +25,7 @@ public class DBUtility {
     public final static String CHATS = "Chats";
     public final static String CHATS_RELATIONS = "ChatRelations";
     private final int POSTS_DISPLAY_NUMBER = 100;
-    private static DBUtility instance;
-  
+
     private DatabaseReference db_;
     private static DBUtility instance;
 
