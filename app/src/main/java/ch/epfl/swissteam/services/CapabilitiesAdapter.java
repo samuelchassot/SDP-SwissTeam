@@ -8,10 +8,18 @@ import android.widget.TextView;
 
 import java.util.List;
 
+/**
+ * TODO : Explain
+ */
 public class CapabilitiesAdapter extends RecyclerView.Adapter<CapabilitiesAdapter.CapabilitiesViewHolder> {
+
     private List<Categories> capabilities_;
 
-
+    /**
+     * TODO : Explain
+     *
+     * @param capabilities
+     */
     public CapabilitiesAdapter(List<Categories> capabilities) {
         capabilities_ = capabilities;
     }
@@ -36,10 +44,18 @@ public class CapabilitiesAdapter extends RecyclerView.Adapter<CapabilitiesAdapte
         return capabilities_ == null ? 0 : capabilities_.size();
     }
 
+    /**
+     * ViewHolder for Capabilities
+     */
     public static class CapabilitiesViewHolder extends RecyclerView.ViewHolder {
 
         public TextView mCapabilityName;
 
+        /**
+         * Create a CapabilitiesViewHolder
+         *
+         * @param v the current View
+         */
         public CapabilitiesViewHolder(View v) {
             super(v);
             mCapabilityName = (TextView) v.findViewById(R.id.textview_capabilitiesadapter_capabilityname);

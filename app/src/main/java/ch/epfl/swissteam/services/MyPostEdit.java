@@ -11,12 +11,12 @@ import android.widget.EditText;
  *
  * @author Julie Giunta
  */
-public class MyPostEdit extends AppCompatActivity{
+public class MyPostEdit extends AppCompatActivity {
     private Post post_;
     private EditText title_, body_;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState){
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_post_edit);
 
@@ -33,6 +33,7 @@ public class MyPostEdit extends AppCompatActivity{
     /**
      * Function called when the edit button is clicked.
      * Sets the modified post in the database and finish the activity.
+     *
      * @param view the current View
      */
     public void editPost(View view) {

@@ -28,7 +28,7 @@ public class PostActivity extends AppCompatActivity {
     private ImageView picture_;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState){
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
 
@@ -52,10 +52,10 @@ public class PostActivity extends AppCompatActivity {
         });
 
         //Set the different fields
-
         title_.setText(post_.getTitle_());
         body_.setText(post_.getBody_());
         date_.setText((new SimpleDateFormat("dd/MM/yyyy", Locale.FRENCH)).format(new Date(post_.getTimestamp_()).getTime()));
+
         //Retrieve the user
         DBUtility.get().getUser(post_.getGoogleId_(), (user -> {
             user_ = user;

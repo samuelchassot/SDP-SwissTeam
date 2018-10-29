@@ -19,7 +19,7 @@ import java.util.List;
  *
  * @author Julie Giunta
  */
-public class HomeFragment extends Fragment implements View.OnClickListener{
+public class HomeFragment extends Fragment implements View.OnClickListener {
 
     private SwipeRefreshLayout swipeRefreshLayout_;
     private RecyclerView.Adapter adapter_;
@@ -31,6 +31,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
 
     /**
      * Creates a new <code>HomeFragment</code>.
+     *
      * @return new instance of <code>HomeFragment</code>
      */
     public static HomeFragment newInstance() {
@@ -76,7 +77,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
     /**
      * Refresh the feed of post shown on the main board
      */
-    private void refresh(){
+    private void refresh() {
         DBUtility.get().getPostsFeed(value -> {
             posts_.clear();
             posts_.addAll(value);

@@ -116,7 +116,7 @@ public class ChatMessage implements DBSavable {
     }
 
     /**
-     * Set the ID of the user who receives the message
+     * Set the ID of the relation of the chat
      *
      * @param relationId the Id of the user
      */

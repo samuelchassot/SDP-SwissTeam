@@ -15,7 +15,6 @@ import java.util.ArrayList;
  * @author Sébastien Gachoud
  * @author Adrian Baudat
  */
-
 public class NewProfileCapabilities extends AppCompatActivity {
 
     private ArrayList<Categories> capabilitiesList_ = new ArrayList<>();
@@ -75,7 +74,7 @@ public class NewProfileCapabilities extends AppCompatActivity {
      * @param capability capability to remove.
      */
     public void removeCapability(Categories capability) {
-        if(capabilitiesList_.contains(capability)){
+        if (capabilitiesList_.contains(capability)) {
             capabilitiesList_.remove(capability);
         }
     }

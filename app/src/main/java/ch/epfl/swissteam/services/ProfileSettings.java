@@ -1,10 +1,9 @@
 package ch.epfl.swissteam.services;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -32,31 +31,25 @@ public class ProfileSettings extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_settings);
 
-        Button saveButton = (Button)findViewById(R.id.button_profilesettings_save);
+        Button saveButton = (Button) findViewById(R.id.button_profilesettings_save);
 
-        saveButton.setOnClickListener(new View.OnClickListener()
-        {
+        saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 save();
 
             }
         });
 
-        Button cancelButton = (Button)findViewById(R.id.button_profilesettings_cancel);
+        Button cancelButton = (Button) findViewById(R.id.button_profilesettings_cancel);
 
-        cancelButton.setOnClickListener(new View.OnClickListener()
-        {
+        cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 cancel();
 
             }
         });
-
-
 
         String uniqueID = GoogleSignInSingleton.get().getClientUniqueID();
         loadAndShowUser(uniqueID);
@@ -71,11 +64,10 @@ public class ProfileSettings extends AppCompatActivity {
 
     }
 
-
     /**
      * Save the modification done by the user
      */
-    private void save(){
+    private void save() {
         String name = ((TextView) findViewById(R.id.edittext_profilesettings_name)).getText().toString();
         String uniqueID = GoogleSignInSingleton.get().getClientUniqueID();
         String email = ((TextView) findViewById(R.id.textview_profilesettings_email)).getText().toString();
@@ -86,45 +78,48 @@ public class ProfileSettings extends AppCompatActivity {
         finish();
     }
 
-    private void cancel(){
+    private void cancel() {
         this.finish();
     }
 
-    public void updateUserCapabilities(Categories cat, boolean checked){
-        if(checked){
+    /**
+     * TODO : Explain
+     *
+     * @param cat
+     * @param checked
+     */
+    public void updateUserCapabilities(Categories cat, boolean checked) {
+        if (checked) {
             //add category to the user's list
-            if(! userCapabilities_.contains(cat)){
+            if (!userCapabilities_.contains(cat)) {
                 userCapabilities_.add(cat);
             }
-        }
-        else{
+        } else {
             //remove it from user's list
-            if(userCapabilities_.contains(cat)){
+            if (userCapabilities_.contains(cat)) {
                 userCapabilities_.remove(cat);
             }
         }
     }
 
 
-    private void loadAndShowUser(String clientUniqueID){
-        DBUtility.get().getUser(clientUniqueID, (user)->{
+    private void loadAndShowUser(String clientUniqueID) {
+        DBUtility.get().getUser(clientUniqueID, (user) -> {
             TextView nameView = (TextView) findViewById(R.id.edittext_profilesettings_name);
             nameView.setText(user.getName_());
 
-            TextView emailView =  (TextView) findViewById(R.id.textview_profilesettings_email);
+            TextView emailView = (TextView) findViewById(R.id.textview_profilesettings_email);
             emailView.setText(user.getEmail_());
 
-            TextView descrView =  (TextView) findViewById(R.id.edittext_profilesettings_description);
+            TextView descrView = (TextView) findViewById(R.id.edittext_profilesettings_description);
             descrView.setText(user.getDescription_());
 
-            Picasso.get().load(user.getImageUrl_()).into((ImageView)findViewById(R.id.imageview_profilesettings_picture));
+            Picasso.get().load(user.getImageUrl_()).into((ImageView) findViewById(R.id.imageview_profilesettings_picture));
             imageUrl_ = user.getImageUrl_();
             userCapabilities_.clear();
             userCapabilities_.addAll(user.getCategories_());
-            
+
             recycler.setAdapter(new CategoriesAdapterProfileSettings(Categories.values(), userCapabilities_));
-
-
 
         });
     }

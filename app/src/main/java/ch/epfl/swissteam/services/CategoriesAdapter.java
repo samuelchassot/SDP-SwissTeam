@@ -17,6 +17,11 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Ca
 
     private Categories[] capabilities_;
 
+    /**
+     * TODO : Explain
+     *
+     * @param capabilities
+     */
     public CategoriesAdapter(Categories[] capabilities) {
         this.capabilities_ = capabilities;
     }
@@ -52,7 +57,9 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Ca
         });
     }
 
-
+    /**
+     * TODO : Explain
+     */
     public static class CategoriesViewHolder extends RecyclerView.ViewHolder {
 
         public TextView nameView;
