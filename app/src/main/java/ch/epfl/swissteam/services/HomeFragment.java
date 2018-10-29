@@ -73,7 +73,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
             mRecyclerView_.setAdapter(adapter_);
         }
 
-        refresh();
+        //refresh();
         return frag;
     }
 

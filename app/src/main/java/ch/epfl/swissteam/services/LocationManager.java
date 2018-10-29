@@ -15,6 +15,9 @@ import com.google.android.gms.location.LocationServices;
  */
 public class LocationManager {
 
+    public final static float MAX_POST_DISTANCE = 10000000; //in meters
+    public final static int M_IN_ONE_KM = 1000;
+
     private Location currentLocation_; //TODO: Maybe make this observable and remove getter, replace by onChangeListener
     private boolean isMock = false;
     private static LocationManager instance;

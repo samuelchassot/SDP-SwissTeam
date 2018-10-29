@@ -88,11 +88,11 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         Location userLocation = LocationManager.get().getCurrentLocation_();
 
         if(userLocation != null) {
-            float distance = postLocation.distanceTo(userLocation) / 1000;
+            float distance = postLocation.distanceTo(userLocation) / LocationManager.M_IN_ONE_KM;
             holder.distanceView_.setText(holder.parentLayout_.getContext().getResources().getString(R.string.homefragment_postdistance, distance));
         }
         else{
-            holder.distanceView_.setText(holder.parentLayout_.getContext().getResources().getString(R.string.homefragment_postdistance, 9999f));
+            holder.distanceView_.setText(holder.parentLayout_.getContext().getResources().getString(R.string.homefragment_postdistance, LocationManager.MAX_POST_DISTANCE / LocationManager.M_IN_ONE_KM));
         }
 
         holder.parentLayout_.setOnClickListener((view) -> {

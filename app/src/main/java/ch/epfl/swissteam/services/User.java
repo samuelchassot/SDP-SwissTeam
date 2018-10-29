@@ -14,8 +14,6 @@ import java.util.List;
  */
 public class User implements DBSavable{
 
-    public final static float MAX_POST_DISTANCE = 99999999; //in meters
-
     private String googleId_, email_, name_, description_, imageUrl_;
     private int rating_;
 

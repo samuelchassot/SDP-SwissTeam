@@ -27,7 +27,7 @@ public class DBUtility {
     public final static String ERROR_TAG = "DBUtility";
     public final static String CHATS = "Chats";
     public final static String CHATS_RELATIONS = "ChatRelations";
-    private final int POSTS_DISPLAY_NUMBER = 20;
+    private final int POSTS_DISPLAY_NUMBER = 100;
 
 
     private DBUtility(DatabaseReference db){
@@ -175,7 +175,7 @@ public class DBUtility {
      * @param userLocation the location of the user
      */
     public void getPostsFeed(final MyCallBack<ArrayList<Post>> callBack, Location userLocation) {
-        Query freshestPosts = db_.child(POSTS).orderByChild("timestamp_");
+        Query freshestPosts = db_.child(POSTS).orderByChild("timestamp_").limitToFirst(POSTS_DISPLAY_NUMBER);
         freshestPosts.addListenerForSingleValueEvent(new ValueEventListener() {
             ArrayList<Post> posts = new ArrayList<>();
 
@@ -188,7 +188,7 @@ public class DBUtility {
                     Location postLocation = new Location("");
                     postLocation.setLongitude(post.getLongitude_());
                     postLocation.setLatitude(post.getLatitude_());
-                    if(postLocation.distanceTo(userLocation) <= User.MAX_POST_DISTANCE){
+                    if(postLocation.distanceTo(userLocation) <= LocationManager.MAX_POST_DISTANCE){
                         posts.add(0, post);
                     }
                 }

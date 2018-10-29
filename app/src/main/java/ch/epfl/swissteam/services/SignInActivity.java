@@ -120,4 +120,9 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
             recreate();
         }
     }
+
+    @Override
+    public void onUserInteraction() {
+        LocationManager.get().refresh(this);
+    }
 }

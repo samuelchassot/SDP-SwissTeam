@@ -29,6 +29,16 @@ public class SignInActivityTest {
     public final IntentsTestRule<SignInActivity> signInActivityRule_ =
             new IntentsTestRule<>(SignInActivity.class);
 
+    @Before
+    public void initialize() {
+        LocationManager.get().setMock();
+    }
+
+    @After
+    public void terminate() {
+        LocationManager.get().unsetMock();
+    }
+
     @Test
     public void connectWithNonexistentAccount() {
         /*if(GoogleSignIn.getLastSignedInAccount(signInActivityRule_.getActivity()) != null) {
