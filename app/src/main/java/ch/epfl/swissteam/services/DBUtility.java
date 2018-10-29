@@ -17,8 +17,6 @@ public class DBUtility {
 
     private DatabaseReference db_;
     private static DBUtility instance;
-    private User currentUser_;
-
 
 
     public final static String USERS = "Users";
@@ -29,9 +27,8 @@ public class DBUtility {
     public final static String CHATS_RELATIONS = "ChatRelations";
     private final int POSTS_DISPLAY_NUMBER = 100;
 
-
+    
     private DBUtility(DatabaseReference db){
-        currentUser_ = null;
         this.db_ = db;
     }
 
@@ -114,32 +111,6 @@ public class DBUtility {
             }
         });
 
-    }
-
-    /**
-     *
-     * @return the current logged user which is null if the db has not yet provided the user
-     */
-    public User getCurrentUser_(){
-        String googleId = GoogleSignInSingleton.get().getClientUniqueID();
-        if(currentUser_ == null || currentUser_.getGoogleId_().compareTo(googleId) != 0) {
-            currentUser_ = null;
-            try{
-                getUser(googleId, new MyCallBack<User>() {
-                    @Override
-                    public void onCallBack(User value) {
-                        if(value != null){
-                            currentUser_ = value;
-                        }
-                    }
-                });
-            }
-            catch (NullPointerException e){
-                currentUser_ = null;
-            }
-
-        }
-        return currentUser_;
     }
 
     /**
