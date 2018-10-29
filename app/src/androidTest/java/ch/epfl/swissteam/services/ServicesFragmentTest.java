@@ -5,6 +5,8 @@ import android.support.test.espresso.contrib.NavigationViewActions;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,6 +29,16 @@ public class ServicesFragmentTest {
     @Rule
     public final ActivityTestRule<MainActivity> mainActivityRule_ =
             new ActivityTestRule<>(MainActivity.class);
+
+    @Before
+    public void initialize() {
+        LocationManager.get().setMock();
+    }
+
+    @After
+    public void terminate() {
+        LocationManager.get().unsetMock();
+    }
 
     @Test
     public void openFragment() {

@@ -29,6 +29,11 @@ public class ProfileDisplayFragmentTest extends FirebaseTest {
     public final ActivityTestRule<MainActivity> mainActivityRule_ =
             new ActivityTestRule<>(MainActivity.class);
 
+    @Override
+    public void terminate() {
+        LocationManager.get().unsetMock();
+    }
+
     @Test
     public void openFragmentAndChangeName() {
         User testUser = TestUtils.getTestUser();
@@ -76,6 +81,8 @@ public class ProfileDisplayFragmentTest extends FirebaseTest {
     @Override
     public void initialize() {
         super.initialize();
+        LocationManager.get().setMock();
+        User testUser = TestUtils.getATestUser();
         User testUser = TestUtils.getTestUser();
         testUser.addToDB(DBUtility.get().getDb_());
         GoogleSignInSingleton.putUniqueID(testUser.getGoogleId_());

@@ -20,6 +20,8 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.squareup.picasso.Picasso;
 
 /**
@@ -236,5 +238,10 @@ public class MainActivity extends AppCompatActivity
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.framelayout_main_fragmentcontainer, fragment).commit();
         }
+    }
+
+    @Override
+    public void onUserInteraction() {
+        LocationManager.get().refresh(this);
     }
 }

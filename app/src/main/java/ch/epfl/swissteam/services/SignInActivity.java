@@ -1,7 +1,11 @@
 package ch.epfl.swissteam.services;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -123,5 +127,10 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
             Log.w(ERROR_TAG, ERROR_MSG + e.getStatusCode());
             recreate();
         }
+    }
+
+    @Override
+    public void onUserInteraction() {
+        LocationManager.get().refresh(this);
     }
 }
