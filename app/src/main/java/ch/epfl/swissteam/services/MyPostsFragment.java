@@ -1,6 +1,7 @@
 package ch.epfl.swissteam.services;
 
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -64,6 +65,15 @@ public class MyPostsFragment extends Fragment {
             mAdapter_ = new MyPostAdapter(mPosts_);
             mRecyclerView_.setAdapter(mAdapter_);
         }
+
+        //set the button to add new post
+        FloatingActionButton addPost = frag.findViewById(R.id.floatingbutton_addpost);
+        addPost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((MainActivity) getActivity()).showCreatePostFragment();
+            }
+        });
 
         return frag;
     }

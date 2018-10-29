@@ -27,6 +27,7 @@
     <string name="profiledisplay_emailtag">EMail</string>
     <string name="profiledisplay_surnametag">Surname</string>
     <string name="profiledisplay_nametag">Name</string>
+    <string name="profiledisplay_ratingtag">Rating</string>
     <string name="profilesettings_save">Save</string>
     <string name="profiledisplay_descriptiontag">Description</string>
     <string name="profiledisplay_modify">Modify</string>

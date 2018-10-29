@@ -51,6 +51,9 @@ public class User implements DBSavable{
     /**
      * Create a new user given its specificities
 
+    /**
+     * Create a new user given its specificities
+
      * @param googleID_ User's unique googleId
      * @param name_ User's name
      * @param email_ User's email
@@ -67,7 +70,6 @@ public class User implements DBSavable{
         this.rating_ = rating_;
         this.categories_ = categories_ == null ? new ArrayList<Categories>() : (ArrayList<Categories>) categories_.clone();
     }
-
 
 
 
