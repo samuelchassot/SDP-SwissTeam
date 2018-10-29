@@ -5,7 +5,6 @@ import android.support.test.espresso.contrib.NavigationViewActions;
 import android.support.test.espresso.intent.Intents;
 import android.support.test.rule.ActivityTestRule;
 
-import org.junit.After;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -39,6 +38,7 @@ public class OnlineChatFragmentTest extends FirebaseTest {
 
     @Override
     public void initialize(){
+        LocationManager.get().setMock();
         GoogleSignInSingleton.putUniqueID(mGoogleId);
         chatRelation.addToDB(DBUtility.get().getDb_());
         mUser.addChatRelation(chatRelation, DBUtility.get().getDb_());
@@ -61,10 +61,10 @@ public class OnlineChatFragmentTest extends FirebaseTest {
     }
 
     @Override
-    public void terminate(){
+    public void terminate() {
         Intents.release();
+        LocationManager.get().unsetMock();
     }
-
     /* Examples
         - onView(nthChildOf(withId(R.id.recycleview), 0).check(matches(hasDescendant(withText("Some text"))))
         - onView(withId(R.id.recycleview)).check(matches(hasDescendant(withText("Some text"))))
