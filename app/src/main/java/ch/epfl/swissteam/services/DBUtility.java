@@ -28,10 +28,9 @@ public class DBUtility {
     private static DBUtility instance;
   
     private DatabaseReference db_;
-    private User currentUser_;
+    private static DBUtility instance;
 
-    private DBUtility(DatabaseReference db) {
-        currentUser_ = null;
+    private DBUtility(DatabaseReference db){
         this.db_ = db;
     }
 
@@ -114,32 +113,6 @@ public class DBUtility {
             }
         });
 
-    }
-
-    /**
-     * Gives the current logged user
-     *
-     * @return the current logged user which is null if the db has not yet provided the user
-     */
-    public User getCurrentUser_() {
-        String googleId = GoogleSignInSingleton.get().getClientUniqueID();
-        if (currentUser_ == null || currentUser_.getGoogleId_().compareTo(googleId) != 0) {
-            currentUser_ = null;
-            try {
-                getUser(googleId, new MyCallBack<User>() {
-                    @Override
-                    public void onCallBack(User value) {
-                        if (value != null) {
-                            currentUser_ = value;
-                        }
-                    }
-                });
-            } catch (NullPointerException e) {
-                currentUser_ = null;
-            }
-
-        }
-        return currentUser_;
     }
 
     /**
