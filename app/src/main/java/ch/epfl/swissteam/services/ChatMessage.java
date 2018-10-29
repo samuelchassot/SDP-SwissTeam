@@ -21,7 +21,7 @@ public class ChatMessage implements DBSavable {
      * @param text       text of the message
      * @param user       name of the user who sent the message
      * @param userId     the id of the user
-     * @param relationId the id of the receiver of the message
+     * @param relationId the id of the relation of the chat
      */
     public ChatMessage(String text, String user, String userId, String relationId) {
         text_ = text;
@@ -107,7 +107,7 @@ public class ChatMessage implements DBSavable {
     }
 
     /**
-     * Gives the ID of the user who receives the message
+     * Gives the ID of the relation of the chat
      *
      * @return the ID of the user
      */
