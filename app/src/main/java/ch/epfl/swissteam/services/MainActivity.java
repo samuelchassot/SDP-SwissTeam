@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private Fragment profileShowerFragment_;
-    private Fragment homeFragment_, servicesFragment_, createPostFragment_, settingsFragment_, onlineChatFragment_, myPostsFragment_;
+    private Fragment homeFragment_, createPostFragment_, servicesFragment_, settingsFragment_, onlineChatFragment_, myPostsFragment_;
     private NetworkStatusReceiver br;
 
     private DBUtility util = DBUtility.get();
@@ -43,17 +43,6 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        /*
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-        */
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -137,9 +126,6 @@ public class MainActivity extends AppCompatActivity
             case (R.id.button_maindrawer_profile) :
                 showProfileShowerFragment();
                 break;
-            case (R.id.button_maindrawer_createpost) :
-                showCreatePostFragment();
-                break;
             case (R.id.button_maindrawer_myposts) :
                 showMyPostsFragment();
                 break;
@@ -165,10 +151,11 @@ public class MainActivity extends AppCompatActivity
      */
     private void setNavUserName() {
         util.getUser(GoogleSignInSingleton.get().getClientUniqueID(), user -> {
-            if(user != null){
-            ((TextView) findViewById(R.id.nav_header_name)).setText(user.getName_());
-            ((TextView) findViewById(R.id.nav_header_email)).setText(user.getEmail_());}
-            Picasso.get().load(user.getImageUrl_()).into((ImageView)findViewById(R.id.nav_header_profileimage));
+            if(user != null) {
+                ((TextView) findViewById(R.id.nav_header_name)).setText(user.getName_());
+                ((TextView) findViewById(R.id.nav_header_email)).setText(user.getEmail_());
+                Picasso.get().load(user.getImageUrl_()).into((ImageView) findViewById(R.id.nav_header_profileimage));
+            }
         });
     }
 
@@ -190,19 +177,19 @@ public class MainActivity extends AppCompatActivity
     }
 
     /**
-     * Shows the create post Fragment
-     */
-    private void showCreatePostFragment(){
-        if (this.createPostFragment_ == null) this.createPostFragment_ = CreatePostFragment.newInstance();
-        this.startTransactionFragment(this.createPostFragment_);
-    }
-
-    /**
      * Shows the my posts Fragment, where the user can edit and delete his posts
      */
     private void showMyPostsFragment(){
         if (this.myPostsFragment_ == null) this.myPostsFragment_ = MyPostsFragment.newInstance();
         this.startTransactionFragment(this.myPostsFragment_);
+    }
+
+    /**
+     * Shows the create post Fragment, where the user can create or edit a post
+     */
+    public void showCreatePostFragment(){
+        if (this.createPostFragment_ == null) this.createPostFragment_ = CreatePostFragment.newInstance();
+        this.startTransactionFragment(this.createPostFragment_);
     }
 
     /**

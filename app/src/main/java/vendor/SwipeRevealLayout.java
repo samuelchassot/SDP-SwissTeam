@@ -1,4 +1,4 @@
-package ch.epfl.swissteam.services;
+package vendor;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -503,11 +503,11 @@ public class SwipeRevealLayout extends ViewGroup {
         if (attrs != null && context != null) {
             TypedArray a = context.getTheme().obtainStyledAttributes(
                     attrs,
-                    R.styleable.SwipeRevealLayout,
+                    ch.epfl.swissteam.services.R.styleable.SwipeRevealLayout,
                     0, 0
             );
 
-            mDragEdge = a.getInteger(R.styleable.SwipeRevealLayout_dragFromEdge, DRAG_EDGE_LEFT);
+            mDragEdge = a.getInteger(ch.epfl.swissteam.services.R.styleable.SwipeRevealLayout_dragFromEdge, DRAG_EDGE_LEFT);
             mMode = MODE_NORMAL;
             mMinFlingVelocity = DEFAULT_MIN_FLING_VELOCITY;
             mMinDistRequestDisallowParent = DEFAULT_MIN_DIST_REQUEST_DISALLOW_PARENT;

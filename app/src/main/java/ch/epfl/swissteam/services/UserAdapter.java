@@ -30,7 +30,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
         public TextView bodyView_;
         public TextView ratingView_;
         public ImageView imageView_;
-        public View parentLayout;
+        private View parentLayout;
 
         public UserViewHolder(View v) {
             super(v);

@@ -50,10 +50,6 @@
         android:icon="@android:drawable/ic_menu_search"
         android:title="@string/navigation_drawer_button_services" />
     <item
-        android:id="@+id/button_maindrawer_createpost"
-        android:icon="@android:drawable/ic_menu_add"
-        android:title="@string/navigation_drawer_newpost" />
-    <item
         android:id="@+id/button_maindrawer_myposts"
         android:icon="@drawable/ic_maindrawer_myposts"
         android:title="@string/navigation_drawer_myposts" />
@@ -64,6 +60,7 @@
 
     <item
         android:id="@+id/button_maindrawer_chats"
+        android:icon="@drawable/ic_maindrawer_chat"
         android:title="@string/navigation_drawer_button_chats" />
 
     <item
