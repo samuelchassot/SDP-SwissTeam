@@ -10,6 +10,8 @@ import android.support.test.runner.AndroidJUnit4;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,6 +28,16 @@ public class SignInActivityTest {
     @Rule
     public final IntentsTestRule<SignInActivity> signInActivityRule_ =
             new IntentsTestRule<>(SignInActivity.class);
+
+    @Before
+    public void initialize() {
+        LocationManager.get().setMock();
+    }
+
+    @After
+    public void terminate() {
+        LocationManager.get().unsetMock();
+    }
 
     @Test
     public void connectWithNonexistentAccount() {
