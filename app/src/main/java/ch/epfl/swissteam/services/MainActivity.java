@@ -78,9 +78,6 @@ public class MainActivity extends NavigationDrawer {
             case (R.id.button_maindrawer_profile) :
                 showProfileShowerFragment();
                 break;
-            case (R.id.button_maindrawer_createpost) :
-                showCreatePostFragment();
-                break;
             case (R.id.button_maindrawer_myposts) :
                 showMyPostsFragment();
                 break;
@@ -129,19 +126,19 @@ public class MainActivity extends NavigationDrawer {
     }
 
     /**
-     * Shows the create post Fragment
-     */
-    private void showCreatePostFragment(){
-        if (this.createPostFragment_ == null) this.createPostFragment_ = CreatePostFragment.newInstance();
-        this.startTransactionFragment(this.createPostFragment_);
-    }
-
-    /**
      * Shows the my posts Fragment, where the user can edit and delete his posts
      */
     private void showMyPostsFragment(){
         if (this.myPostsFragment_ == null) this.myPostsFragment_ = MyPostsFragment.newInstance();
         this.startTransactionFragment(this.myPostsFragment_);
+    }
+
+    /**
+     * Shows the create post Fragment, where the user can create or edit a post
+     */
+    public void showCreatePostFragment(){
+        if (this.createPostFragment_ == null) this.createPostFragment_ = CreatePostFragment.newInstance();
+        this.startTransactionFragment(this.createPostFragment_);
     }
 
     /**

@@ -1,20 +1,26 @@
 package ch.epfl.swissteam.services;
 
-import android.annotation.TargetApi;
 
 import com.google.firebase.database.DatabaseReference;
 
-import java.util.Objects;
-
+/**
+ * Class to represent chatRelation between users.
+ *
+ * @author Sébastien Gachoud
+ */
 public class ChatRelation implements DBSavable {
 
     public static final String RELATION_ID_TEXT = "relationId";
 
+
+    //Attributes
+    private String firstUserId_;
+    private String secondUserId_;
+    private String id_;
+
     public ChatRelation(User firstUser, User secondUser ){
-
+        this();
         setUsers(firstUser, secondUser);
-
-        id_ = null;
     }
 
     public ChatRelation(){
@@ -86,10 +92,22 @@ public class ChatRelation implements DBSavable {
         }
     }
 
-    //Attributes
-    private String firstUserId_;
-    private String secondUserId_;
-    private String id_;
+    public String getOtherId(String currentUserId){
+        if(!isInThisRelation(currentUserId)) {
+            throw new IllegalArgumentException("The current user does not belong to this ChatRelation");
+        }
+        if(firstUserId_.compareTo(currentUserId) == 0){
+            return secondUserId_;
+        }
+        else{
+            return firstUserId_;
+        }
+    }
+
+    private Boolean isInThisRelation(String id){
+        return firstUserId_.compareTo(id) == 0 || secondUserId_.compareTo(id) == 0;
+    }
+
 
     //Overrides
     @Override

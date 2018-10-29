@@ -1,7 +1,10 @@
 package ch.epfl.swissteam.services;
 
-import android.support.v7.app.AppCompatActivity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -11,12 +14,26 @@ import static ch.epfl.swissteam.services.NewProfileDetails.GOOGLE_ID_TAG;
 
 public class ProfileActivity extends AppCompatActivity {
 
+    private Button chatButton_;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
         String clientUID = getIntent().getStringExtra(GOOGLE_ID_TAG);
+
+        chatButton_ = findViewById(R.id.button_profile_toChat);
+        if (clientUID.equals(GoogleSignInSingleton.get().getClientUniqueID())) {
+            chatButton_.setVisibility(View.INVISIBLE);
+        }
+
+        chatButton_.setOnClickListener(v -> {
+            Intent intent = new Intent(this, ChatRoom.class);
+            intent.putExtra(GOOGLE_ID_TAG, clientUID);
+            this.startActivity(intent);
+        });
+
         loadAndShowUser(clientUID);
     }
 

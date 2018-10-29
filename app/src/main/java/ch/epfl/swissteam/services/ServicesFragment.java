@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
@@ -44,7 +45,8 @@ public class ServicesFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
+        toolbar.setTitle(R.string.toolbar_services);
     }
 
     @Override
@@ -93,10 +95,11 @@ public class ServicesFragment extends Fragment {
             DBUtility.get().getUsersFromCategory(category, (googleIds) -> {
                 users.clear();
                 services_problem_text_udpate(view, googleIds.isEmpty());
+                mAdapter.notifyDataSetChanged();
 
                     for (String googleId : googleIds) {
                         DBUtility.get().getUser(googleId, user -> {
-                            if (!users.contains(user)) {
+                            if (user != null && !users.contains(user)) {
                                 users.add(user);
                                 mAdapter.notifyDataSetChanged();
                             }

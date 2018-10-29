@@ -5,28 +5,22 @@ import android.support.test.espresso.contrib.NavigationViewActions;
 import android.support.test.espresso.contrib.RecyclerViewActions;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
-import android.widget.ListView;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.swipeDown;
-import static android.support.test.espresso.action.ViewActions.swipeLeft;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
-import static org.junit.Assert.assertThat;
-import static org.hamcrest.CoreMatchers.is;
+import static ch.epfl.swissteam.services.TestUtils.sleep;
 
 @RunWith(AndroidJUnit4.class)
 public class HomeFragmentTest extends FirebaseTest{
@@ -45,12 +39,7 @@ public class HomeFragmentTest extends FirebaseTest{
         post = TestUtils.getTestPost();
         post.addToDB(DBUtility.get().getDb_());
         DBUtility.get().setUser(user);
-
-        try {
-            Thread.sleep(400);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        sleep(400);
     }
         
     @Test
@@ -73,31 +62,16 @@ public class HomeFragmentTest extends FirebaseTest{
     @Test
     public void canClickOnPost(){
         onView(withId(R.id.swiperefresh_homefragment_refresh)).perform(swipeDown());
-        try {
-            Thread.sleep(300);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        sleep(300);
         onView(withId(R.id.recyclerview_homefragment_posts)).perform(RecyclerViewActions.actionOnItemAtPosition(0,click()));
     }
 
     @Test
     public void canClickOnPostAndSeeInfoAboutPost(){
         onView(withId(R.id.swiperefresh_homefragment_refresh)).perform(swipeDown());
-        try {
-            Thread.sleep(300);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
+        sleep(300);
         onView(withId(R.id.recyclerview_homefragment_posts)).perform(RecyclerViewActions.actionOnItemAtPosition(0,click()));
-
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
+        sleep(500);
         onView(withId(R.id.textview_postactivity_title)).check(matches(withText(post.getTitle_())));
         onView(withId(R.id.textview_postactivity_body)).check(matches(withText(post.getBody_())));
         onView(withId(R.id.textview_postactivity_date)).check(matches(withText(

@@ -86,7 +86,7 @@ public class NavigationDrawer extends AppCompatActivity implements NavigationVie
         });
         */
 
-        //TextView navHeaderName = (TextView) findViewById(R.id.nav_header_name);
+        TextView navHeaderName = (TextView) findViewById(R.id.nav_header_name);
     }
 
     @Override
