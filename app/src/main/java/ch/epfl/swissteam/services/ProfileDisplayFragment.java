@@ -117,6 +117,9 @@ public class ProfileDisplayFragment extends Fragment {
 
                 TextView descrView = (TextView) view.findViewById(R.id.textview_profiledisplay_description);
                 descrView.setText(user.getDescription_());
+
+                TextView ratingView = (TextView) view.findViewById(R.id.textview_profiledisplay_rating);
+                ratingView.setText(Integer.toString(user.getRating_()));
             }
 
             Picasso.get().load(user.getImageUrl_()).into((ImageView)getView().findViewById(R.id.imageview_profiledisplay_picture));
