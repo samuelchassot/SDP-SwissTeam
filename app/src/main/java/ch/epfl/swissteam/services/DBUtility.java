@@ -267,7 +267,7 @@ public class DBUtility {
     }
 
     /**
-     * TODO : Explain
+     * Add a post to the database
      *
      * @param post
      */
