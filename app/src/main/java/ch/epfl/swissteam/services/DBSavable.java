@@ -4,5 +4,4 @@ import com.google.firebase.database.DatabaseReference;
 
 public interface DBSavable {
     void addToDB(DatabaseReference databaseReference);
-
 }

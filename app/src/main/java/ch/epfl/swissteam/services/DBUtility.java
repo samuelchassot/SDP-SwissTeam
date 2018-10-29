@@ -18,8 +18,6 @@ public class DBUtility {
     private static DBUtility instance;
     private User currentUser_;
 
-
-
     public final static String USERS = "Users";
     public final static String CATEGORIES = "Categories";
     public final static String POSTS = "Posts";
@@ -116,6 +114,7 @@ public class DBUtility {
     }
 
     /**
+     * Gives the current logged user
      *
      * @return the current logged user which is null if the db has not yet provided the user
      */
@@ -244,10 +243,18 @@ public class DBUtility {
         });
     }
 
+    /**
+     *
+     * @param key
+     */
     public void deletePost(String key){
         db_.child(POSTS).child(key).setValue(null);
     }
 
+    /**
+     * 
+     * @param post
+     */
     public void setPost(Post post){
         db_.child(POSTS).child(post.getKey_()).setValue(post);
     }
