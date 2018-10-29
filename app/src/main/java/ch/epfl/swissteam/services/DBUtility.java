@@ -18,7 +18,6 @@ public class DBUtility {
     private static DBUtility instance;
 
 
-
     public final static String USERS = "Users";
     public final static String CATEGORIES = "Categories";
     public final static String POSTS = "Posts";
@@ -27,7 +26,7 @@ public class DBUtility {
     public final static String CHATS_RELATIONS = "ChatRelations";
     private final int POSTS_DISPLAY_NUMBER = 20;
 
-
+    
     private DBUtility(DatabaseReference db){
         this.db_ = db;
     }
