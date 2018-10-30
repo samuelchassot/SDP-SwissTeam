@@ -5,6 +5,7 @@ import android.support.test.espresso.contrib.NavigationViewActions;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
+import org.hamcrest.Matcher;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -52,23 +53,24 @@ public class ProfileDisplayFragmentTest extends FirebaseTest {
 
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_profile));
-        sleep(1000);
+        sleep(3000);
         onView(withId(R.id.button_profiledisplay_modify)).perform(scrollTo()).perform(click());
         sleep(1000);
-        onView(withId(R.id.button_profilesettings_cancel)).perform(scrollTo()).perform(click());
+        onView(TestUtils.navigationHomeMatcher()).perform(click());
+
     }
 
     @Test
     public void changeNameSaveAndCheck(){
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_profile));
-        sleep(1000);
+        sleep(3000);
         onView(withId(R.id.button_profiledisplay_modify)).perform(scrollTo()).perform(click());
         sleep(1000);
         String newName = "test New Name";
         onView(withId(R.id.edittext_profilesettings_name)).perform(clearText()).perform(typeText(newName)).perform(closeSoftKeyboard());
         sleep(1000);
-        onView(withId(R.id.button_profilesettings_save)).perform(scrollTo()).perform(click());
+        onView(withId(R.id.action_save)).perform(click());
         sleep(1000);
         onView(withId(R.id.textview_profiledisplay_name)).perform(scrollTo()).check(matches(withText(newName)));
         User testUser = TestUtils.getTestUser();

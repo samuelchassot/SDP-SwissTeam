@@ -17,7 +17,8 @@ import static ch.epfl.swissteam.services.NewProfileDetails.GOOGLE_ID_TAG;
  *
  * @author Ghali Chraïbi
  */
-public class ProfileActivity extends AppCompatActivity {
+public class ProfileActivity extends NavigationDrawer {
+
 
     private Button chatButton_;
 
@@ -25,6 +26,7 @@ public class ProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+        super.onCreateDrawer(BACK);
 
         String clientUID = getIntent().getStringExtra(GOOGLE_ID_TAG);
 

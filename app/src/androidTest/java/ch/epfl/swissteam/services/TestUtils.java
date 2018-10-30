@@ -3,8 +3,11 @@ package ch.epfl.swissteam.services;
 import android.support.test.espresso.ViewAction;
 import android.support.test.espresso.ViewInteraction;
 import android.support.test.espresso.contrib.RecyclerViewActions;
+import android.support.v7.widget.AppCompatImageButton;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
@@ -17,8 +20,13 @@ import java.util.Date;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.matcher.ViewMatchers.hasDescendant;
+import static android.support.test.espresso.matcher.ViewMatchers.withClassName;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static android.support.test.espresso.matcher.ViewMatchers.withParent;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.anyOf;
 
 public class TestUtils {
     protected static final String M_GOOGLE_ID = "1234";
@@ -91,6 +99,15 @@ public class TestUtils {
 
     protected static ViewInteraction recyclerScrollToItemWithTextAndPerformClickItem(int recyclerViewId, String text){
         return recyclerScrollToItemWithTextAndPerformOnItem(recyclerViewId, text, click());
+    }
+
+    public static Matcher<View> navigationHomeMatcher() {
+        return allOf(
+                withParent(withClassName(is(Toolbar.class.getName()))),
+                withClassName(anyOf(
+                        is(ImageButton.class.getName()),
+                        is(AppCompatImageButton.class.getName())
+                )));
     }
 
 }

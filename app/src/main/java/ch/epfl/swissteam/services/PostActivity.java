@@ -28,7 +28,7 @@ import static ch.epfl.swissteam.services.NewProfileDetails.GOOGLE_ID_TAG;
  *
  * @author Julie Giunta
  */
-public class PostActivity extends AppCompatActivity {
+public class PostActivity extends NavigationDrawer{
     private Post post_;
     private User user_;
     private View headerLayout_;
@@ -39,6 +39,7 @@ public class PostActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
+        super.onCreateDrawer(BACK);
 
         //Retrieve the post from the intent which started this activity
         Intent callingIntent = getIntent();
