@@ -26,31 +26,6 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
     private Context context_;
     private Location referenceLocation_;
 
-    /**
-     * TODO : Explain
-     *
-     * @param users
-     * @param context
-     */
-    public static class UserViewHolder extends RecyclerView.ViewHolder{
-
-        public TextView nameView_;
-        public TextView bodyView_;
-        public TextView ratingView_;
-        public TextView distanceView_;
-        public ImageView imageView_;
-        private View parentLayout;
-
-        public UserViewHolder(View v) {
-            super(v);
-            nameView_ = (TextView) v.findViewById(R.id.textview_usersearchlayout_name);
-            bodyView_ = (TextView) v.findViewById(R.id.textview_usersearchlayout_body);
-            imageView_ = v.findViewById(R.id.imageview_usersearchlayout_image);
-            ratingView_ = v.findViewById(R.id.textview_usersearchlayout_rating);
-            distanceView_ = v.findViewById(R.id.textview_usersearchlayout_distance);
-            parentLayout = v.findViewById(R.id.parent_layout);
-        }
-    }
 
     public UserAdapter(ArrayList<User> users, Context context){
         users_ = users;
@@ -105,6 +80,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
         public TextView nameView_;
         public TextView bodyView_;
         public TextView ratingView_;
+        public TextView distanceView_;
         public ImageView imageView_;
         private View parentLayout;
 
@@ -119,6 +95,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
             bodyView_ = (TextView) v.findViewById(R.id.textview_usersearchlayout_body);
             imageView_ = v.findViewById(R.id.imageview_usersearchlayout_image);
             ratingView_ = v.findViewById(R.id.textview_usersearchlayout_rating);
+            distanceView_ = v.findViewById(R.id.textview_usersearchlayout_distance);
             parentLayout = v.findViewById(R.id.parent_layout);
         }
     }
