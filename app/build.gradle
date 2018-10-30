@@ -55,6 +55,7 @@ dependencies {
     implementation 'com.firebase:firebase-client-android:2.3.1'
     implementation 'com.firebaseui:firebase-ui:0.6.0'
     implementation 'com.google.android.gms:play-services-location:16.0.0'
+    implementation 'com.google.android.gms:play-services-maps:16.0.0'
     testImplementation 'junit:junit:4.12'
     testImplementation "org.mockito:mockito-core:2.22.0"
     androidTestImplementation 'com.android.support.test.espresso:espresso-contrib:3.0.2'

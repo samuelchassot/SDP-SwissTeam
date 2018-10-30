@@ -33,34 +33,11 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     private List<Post> posts_;
 
     /**
-     * ViewHolder for Posts
-     */
-    static class PostViewHolder extends RecyclerView.ViewHolder{
-        protected TextView titleView_;
-        protected TextView bodyView_;
-        protected TextView distanceView_;
-        protected ImageView imageView_;
-        protected FrameLayout parentLayout_;
-
-        /**
-         * Create a PostViewHolder
-         * @param v the current View
-         */
-        protected PostViewHolder(View v){
-            super(v);
-            titleView_ = v.findViewById(R.id.textview_postadapter_title);
-            bodyView_ = v.findViewById(R.id.textview_postadapter_body);
-            distanceView_ = v.findViewById(R.id.textview_postadapter_distance);
-            imageView_ = v.findViewById(R.id.imageview_postadapter_image);
-            parentLayout_ = v.findViewById(R.id.framelayout_post);
-        }
-    }
-
-    /**
      * Adapter for a list of Posts
+     *
      * @param posts the list of Posts to be managed by the adapter
      */
-    public PostAdapter(List<Post> posts){
+    public PostAdapter(List<Post> posts) {
         this.posts_ = posts;
     }
 
@@ -105,6 +82,31 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     @Override
     public int getItemCount() {
         return posts_.size();
+    }
+
+    /**
+     * ViewHolder for Posts
+     */
+    static class PostViewHolder extends RecyclerView.ViewHolder {
+        protected TextView titleView_;
+        protected TextView bodyView_;
+        protected TextView distanceView_;
+        protected ImageView imageView_;
+        protected FrameLayout parentLayout_;
+
+        /**
+         * Create a PostViewHolder
+         *
+         * @param v the current View
+         */
+        protected PostViewHolder(View v) {
+            super(v);
+            titleView_ = v.findViewById(R.id.textview_postadapter_title);
+            bodyView_ = v.findViewById(R.id.textview_postadapter_body);
+            distanceView_ = v.findViewById(R.id.textview_postadapter_distance);
+            imageView_ = v.findViewById(R.id.imageview_postadapter_image);
+            parentLayout_ = v.findViewById(R.id.framelayout_post);
+        }
     }
 }
 

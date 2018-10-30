@@ -17,7 +17,12 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Ca
 
     private Categories[] capabilities_;
 
-    public  CategoriesAdapter(Categories[] capabilities) {
+    /**
+     * TODO : Explain
+     *
+     * @param capabilities
+     */
+    public CategoriesAdapter(Categories[] capabilities) {
         this.capabilities_ = capabilities;
     }
 
@@ -40,20 +45,22 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Ca
 
     private void addAddListener(View view, Categories capability) {
         view.setOnClickListener(v -> {
-            ((NewProfileCapabilities)v.getContext()).addCapability(capability);
+            ((NewProfileCapabilities) v.getContext()).addCapability(capability);
             addRemoveListener(view, capability);
         });
     }
 
     private void addRemoveListener(View view, Categories capability) {
         view.setOnClickListener(v -> {
-            ((NewProfileCapabilities)v.getContext()).removeCapability(capability);
+            ((NewProfileCapabilities) v.getContext()).removeCapability(capability);
             addAddListener(view, capability);
         });
     }
 
-
-    public static class CategoriesViewHolder extends  RecyclerView.ViewHolder {
+    /**
+     * TODO : Explain
+     */
+    public static class CategoriesViewHolder extends RecyclerView.ViewHolder {
 
         public TextView nameView;
         public CheckBox checkBox;

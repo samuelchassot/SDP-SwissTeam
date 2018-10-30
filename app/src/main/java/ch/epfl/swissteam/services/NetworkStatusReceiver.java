@@ -10,6 +10,9 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+/**
+ * TODO : Explain Class
+ */
 public class NetworkStatusReceiver extends BroadcastReceiver {
 
     private Activity activity_;
@@ -17,9 +20,9 @@ public class NetworkStatusReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         int status = NetworkUtility.getConnectivityStatus(context);
-        if("android.net.conn.CONNECTIVITY_CHANGE".equals(intent.getAction())){
-        Log.e("NetworkChange", "onReceive triggered");
-            if (status == NetworkUtility.NOT_CONNECTED){
+        if ("android.net.conn.CONNECTIVITY_CHANGE".equals(intent.getAction())) {
+            Log.e("NetworkChange", "onReceive triggered");
+            if (status == NetworkUtility.NOT_CONNECTED) {
                 Toast.makeText(context, "No Internet connection!", Toast.LENGTH_SHORT).show();
                 setStatusBarColor(R.color.no_network);
             } else {
@@ -29,7 +32,12 @@ public class NetworkStatusReceiver extends BroadcastReceiver {
         }
     }
 
-    public void setStatusBarColor(int color){
+    /**
+     * Set the status bar's color given a color in parameter
+     *
+     * @param color a color (in TODO *** RGB? ***)
+     */
+    public void setStatusBarColor(int color) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = activity_.getWindow();
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
@@ -37,7 +45,12 @@ public class NetworkStatusReceiver extends BroadcastReceiver {
         }
     }
 
-    public void setActivity_(Activity activity){
+    /**
+     * Set the activity that is check in the NetworkStatusReceiver
+     *
+     * @param activity an activity
+     */
+    public void setActivity_(Activity activity) {
         this.activity_ = activity;
     }
 

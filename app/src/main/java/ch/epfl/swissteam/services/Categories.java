@@ -10,80 +10,126 @@ import java.util.Collections;
 import java.util.List;
 
 public enum Categories implements DBSavable {
-        ALL,
-        IC,
-        MATHS,
-        GARDENING,
-        COOKING,
-        DAILYLIFE,
-        TRANSPORTATION,
-        HOUSE,
-        TEACHING,
-        MECHANICS;
+    ALL,
+    IC,
+    MATHS,
+    GARDENING,
+    COOKING,
+    DAILYLIFE,
+    TRANSPORTATION,
+    HOUSE,
+    TEACHING,
+    MECHANICS;
 
-    private ArrayList<String> users_;
+    private List<String> users_;
 
-    Categories(){
+    Categories() {
         users_ = new ArrayList<>();
+    }
+
+    public static Categories fromString(String category) {
+        switch (category) {
+            case "Computer":
+                return IC;
+            case "Maths":
+                return MATHS;
+            case "House":
+                return HOUSE;
+            case "Cooking":
+                return COOKING;
+            case "Teaching":
+                return TEACHING;
+            case "Gardening":
+                return GARDENING;
+            case "Mechanics":
+                return MECHANICS;
+            case "Daily Life":
+                return DAILYLIFE;
+            case "Transportation":
+                return TRANSPORTATION;
+            case "All":
+                return ALL;
+            default:
+                return null;
+
+        }
+    }
+
+    @Override
+    public String toString() {
+        switch (this) {
+            case IC:
+                return "Computer";
+            case MATHS:
+                return "Maths";
+            case HOUSE:
+                return "House";
+            case COOKING:
+                return "Cooking";
+            case TEACHING:
+                return "Teaching";
+            case GARDENING:
+                return "Gardening";
+            case MECHANICS:
+                return "Mechanics";
+            case DAILYLIFE:
+                return "Daily Life";
+            case TRANSPORTATION:
+                return "Transportation";
+            case ALL:
+                return "All";
+        }
+        return null;
+
     }
 
     public static Categories[] realCategories(){
         return  Arrays.copyOfRange(Categories.values(),1, Categories.values().length);
     }
 
+    /**
+     * Add a user to the list of users
+     *
+     * @param user a user
+     */
     public void addUser(User user){
         addUser(user.getGoogleId_());
     }
 
-    public void addUser(String googleId){
+    /**
+     * Add a user to the list of users
+     *
+     * @param googleId the google ID of a user
+     */
+    public void addUser(String googleId) {
         users_.add(googleId);
     }
 
-    public void removeUser(User user){
+    /**
+     * Remove a user from the list of users
+     *
+     * @param user a user
+     */
+    public void removeUser(User user) {
         removeUser(user.getGoogleId_());
     }
 
-    public void removeUser(String googleId){
+    /**
+     * Remove a user from the list of users
+     *
+     * @param googleId the google ID of a user
+     */
+    public void removeUser(String googleId) {
         users_.remove(googleId);
     }
 
+    /**
+     * Give an unmodifiable view of the users
+     *
+     * @return the list of users
+     */
     public List<String> getUsers_() {
         return Collections.unmodifiableList(users_);
-    }
-
-    @Override
-    public String toString(){
-        switch (this){
-            case IC: return "Computer";
-            case MATHS: return "Maths";
-            case HOUSE: return "House";
-            case COOKING: return "Cooking";
-            case TEACHING: return "Teaching";
-            case GARDENING: return "Gardening";
-            case MECHANICS: return "Mechanics";
-            case DAILYLIFE: return "Daily Life";
-            case TRANSPORTATION: return "Transportation";
-            case ALL: return "All";
-        }
-        return null;
-
-    }
-
-    public static Categories fromString(String category){
-        switch (category){
-            case "Computer" : return IC;
-            case "Maths" : return MATHS;
-            case "House" : return HOUSE;
-            case "Cooking" : return COOKING;
-            case "Teaching" : return TEACHING;
-            case "Gardening" : return GARDENING;
-            case "Mechanics" : return MECHANICS;
-            case "Daily Life" : return DAILYLIFE;
-            case "Transportation" : return TRANSPORTATION;
-            case "All" : return ALL;
-            default: return null;
-
-        }
     }
 
     @Override

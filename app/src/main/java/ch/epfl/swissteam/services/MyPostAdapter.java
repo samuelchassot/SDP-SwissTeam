@@ -25,32 +25,11 @@ public class MyPostAdapter extends RecyclerView.Adapter<MyPostAdapter.PostViewHo
     private List<Post> posts_;
 
     /**
-     * ViewHolder for Posts, with hidden buttons
-     */
-    static class PostViewHolder extends RecyclerView.ViewHolder{
-        protected TextView titleView_;
-        protected TextView bodyView_;
-        protected ImageButton editButton_;
-        protected ImageButton deleteButton_;
-
-        /**
-         * Create a PostViewHolder
-         * @param v the current View
-         */
-        protected PostViewHolder(View v){
-            super(v);
-            titleView_ = v.findViewById(R.id.textview_mypostadapter_title);
-            bodyView_ = v.findViewById(R.id.textview_mypostadapter_body);
-            editButton_ = v.findViewById(R.id.button_mypostadapter_edit);
-            deleteButton_= v.findViewById(R.id.button_mypostadapter_delete);
-        }
-    }
-
-    /**
      * Adapter for a list of Posts
+     *
      * @param posts the list of Posts to be managed by the adapter
      */
-    public MyPostAdapter(List<Post> posts){
+    public MyPostAdapter(List<Post> posts) {
         this.posts_ = posts;
     }
 
@@ -74,7 +53,7 @@ public class MyPostAdapter extends RecyclerView.Adapter<MyPostAdapter.PostViewHo
                 Intent intent = new Intent(holder.itemView.getContext(), MyPostEdit.class);
                 intent.putExtra(MYPOST_TAG, posts_.get(holder.getAdapterPosition()));
                 holder.itemView.getContext().startActivity(intent);
-                ((RecyclerView)v.getParent().getParent().getParent().getParent()).getAdapter().notifyDataSetChanged();
+                ((RecyclerView) v.getParent().getParent().getParent().getParent()).getAdapter().notifyDataSetChanged();
             }
         });
 
@@ -84,7 +63,7 @@ public class MyPostAdapter extends RecyclerView.Adapter<MyPostAdapter.PostViewHo
                 Toast.makeText(v.getContext(), "DELETE CLICKED", Toast.LENGTH_SHORT).show();
                 DBUtility.get().deletePost(posts_.get(holder.getAdapterPosition()).getKey_());
                 posts_.remove(holder.getAdapterPosition());
-                ((RecyclerView)v.getParent().getParent().getParent().getParent()).getAdapter().notifyDataSetChanged();
+                ((RecyclerView) v.getParent().getParent().getParent().getParent()).getAdapter().notifyDataSetChanged();
             }
         });
     }
@@ -92,5 +71,28 @@ public class MyPostAdapter extends RecyclerView.Adapter<MyPostAdapter.PostViewHo
     @Override
     public int getItemCount() {
         return posts_.size();
+    }
+
+    /**
+     * ViewHolder for Posts, with hidden buttons
+     */
+    static class PostViewHolder extends RecyclerView.ViewHolder {
+        protected TextView titleView_;
+        protected TextView bodyView_;
+        protected ImageButton editButton_;
+        protected ImageButton deleteButton_;
+
+        /**
+         * Create a PostViewHolder
+         *
+         * @param v the current View
+         */
+        protected PostViewHolder(View v) {
+            super(v);
+            titleView_ = v.findViewById(R.id.textview_mypostadapter_title);
+            bodyView_ = v.findViewById(R.id.textview_mypostadapter_body);
+            editButton_ = v.findViewById(R.id.button_mypostadapter_edit);
+            deleteButton_ = v.findViewById(R.id.button_mypostadapter_delete);
+        }
     }
 }

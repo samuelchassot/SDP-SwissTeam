@@ -48,11 +48,10 @@ public class ProfileSettings extends NavigationDrawer {
 
     }
 
-
     /**
      * Save the modification done by the user
      */
-    private void save(){
+    private void save() {
         String name = ((TextView) findViewById(R.id.edittext_profilesettings_name)).getText().toString();
         String uniqueID = GoogleSignInSingleton.get().getClientUniqueID();
         String email = ((TextView) findViewById(R.id.textview_profilesettings_email)).getText().toString();
@@ -76,31 +75,36 @@ public class ProfileSettings extends NavigationDrawer {
         finish();
     }
 
+    /**
+     * TODO : Explain
+     *
+     * @param cat
+     * @param checked
+     */
     public void updateUserCapabilities(Categories cat, boolean checked){
         if(checked){
             //add category to the user's list
-            if(! userCapabilities_.contains(cat)){
+            if (!userCapabilities_.contains(cat)) {
                 userCapabilities_.add(cat);
             }
-        }
-        else{
+        } else {
             //remove it from user's list
-            if(userCapabilities_.contains(cat)){
+            if (userCapabilities_.contains(cat)) {
                 userCapabilities_.remove(cat);
             }
         }
     }
 
 
-    private void loadAndShowUser(String clientUniqueID){
-        DBUtility.get().getUser(clientUniqueID, (user)->{
+    private void loadAndShowUser(String clientUniqueID) {
+        DBUtility.get().getUser(clientUniqueID, (user) -> {
             TextView nameView = (TextView) findViewById(R.id.edittext_profilesettings_name);
             nameView.setText(user.getName_());
 
-            TextView emailView =  (TextView) findViewById(R.id.textview_profilesettings_email);
+            TextView emailView = (TextView) findViewById(R.id.textview_profilesettings_email);
             emailView.setText(user.getEmail_());
 
-            TextView descrView =  (TextView) findViewById(R.id.edittext_profilesettings_description);
+            TextView descrView = (TextView) findViewById(R.id.edittext_profilesettings_description);
             descrView.setText(user.getDescription_());
 
             oldUser_ = user;
@@ -136,6 +140,5 @@ public class ProfileSettings extends NavigationDrawer {
 
         return super.onOptionsItemSelected(item);
     }
-
 
 }
