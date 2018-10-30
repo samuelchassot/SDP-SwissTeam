@@ -64,7 +64,7 @@ public class ProfileDisplayFragmentTest extends FirebaseTest {
     public void changeNameSaveAndCheck(){
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_profile));
-        sleep(1000);
+        sleep(3000);
         onView(withId(R.id.button_profiledisplay_modify)).perform(scrollTo()).perform(click());
         sleep(1000);
         String newName = "test New Name";
