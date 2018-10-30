@@ -8,12 +8,14 @@
     <string name="general_error">Erreur</string>
     <string name="general_ok">OK</string>
 
-    /* ----- Database string ----- *>
+    /* ----- Database string ----- */
+
     <string name="general_could_not_find_you_in_db">Nous ne vous avons pas trouvé dans la database !</string>
     <string name="general_could_not_find_this_user_in_db">Nous n\'avons pas trouvé cet utilisateur dans la database !</string>
     <string name="general_could_not_establish_relation">Nous n\’avons pas réussi à établir une relation !</string>
 
     /* ----- Profile string ----- */
+
     <string name="newprofile_title">Mise en place du profil</string>
     <string name="newprofile_name">Nom:</string>
     <string name="newprofile_description">Description:</string>
@@ -33,9 +35,11 @@
     <string name="show_profile">Voir le profil</string>
 
     /* ----- SignIn string ----- */
+
     <string name="signin_welcomemessage">Bienvenue sur Socialize!</string>
 
     /* ----- Navigation string ----- */
+
     <string name="title_activity_main">Accueil</string>
     <string name="title_activity_online_chat">OnlineChatActivity</string>
     <string name="title_activity_chat_room">ChatRoom</string>
@@ -63,12 +67,15 @@
     <string name="homefragment_asktorefresh">Actualisez pour les derniers messages!</string>
     <string name="homefragment_noposts">Pas de posts pour le moment …</string>
     <string name="homefragment_hintrefreshbutton">Rafraîchir</string>
+    <string name="homefragment_postdistance">à %1.0fkm</string>
+
 
     /* ----- Service string ----- */
 
     <string name="fragment_services_title">Utilisateurs qui peuvent vous aider</string>
 
     /* ----- Post string ----- */
+
     <string name="post_hinteditbutton">Modifiez votre post</string>
     <string name="postadapter_hintdeletebutton">Supprimez votre post</string>
     <string name="createpostfragment_entertitle">Entrez un titre ici</string>
@@ -97,6 +104,14 @@
     <string name="chat_room_message_hint">Ecrivez votre message ici</string>
 
     /* ----- Settings string ----- */
+
+    <string name="settings_title_localisation">Localisation</string>
+    <string name="settings_subtitle_current_localisation">Position actuelle de la maison</string>
+    <string name="settings_button_set_home">Définissez votre position actuelle comme étant celle de votre maison</string>
+
+
+    /* ----- Toolbar string ----- */
+
     <string name="toolbar_my_posts">Mes posts</string>
     <string name="toolbar_home">Accueil</string>
     <string name="toolbar_chats">Chats</string>

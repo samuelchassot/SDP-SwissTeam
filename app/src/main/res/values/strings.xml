@@ -2,6 +2,7 @@
     <string name="app_name" translatable="false">Socialize</string>
 
     /* ----- GENERAL string ----- */
+
     <string name="all_next">Next</string>
     <string name="done_text">Done</string>
     <string name="all_send">Send</string>
@@ -10,11 +11,13 @@
     <string name="general_ok">OK</string>
 
     /* ----- Database string ----- */
+
     <string name="general_could_not_find_you_in_db">Could not find you in the database !</string>
     <string name="general_could_not_find_this_user_in_db">Could not find this user in the database !</string>
     <string name="general_could_not_establish_relation">Could not establish relation !</string>
 
     /* ----- Profile string ----- */
+
     <string name="newprofile_title">Profile setup</string>
     <string name="newprofile_name">Name:</string>
     <string name="newprofile_description">Description:</string>
@@ -34,10 +37,12 @@
     <string name="show_profile">See the profile</string>
 
     /* ----- SignIn string ----- */
+
     <string name="signin_welcomemessage">Welcome in Socialize!</string>
 
 
     /* ----- Navigation string ----- */
+
     <string name="title_activity_main">Socialize!</string>
     <string name="title_activity_online_chat">OnlineChatActivity</string>
     <string name="title_activity_chat_room">ChatRoom</string>
@@ -60,15 +65,18 @@
     <string name="navigation_drawer_button_logout">Logout</string>
 
     /* ----- Home string ----- */
+
     <string name="homefragment_asktorefresh">Refresh for the latest posts!</string>
     <string name="homefragment_noposts">No posts for now …</string>
     <string name="homefragment_hintrefreshbutton">Refresh</string>
+    <string name="homefragment_postdistance">%1.0fkm away</string>
 
     /* ----- Service string ----- */
 
     <string name="fragment_services_title">Users that can help you</string>
 
     /* ----- Post string ----- */
+
     <string name="post_hinteditbutton">Edit your post</string>
     <string name="postadapter_hintdeletebutton">Delete your post</string>
     <string name="createpostfragment_entertitle">Enter a title here</string>
@@ -97,11 +105,13 @@
     <string name="chat_room_message_hint">Write your message here</string>
 
     /* ----- Settings string ----- */
-    <string name="settings_title_localisation">Localisation</string>
-    <string name="settings_subtitle_current_localisation">Current localisation</string>
 
+    <string name="settings_title_localisation">Localization</string>
+    <string name="settings_subtitle_current_localisation">Current home position</string>
+    <string name="settings_button_set_home">Set your home to your current position</string>
 
     /* ----- Toolbar string ----- */
+
     <string name="toolbar_my_posts">My posts</string>
     <string name="toolbar_profile">Profile</string>
     <string name="toolbar_home">Home</string>
@@ -115,5 +125,4 @@
         <item>English</item>
         <item>French</item>
     </string-array>
-    <string name="homefragment_postdistance">%1.0fkm away</string>
 </resources>
