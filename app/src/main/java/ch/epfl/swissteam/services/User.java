@@ -180,7 +180,7 @@ public class User implements DBSavable{
 
     /**
      * Add a chatRelationId to the list of chatRelation of the user
-     * db
+     * 
      * @param chatRelation the id of the chatRelation
      */
     public void addChatRelation(ChatRelation chatRelation){
