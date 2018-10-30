@@ -116,4 +116,6 @@
         <item>French</item>
     </string-array>
     <string name="homefragment_postdistance">%1.0fkm away</string>
+    <string name="usersearch_distanceunavailable">Unavailable</string>
+    <string name="usersearch_distancedisplay">%1dkm away</string>
 </resources>
