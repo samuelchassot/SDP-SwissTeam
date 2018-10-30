@@ -173,19 +173,14 @@ public class DBUtility {
         });
     }
 
-    public void setUser(User user) {
-        db_.child(USERS).child(user.getGoogleId_()).setValue(user);
-
-    }
-
-    public void getCategory(String category, final MyCallBack<Void> callBack) {
-        db_.child(CATEGORIES).child(category).addListenerForSingleValueEvent(new ValueEventListener() {
+    public void getCategory(Categories category, final MyCallBack<Categories> callBack) {
+        db_.child(CATEGORIES).child(category.toString()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot data : dataSnapshot.getChildren()) {
-                    Categories.fromString(category).addUser(data.getKey());
+                    category.addUser(data.getKey());
                 }
-                callBack.onCallBack(null);
+                callBack.onCallBack(category);
             }
 
             @Override

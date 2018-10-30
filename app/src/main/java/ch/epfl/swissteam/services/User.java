@@ -5,8 +5,6 @@ import android.util.Log;
 import com.google.firebase.database.DatabaseReference;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 /**
  * Class representing a user in the database,
@@ -16,7 +14,7 @@ public class User implements DBSavable{
 
     private String googleId_, email_, name_, description_, imageUrl_;
     private int rating_;
-
+    private double latitude_, longitude_;
     private ArrayList<Categories> categories_;
 
     private ArrayList<ChatRelation> chatRelations_;
@@ -60,8 +58,11 @@ public class User implements DBSavable{
      * @param description_ User's description
      * @param categories_ User's categories of services
      * @param rating_ User's rating score
+     * @param latitude_ User's last latitude
+     * @param longitude_ User's last longitude
      */
-    public User(String googleID_, String name_, String email_, String description_, ArrayList<Categories> categories_, String imageUrl_, int rating_) {
+    public User(String googleID_, String name_, String email_, String description_, ArrayList<Categories> categories_, String imageUrl_, int rating_,
+                double latitude_, double longitude_) {
         this.googleId_ = googleID_;
         this.email_ = email_;
         this.name_ = name_;
@@ -69,8 +70,27 @@ public class User implements DBSavable{
         this.imageUrl_ = imageUrl_;
         this.rating_ = rating_;
         this.categories_ = categories_ == null ? new ArrayList<Categories>() : (ArrayList<Categories>) categories_.clone();
+        this.latitude_ = latitude_;
+        this.longitude_ = longitude_;
     }
 
+//    public User(String googleID_, String name_, String email_, String description_, ArrayList<Categories> categories_, String imageUrl_, int rating_, Location lastLocation) {
+//        this.googleId_ = googleID_;
+//        this.email_ = email_;
+//        this.name_ = name_;
+//        this.description_ = description_;
+//        this.imageUrl_ = imageUrl_;
+//        this.rating_ = rating_;
+//        this.categories_ = categories_ == null ? new ArrayList<Categories>() : (ArrayList<Categories>) categories_.clone();
+//        double lat = 0;
+//        double longt = 0;
+//        if(lastLocation != null) {
+//            lat= lastLocation.getLatitude();
+//            longt = lastLocation.getLongitude();
+//        }
+//        this.latitude_ = lat;
+//        this.longitude_= longt;
+//    }
 
 
     public String getGoogleId_() { return googleId_; }
@@ -90,6 +110,28 @@ public class User implements DBSavable{
     public String getImageUrl_() { return imageUrl_; }
 
     public int getRating_() { return rating_; }
+
+//    public Location getLastLocation() {
+//        Location lastLocation = new Location("");
+//        lastLocation.setLongitude(longitude_);
+//        lastLocation.setLatitude(latitude_);
+//        return lastLocation;
+//    }
+//    public void setLastLocation_(Location lastLocation){
+//        if(lastLocation != null){
+//          this.latitude_ = lastLocation.getLatitude();
+//          this.longitude_ = lastLocation.getLongitude();
+//        }
+//    }
+
+
+    public double getLatitude_() {
+        return latitude_;
+    }
+
+    public double getLongitude_() {
+        return longitude_;
+    }
 
     public ArrayList<Categories> getCategories_() {
         if(categories_ == null){

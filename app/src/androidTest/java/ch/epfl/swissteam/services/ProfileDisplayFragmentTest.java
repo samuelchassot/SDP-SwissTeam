@@ -35,7 +35,7 @@ public class ProfileDisplayFragmentTest extends FirebaseTest {
 
     @Test
     public void openFragmentAndChangeName() {
-        User testUser = TestUtils.getATestUser();
+        User testUser = TestUtils.getTestUser();
 //        DBUtility.get().setUser(testUser);
 
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
@@ -73,7 +73,7 @@ public class ProfileDisplayFragmentTest extends FirebaseTest {
         onView(withId(R.id.action_save)).perform(click());
         sleep(1000);
         onView(withId(R.id.textview_profiledisplay_name)).perform(scrollTo()).check(matches(withText(newName)));
-        User testUser = TestUtils.getATestUser();
+        User testUser = TestUtils.getTestUser();
         testUser.addToDB(DBUtility.get().getDb_());
     }
 
@@ -82,7 +82,7 @@ public class ProfileDisplayFragmentTest extends FirebaseTest {
     public void initialize() {
         super.initialize();
         LocationManager.get().setMock();
-        User testUser = TestUtils.getATestUser();
+        User testUser = TestUtils.getTestUser();
         testUser.addToDB(DBUtility.get().getDb_());
         GoogleSignInSingleton.putUniqueID(testUser.getGoogleId_());
     }
