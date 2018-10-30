@@ -93,7 +93,6 @@ public class User implements DBSavable{
 //    }
 
 
-
     public String getGoogleId_() { return googleId_; }
 
     public String getName_() {
