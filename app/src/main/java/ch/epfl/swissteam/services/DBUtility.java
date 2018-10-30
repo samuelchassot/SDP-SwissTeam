@@ -187,7 +187,7 @@ public class DBUtility {
                 for (DataSnapshot data : dataSnapshot.getChildren()) {
                     category.addUser(data.getKey());
                 }
-                callBack.onCallBack(null);
+                callBack.onCallBack(category);
             }
 
             @Override

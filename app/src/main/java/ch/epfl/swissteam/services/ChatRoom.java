@@ -19,7 +19,7 @@ import com.google.firebase.database.DatabaseReference;
  *
  * @author Sébastien Gachoud
  */
-public class ChatRoom extends Activity {
+public class ChatRoom extends NavigationDrawer {
 
     private FirebaseRecyclerAdapter<ChatMessage, MessageHolder> adapter_;
     private DatabaseReference dataBase_;
@@ -30,6 +30,7 @@ public class ChatRoom extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_room);
+        super.onCreateDrawer(BACK);
         dataBase_ = DBUtility.get().getDb_();
         setCurrentRelationId_(getIntent().getExtras().getString(ChatRelation.RELATION_ID_TEXT, null));
         retrieveUserAndSetRelationId();

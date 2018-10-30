@@ -1,11 +1,13 @@
 package ch.epfl.swissteam.services;
 
+import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Fragment for displaying users in form of a list
@@ -24,6 +27,7 @@ public class ServicesFragment extends Fragment {
 
     private RecyclerView.Adapter mAdapter;
     private ArrayList<User> users = new ArrayList<>();
+    private Location currentUserLocation_;
 
 
     public ServicesFragment() {
@@ -83,6 +87,9 @@ public class ServicesFragment extends Fragment {
             DBUtility.get().getAllUsers((usersdb -> {
                 users.clear();
                 users.addAll(usersdb);
+
+
+                Collections.sort(users, this::compareUsersUsingDistanceWithRef);
                 mAdapter.notifyDataSetChanged();
                 services_problem_text_udpate(view, users.isEmpty());
             }));
@@ -92,14 +99,15 @@ public class ServicesFragment extends Fragment {
                 services_problem_text_udpate(view, googleIds.isEmpty());
                 mAdapter.notifyDataSetChanged();
 
-                for (String googleId : googleIds) {
-                    DBUtility.get().getUser(googleId, user -> {
-                        if (user != null && !users.contains(user)) {
-                            users.add(user);
-                            mAdapter.notifyDataSetChanged();
-                        }
-                    });
-                }
+                    for (String googleId : googleIds) {
+                        DBUtility.get().getUser(googleId, user -> {
+                            if (user != null && !users.contains(user)) {
+                                users.add(user);
+                                Collections.sort(users, this::compareUsersUsingDistanceWithRef);
+                                mAdapter.notifyDataSetChanged();
+                            }
+                        });
+                    }
             });
         }
 
@@ -113,6 +121,26 @@ public class ServicesFragment extends Fragment {
                 view.findViewById(R.id.services_problem_text).setVisibility(View.INVISIBLE);
             }
         }
+    }
+
+    private int compareUsersUsingDistanceWithRef(User u1, User u2){
+        Location ref = LocationManager.get().getCurrentLocation_();
+        int result = 0;
+        Location u1Location = new Location("");
+        u1Location.setLatitude(u1.getLatitude_());
+        u1Location.setLongitude(u1.getLongitude_());
+
+        Log.i("U1Latitude", u1.getLatitude_() + "");
+
+        Location u2Location = new Location("");
+        u2Location.setLatitude(u2.getLatitude_());
+        u2Location.setLongitude(u2.getLongitude_());
+
+        if(ref != null) {
+            result = (int) u1Location.distanceTo(ref) - (int) u2Location.distanceTo(ref);
+            Log.i("Ref", "not null");
+        }
+        return result;
     }
 
 }
