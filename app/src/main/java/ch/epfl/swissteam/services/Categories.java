@@ -8,6 +8,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * The enum for Categories representing the different kind of user's capabilities
+ */
 public enum Categories implements DBSavable {
     ALL,
     IC,
@@ -22,10 +25,17 @@ public enum Categories implements DBSavable {
 
     private List<String> users_;
 
+
     Categories() {
         users_ = new ArrayList<>();
     }
 
+    /**
+     * Convert a category in String form into its enum form
+     *
+     * @param category a String corresponding to a category
+     * @return the enum corresponding to category
+     */
     public static Categories fromString(String category) {
         switch (category) {
             case "Computer":
