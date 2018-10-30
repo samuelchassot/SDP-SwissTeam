@@ -140,9 +140,15 @@ public class ChatRoom extends NavigationDrawer {
      * ViewHolder class to handle the RecyclerView
      */
     private static class MessageHolder extends RecyclerView.ViewHolder {
+
         TextView messageText_;
         TextView timeUserText_;
 
+        /**
+         * Create a MessageViewHolder
+         *
+         * @param view the current View
+         */
         public MessageHolder(View view) {
             super(view);
             messageText_ = view.findViewById(R.id.message_message);

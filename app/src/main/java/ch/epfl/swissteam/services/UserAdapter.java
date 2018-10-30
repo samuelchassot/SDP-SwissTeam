@@ -26,7 +26,12 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
     private Context context_;
     private Location referenceLocation_;
 
-
+    /**
+     * TODO : Explain
+     *
+     * @param users
+     * @param context
+     */
     public UserAdapter(ArrayList<User> users, Context context){
         users_ = users;
         context_ = context;
@@ -60,7 +65,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
         holder.distanceView_.setText(distanceText);
         Picasso.get().load(users_.get(i).getImageUrl_()).into(holder.imageView_);
 
-        holder.parentLayout.setOnClickListener((view) -> {
+        holder.parentLayout_.setOnClickListener((view) -> {
             Intent intent = new Intent(context_, ProfileActivity.class);
             intent.putExtra(GOOGLE_ID_TAG, users_.get(i).getGoogleId_());
             context_.startActivity(intent);
@@ -82,7 +87,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
         public TextView ratingView_;
         public TextView distanceView_;
         public ImageView imageView_;
-        private View parentLayout;
+        private View parentLayout_;
 
         /**
          * Create a UserViewHolder
@@ -96,7 +101,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
             imageView_ = v.findViewById(R.id.imageview_usersearchlayout_image);
             ratingView_ = v.findViewById(R.id.textview_usersearchlayout_rating);
             distanceView_ = v.findViewById(R.id.textview_usersearchlayout_distance);
-            parentLayout = v.findViewById(R.id.parent_layout);
+            parentLayout_ = v.findViewById(R.id.parent_layout);
         }
     }
 }

@@ -29,7 +29,8 @@ public class DBUtility {
     private DatabaseReference db_;
     private static DBUtility instance;
 
-    private DBUtility(DatabaseReference db){
+
+    private DBUtility(DatabaseReference db) {
         this.db_ = db;
     }
 
@@ -64,6 +65,7 @@ public class DBUtility {
      * @param callBack the CallBack to use
      */
     public void getUsersFromCategory(Categories category, final MyCallBack<ArrayList<String>> callBack) {
+
         if (category == Categories.ALL) {
             Log.e("DBUtility", "Cannot retrieve all users that way");
         } else {
@@ -81,9 +83,7 @@ public class DBUtility {
                 public void onCancelled(@NonNull DatabaseError databaseError) {
                 }
             });
-
         }
-
     }
 
     /**
@@ -94,13 +94,13 @@ public class DBUtility {
      */
     public void getUser(String googleId, final MyCallBack<User> callBack) {
 
-
         if (googleId == null) {
             User nullUser = null;//new User(null, null, null, null, null, null);
             callBack.onCallBack(nullUser);
             return;
         }
         db_.child(USERS).child(googleId).addListenerForSingleValueEvent(new ValueEventListener() {
+
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 callBack.onCallBack(dataSnapshot.getValue(User.class));
@@ -143,7 +143,7 @@ public class DBUtility {
     /**
      * Retrieves the POSTS_DISPLAY_NUMBER freshest post of the database in geographical range of the user.
      *
-     * @param callBack the function called on the callBack
+     * @param callBack     the function called on the callBack
      * @param userLocation the location of the user
      */
     public void getPostsFeed(final MyCallBack<ArrayList<Post>> callBack, Location userLocation) {
@@ -160,7 +160,7 @@ public class DBUtility {
                     Location postLocation = new Location("");
                     postLocation.setLongitude(post.getLongitude_());
                     postLocation.setLatitude(post.getLatitude_());
-                    if(postLocation.distanceTo(userLocation) <= LocationManager.MAX_POST_DISTANCE){
+                    if (postLocation.distanceTo(userLocation) <= LocationManager.MAX_POST_DISTANCE) {
                         posts.add(0, post);
                     }
                 }

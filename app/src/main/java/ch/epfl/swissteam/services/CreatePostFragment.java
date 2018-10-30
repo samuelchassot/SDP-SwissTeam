@@ -59,8 +59,10 @@ public class CreatePostFragment extends Fragment implements View.OnClickListener
 
     @Override
     public void onClick(View v) {
+
         EditText titleField = ((EditText) getView().findViewById(R.id.plaintext_createpostfragment_title));
         EditText bodyField = ((EditText) getView().findViewById(R.id.plaintext_createpostfragment_body));
+        
         if (TextUtils.isEmpty(titleField.getText())) {
             Toast.makeText(getActivity(), R.string.createpostfragment_titleempty, Toast.LENGTH_SHORT).show();
         } else if (TextUtils.isEmpty(bodyField.getText())) {

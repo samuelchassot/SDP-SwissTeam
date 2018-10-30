@@ -25,7 +25,8 @@ import com.squareup.picasso.Picasso;
  *
  * @author Julie Giunta
  */
-public class NavigationDrawer extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+public class NavigationDrawer extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+
     public static final String NAVIGATION_TAG = "NAV_DRAWER_CLICKED";
     public static final String CANCEL = "Cancel";
     public static final String MAIN = "Main";
@@ -139,12 +140,12 @@ public class NavigationDrawer extends AppCompatActivity implements NavigationVie
         int id = item.getItemId();
 
 
-        /**
+        /*
          //noinspection SimplifiableIfStatement
          if (id == R.id.action_settings) {
          return true;
          }
-         **/
+         */
 
         return super.onOptionsItemSelected(item);
     }

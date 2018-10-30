@@ -27,6 +27,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
     private static final int RC_SIGN_IN = 42;
     private final String ERROR_TAG = "SignInActivity";
     private final String ERROR_MSG = "signInResult:failed code=";
+
     private GoogleSignInClient mGoogleSignInClient_;
 
     @Override

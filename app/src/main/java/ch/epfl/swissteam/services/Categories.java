@@ -65,6 +65,15 @@ public enum Categories implements DBSavable {
         }
     }
 
+    /**
+     * TODO : Explain
+     *
+     * @return
+     */
+    public static Categories[] realCategories() {
+        return Arrays.copyOfRange(Categories.values(), 1, Categories.values().length);
+    }
+
     @Override
     public String toString() {
         switch (this) {
@@ -93,16 +102,12 @@ public enum Categories implements DBSavable {
 
     }
 
-    public static Categories[] realCategories(){
-        return  Arrays.copyOfRange(Categories.values(),1, Categories.values().length);
-    }
-
     /**
      * Add a user to the list of users
      *
      * @param user a user
      */
-    public void addUser(User user){
+    public void addUser(User user) {
         addUser(user.getGoogleId_());
     }
 

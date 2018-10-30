@@ -77,6 +77,4 @@ public class GoogleSignInSingleton {
         return clientUniqueID_;
     }
 
-
-
 }
