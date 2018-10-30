@@ -25,6 +25,7 @@ public class ProfileSettings extends AppCompatActivity {
     private String imageUrl_; //TODO: Allow user to change picture in his profile.
     private ArrayList<Categories> userCapabilities_ = new ArrayList<>();
     private RecyclerView recycler;
+    private User oldUser_;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +38,6 @@ public class ProfileSettings extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 save();
-
             }
         });
 
@@ -72,9 +72,22 @@ public class ProfileSettings extends AppCompatActivity {
         String uniqueID = GoogleSignInSingleton.get().getClientUniqueID();
         String email = ((TextView) findViewById(R.id.textview_profilesettings_email)).getText().toString();
         String descr = ((TextView) findViewById(R.id.edittext_profilesettings_description)).getText().toString();
-        User updatedUser = new User(uniqueID, name, email, descr, userCapabilities_, imageUrl_);
+        User updatedUser = new User(uniqueID, name, email, descr, userCapabilities_, imageUrl_, oldUser_.getRating_(),
+                oldUser_.getLatitude_(), oldUser_.getLongitude_());
 
-        DBUtility.get().setUser(updatedUser);
+
+        ArrayList<Categories> categoriesThatHaveBeenRemoved = oldUser_.getCategories_();
+        categoriesThatHaveBeenRemoved.removeAll(userCapabilities_);
+
+        for (Categories c : categoriesThatHaveBeenRemoved){
+            DBUtility.get().getCategory(c, (cat)->{
+                cat.removeUser(uniqueID);
+                cat.addToDB(DBUtility.get().getDb_());
+            });
+        }
+
+
+        updatedUser.addToDB(DBUtility.get().getDb_());
         finish();
     }
 
@@ -114,12 +127,14 @@ public class ProfileSettings extends AppCompatActivity {
             TextView descrView = (TextView) findViewById(R.id.edittext_profilesettings_description);
             descrView.setText(user.getDescription_());
 
-            Picasso.get().load(user.getImageUrl_()).into((ImageView) findViewById(R.id.imageview_profilesettings_picture));
+            oldUser_ = user;
+
+            Picasso.get().load(user.getImageUrl_()).into((ImageView)findViewById(R.id.imageview_profilesettings_picture));
             imageUrl_ = user.getImageUrl_();
             userCapabilities_.clear();
             userCapabilities_.addAll(user.getCategories_());
-
-            recycler.setAdapter(new CategoriesAdapterProfileSettings(Categories.values(), userCapabilities_));
+            
+            recycler.setAdapter(new CategoriesAdapterProfileSettings(Categories.realCategories(), userCapabilities_));
 
         });
     }

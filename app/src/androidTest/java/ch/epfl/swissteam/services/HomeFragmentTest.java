@@ -1,6 +1,5 @@
 package ch.epfl.swissteam.services;
 
-import android.content.Intent;
 import android.support.test.espresso.contrib.DrawerActions;
 import android.support.test.espresso.contrib.NavigationViewActions;
 import android.support.test.espresso.contrib.RecyclerViewActions;
@@ -37,10 +36,10 @@ public class HomeFragmentTest extends FirebaseTest{
     public void initialize() {
         LocationManager.get().setMock();
         TestUtils.addTestPost();
-        user = TestUtils.getATestUser();
+        user = TestUtils.getTestUser();
         post = TestUtils.getTestPost();
         post.addToDB(DBUtility.get().getDb_());
-        DBUtility.get().setUser(user);
+        user.addToDB(DBUtility.get().getDb_());
         sleep(400);
     }
 

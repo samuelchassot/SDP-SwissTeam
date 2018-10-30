@@ -17,7 +17,7 @@ public class DBUtilityTest {
 
     @Test
     public void getCatTest(){
-        DBUtility.get().getCategory("Computer", c->{
+        DBUtility.get().getCategory(Categories.fromString("Computer"), c->{
 
         });
     }

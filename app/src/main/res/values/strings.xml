@@ -125,4 +125,8 @@
         <item>English</item>
         <item>French</item>
     </string-array>
+
+    <string name="usersearch_distanceunavailable">Unavailable</string>
+    <string name="usersearch_distancedisplay">%1dkm away</string>
+
 </resources>
