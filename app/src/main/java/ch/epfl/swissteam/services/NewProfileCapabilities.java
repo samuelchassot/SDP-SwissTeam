@@ -56,14 +56,9 @@ public class NewProfileCapabilities extends AppCompatActivity {
      * Saves the newly created user in the database.
      */
     private void saveUserInDB() {
-        double latitude = 0;
-        double longitude = 0;
-        if(GoogleSignInSingleton.get().getLastLocation() != null){
-            latitude = GoogleSignInSingleton.get().getLastLocation().getLatitude();
-            longitude = GoogleSignInSingleton.get().getLastLocation().getLongitude();
-        }
+
         User user = new User(googleID_, username_, email_, description_, capabilitiesList_, imageUrl_, 0,
-               latitude, longitude);
+               0, 0);
         user.addToDB(DBUtility.get().getDb_());
 
     }

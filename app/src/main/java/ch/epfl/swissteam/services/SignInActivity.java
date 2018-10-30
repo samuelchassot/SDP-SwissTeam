@@ -1,11 +1,7 @@
 package ch.epfl.swissteam.services;
 
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -68,15 +64,11 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         if(account != null ){
             // Launch main
 
-            //put the current Location in the singleton
-            GoogleSignInSingleton.putCurrentLocation(this);
-
             // put uniqueID in the singleton
             GoogleSignInSingleton.putUniqueID(account.getId());
             Intent mainIntent = new Intent(this, MainActivity.class);
             mainIntent.putExtra(ACCOUNT_TAG , account);
 
-            GoogleSignInSingleton.updateLastLocationUserInDB();
             startActivity(mainIntent);
         }
     }
@@ -115,8 +107,6 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
             // Signed in successfully, show authenticated UI
             GoogleSignInSingleton.putUniqueID(account.getId());
             Intent newProfileIntent = new Intent(this, NewProfileDetails.class);
-
-            GoogleSignInSingleton.putCurrentLocation(this);
 
             newProfileIntent.putExtra(ACCOUNT_TAG , account);
             startActivity(newProfileIntent);

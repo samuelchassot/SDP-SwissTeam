@@ -18,7 +18,7 @@ public class LocationManager {
     public final static float MAX_POST_DISTANCE = 10000000; //in meters
     public final static int M_IN_ONE_KM = 1000;
 
-    private Location currentLocation_; //TODO: Maybe make this observable and remove getter, replace by onChangeListener
+    private Location currentLocation_ = null; //TODO: Maybe make this observable and remove getter, replace by onChangeListener
     private boolean isMock = false;
     private static LocationManager instance;
 
@@ -37,6 +37,7 @@ public class LocationManager {
 
     /**
      * Refreshes the LocationManager, which will fetch the current location asynchronously.
+     * When it gets the location, it puts it in the DB for the user if the clientUniqueID is not null in GoogleSignSingleton
      *
      * @param activity calling activity
      */
@@ -48,6 +49,17 @@ public class LocationManager {
                         1);
             } else {
                 LocationServices.getFusedLocationProviderClient(activity).getLastLocation().addOnSuccessListener(location -> currentLocation_ = location);
+                String googleClientID = GoogleSignInSingleton.get().getClientUniqueID();
+                if(googleClientID != null) {
+                    DBUtility.get().getUser(googleClientID, (u) -> {
+                        if (u != null) {
+                            User newUser = new User(u.getGoogleId_(), u.getName_(), u.getEmail_(), u.getDescription_(), u.getCategories_(), u.getImageUrl_(), u.getRating_(),
+                                    currentLocation_.getLatitude(), currentLocation_.getLongitude());
+                            newUser.addToDB(DBUtility.get().getDb_());
+
+                        }
+                    });
+                }
             }
         }
     }

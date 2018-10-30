@@ -127,7 +127,7 @@ public class ServicesFragment extends Fragment {
     }
 
     private int compareUsersUsingDistanceWithRef(User u1, User u2){
-        Location ref = GoogleSignInSingleton.get().getLastLocation();
+        Location ref = LocationManager.get().getCurrentLocation_();
         int result = 0;
         Location u1Location = new Location("");
         u1Location.setLatitude(u1.getLatitude_());
