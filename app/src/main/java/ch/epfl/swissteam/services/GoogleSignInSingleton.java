@@ -16,7 +16,7 @@ public class GoogleSignInSingleton {
         if(instance_ == null){
             instance_ = new GoogleSignInSingleton();
         }
-        if(instance_.clientUniqueID_ == null){
+        if(instance_.clientUniqueID_ == null && clientUniqueID != null){
             instance_.clientUniqueID_ = clientUniqueID;
         }
     }
@@ -29,10 +29,11 @@ public class GoogleSignInSingleton {
         if(instance_ == null){
             instance_ = new GoogleSignInSingleton();
         }
-        if(instance_.client_ == null){
+        if(instance_.client_ == null && client != null){
             instance_.client_ = client;
         }
     }
+
 
     public static GoogleSignInSingleton get(){
         if(instance_ == null){
@@ -62,6 +63,7 @@ public class GoogleSignInSingleton {
     public String getClientUniqueID(){
         return clientUniqueID_;
     }
+
 
 
 }

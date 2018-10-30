@@ -16,11 +16,9 @@ import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard
 import static android.support.test.espresso.action.ViewActions.scrollTo;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
-import static android.support.test.espresso.matcher.ViewMatchers.assertThat;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static ch.epfl.swissteam.services.TestUtils.sleep;
-import static org.hamcrest.CoreMatchers.is;
 
 @RunWith(AndroidJUnit4.class)
 public class ProfileDisplayFragmentTest extends FirebaseTest {
@@ -36,7 +34,7 @@ public class ProfileDisplayFragmentTest extends FirebaseTest {
 
     @Test
     public void openFragmentAndChangeName() {
-        User testUser = TestUtils.getATestUser();
+        User testUser = TestUtils.getTestUser();
 //        DBUtility.get().setUser(testUser);
 
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
@@ -73,7 +71,7 @@ public class ProfileDisplayFragmentTest extends FirebaseTest {
         onView(withId(R.id.button_profilesettings_save)).perform(scrollTo()).perform(click());
         sleep(1000);
         onView(withId(R.id.textview_profiledisplay_name)).perform(scrollTo()).check(matches(withText(newName)));
-        User testUser = TestUtils.getATestUser();
+        User testUser = TestUtils.getTestUser();
         testUser.addToDB(DBUtility.get().getDb_());
     }
 
@@ -82,7 +80,7 @@ public class ProfileDisplayFragmentTest extends FirebaseTest {
     public void initialize() {
         super.initialize();
         LocationManager.get().setMock();
-        User testUser = TestUtils.getATestUser();
+        User testUser = TestUtils.getTestUser();
         testUser.addToDB(DBUtility.get().getDb_());
         GoogleSignInSingleton.putUniqueID(testUser.getGoogleId_());
     }
