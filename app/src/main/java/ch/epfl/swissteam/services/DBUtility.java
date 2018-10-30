@@ -177,21 +177,11 @@ public class DBUtility {
     /**
      * TODO : Explain
      *
-     * @param user
-     */
-    public void setUser(User user) {
-        db_.child(USERS).child(user.getGoogleId_()).setValue(user);
-
-    }
-
-    /**
-     * TODO : Explain
-     *
      * @param category
      * @param callBack
      */
-    public void getCategory(String category, final MyCallBack<Void> callBack) {
-        db_.child(CATEGORIES).child(category).addListenerForSingleValueEvent(new ValueEventListener() {
+    public void getCategory(Categories category, final MyCallBack<Categories> callBack) {
+        db_.child(CATEGORIES).child(category.toString()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot data : dataSnapshot.getChildren()) {
