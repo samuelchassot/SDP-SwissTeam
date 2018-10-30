@@ -14,7 +14,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 /**
- * TODO : Explain class
+ * Utility class that wraps tools related with Firebase database
  */
 public class DBUtility {
 
@@ -175,17 +175,17 @@ public class DBUtility {
     }
 
     /**
-     * TODO : Explain
+     * Get Category from DB and execute CallBack
      *
-     * @param category
-     * @param callBack
+     * @param category Category wanted from DB
+     * @param callBack Callback to execute
      */
     public void getCategory(Categories category, final MyCallBack<Categories> callBack) {
         db_.child(CATEGORIES).child(category.toString()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot data : dataSnapshot.getChildren()) {
-                    Categories.fromString(category).addUser(data.getKey());
+                    category.addUser(data.getKey());
                 }
                 callBack.onCallBack(null);
             }
