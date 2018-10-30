@@ -2,14 +2,18 @@ package ch.epfl.swissteam.services;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -30,6 +34,9 @@ public class NavigationDrawer extends AppCompatActivity implements NavigationVie
     private DBUtility util_ = DBUtility.get();
 
     private DrawerLayout drawer_;
+    private Toolbar toolbar_;
+    protected ActionBarDrawerToggle toggle_;
+    private String toggleButton_;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,30 +49,32 @@ public class NavigationDrawer extends AppCompatActivity implements NavigationVie
      *                     the menu (MAIN : normal hamburger menu,
      *                     CANCEL : cross image and disables button to draw the menu,
      *                     BACK : arrow image and disables button tu draw the menu)
+     *
      */
     protected void onCreateDrawer(String toggleButton) {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        this.toggleButton_ = toggleButton;
+        toolbar_ = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar_);
 
         drawer_ = (DrawerLayout) findViewById(R.id.drawer_layout);
 
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer_, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer_.addDrawerListener(toggle);
-        toggle.syncState();
+        toggle_ = new ActionBarDrawerToggle(
+                this, drawer_, toolbar_, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer_.addDrawerListener(toggle_);
+        toggle_.syncState();
 
         switch(toggleButton){
             case (CANCEL) :
-                toggle.setDrawerIndicatorEnabled(false);
-                toggle.setHomeAsUpIndicator(R.drawable.ic_toggle_cancel);
-                toggle.setToolbarNavigationClickListener(view -> {
+                toggle_.setDrawerIndicatorEnabled(false);
+                toggle_.setHomeAsUpIndicator(R.drawable.ic_toggle_cancel);
+                toggle_.setToolbarNavigationClickListener(view -> {
                     finish();
                 });
                 break;
             case (BACK) :
-                toggle.setDrawerIndicatorEnabled(false);
-                toggle.setHomeAsUpIndicator(R.drawable.ic_toggle_backarrow);
-                toggle.setToolbarNavigationClickListener(view -> {
+                toggle_.setDrawerIndicatorEnabled(false);
+                toggle_.setHomeAsUpIndicator(R.drawable.ic_toggle_backarrow);
+                toggle_.setToolbarNavigationClickListener(view -> {
                     finish();
                 });
                 break;
@@ -75,16 +84,20 @@ public class NavigationDrawer extends AppCompatActivity implements NavigationVie
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        /*
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-        */
+        //if(toggleButton.equals(CANCEL)){
+            /*
+            FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                }
+            });
+            */
+
+        //}
+
 
         TextView navHeaderName = (TextView) findViewById(R.id.nav_header_name);
     }
@@ -102,6 +115,13 @@ public class NavigationDrawer extends AppCompatActivity implements NavigationVie
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
+        if(toggleButton_.equals(CANCEL)){
+            menu.setGroupEnabled(R.id.group_cancel, true);
+            menu.setGroupVisible(R.id.group_cancel, true);
+        }else{
+            menu.removeGroup(R.id.group_cancel);
+        }
+
         setNavUserName();
         return true;
     }

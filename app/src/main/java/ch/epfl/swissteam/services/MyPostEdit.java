@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -33,20 +34,28 @@ public class MyPostEdit extends NavigationDrawer{
         body_.setText(post_.getBody_());
     }
 
-    /**
-     * Function called when the edit button is clicked.
-     * Sets the modified post in the database and finish the activity.
-     * @param view the current View
-     */
-    public void editPost(View view) {
-        post_.setTitle_(title_.getText().toString());
-        post_.setBody_(body_.getText().toString());
-        DBUtility.get().setPost(post_);
-        finish();
-    }
 
-    //@Override
-    //public boolean onNavigationItemSelected(MenuItem item) {
-    //    Intent intent = new Intent()
-    //}
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        if(id == R.id.action_save){
+            post_.setTitle_(title_.getText().toString());
+            post_.setBody_(body_.getText().toString());
+            DBUtility.get().setPost(post_);
+            finish();
+        }
+
+        /**
+         //noinspection SimplifiableIfStatement
+         if (id == R.id.action_settings) {
+         return true;
+         }
+         **/
+
+        return super.onOptionsItemSelected(item);
+    }
 }
