@@ -92,7 +92,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/settings_button_set_home"
-                android:textAllCaps="false" />
+                android:textAllCaps="false"
+                android:layout_weight="1" />
+
+            <Space
+                android:layout_width="@dimen/settings_space_indent"
+                android:layout_height="match_parent" />
         </LinearLayout>
 
 
