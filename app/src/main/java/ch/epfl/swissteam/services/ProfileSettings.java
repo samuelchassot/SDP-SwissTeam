@@ -141,5 +141,4 @@ public class ProfileSettings extends NavigationDrawer {
         return super.onOptionsItemSelected(item);
     }
 
-
 }

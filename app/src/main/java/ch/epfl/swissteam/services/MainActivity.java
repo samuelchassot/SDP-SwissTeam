@@ -44,7 +44,7 @@ public class MainActivity extends NavigationDrawer {
     }
 
     @Override
-    protected void onStart(){
+    protected void onStart() {
         super.onStart();
         Intent intent = getIntent();
         chooseFragment(intent.getIntExtra(NAVIGATION_TAG, -1));
@@ -63,49 +63,9 @@ public class MainActivity extends NavigationDrawer {
         super.onPause();
         unregisterReceiver(br);
     }
-
-    @Override
-    public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        setNavUserName();
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        /*
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-         */
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
+    
       
-    public void chooseFragment(int id){
+    public void chooseFragment(int id) {
         switch (id) {
             case (R.id.button_maindrawer_home):
                 showHomeFragment();
@@ -133,17 +93,7 @@ public class MainActivity extends NavigationDrawer {
                 break;
         }
     }
-
- 
-
-    private void setNavUserName() {
-        util.getUser(GoogleSignInSingleton.get().getClientUniqueID(), user -> {
-            if (user != null) {
-                ((TextView) findViewById(R.id.nav_header_name)).setText(user.getName_());
-                ((TextView) findViewById(R.id.nav_header_email)).setText(user.getEmail_());
-                Picasso.get().load(user.getImageUrl_()).into((ImageView) findViewById(R.id.nav_header_profileimage));
-            }
-        });
+    
 
     /**
      * Initiate the fragment transaction
