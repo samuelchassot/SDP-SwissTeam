@@ -87,7 +87,7 @@ public class MyPostFragmentTest extends FirebaseTest{
         onView(withId(R.id.edittext_mypostedit_body)).check(matches(withText("Body")));
         onView(withId(R.id.edittext_mypostedit_title)).perform(typeText(" from unit test")).perform(closeSoftKeyboard());
         onView(withId(R.id.edittext_mypostedit_body)).perform(typeText(" from unit test")).perform(closeSoftKeyboard());
-        onView(withId(R.id.button_mypostedit_edit)).perform(click());
+        onView(withId(R.id.action_save)).perform(click());
 
         onView(withId(R.id.recyclerview_mypostsfragment)).perform(RecyclerViewActions.actionOnItemAtPosition(0,swipeLeft()));
         onView(withId(R.id.recyclerview_mypostsfragment)).perform(RecyclerViewActions.actionOnItemAtPosition(0, clickChildViewWithId(R.id.button_mypostadapter_edit)));
@@ -96,7 +96,7 @@ public class MyPostFragmentTest extends FirebaseTest{
         onView(withId(R.id.edittext_mypostedit_body)).check(matches(withText("Body from unit test")));
         onView(withId(R.id.edittext_mypostedit_title)).perform(clearText()).perform(typeText("Title")).perform(closeSoftKeyboard());
         onView(withId(R.id.edittext_mypostedit_body)).perform(clearText()).perform(typeText("Body")).perform(closeSoftKeyboard());
-        onView(withId(R.id.button_mypostedit_edit)).perform(click());
+        onView(withId(R.id.action_save)).perform(click());
     }
 
     public static ViewAction clickChildViewWithId(final int id) {

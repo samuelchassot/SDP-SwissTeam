@@ -13,6 +13,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
@@ -30,36 +31,28 @@ import com.squareup.picasso.Picasso;
  *
  * @author Samuel Chassot
  */
-public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends NavigationDrawer {
+    private Fragment profileShowerFragment_, homeFragment_,
+            servicesFragment_, createPostFragment_, settingsFragment_,
+            onlineChatFragment_, myPostsFragment_;
 
-    private Fragment profileShowerFragment_;
-    private Fragment homeFragment_, createPostFragment_, servicesFragment_, settingsFragment_, onlineChatFragment_, myPostsFragment_;
     private NetworkStatusReceiver br;
-
-    private DBUtility util = DBUtility.get();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        super.onCreateDrawer(MAIN);
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-
-        TextView navHeaderName = (TextView) findViewById(R.id.nav_header_name);
         br = new NetworkStatusReceiver();
         br.setActivity_(this);
+    }
 
-        showHomeFragment();
+    @Override
+    protected void onStart(){
+        super.onStart();
+        Intent intent = getIntent();
+        chooseFragment(intent.getIntExtra(NAVIGATION_TAG, -1));
     }
 
     @Override
@@ -76,48 +69,7 @@ public class MainActivity extends AppCompatActivity
         unregisterReceiver(br);
     }
 
-
-    @Override
-    public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        setNavUserName();
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-
-        /**
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-         **/
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
+    public void chooseFragment(int id){
         switch (id) {
             case (R.id.button_maindrawer_home) :
                 showHomeFragment();
@@ -140,25 +92,22 @@ public class MainActivity extends AppCompatActivity
             case (R.id.button_maindrawer_chats) :
                 showChatsFragment();
                 break;
+            default :
+                showHomeFragment();
+                break;
         }
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
     }
 
-
     /**
-     * Set the user name and email in the nav
+     * Initiate the fragment transaction
+     *
+     * @param fragment the fragment to show
      */
-    private void setNavUserName() {
-        util.getUser(GoogleSignInSingleton.get().getClientUniqueID(), user -> {
-            if(user != null) {
-                ((TextView) findViewById(R.id.nav_header_name)).setText(user.getName_());
-                ((TextView) findViewById(R.id.nav_header_email)).setText(user.getEmail_());
-                Picasso.get().load(user.getImageUrl_()).into((ImageView) findViewById(R.id.nav_header_profileimage));
-            }
-        });
+    protected void startTransactionFragment(Fragment fragment){
+        if (!fragment.isVisible()){
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.framelayout_main_fragmentcontainer, fragment).commit();
+        }
     }
 
     /**
@@ -227,19 +176,7 @@ public class MainActivity extends AppCompatActivity
         if (this.settingsFragment_ == null) this.settingsFragment_ = SettingsFragment.newInstance();
         this.startTransactionFragment(this.settingsFragment_);
     }
-
-    /**
-     * Initiate the fragment transaction
-     *
-     * @param fragment the fragment to show
-     */
-    private void startTransactionFragment(Fragment fragment){
-        if (!fragment.isVisible()){
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.framelayout_main_fragmentcontainer, fragment).commit();
-        }
-    }
-
+  
     @Override
     public void onUserInteraction() {
         LocationManager.get().refresh(this);

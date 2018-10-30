@@ -2,7 +2,10 @@ package ch.epfl.swissteam.services;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
@@ -11,7 +14,7 @@ import android.widget.EditText;
  *
  * @author Julie Giunta
  */
-public class MyPostEdit extends AppCompatActivity{
+public class MyPostEdit extends NavigationDrawer{
     private Post post_;
     private EditText title_, body_;
 
@@ -19,6 +22,7 @@ public class MyPostEdit extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_post_edit);
+        super.onCreateDrawer(CANCEL);
 
         Intent intent = getIntent();
         post_ = intent.getParcelableExtra(MyPostAdapter.MYPOST_TAG);
@@ -30,15 +34,29 @@ public class MyPostEdit extends AppCompatActivity{
         body_.setText(post_.getBody_());
     }
 
-    /**
-     * Function called when the edit button is clicked.
-     * Sets the modified post in the database and finish the activity.
-     * @param view the current View
-     */
-    public void editPost(View view) {
-        post_.setTitle_(title_.getText().toString());
-        post_.setBody_(body_.getText().toString());
-        DBUtility.get().setPost(post_);
-        finish();
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        if(id == R.id.action_save){
+            post_.setTitle_(title_.getText().toString());
+            post_.setBody_(body_.getText().toString());
+            DBUtility.get().setPost(post_);
+            finish();
+            return true;
+        }
+
+        /**
+         //noinspection SimplifiableIfStatement
+         if (id == R.id.action_settings) {
+         return true;
+         }
+         **/
+
+        return super.onOptionsItemSelected(item);
     }
 }
