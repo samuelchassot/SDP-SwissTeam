@@ -42,7 +42,7 @@ public class MyPostFragmentTest extends FirebaseTest{
     @Override
     public void initialize(){
         LocationManager.get().setMock();
-        DBUtility.get().setUser(TestUtils.getTestUser());
+        TestUtils.getTestUser().addToDB(DBUtility.get().getDb_());
         id = "1234";
         GoogleSignInSingleton.putUniqueID(id);
         post = new Post("1234_1539704399119", "Title", "1234", "Body", 1539704399119L,  10, 20);
