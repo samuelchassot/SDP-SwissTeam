@@ -1,23 +1,14 @@
 package ch.epfl.swissteam.services;
 
-import android.support.test.espresso.action.ViewActions;
 import android.support.test.espresso.contrib.DrawerActions;
 import android.support.test.espresso.contrib.NavigationViewActions;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
-import android.support.v7.widget.AppCompatImageButton;
-import android.support.v7.widget.Toolbar;
-import android.view.View;
-import android.widget.ImageButton;
-import android.widget.TextView;
 
 import org.hamcrest.Matcher;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.clearText;
@@ -36,6 +27,11 @@ public class ProfileDisplayFragmentTest extends FirebaseTest {
     @Rule
     public final ActivityTestRule<MainActivity> mainActivityRule_ =
             new ActivityTestRule<>(MainActivity.class);
+
+    @Override
+    public void terminate() {
+        LocationManager.get().unsetMock();
+    }
 
     @Test
     public void openFragmentAndChangeName() {
@@ -85,6 +81,7 @@ public class ProfileDisplayFragmentTest extends FirebaseTest {
     @Override
     public void initialize() {
         super.initialize();
+        LocationManager.get().setMock();
         User testUser = TestUtils.getATestUser();
         testUser.addToDB(DBUtility.get().getDb_());
         GoogleSignInSingleton.putUniqueID(testUser.getGoogleId_());

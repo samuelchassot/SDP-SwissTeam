@@ -50,7 +50,11 @@ public class ProfileActivity extends NavigationDrawer {
             TextView descrView =  findViewById(R.id.textView_profile_description);
             descrView.setText(user.getDescription_());
 
+            TextView ratingView = findViewById(R.id.textView_profile_rating);
+            ratingView.setText(Integer.toString(user.getRating_()));
+
             Picasso.get().load(user.getImageUrl_()).into((ImageView)findViewById(R.id.imageview_profile_picture));
+
         });
     }
 }

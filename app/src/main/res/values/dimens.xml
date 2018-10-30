@@ -15,6 +15,8 @@
     <dimen name="profile_settings_tags_width">90dp</dimen>
     <dimen name="profile_settings_space_height">25dp</dimen>
     <dimen name="undertoolbar_space_height">70dp</dimen>
+    <dimen name="post_maxheight">100dp</dimen>
+    <dimen name="post_image_maxsize">50dp</dimen>
 </resources>
 
     

@@ -21,6 +21,8 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.squareup.picasso.Picasso;
 
 /**
@@ -173,5 +175,10 @@ public class MainActivity extends NavigationDrawer {
     private void showSettingsFragment() {
         if (this.settingsFragment_ == null) this.settingsFragment_ = SettingsFragment.newInstance();
         this.startTransactionFragment(this.settingsFragment_);
+    }
+  
+    @Override
+    public void onUserInteraction() {
+        LocationManager.get().refresh(this);
     }
 }

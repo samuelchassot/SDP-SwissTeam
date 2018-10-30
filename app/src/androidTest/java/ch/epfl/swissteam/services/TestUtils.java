@@ -46,7 +46,7 @@ public class TestUtils {
     protected static void addTestPost() {
         long timestamp = (new Date()).getTime();
         String key = "1234" + "_" + timestamp;
-        DBUtility.get().setPost(new Post(key, "Hello there", "1234", "General Kenobi", timestamp));
+        DBUtility.get().setPost(new Post(key, "Hello there", "1234", "General Kenobi", timestamp, 10, 20));
 
 
     }
@@ -54,7 +54,7 @@ public class TestUtils {
     protected static Post getTestPost() {
         long timestamp = (new Date()).getTime();
         String key = "1234" + "_" + timestamp;
-        return new Post(key, "Hello there", "1234", "General Kenobi", timestamp);
+        return new Post(key, "Hello there", "1234", "General Kenobi", timestamp, 10, 20);
     }
 
     protected static void sleep(int ms){

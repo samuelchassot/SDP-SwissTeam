@@ -1,5 +1,6 @@
 package ch.epfl.swissteam.services;
 
+import android.location.Location;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
@@ -16,8 +17,6 @@ public class DBUtility {
 
     private DatabaseReference db_;
     private static DBUtility instance;
-    private User currentUser_;
-
 
 
     public final static String USERS = "Users";
@@ -26,11 +25,10 @@ public class DBUtility {
     public final static String ERROR_TAG = "DBUtility";
     public final static String CHATS = "Chats";
     public final static String CHATS_RELATIONS = "ChatRelations";
-    private final int POSTS_DISPLAY_NUMBER = 20;
+    private final int POSTS_DISPLAY_NUMBER = 100;
 
-
+    
     private DBUtility(DatabaseReference db){
-        currentUser_ = null;
         this.db_ = db;
     }
 
@@ -116,32 +114,6 @@ public class DBUtility {
     }
 
     /**
-     *
-     * @return the current logged user which is null if the db has not yet provided the user
-     */
-    public User getCurrentUser_(){
-        String googleId = GoogleSignInSingleton.get().getClientUniqueID();
-        if(currentUser_ == null || currentUser_.getGoogleId_().compareTo(googleId) != 0) {
-            currentUser_ = null;
-            try{
-                getUser(googleId, new MyCallBack<User>() {
-                    @Override
-                    public void onCallBack(User value) {
-                        if(value != null){
-                            currentUser_ = value;
-                        }
-                    }
-                });
-            }
-            catch (NullPointerException e){
-                currentUser_ = null;
-            }
-
-        }
-        return currentUser_;
-    }
-
-    /**
      * Get all users inside the database
      *
      * @param callBack the callBack to use
@@ -168,12 +140,13 @@ public class DBUtility {
     }
 
     /**
-     * Retrieves the POSTS_DISPLAY_NUMBER freshest post of the database
+     * Retrieves the POSTS_DISPLAY_NUMBER freshest post of the database in geographical range of the user.
      *
      * @param callBack the function called on the callBack
+     * @param userLocation the location of the user
      */
-    public void getPostsFeed(final MyCallBack<ArrayList<Post>> callBack) {
-        Query freshestPosts = db_.child(POSTS).orderByChild("timestamp_");
+    public void getPostsFeed(final MyCallBack<ArrayList<Post>> callBack, Location userLocation) {
+        Query freshestPosts = db_.child(POSTS).orderByChild("timestamp_").limitToFirst(POSTS_DISPLAY_NUMBER);
         freshestPosts.addListenerForSingleValueEvent(new ValueEventListener() {
             ArrayList<Post> posts = new ArrayList<>();
 
@@ -183,7 +156,12 @@ public class DBUtility {
 
                 for (DataSnapshot data : dataSnapshot.getChildren()){
                     Post post = data.getValue(Post.class);
-                    posts.add(0, post);
+                    Location postLocation = new Location("");
+                    postLocation.setLongitude(post.getLongitude_());
+                    postLocation.setLatitude(post.getLatitude_());
+                    if(postLocation.distanceTo(userLocation) <= LocationManager.MAX_POST_DISTANCE){
+                        posts.add(0, post);
+                    }
                 }
                 callBack.onCallBack(posts);
             }

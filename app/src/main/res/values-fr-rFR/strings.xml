@@ -74,4 +74,15 @@
         <item>Anglais</item>
         <item>Français</item>
     </string-array>
+    <string name="profiledisplay_nametag">Nom</string>
+    <string name="profiledisplay_emailtag">Email</string>
+    <string name="general_error">Erreur</string>
+    <string name="general_ok">OK</string>
+    <string name="profiledisplay_ratingtag">Note</string>
+    <string name="profilesettings_save">Sauvegarder</string>
+    <string name="profiledisplay_descriptiontag">Description</string>
+    <string name="profiledisplay_modify">Modifier</string>
+    <string name="show_profile">Voir le profil</string>
+    <string name="navigation_drawer_button_chats">Chats</string>
+    <string name="send_text">Envoyer</string>
 </resources>
