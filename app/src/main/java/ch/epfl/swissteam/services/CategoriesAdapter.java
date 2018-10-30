@@ -65,6 +65,11 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Ca
         public TextView nameView;
         public CheckBox checkBox;
 
+        /**
+         * Create a CategoriesViewHolder
+         *
+         * @param v the current View
+         */
         public CategoriesViewHolder(@NonNull View v) {
             super(v);
             this.nameView = v.findViewById(R.id.textview_capabilitylayout_name);
