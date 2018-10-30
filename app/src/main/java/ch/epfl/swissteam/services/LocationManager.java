@@ -46,7 +46,7 @@ public class LocationManager {
      * @param activity calling activity
      */
     public void refresh(Activity activity) {
-        if(!isMock && (lastUpateTime + TIME_BETWEEN_UPDATES) < (new Date()).getTime()) {
+        if((lastUpateTime + TIME_BETWEEN_UPDATES) < (new Date()).getTime() && !isMock) {
             if (ActivityCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(activity,
                         new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION},
