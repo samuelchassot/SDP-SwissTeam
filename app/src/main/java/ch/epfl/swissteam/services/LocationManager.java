@@ -28,11 +28,10 @@ public class LocationManager {
      * @return instance on LocationManager
      */
     public static LocationManager get() {
-        if(instance == null) {
+        if (instance == null) {
             instance = new LocationManager();
             return instance;
-        }
-        else return instance;
+        } else return instance;
     }
 
     /**
@@ -42,24 +41,28 @@ public class LocationManager {
      * @param activity calling activity
      */
     public void refresh(Activity activity) {
-        if(!isMock) {
+        if (!isMock) {
             if (ActivityCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(activity,
                         new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION},
                         1);
             } else {
-                LocationServices.getFusedLocationProviderClient(activity).getLastLocation().addOnSuccessListener(location -> currentLocation_ = location);
                 String googleClientID = GoogleSignInSingleton.get().getClientUniqueID();
-                if(googleClientID != null) {
-                    DBUtility.get().getUser(googleClientID, (u) -> {
-                        if (u != null) {
-                            User newUser = new User(u.getGoogleId_(), u.getName_(), u.getEmail_(), u.getDescription_(), u.getCategories_(), u.getImageUrl_(), u.getRating_(),
-                                    currentLocation_.getLatitude(), currentLocation_.getLongitude());
-                            newUser.addToDB(DBUtility.get().getDb_());
+                LocationServices.getFusedLocationProviderClient(activity).getLastLocation().addOnSuccessListener(location -> {
+                    currentLocation_ = location;
+                    if (googleClientID != null) {
+                        DBUtility.get().getUser(googleClientID, (u) -> {
+                            if (u != null) {
+                                User newUser = new User(u.getGoogleId_(), u.getName_(), u.getEmail_(), u.getDescription_(), u.getCategories_(), u.getImageUrl_(), u.getRating_(),
+                                        currentLocation_.getLatitude(), currentLocation_.getLongitude());
+                                newUser.addToDB(DBUtility.get().getDb_());
 
-                        }
-                    });
-                }
+                            }
+                        });
+                    }
+                });
+
+
             }
         }
     }
@@ -87,7 +90,7 @@ public class LocationManager {
      *
      * @return current location
      */
-    public Location getCurrentLocation_(){
+    public Location getCurrentLocation_() {
         return currentLocation_;
     }
 
