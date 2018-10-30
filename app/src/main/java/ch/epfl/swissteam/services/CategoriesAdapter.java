@@ -18,9 +18,9 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Ca
     private Categories[] capabilities_;
 
     /**
-     * TODO : Explain
+     * Creates a new CategoriesAdapter from an array of Categories.
      *
-     * @param capabilities
+     * @param capabilities Array of categories to create from
      */
     public CategoriesAdapter(Categories[] capabilities) {
         this.capabilities_ = capabilities;
@@ -58,7 +58,7 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Ca
     }
 
     /**
-     * TODO : Explain
+     * View Holder for the CategoriesAdapter.
      */
     public static class CategoriesViewHolder extends RecyclerView.ViewHolder {
 
