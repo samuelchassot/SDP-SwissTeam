@@ -78,6 +78,14 @@ public class HomeFragmentTest extends FirebaseTest{
                 (new SimpleDateFormat("dd/MM/yyyy", Locale.FRENCH)).format(new Date(post.getTimestamp_()).getTime()))));
         onView(withId(R.id.textview_postactivity_username)).check(matches(withText(user.getName_())));
     }
-    
+
+    @Test
+    public void canClickOnPostAndThenComeBack(){
+        onView(withId(R.id.swiperefresh_homefragment_refresh)).perform(swipeDown());
+        sleep(300);
+        onView(withId(R.id.recyclerview_homefragment_posts)).perform(RecyclerViewActions.actionOnItemAtPosition(0,click()));
+        sleep(500);
+        onView(TestUtils.navigationHomeMatcher()).perform(click());
+    }
 
 }
