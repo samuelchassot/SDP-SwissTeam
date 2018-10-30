@@ -5,8 +5,11 @@ import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.support.v4.app.ActivityCompat;
+import android.util.Log;
 
 import com.google.android.gms.location.LocationServices;
+
+import java.util.Date;
 
 /**
  * This singleton class contains the methods related to the location
@@ -17,10 +20,12 @@ public class LocationManager {
 
     public final static float MAX_POST_DISTANCE = 10000000; //in meters
     public final static int M_IN_ONE_KM = 1000;
+    private final static int TIME_BETWEEN_UPDATES = 10000; //in ms
 
     private Location currentLocation_; //TODO: Maybe make this observable and remove getter, replace by onChangeListener
     private boolean isMock = false;
     private static LocationManager instance;
+    private long lastUpateTime = 0;
 
     /**
      * Get the only instance of LocationManager;
@@ -41,12 +46,13 @@ public class LocationManager {
      * @param activity calling activity
      */
     public void refresh(Activity activity) {
-        if(!isMock) {
+        if(!isMock && (lastUpateTime + TIME_BETWEEN_UPDATES) < (new Date()).getTime()) {
             if (ActivityCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(activity,
                         new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION},
                         1);
             } else {
+                lastUpateTime = (new Date()).getTime();
                 LocationServices.getFusedLocationProviderClient(activity).getLastLocation().addOnSuccessListener(location -> currentLocation_ = location);
             }
         }
