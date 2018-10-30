@@ -5,8 +5,13 @@ import android.support.test.espresso.contrib.DrawerActions;
 import android.support.test.espresso.contrib.NavigationViewActions;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
+import android.support.v7.widget.AppCompatImageButton;
+import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
+import org.hamcrest.Matcher;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,11 +26,9 @@ import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard
 import static android.support.test.espresso.action.ViewActions.scrollTo;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
-import static android.support.test.espresso.matcher.ViewMatchers.assertThat;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static ch.epfl.swissteam.services.TestUtils.sleep;
-import static org.hamcrest.CoreMatchers.is;
 
 @RunWith(AndroidJUnit4.class)
 public class ProfileDisplayFragmentTest extends FirebaseTest {
@@ -57,7 +60,8 @@ public class ProfileDisplayFragmentTest extends FirebaseTest {
         sleep(1000);
         onView(withId(R.id.button_profiledisplay_modify)).perform(scrollTo()).perform(click());
         sleep(1000);
-        onView(withId(R.id.button_profilesettings_cancel)).perform(scrollTo()).perform(click());
+        onView(TestUtils.navigationHomeMatcher()).perform(click());
+
     }
 
     @Test
@@ -70,7 +74,7 @@ public class ProfileDisplayFragmentTest extends FirebaseTest {
         String newName = "test New Name";
         onView(withId(R.id.edittext_profilesettings_name)).perform(clearText()).perform(typeText(newName)).perform(closeSoftKeyboard());
         sleep(1000);
-        onView(withId(R.id.button_profilesettings_save)).perform(scrollTo()).perform(click());
+        onView(withId(R.id.action_save)).perform(click());
         sleep(1000);
         onView(withId(R.id.textview_profiledisplay_name)).perform(scrollTo()).check(matches(withText(newName)));
         User testUser = TestUtils.getATestUser();

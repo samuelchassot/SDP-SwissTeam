@@ -47,6 +47,7 @@ public class MyPostEdit extends NavigationDrawer{
             post_.setBody_(body_.getText().toString());
             DBUtility.get().setPost(post_);
             finish();
+            return true;
         }
 
         /**

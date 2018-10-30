@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -33,32 +34,6 @@ public class ProfileSettings extends NavigationDrawer {
         setContentView(R.layout.activity_profile_settings);
         super.onCreateDrawer(CANCEL);
 
-        Button saveButton = (Button)findViewById(R.id.button_profilesettings_save);
-
-        saveButton.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                save();
-
-            }
-        });
-
-        Button cancelButton = (Button)findViewById(R.id.button_profilesettings_cancel);
-
-        cancelButton.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                cancel();
-
-            }
-        });
-
-
-
         String uniqueID = GoogleSignInSingleton.get().getClientUniqueID();
         loadAndShowUser(uniqueID);
 
@@ -85,10 +60,6 @@ public class ProfileSettings extends NavigationDrawer {
 
         DBUtility.get().setUser(updatedUser);
         finish();
-    }
-
-    private void cancel(){
-        this.finish();
     }
 
     public void updateUserCapabilities(Categories cat, boolean checked){
@@ -125,9 +96,29 @@ public class ProfileSettings extends NavigationDrawer {
             
             recycler.setAdapter(new CategoriesAdapterProfileSettings(Categories.values(), userCapabilities_));
 
-
-
         });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        if(id == R.id.action_save){
+            save();
+            return true;
+        }
+
+        /**
+         //noinspection SimplifiableIfStatement
+         if (id == R.id.action_settings) {
+         return true;
+         }
+         **/
+
+        return super.onOptionsItemSelected(item);
     }
 
 
