@@ -58,28 +58,7 @@ public class NavigationDrawer extends AppCompatActivity implements NavigationVie
 
         drawer_ = (DrawerLayout) findViewById(R.id.drawer_layout);
 
-        toggle_ = new ActionBarDrawerToggle(
-                this, drawer_, toolbar_, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer_.addDrawerListener(toggle_);
-        toggle_.syncState();
-
-        switch(toggleButton){
-            case (CANCEL) :
-                toggle_.setDrawerIndicatorEnabled(false);
-                toggle_.setHomeAsUpIndicator(R.drawable.ic_toggle_cancel);
-                toggle_.setToolbarNavigationClickListener(view -> {
-                    finish();
-                });
-                break;
-            case (BACK) :
-                toggle_.setDrawerIndicatorEnabled(false);
-                toggle_.setHomeAsUpIndicator(R.drawable.ic_toggle_backarrow);
-                toggle_.setToolbarNavigationClickListener(view -> {
-                    finish();
-                });
-                break;
-        }
-
+        setUpToggle();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -100,6 +79,32 @@ public class NavigationDrawer extends AppCompatActivity implements NavigationVie
 
 
         TextView navHeaderName = (TextView) findViewById(R.id.nav_header_name);
+    }
+
+    /**
+     * Set up the action bar
+     */
+    private void setUpToggle(){
+        toggle_ = new ActionBarDrawerToggle(
+                this, drawer_, toolbar_, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer_.addDrawerListener(toggle_);
+        toggle_.syncState();
+
+        if(!toggleButton_.equals(MAIN)){
+            toggle_.setDrawerIndicatorEnabled(false);
+            toggle_.setToolbarNavigationClickListener(view -> {
+                finish();
+            });
+        }
+
+        switch(toggleButton_){
+            case (CANCEL) :
+                toggle_.setHomeAsUpIndicator(R.drawable.ic_toggle_cancel);
+                break;
+            case (BACK) :
+                toggle_.setHomeAsUpIndicator(R.drawable.ic_toggle_backarrow);
+                break;
+        }
     }
 
     @Override
