@@ -21,10 +21,10 @@ public class CategoriesAdapterProfileSettings extends RecyclerView.Adapter<Categ
     private ArrayList<Categories> userCapabilities_;
 
     /**
-     * TODO : Explain
+     * Creates an adapter for categories to be used in ProfileSettings
      *
-     * @param capabilities
-     * @param userCapabilities
+     * @param capabilities the array of categories to be adapted
+     * @param userCapabilities a list of capabilities (of the user) to be checked
      */
     public CategoriesAdapterProfileSettings(Categories[] capabilities, ArrayList<Categories> userCapabilities) {
         this.capabilities_ = capabilities;

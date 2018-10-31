@@ -66,9 +66,9 @@ public enum Categories implements DBSavable {
     }
 
     /**
-     * TODO : Explain
+     * Gives all the actual categories (all except ALL)
      *
-     * @return
+     * @return the actual categories
      */
     public static Categories[] realCategories() {
         return Arrays.copyOfRange(Categories.values(), 1, Categories.values().length);

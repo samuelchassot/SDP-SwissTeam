@@ -9,16 +9,16 @@ import android.widget.TextView;
 import java.util.List;
 
 /**
- * TODO : Explain
+ * An adapter for capabilities
  */
 public class CapabilitiesAdapter extends RecyclerView.Adapter<CapabilitiesAdapter.CapabilitiesViewHolder> {
 
     private List<Categories> capabilities_;
 
     /**
-     * TODO : Explain
+     * Create an adapter for capabilities
      *
-     * @param capabilities
+     * @param capabilities a list of capabilities
      */
     public CapabilitiesAdapter(List<Categories> capabilities) {
         capabilities_ = capabilities;

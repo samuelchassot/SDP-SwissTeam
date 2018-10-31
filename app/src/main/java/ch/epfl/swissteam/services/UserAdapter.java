@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import static ch.epfl.swissteam.services.NewProfileDetails.GOOGLE_ID_TAG;
 
 /**
- * TODO : Explain
+ * An adapter for User
  */
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder> {
 
@@ -27,10 +27,10 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
     private Location referenceLocation_;
 
     /**
-     * TODO : Explain
+     * Create an adapter for User
      *
-     * @param users
-     * @param context
+     * @param users a list of User
+     * @param context the current context
      */
     public UserAdapter(ArrayList<User> users, Context context){
         users_ = users;
