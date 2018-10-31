@@ -12,6 +12,8 @@ public class ChatRelation implements DBSavable {
 
     public static final String RELATION_ID_TEXT = "relationId";
 
+
+    //Attributes
     private String firstUserId_;
     private String secondUserId_;
     private String id_;
@@ -22,17 +24,14 @@ public class ChatRelation implements DBSavable {
      * @param firstUser  the first user in the relation
      * @param secondUser the second user in the relation
      */
-    public ChatRelation(User firstUser, User secondUser) {
-        this();
-        setUsers(firstUser, secondUser);
+    public ChatRelation(User firstUser, User secondUser ) {
+        //set users IDs in alphanumeric order
+        assignUsers(firstUser, secondUser);
     }
 
-    /**
-     * An empty constructor that defines a null id
-     */
-    public ChatRelation() {
-        id_ = null;
-    }
+    public ChatRelation(){}
+
+    //Getters
 
     /**
      * Gives the id of the first user in the relation
@@ -41,20 +40,6 @@ public class ChatRelation implements DBSavable {
      */
     public String getFirstUserId_() {
         return firstUserId_;
-    }
-
-    /**
-     * Set the id of the first user in the relation. If the id of the second
-     * user is null, make both users id in the relation be user1Id
-     *
-     * @param user1Id the id of the first user
-     */
-    public void setFirstUserId_(String user1Id) {
-        if (secondUserId_ == null) {
-            setUsersId(user1Id, user1Id);
-        } else {
-            setUsersId(user1Id, secondUserId_);
-        }
     }
 
     /**
@@ -67,26 +52,42 @@ public class ChatRelation implements DBSavable {
     }
 
     /**
-     * Set the id of the second user in the relation. If the id of the first
-     * user is null, make both users id in the relation be user2Id
-     *
-     * @param user2Id the id of the second user
-     */
-    public void setSecondUserId_(String user2Id) {
-        if (firstUserId_ == null) {
-            setUsersId(user2Id, user2Id);
-        } else {
-            setUsersId(firstUserId_, user2Id);
-        }
-    }
-
-    /**
      * Gives the id of the relation
      *
      * @return the id of the relation
      */
     public String getId_() {
         return id_;
+    }
+
+    //Setters
+
+    /**
+     * Set the id of the first user in the relation.
+     *
+     * @param firstUserId the id of the first user
+     */
+    public void setFirstUserId_(String firstUserId) {
+        if(firstUserId == null) {
+            throw new NullPointerException("ChatRelations requires non null firstUser");
+        }
+
+        if(secondUserId_ == null) {firstUserId_ = firstUserId;}
+        else {assignUsersId(firstUserId, secondUserId_);} //set users IDs in alphanumeric order
+    }
+
+    /**
+     * Set the id of the second user in the relation.
+     *
+     * @param secondUserId the id of the second user
+     */
+    public void setSecondUserId_(String secondUserId) {
+        if(secondUserId == null) {
+            throw new NullPointerException("ChatRelations requires non null secondUser");
+        }
+
+        if(firstUserId_ == null) {secondUserId_ = secondUserId;}
+        else {assignUsersId(firstUserId_, secondUserId);} //set users IDs in alphanumeric order
     }
 
     /**
@@ -98,76 +99,84 @@ public class ChatRelation implements DBSavable {
         this.id_ = id;
     }
 
+    //public methods
+
     /**
-     * Set both users id in the relation
-     *
-     * @param firstUser  the first user
-     * @param secondUser the second user
+     * assign users by their ID in alphanumeric order, firstUser < secondUser.
+     * It does not matter in which order the IDs are input, this method take care of ordering them.
+     * @param firstUser a reference to the first user
+     * @param secondUser    a reference to the second user
      */
-    public void setUsers(User firstUser, User secondUser) {
-        if (firstUser == null) {
+    public void assignUsers(User firstUser, User secondUser) {
+        if(firstUser == null) {
             throw new NullPointerException("ChatRelations requires non null firstUser");
         }
-        if (secondUser == null) {
+        if(secondUser == null) {
             throw new NullPointerException("ChatRelations requires non null secondUser");
         }
 
-        setUsersId(firstUser.getGoogleId_(), secondUser.getGoogleId_());
+        //set users IDs in alphanumeric order
+        assignUsersId(firstUser.getGoogleId_(), secondUser.getGoogleId_());
     }
 
     /**
-     * Set both users id in the relation
-     *
-     * @param firstId  the id of the first user
-     * @param secondId the id of the second user
+     * assign users ID in alphanumeric order, firstUser < secondUser.
+     * It does not matter in which order the IDs are input, this method take care of ordering them.
+     * @param firstId   the id of the first user
+     * @param secondId  the id of the second user
      */
-    private void setUsersId(String firstId, String secondId) {
-        if (firstId == null) {
+    private void assignUsersId(String firstId, String secondId) {
+        if(firstId == null) {
             throw new NullPointerException("ChatRelations requires non null firstUser googleId");
         }
-        if (secondId == null) {
+        if(secondId == null) {
             throw new NullPointerException("ChatRelations requires non null secondUser googleId");
         }
 
-        if (firstId.compareTo(secondId) <= 0) {
+        if(firstId.compareTo(secondId) <= 0) {
             firstUserId_ = firstId;
             secondUserId_ = secondId;
-        } else {
+        }
+        else {
             firstUserId_ = secondId;
             secondUserId_ = firstId;
         }
     }
 
     /**
-     * Given the id of a user, get the id of the other user in this relation
+     * return the id of the user that is in relation with the user with the ID currentUserId
      *
-     * @param currentUserId the id of a user in the relation
-     * @return the id of the user related to currentUserId
+     * @throws IllegalArgumentException if the currentUserId is not an ID in the relation
+     * @param currentUserId the ID of the user that needs to know his partner ID
+     * @return  the googleID of the other user in the relation
      */
     public String getOtherId(String currentUserId) {
-        if (!isInThisRelation(currentUserId)) {
+        if(!isInThisRelation(currentUserId)) {
             throw new IllegalArgumentException("The current user does not belong to this ChatRelation");
         }
-        if (firstUserId_.compareTo(currentUserId) == 0) {
+
+        if(firstUserId_.compareTo(currentUserId) == 0) {
             return secondUserId_;
-        } else {
+        }
+        else {
             return firstUserId_;
         }
     }
 
     /**
-     * Check if a given id is the id of one of the users in this relation
-     *
-     * @param id the id to be checked
-     * @return true if the id is indeed one of the user's id in the relation, false otherwise
+     * whether the user with googleID id is part of this relation
+     * @param id the googleID of the user
+     * @return true if the user is part of this relation, false otherwise
      */
     private Boolean isInThisRelation(String id) {
         return firstUserId_.compareTo(id) == 0 || secondUserId_.compareTo(id) == 0;
     }
 
+
+    //Overrides
     @Override
     public void addToDB(DatabaseReference databaseReference) {
-        if (id_ == null) {
+        if(id_ == null) {
             id_ = databaseReference.child(DBUtility.get().CHATS_RELATIONS).push().getKey();
         }
         databaseReference.child(DBUtility.get().CHATS_RELATIONS).child(id_).setValue(this);

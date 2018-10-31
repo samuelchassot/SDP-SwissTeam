@@ -242,20 +242,20 @@ public class User implements DBSavable {
     }
 
     /**
-     * TODO : Explain
+     * return the chatRelation that this user have with other if it exists already and null otherwise
      *
-     * @param other
-     * @return
+     * @param other the other user
+     * @return the chatRelation that this user have with other if it exists already and null otherwise
      */
     public ChatRelation relationExists(User other) {
         return relationExists(other.getGoogleId_());
     }
 
     /**
-     * TODO : Explain
+     * return the chatRelation that this user have with otherID if it exists already and null otherwise
      *
-     * @param otherId
-     * @return
+     * @param otherId the other user's ID
+     * @return the chatRelation that this user have with other if it exists already and null otherwise
      */
     public ChatRelation relationExists(String otherId) {
         if (chatRelations_ == null) return null;
