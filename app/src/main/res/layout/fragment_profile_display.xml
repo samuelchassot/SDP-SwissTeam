@@ -11,7 +11,9 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
 
         <Space
             android:layout_width="match_parent"
@@ -121,8 +123,33 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/textview_profiledisplay_categoriestag"
+                android:id="@+id/textview_usersearchlayout_ratingtag"
+                android:layout_width="@dimen/profile_settings_tags_width"
+                android:layout_height="wrap_content"
+                android:text="@string/profiledisplay_ratingtag"
+                android:textStyle="bold" />
+
+
+            <TextView
+                android:id="@+id/textview_profiledisplay_rating"
                 android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"/>
+        </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/profile_settings_space_height" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textview_profiledisplay_categoriestag"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/profiledisplay_categoriestag"
@@ -147,7 +174,8 @@
         <Button
             android:id="@+id/button_profiledisplay_modify"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
             android:text="@string/profiledisplay_modify" />
 
     </LinearLayout>

@@ -2,16 +2,20 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/parent_layout"
     android:layout_width="match_parent"
     android:layout_height="72dp"
     android:background="@drawable/border_top"
-    android:orientation="horizontal"
-    android:id="@+id/parent_layout">
+    android:orientation="horizontal">
+
     <ImageView
         android:id="@+id/imageview_usersearchlayout_image"
-        android:layout_width="72dp"
+        android:layout_width="0dp"
         android:layout_height="72dp"
+        android:layout_marginEnd="236dp"
         android:src="@drawable/img1"
+        app:layout_constraintEnd_toStartOf="@+id/textview_usersearchlayout_rating"
+        app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -40,6 +44,34 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageview_usersearchlayout_image"
         app:layout_constraintTop_toBottomOf="@+id/textview_usersearchlayout_name" />
+
+    <TextView
+        android:id="@+id/textview_usersearchlayout_rating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="18dp"
+        android:layout_marginRight="18dp"
+        android:layout_marginBottom="2dp"
+        android:text="42"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageview_usersearchlayout_image" />
+
+    <TextView
+        android:id="@+id/textview_usersearchlayout_distance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.959"
+        app:layout_constraintStart_toEndOf="@+id/imageview_usersearchlayout_image"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
 
 </android.support.constraint.ConstraintLayout>

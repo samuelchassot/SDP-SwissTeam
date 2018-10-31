@@ -5,20 +5,17 @@ import android.util.Log;
 import com.google.firebase.database.DatabaseReference;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 /**
- * Class representing a user in the database,
+ * Class representing a user in the database
+ *
  * @author simonwicky
  */
-public class User implements DBSavable{
-
-
-
+public class User implements DBSavable {
 
     private String googleId_, email_, name_, description_, imageUrl_;
-
+    private int rating_;
+    private double latitude_, longitude_;
     private ArrayList<Categories> categories_;
 
     private ArrayList<ChatRelation> chatRelations_;
@@ -26,62 +23,185 @@ public class User implements DBSavable{
     /**
      * Default constructor, needed for database
      */
-    public User(){
-
+    public User() {
+        categories_ = new ArrayList<>();
+        chatRelations_ = new ArrayList<>();
     }
 
     /**
      * Create a new user given its specificities
-
-     * @param googleID_ User's unique googleId
-     * @param name_ User's name
-     * @param email_ User's email
+     *
+     * @param googleID_    User's unique googleId
+     * @param name_        User's name
+     * @param email_       User's email
      * @param description_ User's description
-     * @param categories_ User's categories of services
+     * @param categories_  User's categories of services
      */
+    @Deprecated
     public User(String googleID_, String name_, String email_, String description_, ArrayList<Categories> categories_, String imageUrl_) {
+        this();
         this.googleId_ = googleID_;
         this.email_ = email_;
         this.name_ = name_;
         this.description_ = description_;
         this.imageUrl_ = imageUrl_;
+        this.rating_ = 0;
         this.categories_ = categories_ == null ? new ArrayList<Categories>() : (ArrayList<Categories>) categories_.clone();
     }
 
-    public String getGoogleId_() { return googleId_; }
+    /**
+     * Create a new user given its specificities
+     *
+     * @param googleID_    User's unique googleId
+     * @param name_        User's name
+     * @param email_       User's email
+     * @param description_ User's description
+     * @param categories_  User's categories of services
+     * @param rating_      User's rating score
+     * @param latitude_    User's last latitude
+     * @param longitude_   User's last longitude
+     */
+    public User(String googleID_, String name_, String email_, String description_, ArrayList<Categories> categories_, String imageUrl_, int rating_,
+                double latitude_, double longitude_) {
+        this.googleId_ = googleID_;
+        this.email_ = email_;
+        this.name_ = name_;
+        this.description_ = description_;
+        this.imageUrl_ = imageUrl_;
+        this.rating_ = rating_;
+        this.categories_ = categories_ == null ? new ArrayList<Categories>() : (ArrayList<Categories>) categories_.clone();
 
+        this.latitude_ = latitude_;
+        this.longitude_ = longitude_;
+    }
+
+//    public User(String googleID_, String name_, String email_, String description_, ArrayList<Categories> categories_, String imageUrl_, int rating_, Location lastLocation) {
+//        this.googleId_ = googleID_;
+//        this.email_ = email_;
+//        this.name_ = name_;
+//        this.description_ = description_;
+//        this.imageUrl_ = imageUrl_;
+//        this.rating_ = rating_;
+//        this.categories_ = categories_ == null ? new ArrayList<Categories>() : (ArrayList<Categories>) categories_.clone();
+//        double lat = 0;
+//        double longt = 0;
+//        if(lastLocation != null) {
+//            lat= lastLocation.getLatitude();
+//            longt = lastLocation.getLongitude();
+//        }
+//        this.latitude_ = lat;
+//        this.longitude_= longt;
+//    }
+
+    /**
+     * Gives the google id of the user
+     *
+     * @return the google id of the user
+     */
+    public String getGoogleId_() {
+        return googleId_;
+    }
+
+    /**
+     * Gives the name of the user
+     *
+     * @return the name of the user
+     */
     public String getName_() {
         return name_;
     }
 
+    /**
+     * Gives the email of the user
+     *
+     * @return the email of the user
+     */
     public String getEmail_() {
         return email_;
     }
 
+    /**
+     * Gives the description of the user
+     *
+     * @return the description of the user
+     */
     public String getDescription_() {
         return description_;
     }
 
-    public String getImageUrl_() { return imageUrl_; }
+    /**
+     * Gives the url of the image of the user
+     *
+     * @return the url of the image of the user
+     */
+    public String getImageUrl_() {
+        return imageUrl_;
+    }
 
+    /**
+     * Gives the rating of the user
+     *
+     * @return the rating of the user
+     */
+    public int getRating_() {
+        return rating_;
+    }
+
+
+//    public Location getLastLocation() {
+//        Location lastLocation = new Location("");
+//        lastLocation.setLongitude(longitude_);
+//        lastLocation.setLatitude(latitude_);
+//        return lastLocation;
+//    }
+//    public void setLastLocation_(Location lastLocation){
+//        if(lastLocation != null){
+//          this.latitude_ = lastLocation.getLatitude();
+//          this.longitude_ = lastLocation.getLongitude();
+//        }
+//    }
+
+
+    public double getLatitude_() {
+        return latitude_;
+    }
+
+    public double getLongitude_() {
+        return longitude_;
+    }
+
+    /**
+     * Gives the list of categories of the user if it exists, creates a new empty list otherwise
+     *
+     * @return the list of categories of the user
+     */
     public ArrayList<Categories> getCategories_() {
-        if(categories_ == null){
+        if (categories_ == null) {
             return new ArrayList<>();
         }
         return (ArrayList<Categories>) categories_.clone();
     }
 
+    /**
+     * Gives the list of chat relations of the user if it exists, creates a new empty list otherwise
+     *
+     * @return the list of categories of the user
+     */
     public ArrayList<ChatRelation> getChatRelations_() {
-        return chatRelations_ == null ? null : (ArrayList<ChatRelation>) chatRelations_.clone();//Collections.unmodifiableList(chatRelations_);
+        if (chatRelations_ == null) {
+            return new ArrayList<>();
+        }
+        return (ArrayList<ChatRelation>) chatRelations_.clone();
     }
 
     /**
      * Add the user to a database
+     *
      * @param db the database in which to add the user
      */
-    public void addToDB(DatabaseReference db){
+    public void addToDB(DatabaseReference db) {
         db.child(DBUtility.USERS).child(googleId_).setValue(this);
-        if(categories_ != null) {
+        if (categories_ != null) {
             for (Categories category : categories_) {
                 db.child(DBUtility.CATEGORIES).child(category.toString()).child(googleId_).setValue("true");
             }
@@ -91,41 +211,74 @@ public class User implements DBSavable{
     }
 
     /**
-     * Add a chatRelation to the list of chatRelationId of the user and save it into the database
-     * db
+     * Add a chatRelation to the list of chatRelationId of the user and save it into the database db
+     *
      * @param chatRelation the id of the chatRelation
-     * @param db reference to the database to update the user
+     * @param db           reference to the database to update the user
      */
-    public void addChatRelation(ChatRelation chatRelation, DatabaseReference db){
-        if(chatRelations_ == null) {
-            chatRelations_ = new ArrayList<>();}
+    public void addChatRelation(ChatRelation chatRelation, DatabaseReference db) {
+        if (chatRelations_ == null) {
+            chatRelations_ = new ArrayList<>();
+        }
         chatRelations_.add(chatRelation);
-        if(db != null){
+        if (db != null) {
             addToDB(db);
         }
     }
+
     @Override
-    public boolean equals(Object other){
+    public boolean equals(Object other) {
         return this.googleId_.equals(((User) other).getGoogleId_());
     }
 
     /**
      * Add a chatRelationId to the list of chatRelation of the user
      * db
+     *
      * @param chatRelation the id of the chatRelation
      */
-    public void addChatRelation(ChatRelation chatRelation){
+    public void addChatRelation(ChatRelation chatRelation) {
         addChatRelation(chatRelation, null);
     }
 
-    public ChatRelation relationExists(User other){
-        if(chatRelations_ == null) return null;
-        for(ChatRelation cR : chatRelations_){
-            if(cR.getFirstUserId_().compareTo(googleId_) == 0 && cR.getSecondUserId_().compareTo(other.googleId_) == 0
-                    || cR.getFirstUserId_().compareTo(other.googleId_) == 0 && cR.getSecondUserId_().compareTo(googleId_) == 0){
+    /**
+     * return the chatRelation that this user have with other if it exists already and null otherwise
+     *
+     * @param other the other user
+     * @return the chatRelation that this user have with other if it exists already and null otherwise
+     */
+    public ChatRelation relationExists(User other) {
+        return relationExists(other.getGoogleId_());
+    }
+
+    /**
+     * return the chatRelation that this user have with otherID if it exists already and null otherwise
+     *
+     * @param otherId the other user's ID
+     * @return the chatRelation that this user have with other if it exists already and null otherwise
+     */
+    public ChatRelation relationExists(String otherId) {
+        if (chatRelations_ == null) return null;
+        for (ChatRelation cR : chatRelations_) {
+            if (cR.getFirstUserId_().compareTo(getGoogleId_()) == 0 && cR.getSecondUserId_().compareTo(otherId) == 0
+                    || cR.getFirstUserId_().compareTo(otherId) == 0 && cR.getSecondUserId_().compareTo(getGoogleId_()) == 0) {
                 return cR;
             }
         }
         return null;
+    }
+
+    /**
+     * Increments user's rating by 1
+     */
+    public void upvote() {
+        rating_ += 1;
+    }
+
+    /**
+     * Decrements user's rating by 1
+     */
+    public void downvote() {
+        rating_ -= 1;
     }
 }

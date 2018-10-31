@@ -1,10 +1,11 @@
 package ch.epfl.swissteam.services;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -21,42 +22,18 @@ import java.util.ArrayList;
  *
  * @Author Samuel Chassot
  */
-public class ProfileSettings extends AppCompatActivity {
+public class ProfileSettings extends NavigationDrawer {
 
     private String imageUrl_; //TODO: Allow user to change picture in his profile.
     private ArrayList<Categories> userCapabilities_ = new ArrayList<>();
     private RecyclerView recycler;
+    private User oldUser_;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_settings);
-
-        Button saveButton = (Button)findViewById(R.id.button_profilesettings_save);
-
-        saveButton.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                save();
-
-            }
-        });
-
-        Button cancelButton = (Button)findViewById(R.id.button_profilesettings_cancel);
-
-        cancelButton.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                cancel();
-
-            }
-        });
-
-
+        super.onCreateDrawer(CANCEL);
 
         String uniqueID = GoogleSignInSingleton.get().getClientUniqueID();
         loadAndShowUser(uniqueID);
@@ -71,63 +48,97 @@ public class ProfileSettings extends AppCompatActivity {
 
     }
 
-
     /**
      * Save the modification done by the user
      */
-    private void save(){
+    private void save() {
         String name = ((TextView) findViewById(R.id.edittext_profilesettings_name)).getText().toString();
         String uniqueID = GoogleSignInSingleton.get().getClientUniqueID();
         String email = ((TextView) findViewById(R.id.textview_profilesettings_email)).getText().toString();
         String descr = ((TextView) findViewById(R.id.edittext_profilesettings_description)).getText().toString();
-        User updatedUser = new User(uniqueID, name, email, descr, userCapabilities_, imageUrl_);
+        User updatedUser = new User(uniqueID, name, email, descr, userCapabilities_, imageUrl_, oldUser_.getRating_(),
+                oldUser_.getLatitude_(), oldUser_.getLongitude_());
 
-        DBUtility.get().setUser(updatedUser);
+
+        ArrayList<Categories> categoriesThatHaveBeenRemoved = oldUser_.getCategories_();
+        categoriesThatHaveBeenRemoved.removeAll(userCapabilities_);
+
+        for (Categories c : categoriesThatHaveBeenRemoved){
+            DBUtility.get().getCategory(c, (cat)->{
+                cat.removeUser(uniqueID);
+                cat.addToDB(DBUtility.get().getDb_());
+            });
+        }
+
+
+        updatedUser.addToDB(DBUtility.get().getDb_());
         finish();
     }
 
-    private void cancel(){
-        this.finish();
-    }
-
+    /**
+     * TODO : Explain
+     *
+     * @param cat
+     * @param checked
+     */
     public void updateUserCapabilities(Categories cat, boolean checked){
         if(checked){
             //add category to the user's list
-            if(! userCapabilities_.contains(cat)){
+            if (!userCapabilities_.contains(cat)) {
                 userCapabilities_.add(cat);
             }
-        }
-        else{
+        } else {
             //remove it from user's list
-            if(userCapabilities_.contains(cat)){
+            if (userCapabilities_.contains(cat)) {
                 userCapabilities_.remove(cat);
             }
         }
     }
 
 
-    private void loadAndShowUser(String clientUniqueID){
-        DBUtility.get().getUser(clientUniqueID, (user)->{
+    private void loadAndShowUser(String clientUniqueID) {
+        DBUtility.get().getUser(clientUniqueID, (user) -> {
             TextView nameView = (TextView) findViewById(R.id.edittext_profilesettings_name);
             nameView.setText(user.getName_());
 
-            TextView emailView =  (TextView) findViewById(R.id.textview_profilesettings_email);
+            TextView emailView = (TextView) findViewById(R.id.textview_profilesettings_email);
             emailView.setText(user.getEmail_());
 
-            TextView descrView =  (TextView) findViewById(R.id.edittext_profilesettings_description);
+            TextView descrView = (TextView) findViewById(R.id.edittext_profilesettings_description);
             descrView.setText(user.getDescription_());
+
+            oldUser_ = user;
 
             Picasso.get().load(user.getImageUrl_()).into((ImageView)findViewById(R.id.imageview_profilesettings_picture));
             imageUrl_ = user.getImageUrl_();
             userCapabilities_.clear();
             userCapabilities_.addAll(user.getCategories_());
             
-            recycler.setAdapter(new CategoriesAdapterProfileSettings(Categories.values(), userCapabilities_));
-
-
+            recycler.setAdapter(new CategoriesAdapterProfileSettings(Categories.realCategories(), userCapabilities_));
 
         });
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        if(id == R.id.action_save){
+            save();
+            return true;
+        }
+
+        /**
+         //noinspection SimplifiableIfStatement
+         if (id == R.id.action_settings) {
+         return true;
+         }
+         **/
+
+        return super.onOptionsItemSelected(item);
+    }
 
 }

@@ -1,9 +1,13 @@
 package ch.epfl.swissteam.services;
 
+import android.support.test.runner.AndroidJUnit4;
+
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import static org.junit.Assert.assertEquals;
 
+@RunWith(AndroidJUnit4.class)
 public class ChatRelationTest {
     String name1 = "Martin"; String name2 = "Robin"; String name3 = "Badass";
     String surname1 = "Latex King"; String surname2 = "des Cailloux"; String surname3 = "Romarin";
@@ -42,11 +46,11 @@ public class ChatRelationTest {
         ChatRelation relation = new ChatRelation(user1, null);
     }
 
-    //setUsers
+    //assignUsers(User,User)
     @Test
     public void setUsersYieldSortedIds() {
         ChatRelation relation = new ChatRelation();
-        relation.setUsers(user1, user2);
+        relation.assignUsers(user1, user2);
 
         assertEquals(userId1, relation.getFirstUserId_());
         assertEquals(userId2, relation.getSecondUserId_());
@@ -55,13 +59,13 @@ public class ChatRelationTest {
     @Test(expected = NullPointerException.class)
     public void setUsersYieldExceptionOnNullValuesForFirstUser() {
         ChatRelation relation = new ChatRelation();
-        relation.setUsers(null, user2);
+        relation.assignUsers(null, user2);
     }
 
     @Test(expected = NullPointerException.class)
     public void setUsersYieldExceptionOnNullValuesForSecondUser() {
         ChatRelation relation = new ChatRelation();
-        relation.setUsers(user1, null);
+        relation.assignUsers(user1, null);
     }
 
     //setFirstUserId
@@ -86,7 +90,7 @@ public class ChatRelationTest {
         ChatRelation relation = new ChatRelation();
         relation.setFirstUserId_(userId3);
         assertEquals(userId3, relation.getFirstUserId_());
-        assertEquals(userId3, relation.getSecondUserId_());
+        assertEquals(null, relation.getSecondUserId_());
     }
 
     @Test(expected = NullPointerException.class)
@@ -116,7 +120,7 @@ public class ChatRelationTest {
     public void setSecondUserIdYieldSingleUserRelationWhenTheSecondWasNull() {
         ChatRelation relation = new ChatRelation();
         relation.setSecondUserId_(userId3);
-        assertEquals(userId3, relation.getFirstUserId_());
+        assertEquals(null, relation.getFirstUserId_());
         assertEquals(userId3, relation.getSecondUserId_());
     }
 
@@ -134,5 +138,20 @@ public class ChatRelationTest {
 
         relation.setId_(CRId);
         assertEquals(CRId, relation.getId_());
+    }
+
+    //getOtherId
+    @Test
+    public void getOtherIdWorks(){
+        ChatRelation relation = new ChatRelation(user1, user2);
+
+        assertEquals(userId1, relation.getOtherId(userId2));
+        assertEquals(userId2, relation.getOtherId(userId1));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void getOtherIdThrowsWhenWrongUser(){
+        ChatRelation relation = new ChatRelation(user1, user2);
+        relation.getOtherId(userId3);
     }
 }

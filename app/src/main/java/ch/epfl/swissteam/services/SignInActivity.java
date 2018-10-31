@@ -12,7 +12,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.FirebaseDatabase;
 
 /**
  * This class is an activity created to make the user authenticate with Google.
@@ -22,16 +21,13 @@ import com.google.firebase.database.FirebaseDatabase;
  * @author Julie Giunta
  */
 public class SignInActivity extends AppCompatActivity implements View.OnClickListener {
+
+    public static final String ACCOUNT_TAG = "ch.epfl.swissteam.services.account";
     //Request code for startActivityForResult
     private static final int RC_SIGN_IN = 42;
-
-    private GoogleSignInClient mGoogleSignInClient_;
-    public static final String ACCOUNT_TAG = "ch.epfl.swissteam.services.account";
     private final String ERROR_TAG = "SignInActivity";
     private final String ERROR_MSG = "signInResult:failed code=";
-
-
-
+    private GoogleSignInClient mGoogleSignInClient_;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,24 +46,26 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         //put the GoogleSignInClient in the singleton
         GoogleSignInSingleton.putGoogleSignInClient(mGoogleSignInClient_);
 
+
         //Listen to clicks on the signIn button
         findViewById(R.id.button_signin_googlesignin).setOnClickListener(this);
     }
 
     @Override
-    protected void onStart(){
+    protected void onStart() {
         super.onStart();
         // Check for existing Google Sign In account, if the user is already signed in
         // the GoogleSignInAccount will be non-null.
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
 
-        if(account != null ){
+        if (account != null) {
             // Launch main
 
             // put uniqueID in the singleton
             GoogleSignInSingleton.putUniqueID(account.getId());
             Intent mainIntent = new Intent(this, MainActivity.class);
             mainIntent.putExtra(ACCOUNT_TAG , account);
+
             startActivity(mainIntent);
         }
     }
@@ -125,5 +123,10 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
             Log.w(ERROR_TAG, ERROR_MSG + e.getStatusCode());
             recreate();
         }
+    }
+
+    @Override
+    public void onUserInteraction() {
+        LocationManager.get().refresh(this);
     }
 }
