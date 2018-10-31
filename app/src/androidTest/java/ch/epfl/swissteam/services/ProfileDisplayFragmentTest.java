@@ -5,7 +5,6 @@ import android.support.test.espresso.contrib.NavigationViewActions;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
-import org.hamcrest.Matcher;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -65,6 +64,8 @@ public class ProfileDisplayFragmentTest extends FirebaseTest {
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_profile));
         sleep(3000);
+        closeSoftKeyboard();
+        sleep(200);
         onView(withId(R.id.button_profiledisplay_modify)).perform(scrollTo()).perform(click());
         sleep(1000);
         String newName = "test New Name";
