@@ -21,7 +21,7 @@ import java.util.List;
  * @author Sébastien gachoud
  */
 public class ChatRelationAdapter extends RecyclerView.Adapter<ChatRelationAdapter.ChatRelationsViewHolder> {
-    
+
     private List<ChatRelation> relations_;
     private String currentUserId_;
 

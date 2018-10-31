@@ -61,6 +61,7 @@ public class OnlineChatFragment extends Fragment {
         return thatView;
     }
 
+    //TODO find out why this does not work anymore
     private void displayChats(View view, User user) {
 
         ArrayList<ChatRelation> relations = user.getChatRelations_();

@@ -5,7 +5,7 @@ import com.google.firebase.database.DatabaseReference;
 import java.util.Date;
 
 /**
- * This class helps to use firebase to store messages
+ * This class helps to store messages in firebase
  *
  * @author Sébastien Gachoud
  */
@@ -127,5 +127,15 @@ public class ChatMessage implements DBSavable {
     @Override
     public void addToDB(DatabaseReference databaseReference) {
         databaseReference.child(DBUtility.CHATS).child(relationId_).push().setValue(this);
+    }
+
+    /**
+     * remove the message in databaseReference designed by key. Does nothing if key is null.
+     * @param databaseReference The database reference of the target database
+     * @param key   The id of the message in the database, if null nothing happens.
+     */
+    public void removeFromDB(DatabaseReference databaseReference, String key){
+        if(key != null)
+            databaseReference.child(DBUtility.CHATS).child(relationId_).child(key).removeValue();
     }
 }

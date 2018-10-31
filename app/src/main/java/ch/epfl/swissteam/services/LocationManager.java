@@ -8,6 +8,8 @@ import android.support.v4.app.ActivityCompat;
 
 import com.google.android.gms.location.LocationServices;
 
+import java.util.Date;
+
 /**
  * This singleton class contains the methods related to the location
  *
@@ -17,10 +19,12 @@ public class LocationManager {
 
     public final static float MAX_POST_DISTANCE = 10000000; //in meters
     public final static int M_IN_ONE_KM = 1000;
+    private final static int TIME_BETWEEN_UPDATES = 10000; //in ms
 
     private Location currentLocation_ = null; //TODO: Maybe make this observable and remove getter, replace by onChangeListener
     private boolean isMock_ = false;
     private static LocationManager instance;
+    private long lastUpateTime = 0;
 
     /**
      * Get the only instance of LocationManager;
@@ -43,18 +47,20 @@ public class LocationManager {
      * @param activity calling activity
      */
     public void refresh(Activity activity) {
-        if (!isMock_) {
+
+        if((lastUpateTime + TIME_BETWEEN_UPDATES) < (new Date()).getTime() && !isMock) {
             if (ActivityCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(activity,
                         new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION},
                         1);
             } else {
+                lastUpateTime = (new Date()).getTime();
                 String googleClientID = GoogleSignInSingleton.get().getClientUniqueID();
                 LocationServices.getFusedLocationProviderClient(activity).getLastLocation().addOnSuccessListener(location -> {
                     currentLocation_ = location;
                     if (googleClientID != null) {
                         DBUtility.get().getUser(googleClientID, (u) -> {
-                            if (u != null) {
+                            if (u != null && currentLocation_ != null) {
                                 User newUser = new User(u.getGoogleId_(), u.getName_(), u.getEmail_(), u.getDescription_(), u.getCategories_(), u.getImageUrl_(), u.getRating_(),
                                         currentLocation_.getLatitude(), currentLocation_.getLongitude());
                                 newUser.addToDB(DBUtility.get().getDb_());
@@ -63,7 +69,6 @@ public class LocationManager {
                         });
                     }
                 });
-
             }
         }
     }
