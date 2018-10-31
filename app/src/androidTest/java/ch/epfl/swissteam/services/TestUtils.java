@@ -88,10 +88,11 @@ public class TestUtils {
     }
 
     protected static void recyclerScrollToItemWithTextAndPerformOnItem(int recyclerViewId, String text, ViewAction perform){
-        /*onView(withId(recyclerViewId)).
-                perform(RecyclerViewActions.scrollTo(hasDescendant(withText(text))));*/
+        onView(withId(recyclerViewId)).
+                perform(RecyclerViewActions.scrollTo(hasDescendant(withText(text))));
         sleep(2000);
-        onView(withId(recyclerViewId)).perform(RecyclerViewActions.actionOnItem(hasDescendant(withText(text)), perform));
+        onView(withText(text)).perform(perform);
+        //onView(withId(recyclerViewId)).perform(RecyclerViewActions.actionOnItem(hasDescendant(withText(text)), perform));
     }
 
     protected static void recyclerScrollToItemWithTextAndPerformClickItem(int recyclerViewId, String text){

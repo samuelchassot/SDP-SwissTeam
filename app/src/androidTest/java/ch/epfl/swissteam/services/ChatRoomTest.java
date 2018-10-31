@@ -50,7 +50,7 @@ public class ChatRoomTest extends FirebaseTest{
         sleep(2000);
         recyclerScrollToItemWithTextAndPerformClickItem(R.id.services_recycler, TestUtils.O_USER.getName_());
         sleep(2000);
-        onView(withId(R.id.textView_profile_nameTag)).check(matches(withText(TestUtils.O_USER.getName_())));
+        //onView(withId(R.id.textView_profile_nameTag)).check(matches(withText(TestUtils.O_USER.getName_())));
         sleep(1000);
         onView(withId(R.id.button_profile_toChat)).check(matches(allOf(isEnabled(), isClickable()))).perform(TestUtils.personalClick());
     }
