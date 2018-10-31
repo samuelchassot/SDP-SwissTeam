@@ -21,16 +21,13 @@ import com.google.android.gms.tasks.Task;
  * @author Julie Giunta
  */
 public class SignInActivity extends AppCompatActivity implements View.OnClickListener {
+
+    public static final String ACCOUNT_TAG = "ch.epfl.swissteam.services.account";
     //Request code for startActivityForResult
     private static final int RC_SIGN_IN = 42;
-
-    private GoogleSignInClient mGoogleSignInClient_;
-    public static final String ACCOUNT_TAG = "ch.epfl.swissteam.services.account";
     private final String ERROR_TAG = "SignInActivity";
     private final String ERROR_MSG = "signInResult:failed code=";
-
-
-
+    private GoogleSignInClient mGoogleSignInClient_;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,13 +52,13 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     @Override
-    protected void onStart(){
+    protected void onStart() {
         super.onStart();
         // Check for existing Google Sign In account, if the user is already signed in
         // the GoogleSignInAccount will be non-null.
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
 
-        if(account != null ){
+        if (account != null) {
             // Launch main
 
             // put uniqueID in the singleton
@@ -107,8 +104,8 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
             // Signed in successfully, show authenticated UI
             GoogleSignInSingleton.putUniqueID(account.getId());
             Intent newProfileIntent = new Intent(this, NewProfileDetails.class);
-
             newProfileIntent.putExtra(ACCOUNT_TAG , account);
+
             startActivity(newProfileIntent);
 
         } catch (ApiException e) {

@@ -15,11 +15,12 @@ import android.widget.EditText;
  * @author Julie Giunta
  */
 public class MyPostEdit extends NavigationDrawer{
+
     private Post post_;
     private EditText title_, body_;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState){
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_post_edit);
         super.onCreateDrawer(CANCEL);
@@ -33,7 +34,6 @@ public class MyPostEdit extends NavigationDrawer{
         title_.setText(post_.getTitle_());
         body_.setText(post_.getBody_());
     }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -50,12 +50,12 @@ public class MyPostEdit extends NavigationDrawer{
             return true;
         }
 
-        /**
+        /*
          //noinspection SimplifiableIfStatement
          if (id == R.id.action_settings) {
          return true;
          }
-         **/
+         */
 
         return super.onOptionsItemSelected(item);
     }

@@ -6,7 +6,6 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -37,6 +36,7 @@ public class ServicesFragment extends Fragment {
 
     /**
      * Create a new instance of Services fragment
+     *
      * @return the created instance
      */
     public static ServicesFragment newInstance() {
@@ -53,7 +53,7 @@ public class ServicesFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view =  inflater.inflate(R.layout.fragment_services, container, false);
+        View view = inflater.inflate(R.layout.fragment_services, container, false);
         RecyclerView mRecyclerView = view.findViewById(R.id.services_recycler);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         mAdapter = new UserAdapter(users, getContext());
@@ -81,12 +81,10 @@ public class ServicesFragment extends Fragment {
         return view;
     }
 
-
-
-    private void initDataSet(Categories category){
+    private void initDataSet(Categories category) {
         View view = getView();
-        if (category == Categories.ALL){
-            DBUtility.get().getAllUsers((usersdb ->{
+        if (category == Categories.ALL) {
+            DBUtility.get().getAllUsers((usersdb -> {
                 users.clear();
                 users.addAll(usersdb);
 
@@ -110,13 +108,12 @@ public class ServicesFragment extends Fragment {
                             }
                         });
                     }
-
             });
         }
 
     }
 
-    private void services_problem_text_udpate(View view, boolean empty){
+    private void services_problem_text_udpate(View view, boolean empty) {
         if (view != null) {
             if (empty) {
                 view.findViewById(R.id.services_problem_text).setVisibility(View.VISIBLE);
@@ -145,9 +142,5 @@ public class ServicesFragment extends Fragment {
         }
         return result;
     }
-
-
-
-
 
 }

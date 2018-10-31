@@ -2,18 +2,29 @@ package ch.epfl.swissteam.services;
 
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 
+/**
+ * TODO : Explain class
+ */
 public class GoogleSignInSingleton {
+
+    private static GoogleSignInSingleton instance_;
     private GoogleSignInClient client_;
     private String clientUniqueID_;
-    private static GoogleSignInSingleton instance_;
 
+    private GoogleSignInSingleton() {
+        client_ = null;
+        clientUniqueID_ = null;
+
+    }
 
     /**
-     * if the instance of the singleton object doesn't exist, it creates it. If the clientUniqueID has not been instantiated yet, it instantiates it with the given parameter
-     * @param clientUniqueID
+     * Creates the instance of the singleton object if it doesn't already exists.
+     * Instantiates the clientUniqueID, if it wasn't done yet.
+     *
+     * @param clientUniqueID the unique id of the client
      */
-    public static void putUniqueID(String clientUniqueID){
-        if(instance_ == null){
+    public static void putUniqueID(String clientUniqueID) {
+        if (instance_ == null) {
             instance_ = new GoogleSignInSingleton();
         }
         if(instance_.clientUniqueID_ == null && clientUniqueID != null){
@@ -22,11 +33,13 @@ public class GoogleSignInSingleton {
     }
 
     /**
-     * if the instance of the singleton object doesn't exist, it creates it. If the client has not been instantiated yet, it instantiates it with the given parameter
-     * @param client
+     * Creates the instance of the singleton object if it doesn't already exists.
+     * Instantiates the client, if it wasn't done yet.
+     *
+     * @param client the client
      */
-    public static void putGoogleSignInClient(GoogleSignInClient client){
-        if(instance_ == null){
+    public static void putGoogleSignInClient(GoogleSignInClient client) {
+        if (instance_ == null) {
             instance_ = new GoogleSignInSingleton();
         }
         if(instance_.client_ == null && client != null){
@@ -34,33 +47,33 @@ public class GoogleSignInSingleton {
         }
     }
 
-
-    public static GoogleSignInSingleton get(){
-        if(instance_ == null){
+    /**
+     * Gives the GoogleSignIn instance if it exists, otherwise creates it before.
+     *
+     * @return the GoogleSignIn singleton
+     */
+    public static GoogleSignInSingleton get() {
+        if (instance_ == null) {
             instance_ = new GoogleSignInSingleton();
         }
         return instance_;
     }
 
-    private GoogleSignInSingleton(){
-        client_ = null;
-        clientUniqueID_ = null;
-
-    }
-
     /**
-     * Can be null
-     * @return GoogleSignInClient
+     * Gives the GoogleSignIn client (can be null)
+     *
+     * @return GoogleSignInClient or null if it doesn't exist
      */
-    public GoogleSignInClient getClient(){
+    public GoogleSignInClient getClient() {
         return client_;
     }
 
     /**
-     * Can be null
+     * Gives the GoogleSignIn clientUniqueID (can be null)
+     *
      * @return the clientUniqueID
      */
-    public String getClientUniqueID(){
+    public String getClientUniqueID() {
         return clientUniqueID_;
     }
 

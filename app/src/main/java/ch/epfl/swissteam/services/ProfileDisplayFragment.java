@@ -67,12 +67,11 @@ public class ProfileDisplayFragment extends Fragment {
 
 
         Button button = (Button) thisView.findViewById(R.id.button_profiledisplay_modify);
-        button.setOnClickListener(new View.OnClickListener()
-        {
+        button.setOnClickListener(new View.OnClickListener() {
             Intent intent = new Intent(getActivity(), ProfileSettings.class);
+
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 startActivity(intent);
 
             }
@@ -80,7 +79,7 @@ public class ProfileDisplayFragment extends Fragment {
 
         clientUniqueID_ = GoogleSignInSingleton.get().getClientUniqueID();
 
-        if(clientUniqueID_ != null && !clientUniqueID_.equals("")) {
+        if (clientUniqueID_ != null && !clientUniqueID_.equals("")) {
             loadAndShowUser(clientUniqueID_);
 
             //setup recyclerview for capabilities
@@ -96,18 +95,15 @@ public class ProfileDisplayFragment extends Fragment {
                 mRecyclerView_.setAdapter(mAdapter_);
             }
         }
-        
-
-
 
         // Inflate the layout for this fragment
         return thisView;
     }
 
-    private void loadAndShowUser(String clientUniqueID){
+    private void loadAndShowUser(String clientUniqueID) {
         //for now we use the username
-        View view= getView();
-        DBUtility.get().getUser(clientUniqueID, (user)->{
+        View view = getView();
+        DBUtility.get().getUser(clientUniqueID, (user) -> {
             if (view != null) {
                 TextView nameView = (TextView) view.findViewById(R.id.textview_profiledisplay_name);
                 nameView.setText(user.getName_());
@@ -122,12 +118,12 @@ public class ProfileDisplayFragment extends Fragment {
                 ratingView.setText(Integer.toString(user.getRating_()));
             }
 
-            Picasso.get().load(user.getImageUrl_()).into((ImageView)getView().findViewById(R.id.imageview_profiledisplay_picture));
+            Picasso.get().load(user.getImageUrl_()).into((ImageView) getView().findViewById(R.id.imageview_profiledisplay_picture));
 
             //for the recyclerview
             mCapabilities_.clear();
             mCapabilities_.addAll(user.getCategories_());
-            if(mAdapter_ != null) {
+            if (mAdapter_ != null) {
                 mAdapter_.notifyDataSetChanged();
             }
 
@@ -155,7 +151,6 @@ public class ProfileDisplayFragment extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
-
 
 
 }

@@ -13,11 +13,10 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+/**
+ * TODO : Explain class
+ */
 public class DBUtility {
-
-    private DatabaseReference db_;
-    private static DBUtility instance;
-
 
     public final static String USERS = "Users";
     public final static String CATEGORIES = "Categories";
@@ -27,7 +26,9 @@ public class DBUtility {
     public final static String CHATS_RELATIONS = "ChatRelations";
     private final int POSTS_DISPLAY_NUMBER = 100;
 
-    
+    private DatabaseReference db_;
+    private static DBUtility instance;
+
     private DBUtility(DatabaseReference db){
         this.db_ = db;
     }
@@ -154,7 +155,7 @@ public class DBUtility {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 posts.clear();
 
-                for (DataSnapshot data : dataSnapshot.getChildren()){
+                for (DataSnapshot data : dataSnapshot.getChildren()) {
                     Post post = data.getValue(Post.class);
                     Location postLocation = new Location("");
                     postLocation.setLongitude(post.getLongitude_());
@@ -172,6 +173,7 @@ public class DBUtility {
             }
         });
     }
+
 
     public void getCategory(Categories category, final MyCallBack<Categories> callBack) {
         db_.child(CATEGORIES).child(category.toString()).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -192,18 +194,20 @@ public class DBUtility {
 
     /**
      * Retrieves all the posts from one user
+     *
      * @param googleID the ID of the user
      * @param callBack the function called on the callBack
      */
-    public void getUsersPosts(String googleID, final MyCallBack<ArrayList<Post>> callBack){
+    public void getUsersPosts(String googleID, final MyCallBack<ArrayList<Post>> callBack) {
         Query usersPosts = db_.child(POSTS).orderByChild("googleId_").equalTo(googleID);
         Log.e("ID", googleID);
         usersPosts.addListenerForSingleValueEvent(new ValueEventListener() {
             ArrayList<Post> posts = new ArrayList<>();
+
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 posts.clear();
-                for (DataSnapshot data : dataSnapshot.getChildren()){
+                for (DataSnapshot data : dataSnapshot.getChildren()) {
                     Post post = data.getValue(Post.class);
                     posts.add(post);
                 }
@@ -217,11 +221,21 @@ public class DBUtility {
         });
     }
 
-    public void deletePost(String key){
+    /**
+     * Delete a post of a given key
+     *
+     * @param key the key of the post
+     */
+    public void deletePost(String key) {
         db_.child(POSTS).child(key).setValue(null);
     }
 
-    public void setPost(Post post){
+    /**
+     * Add a post to the database
+     *
+     * @param post
+     */
+    public void setPost(Post post) {
         db_.child(POSTS).child(post.getKey_()).setValue(post);
     }
 }

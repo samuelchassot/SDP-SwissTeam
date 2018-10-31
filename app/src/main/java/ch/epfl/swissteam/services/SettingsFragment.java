@@ -7,12 +7,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+/**
+ * A fragment to set the different settings of the application
+ *
+ * @author Ghali Chraïbi
+ */
 public class SettingsFragment extends Fragment {
 
     public SettingsFragment() {
         // Required empty public constructor
     }
 
+    /**
+     * Create a new instance of this fragment
+     *
+     * @return the settings fragment
+     */
     public static SettingsFragment newInstance() {
         SettingsFragment fragment = new SettingsFragment();
         return fragment;

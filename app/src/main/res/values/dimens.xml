@@ -6,18 +6,37 @@
 
     <!-- Per the design guidelines, navigation drawers should be between 240dp and 320dp:
          https://developer.android.com/design/patterns/navigation-drawer.html -->
+    /* ----- Navigation dimens ----- */
     <dimen name="navigation_drawer_width">240dp</dimen>
     <dimen name="nav_header_vertical_spacing">8dp</dimen>
     <dimen name="nav_header_height">176dp</dimen>
-    <dimen name="fab_margin">16dp</dimen>
-    <dimen name="newprofiledetails_picture_maxheigth">150dp</dimen>
     <dimen name="navheader_image_size">100dp</dimen>
+  
+    /* ----- Toolbar dimens ----- */
+    <dimen name="undertoolbar_space_height">70dp</dimen>
+
+    /* ----- Button dimens ----- */
+    <dimen name="fab_margin">16dp</dimen>
+
+    /* ----- Profile dimens ----- */
+    <dimen name="newprofiledetails_picture_maxheigth">150dp</dimen>
     <dimen name="profile_settings_tags_width">90dp</dimen>
     <dimen name="profile_settings_space_height">25dp</dimen>
-    <dimen name="undertoolbar_space_height">70dp</dimen>
+
+    /* ----- Post dimens ----- */
+                               
     <dimen name="post_maxheight">100dp</dimen>
     <dimen name="post_image_maxsize">50dp</dimen>
     <dimen name="usersearch_image_size">72dp</dimen>
+
+    /* ----- Settings dimens ----- */
+    <dimen name="settings_space_height">20dp</dimen>
+    <dimen name="settings_space_width">50dp</dimen>
+    <dimen name="settings_space_indent">15dp</dimen>
+
+    <dimen name="settings_police_big_title">26dp</dimen>
+    <dimen name="settings_police_medium_title">18dp</dimen>
+
 </resources>
 
     
