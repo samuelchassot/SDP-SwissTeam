@@ -147,7 +147,7 @@
 
             <TextView
                 android:id="@+id/textview_profiledisplay_categoriestag"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/profiledisplay_categoriestag"
@@ -172,7 +172,8 @@
         <Button
             android:id="@+id/button_profiledisplay_modify"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
             android:text="@string/profiledisplay_modify" />
 
     </LinearLayout>
