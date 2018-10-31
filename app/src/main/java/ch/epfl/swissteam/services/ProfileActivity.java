@@ -12,7 +12,13 @@ import com.squareup.picasso.Picasso;
 
 import static ch.epfl.swissteam.services.NewProfileDetails.GOOGLE_ID_TAG;
 
-public class ProfileActivity extends AppCompatActivity {
+/**
+ * An activity to display the profile of a user
+ *
+ * @author Ghali Chraïbi
+ */
+public class ProfileActivity extends NavigationDrawer {
+
 
     private Button chatButton_;
 
@@ -20,6 +26,7 @@ public class ProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+        super.onCreateDrawer(BACK);
 
         String clientUID = getIntent().getStringExtra(GOOGLE_ID_TAG);
 
@@ -37,22 +44,22 @@ public class ProfileActivity extends AppCompatActivity {
         loadAndShowUser(clientUID);
     }
 
-    private void loadAndShowUser(String clientUniqueID){
+    private void loadAndShowUser(String clientUniqueID) {
         //for now we use the username
-        DBUtility.get().getUser(clientUniqueID, (user)->{
+        DBUtility.get().getUser(clientUniqueID, (user) -> {
             TextView nameView = findViewById(R.id.textView_profile_nameTag);
             nameView.setText(user.getName_());
 
-            TextView emailView =  findViewById(R.id.textView_profile_email);
+            TextView emailView = findViewById(R.id.textView_profile_email);
             emailView.setText(user.getEmail_());
 
-            TextView descrView =  findViewById(R.id.textView_profile_description);
+            TextView descrView = findViewById(R.id.textView_profile_description);
             descrView.setText(user.getDescription_());
 
             TextView ratingView = findViewById(R.id.textView_profile_rating);
             ratingView.setText(Integer.toString(user.getRating_()));
 
-            Picasso.get().load(user.getImageUrl_()).into((ImageView)findViewById(R.id.imageview_profile_picture));
+            Picasso.get().load(user.getImageUrl_()).into((ImageView) findViewById(R.id.imageview_profile_picture));
 
         });
     }

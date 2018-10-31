@@ -1,25 +1,16 @@
 package ch.epfl.swissteam.services;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.squareup.picasso.Picasso;
-
-import java.io.IOException;
 
 /**
  * This activity is used to set up the account details of a new user.
@@ -28,7 +19,8 @@ import java.io.IOException;
  */
 public class NewProfileDetails extends AppCompatActivity {
 
-    public static final String GOOGLE_ID_TAG = "GOOGLE_ID", USERNAME_TAG = "USERNAME", EMAIL_TAG = "EMAIL", DESCRIPTION_TAG = "DESCRIPTION", IMAGE_TAG = "IMAGE";
+    public static final String GOOGLE_ID_TAG = "GOOGLE_ID", USERNAME_TAG = "USERNAME",
+            EMAIL_TAG = "EMAIL", DESCRIPTION_TAG = "DESCRIPTION", IMAGE_TAG = "IMAGE";
     public static final String DEFAULT_IMAGE_URL = "https://i.stack.imgur.com/34AD2.jpg";
 
     private String googleID_, username_, email_, description_, imageUrl_;
@@ -42,23 +34,22 @@ public class NewProfileDetails extends AppCompatActivity {
         setTitle(getResources().getString(R.string.newprofile_title));
 
         GoogleSignInAccount account = getIntent().getParcelableExtra(SignInActivity.ACCOUNT_TAG);
-        if(account != null) {
+        if (account != null) {
 
             findAndSetName(account);
 
             googleID_ = account.getId();
             email_ = account.getEmail();
             description_ = "";
-            if(account.getPhotoUrl() != null) {
+            if (account.getPhotoUrl() != null) {
                 imageUrl_ = account.getPhotoUrl().toString();
-            }
-            else{
+            } else {
                 imageUrl_ = DEFAULT_IMAGE_URL;
             }
 
-            Picasso.get().load(imageUrl_).into((ImageView)findViewById(R.id.imageview_newprofiledetails_picture));
+            Picasso.get().load(imageUrl_).into((ImageView) findViewById(R.id.imageview_newprofiledetails_picture));
 
-            ((EditText)findViewById(R.id.plaintext_newprofiledetails_description)).addTextChangedListener(new TextWatcher() {
+            ((EditText) findViewById(R.id.plaintext_newprofiledetails_description)).addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -85,10 +76,9 @@ public class NewProfileDetails extends AppCompatActivity {
      * @param account Google account to use
      */
     private void findAndSetName(GoogleSignInAccount account) {
-        if(account.getDisplayName() != null && !account.getDisplayName().equals("")) {
+        if (account.getDisplayName() != null && !account.getDisplayName().equals("")) {
             setName(account.getDisplayName());
-        }
-        else if(account.getGivenName() != null && account.getFamilyName() != null) {
+        } else if (account.getGivenName() != null && account.getFamilyName() != null) {
             setName(account.getGivenName() + " " + account.getFamilyName());
         }
     }
@@ -99,7 +89,7 @@ public class NewProfileDetails extends AppCompatActivity {
      * @param name new name
      */
     private void setName(String name) {
-        ((EditText)findViewById(R.id.plaintext_newprofiledetails_name)).setText(name);
+        ((EditText) findViewById(R.id.plaintext_newprofiledetails_name)).setText(name);
         username_ = name;
     }
 

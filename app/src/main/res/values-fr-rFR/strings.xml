@@ -1,14 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-
     /* ----- GENERAL string ----- */
     <string name="all_next">Suivant</string>
     <string name="done_text">Terminer</string>
     <string name="all_send">Envoyer</string>
+    <string name="general_error">Erreur</string>
+    <string name="general_ok">OK</string>
 
+    /* ----- Database string ----- */
+
+    <string name="general_could_not_find_you_in_db">Nous ne vous avons pas trouvé dans la database !</string>
+    <string name="general_could_not_find_this_user_in_db">Nous n\'avons pas trouvé cet utilisateur dans la database !</string>
+    <string name="general_could_not_establish_relation">Nous n\’avons pas réussi à établir une relation !</string>
 
     /* ----- Profile string ----- */
+
     <string name="newprofile_title">Mise en place du profil</string>
     <string name="newprofile_name">Nom:</string>
     <string name="newprofile_description">Description:</string>
@@ -16,13 +23,27 @@
     <string name="newprofile_picture">Photo:</string>
     <string name="newprofile_changepicture">Modifier</string>
 
+    <string name="profiledisplay_nametag">Nom</string>
+    <string name="profiledisplay_surnametag">Nom de famille</string>
+    <string name="profiledisplay_emailtag">Email</string>
+    <string name="profiledisplay_descriptiontag">Description</string>
+    <string name="profiledisplay_ratingtag">Note</string>
+    <string name="profilesettings_save">Sauvegarder</string>
+    <string name="profiledisplay_modify">Modifier</string>
     <string name="profiledisplay_categoriestag">Mes capacités</string>
 
+    <string name="show_profile">Voir le profil</string>
+
     /* ----- SignIn string ----- */
+
     <string name="signin_welcomemessage">Bienvenue sur Socialize!</string>
 
     /* ----- Navigation string ----- */
+
     <string name="title_activity_main">Accueil</string>
+    <string name="title_activity_online_chat">OnlineChatActivity</string>
+    <string name="title_activity_chat_room">ChatRoom</string>
+    <string name="title_activity_services_search">Recherche de services</string>
 
     <string name="navigation_drawer_open">Ouvrir le menu de navigation</string>
     <string name="navigation_drawer_close">Fermer le menu de navigation</string>
@@ -36,53 +57,72 @@
     <string name="navigation_drawer_button_services">Services</string>
     <string name="navigation_drawer_newpost">Nouveau post</string>
     <string name="navigation_drawer_myposts">Mes posts</string>
+    <string name="navigation_drawer_button_chats">Chats</string>
     <string name="navigation_drawer_section_settings">Paramètres</string>
     <string name="navigation_drawer_button_logout">Déconnexion</string>
-    <string name="toolbar_profile">Profil</string>
+
 
     /* ----- Home string ----- */
 
     <string name="homefragment_asktorefresh">Actualisez pour les derniers messages!</string>
     <string name="homefragment_noposts">Pas de posts pour le moment …</string>
     <string name="homefragment_hintrefreshbutton">Rafraîchir</string>
+    <string name="homefragment_postdistance">à %1.0fkm</string>
+
 
     /* ----- Service string ----- */
 
     <string name="fragment_services_title">Utilisateurs qui peuvent vous aider</string>
 
     /* ----- Post string ----- */
+
     <string name="post_hinteditbutton">Modifiez votre post</string>
     <string name="postadapter_hintdeletebutton">Supprimez votre post</string>
     <string name="createpostfragment_entertitle">Entrez un titre ici</string>
     <string name="createpostfragment_enterbody">Entrez le contenu ici</string>
     <string name="createpostfragment_titleempty">Vous devez entrer un titre!</string>
     <string name="createpostfragment_bodyempty">Vous devez entrez un contenu!</string>
+    <string name="fragment_services_problem">Oups! Il semblerait que personne ne puisse vous aider!\nSélectionnez une autre catégorie, ou vérifiez votre connextion internet.</string>
 
     <string name="new_service">Nouveau service</string>
     <string name="enter_key_word">Entrez des mots-clés</string>
 
+    /* ----- Category strings ----- */
+
+    <string name="category_IC">Informatique</string>
+    <string name="category_Maths">Maths</string>
+    <string name="category_House">Domestique</string>
+    <string name="category_Cooking">Cuisine</string>
+    <string name="category_Teaching">Enseignement</string>
+    <string name="category_Gardening">Jardinage</string>
+    <string name="category_Mechanics">Mécanique</string>
+    <string name="category_Dailylife">Vie quotidienne</string>
+    <string name="category_Transportation">Transport</string>
+
+    /* ----- ChatRoom strings ----- */
+
+    <string name="chat_room_message_hint">Ecrivez votre message ici</string>
+
     /* ----- Settings string ----- */
-    <string name="language_prompt">Choississez une langue</string>
+
+    <string name="settings_title_localisation">Localisation</string>
+    <string name="settings_subtitle_current_localisation">Position actuelle de la maison</string>
+    <string name="settings_button_set_home">Définissez votre position actuelle comme étant celle de votre maison</string>
+
+
+    /* ----- Toolbar string ----- */
+
     <string name="toolbar_my_posts">Mes posts</string>
     <string name="toolbar_home">Accueil</string>
     <string name="toolbar_chats">Chats</string>
     <string name="toolbar_settings">Paramètres</string>
     <string name="toolbar_services">Services</string>
+    <string name="toolbar_profile">Profil</string>
 
 
     <string-array name="language_arrays">
         <item>Anglais</item>
         <item>Français</item>
     </string-array>
-    <string name="profiledisplay_nametag">Nom</string>
-    <string name="profiledisplay_emailtag">Email</string>
-    <string name="general_error">Erreur</string>
-    <string name="general_ok">OK</string>
-    <string name="profiledisplay_ratingtag">Note</string>
-    <string name="profilesettings_save">Sauvegarder</string>
-    <string name="profiledisplay_descriptiontag">Description</string>
-    <string name="profiledisplay_modify">Modifier</string>
-    <string name="show_profile">Voir le profil</string>
-    <string name="navigation_drawer_button_chats">Chats</string>
-    <string name="send_text">Envoyer</string>
+
 </resources>

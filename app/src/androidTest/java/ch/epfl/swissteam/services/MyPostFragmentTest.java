@@ -9,15 +9,10 @@ import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.view.View;
 
-import com.google.firebase.database.FirebaseDatabase;
-
 import org.hamcrest.Matcher;
-import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import java.util.ArrayList;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.clearText;
@@ -40,11 +35,17 @@ public class MyPostFragmentTest extends FirebaseTest{
             new ActivityTestRule<>(MainActivity.class);
 
     @Override
+    public void terminate() {
+        LocationManager.get().unsetMock();
+    }
+
+    @Override
     public void initialize(){
-        DBUtility.get().setUser(TestUtils.getATestUser());
+        LocationManager.get().setMock();
+        TestUtils.getTestUser().addToDB(DBUtility.get().getDb_());
         id = "1234";
         GoogleSignInSingleton.putUniqueID(id);
-        post = new Post("1234_1539704399119", "Title", "1234", "Body", 1539704399119L);
+        post = new Post("1234_1539704399119", "Title", "1234", "Body", 1539704399119L,  10, 20);
         DBUtility.get().setPost(post);
         sleep(400);
     }
@@ -86,7 +87,7 @@ public class MyPostFragmentTest extends FirebaseTest{
         onView(withId(R.id.edittext_mypostedit_body)).check(matches(withText("Body")));
         onView(withId(R.id.edittext_mypostedit_title)).perform(typeText(" from unit test")).perform(closeSoftKeyboard());
         onView(withId(R.id.edittext_mypostedit_body)).perform(typeText(" from unit test")).perform(closeSoftKeyboard());
-        onView(withId(R.id.button_mypostedit_edit)).perform(click());
+        onView(withId(R.id.action_save)).perform(click());
 
         onView(withId(R.id.recyclerview_mypostsfragment)).perform(RecyclerViewActions.actionOnItemAtPosition(0,swipeLeft()));
         onView(withId(R.id.recyclerview_mypostsfragment)).perform(RecyclerViewActions.actionOnItemAtPosition(0, clickChildViewWithId(R.id.button_mypostadapter_edit)));
@@ -95,7 +96,7 @@ public class MyPostFragmentTest extends FirebaseTest{
         onView(withId(R.id.edittext_mypostedit_body)).check(matches(withText("Body from unit test")));
         onView(withId(R.id.edittext_mypostedit_title)).perform(clearText()).perform(typeText("Title")).perform(closeSoftKeyboard());
         onView(withId(R.id.edittext_mypostedit_body)).perform(clearText()).perform(typeText("Body")).perform(closeSoftKeyboard());
-        onView(withId(R.id.button_mypostedit_edit)).perform(click());
+        onView(withId(R.id.action_save)).perform(click());
     }
 
     public static ViewAction clickChildViewWithId(final int id) {

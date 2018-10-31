@@ -1,15 +1,18 @@
 package ch.epfl.swissteam.services;
 
+import android.Manifest;
 import android.support.test.espresso.action.ViewActions;
 import android.support.test.espresso.contrib.DrawerActions;
 import android.support.test.espresso.contrib.NavigationViewActions;
 import android.support.test.rule.ActivityTestRule;
+import android.support.test.rule.GrantPermissionRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.widget.Button;
 
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.RuleChain;
 import org.junit.runner.RunWith;
 
 import static android.support.test.espresso.Espresso.onView;
@@ -38,7 +41,13 @@ public class CreatePostFragmentTest extends FirebaseTest{
 
     @Override
     public void initialize() {
-        GoogleSignInSingleton.putUniqueID(TestUtils.M_GOOGLE_ID);
+        LocationManager.get().setMock();
+      GoogleSignInSingleton.putUniqueID(TestUtils.M_GOOGLE_ID);
+    }
+
+    @Override
+    public void terminate() {
+        LocationManager.get().unsetMock();
     }
 
     @Test

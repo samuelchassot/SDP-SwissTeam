@@ -3,7 +3,6 @@ package ch.epfl.swissteam.services;
 import android.support.test.espresso.contrib.DrawerActions;
 import android.support.test.espresso.contrib.NavigationViewActions;
 import android.support.test.espresso.intent.Intents;
-import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
@@ -15,14 +14,8 @@ import org.junit.runner.RunWith;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.action.ViewActions.scrollTo;
-import static android.support.test.espresso.assertion.ViewAssertions.matches;
-import static android.support.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
-import static ch.epfl.swissteam.services.TestUtils.O_USER;
-import static ch.epfl.swissteam.services.TestUtils.URL;
-import static ch.epfl.swissteam.services.TestUtils.recyclerScrollToItemWithTextAndPerformClickItem;
 import static ch.epfl.swissteam.services.TestUtils.sleep;
 
 /**
@@ -42,6 +35,7 @@ public class ProfileActivityTest extends FirebaseTest {
 
     @Override
     public void initialize() {
+        LocationManager.get().setMock();
         GoogleSignInSingleton.putUniqueID(TestUtils.M_GOOGLE_ID);
         TestUtils.O_USER.addToDB(FirebaseDatabase.getInstance().getReference());
         TestUtils.M_USER.addToDB(FirebaseDatabase.getInstance().getReference());
@@ -80,6 +74,7 @@ public class ProfileActivityTest extends FirebaseTest {
 
     @Override
     public void terminate(){
+        LocationManager.get().unsetMock();
         Intents.release();
     }
 }

@@ -8,6 +8,8 @@ import android.support.test.rule.GrantPermissionRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.telephony.TelephonyManager;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,6 +29,15 @@ public class NoNetworkTest {
     //@Rule
     //public GrantPermissionRule gpr2 = GrantPermissionRule.grant("android.permission.CHANGE_WIFI_STATE");
 
+    @Before
+    public void initialize() {
+        LocationManager.get().setMock();
+    }
+
+    @After
+    public void terminate() {
+        LocationManager.get().unsetMock();
+    }
 
     @Test
     public void cutNetwork() {
