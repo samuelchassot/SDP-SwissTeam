@@ -19,13 +19,11 @@ public class ChatRelation implements DBSavable {
     private String id_;
 
     public ChatRelation(User firstUser, User secondUser ) {
-        this();
-        setUsers(firstUser, secondUser);
+        //set users IDs in alphanumeric order
+        assignUsers(firstUser, secondUser);
     }
 
-    public ChatRelation(){
-        id_ = null;
-    }
+    public ChatRelation(){}
 
     //Getters
     public String getFirstUserId_() {
@@ -45,24 +43,18 @@ public class ChatRelation implements DBSavable {
         if(firstUserId == null) {
             throw new NullPointerException("ChatRelations requires non null firstUser");
         }
-        if(secondUserId_ == null) {
-            firstUserId_ = firstUserId;
-        }
-        else{
-            setUsersId(firstUserId, secondUserId_);
-        }
+
+        if(secondUserId_ == null) {firstUserId_ = firstUserId;}
+        else {assignUsersId(firstUserId, secondUserId_);} //set users IDs in alphanumeric order
     }
 
     public void setSecondUserId_(String secondUserId) {
         if(secondUserId == null) {
             throw new NullPointerException("ChatRelations requires non null secondUser");
         }
-        if(firstUserId_ == null) {
-            secondUserId_ = secondUserId;
-        }
-        else {
-            setUsersId(firstUserId_, secondUserId_);
-        }
+
+        if(firstUserId_ == null) {secondUserId_ = secondUserId;}
+        else {assignUsersId(firstUserId_, secondUserId);} //set users IDs in alphanumeric order
     }
 
     public void setId_(String id) {
@@ -70,7 +62,14 @@ public class ChatRelation implements DBSavable {
     }
 
     //public methods
-    public void setUsers(User firstUser, User secondUser) {
+
+    /**
+     * assign users by their ID in alphanumeric order, firstUser < secondUser.
+     * It does not matter in which order the IDs are input, this method take care of ordering them.
+     * @param firstUser a reference to the first user
+     * @param secondUser    a reference to the second user
+     */
+    public void assignUsers(User firstUser, User secondUser) {
         if(firstUser == null) {
             throw new NullPointerException("ChatRelations requires non null firstUser");
         }
@@ -78,10 +77,17 @@ public class ChatRelation implements DBSavable {
             throw new NullPointerException("ChatRelations requires non null secondUser");
         }
 
-        setUsersId(firstUser.getGoogleId_(), secondUser.getGoogleId_());
+        //set users IDs in alphanumeric order
+        assignUsersId(firstUser.getGoogleId_(), secondUser.getGoogleId_());
     }
 
-    private void setUsersId(String firstId, String secondId) {
+    /**
+     * assign users ID in alphanumeric order, firstUser < secondUser.
+     * It does not matter in which order the IDs are input, this method take care of ordering them.
+     * @param firstId   the id of the first user
+     * @param secondId  the id of the second user
+     */
+    private void assignUsersId(String firstId, String secondId) {
         if(firstId == null) {
             throw new NullPointerException("ChatRelations requires non null firstUser googleId");
         }
@@ -103,6 +109,7 @@ public class ChatRelation implements DBSavable {
         if(!isInThisRelation(currentUserId)) {
             throw new IllegalArgumentException("The current user does not belong to this ChatRelation");
         }
+
         if(firstUserId_.compareTo(currentUserId) == 0) {
             return secondUserId_;
         }
@@ -111,6 +118,11 @@ public class ChatRelation implements DBSavable {
         }
     }
 
+    /**
+     * whether the user with googleID id is part of this relation
+     * @param id the googleID of the user
+     * @return true if the user is part of this relation, false otherwise
+     */
     private Boolean isInThisRelation(String id) {
         return firstUserId_.compareTo(id) == 0 || secondUserId_.compareTo(id) == 0;
     }

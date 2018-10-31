@@ -61,21 +61,21 @@ public class ProfileActivityTest extends FirebaseTest {
         onView(withId(R.id.textView_profile_description)).check(matches(withText(TestUtils.O_USER.getDescription_())));*/
     }
 
-    @Test
+    /*@Test
     public void canAccessToChatButtonIfOtherProfile() {
-        /*sleep(SLEEP_TIME);
+        sleep(SLEEP_TIME);
         recyclerScrollToItemWithTextAndPerformClickItem(R.id.services_recycler, TestUtils.O_USER.getName_());
         sleep(SLEEP_TIME);
-        onView(withId(R.id.button_profile_toChat)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));*/
-    }
+        onView(withId(R.id.button_profile_toChat)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+    }*/
 
-    @Test
+    /*@Test
     public void cantAccessToChatButtonIfMyProfile() {
-        /*sleep(SLEEP_TIME);
+        sleep(SLEEP_TIME);
         recyclerScrollToItemWithTextAndPerformClickItem(R.id.services_recycler, TestUtils.M_USER.getName_());
         sleep(SLEEP_TIME);
-        onView(withId(R.id.button_profile_toChat)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.INVISIBLE)));*/
-    }
+        onView(withId(R.id.button_profile_toChat)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.INVISIBLE)));
+    }*/
 
 
     @Override
