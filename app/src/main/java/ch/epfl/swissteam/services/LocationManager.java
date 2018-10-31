@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.support.v4.app.ActivityCompat;
-import android.util.Log;
 
 import com.google.android.gms.location.LocationServices;
 
@@ -58,7 +57,7 @@ public class LocationManager {
                     currentLocation_ = location;
                     if (googleClientID != null) {
                         DBUtility.get().getUser(googleClientID, (u) -> {
-                            if (u != null) {
+                            if (u != null && currentLocation_ != null) {
                                 User newUser = new User(u.getGoogleId_(), u.getName_(), u.getEmail_(), u.getDescription_(), u.getCategories_(), u.getImageUrl_(), u.getRating_(),
                                         currentLocation_.getLatitude(), currentLocation_.getLongitude());
                                 newUser.addToDB(DBUtility.get().getDb_());
