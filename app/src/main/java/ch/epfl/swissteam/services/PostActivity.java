@@ -28,7 +28,7 @@ import static ch.epfl.swissteam.services.NewProfileDetails.GOOGLE_ID_TAG;
  *
  * @author Julie Giunta
  */
-public class PostActivity extends AppCompatActivity {
+public class PostActivity extends NavigationDrawer{
     private Post post_;
     private User user_;
     private View headerLayout_;
@@ -36,9 +36,10 @@ public class PostActivity extends AppCompatActivity {
     private ImageView picture_;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState){
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
+        super.onCreateDrawer(BACK);
 
         //Retrieve the post from the intent which started this activity
         Intent callingIntent = getIntent();
@@ -60,10 +61,10 @@ public class PostActivity extends AppCompatActivity {
         });
 
         //Set the different fields
-
         title_.setText(post_.getTitle_());
         body_.setText(post_.getBody_());
         date_.setText((new SimpleDateFormat("dd/MM/yyyy", Locale.FRENCH)).format(new Date(post_.getTimestamp_()).getTime()));
+
         //Retrieve the user
         DBUtility.get().getUser(post_.getGoogleId_(), (user -> {
             user_ = user;

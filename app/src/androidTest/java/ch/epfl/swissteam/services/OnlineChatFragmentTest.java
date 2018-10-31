@@ -27,7 +27,7 @@ public class OnlineChatFragmentTest extends FirebaseTest {
 
     private static final String mGoogleId = "1234";
     private static final String oGoogleId = "5678";
-    private static final String url = TestUtils.getATestUser().getImageUrl_();
+    private static final String url = TestUtils.getTestUser().getImageUrl_();
     private static final User mUser = new User(mGoogleId,"Bear", "polar@north.nth","",null,url);
     private static final User oUser = new User(oGoogleId, "Raeb", "hairy@north.nth", "", null, url);
     private static final ChatRelation chatRelation = new ChatRelation(mUser,oUser);

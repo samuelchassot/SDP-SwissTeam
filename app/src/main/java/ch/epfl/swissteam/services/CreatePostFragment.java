@@ -6,7 +6,9 @@ import android.location.Location;
 import android.os.Build;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -34,6 +36,7 @@ public class CreatePostFragment extends Fragment implements View.OnClickListener
 
     /**
      * Creates a new {@link CreatePostFragment}.
+     *
      * @return new instance of <code>CreatePostFragment</code>
      */
     public static CreatePostFragment newInstance() {
