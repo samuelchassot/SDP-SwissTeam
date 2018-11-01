@@ -76,10 +76,10 @@ public class ProfileSettings extends NavigationDrawer {
     }
 
     /**
-     * TODO : Explain
+     * Updates the status of a capability for a user.
      *
-     * @param cat
-     * @param checked
+     * @param cat capability to update
+     * @param checked whether to add or remove the capability
      */
     public void updateUserCapabilities(Categories cat, boolean checked){
         if(checked){
