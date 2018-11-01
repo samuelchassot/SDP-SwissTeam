@@ -9,16 +9,16 @@ import android.widget.TextView;
 import java.util.List;
 
 /**
- * TODO : Explain
+ * An adapter for capabilities
  */
 public class CapabilitiesAdapter extends RecyclerView.Adapter<CapabilitiesAdapter.CapabilitiesViewHolder> {
 
     private List<Categories> capabilities_;
 
     /**
-     * TODO : Explain
+     * Create an adapter for capabilities
      *
-     * @param capabilities
+     * @param capabilities a list of capabilities
      */
     public CapabilitiesAdapter(List<Categories> capabilities) {
         capabilities_ = capabilities;
@@ -35,7 +35,7 @@ public class CapabilitiesAdapter extends RecyclerView.Adapter<CapabilitiesAdapte
 
     @Override
     public void onBindViewHolder(CapabilitiesViewHolder mViewHolder, int position) {
-        mViewHolder.mCapabilityName.setText(capabilities_.get(position).toString());
+        mViewHolder.mCapabilityName_.setText(capabilities_.get(position).toString());
     }
 
     // Return the size of your dataset (invoked by the layout manager)
@@ -49,7 +49,7 @@ public class CapabilitiesAdapter extends RecyclerView.Adapter<CapabilitiesAdapte
      */
     public static class CapabilitiesViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView mCapabilityName;
+        public TextView mCapabilityName_;
 
         /**
          * Create a CapabilitiesViewHolder
@@ -58,7 +58,7 @@ public class CapabilitiesAdapter extends RecyclerView.Adapter<CapabilitiesAdapte
          */
         public CapabilitiesViewHolder(View v) {
             super(v);
-            mCapabilityName = (TextView) v.findViewById(R.id.textview_capabilitiesadapter_capabilityname);
+            mCapabilityName_ = (TextView) v.findViewById(R.id.textview_capabilitiesadapter_capabilityname);
         }
     }
 

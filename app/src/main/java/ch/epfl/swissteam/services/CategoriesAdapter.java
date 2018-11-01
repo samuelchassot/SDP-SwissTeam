@@ -18,9 +18,9 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Ca
     private Categories[] capabilities_;
 
     /**
-     * TODO : Explain
+     * Creates a new CategoriesAdapter from an array of Categories.
      *
-     * @param capabilities
+     * @param capabilities Array of categories to create from
      */
     public CategoriesAdapter(Categories[] capabilities) {
         this.capabilities_ = capabilities;
@@ -34,8 +34,8 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Ca
 
     @Override
     public void onBindViewHolder(@NonNull CategoriesViewHolder categoriesViewHolder, int i) {
-        categoriesViewHolder.nameView.setText(capabilities_[i].toString());
-        addAddListener(categoriesViewHolder.checkBox, capabilities_[i]);
+        categoriesViewHolder.nameView_.setText(capabilities_[i].toString());
+        addAddListener(categoriesViewHolder.checkBox_, capabilities_[i]);
     }
 
     @Override
@@ -58,17 +58,22 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Ca
     }
 
     /**
-     * TODO : Explain
+     * View Holder for the CategoriesAdapter.
      */
     public static class CategoriesViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView nameView;
-        public CheckBox checkBox;
+        public TextView nameView_;
+        public CheckBox checkBox_;
 
+        /**
+         * Create a CategoriesViewHolder
+         *
+         * @param v the current View
+         */
         public CategoriesViewHolder(@NonNull View v) {
             super(v);
-            this.nameView = v.findViewById(R.id.textview_capabilitylayout_name);
-            this.checkBox = v.findViewById(R.id.checkbox_capabilitylayout_check);
+            this.nameView_ = v.findViewById(R.id.textview_capabilitylayout_name);
+            this.checkBox_ = v.findViewById(R.id.checkbox_capabilitylayout_check);
         }
     }
 }

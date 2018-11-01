@@ -3,7 +3,7 @@ package ch.epfl.swissteam.services;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 
 /**
- * TODO : Explain class
+ * Store the GoogleSignIn object and the uniqueClientID of the user currently logged in
  */
 public class GoogleSignInSingleton {
 
@@ -76,7 +76,5 @@ public class GoogleSignInSingleton {
     public String getClientUniqueID() {
         return clientUniqueID_;
     }
-
-
 
 }
