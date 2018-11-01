@@ -1,5 +1,6 @@
 package ch.epfl.swissteam.services;
 
+import android.app.Activity;
 import android.location.Location;
 import android.support.annotation.NonNull;
 import android.util.Log;
@@ -233,9 +234,23 @@ public class DBUtility {
     /**
      * Add a post to the database
      *
-     * @param post
+     * @param post post to add
      */
     public void setPost(Post post) {
         db_.child(POSTS).child(post.getKey_()).setValue(post);
+    }
+
+    public void notifyWhenUserChanges(Activity activity) {
+        db_.child(USERS).child("101976486863571424821").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                NotificationUtils.sendCustomNotification(activity, "USER CHANGE", "USer CHANGE");
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 }

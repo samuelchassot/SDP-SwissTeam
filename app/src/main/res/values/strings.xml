@@ -138,5 +138,7 @@
 
     <string name="usersearch_distanceunavailable">Unavailable</string>
     <string name="usersearch_distancedisplay">%1dkm away</string>
+    <string name="channel_name" translatable="false">Notification Channel</string>
+    <string name="channel_description" translatable="false">Notification Channel for Socialize</string>
 
 </resources>
