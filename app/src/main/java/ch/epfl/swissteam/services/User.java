@@ -17,6 +17,8 @@ public class User implements DBSavable {
     private int rating_;
     private double latitude_, longitude_;
     private ArrayList<Categories> categories_;
+    private ArrayList<String> upvotes_;
+    private ArrayList<String> downvotes_;
 
     private ArrayList<ChatRelation> chatRelations_;
 
@@ -62,7 +64,7 @@ public class User implements DBSavable {
      * @param longitude_   User's last longitude
      */
     public User(String googleID_, String name_, String email_, String description_, ArrayList<Categories> categories_, String imageUrl_, int rating_,
-                double latitude_, double longitude_) {
+                double latitude_, double longitude_, ArrayList<String> upvotes_, ArrayList<String> downvotes_) {
         this.googleId_ = googleID_;
         this.email_ = email_;
         this.name_ = name_;
@@ -70,6 +72,8 @@ public class User implements DBSavable {
         this.imageUrl_ = imageUrl_;
         this.rating_ = rating_;
         this.categories_ = categories_ == null ? new ArrayList<Categories>() : (ArrayList<Categories>) categories_.clone();
+        this.upvotes_ = upvotes_ == null ? new ArrayList<String>() : (ArrayList<String>) upvotes_.clone();
+        this.downvotes_ = downvotes_ == null ? new ArrayList<String>() : (ArrayList<String>) upvotes_.clone();
 
         this.latitude_ = latitude_;
         this.longitude_ = longitude_;
@@ -280,14 +284,32 @@ public class User implements DBSavable {
     /**
      * Increments user's rating by 1
      */
-    public void upvote() {
+    public boolean upvote(User user) {
+        if (upvotes_.contains(user.getGoogleId_())){
+            return false;
+        }
+
+        if (downvotes_.contains(user.getGoogleId_())){
+            downvotes_.remove(user.getGoogleId_());
+        }
+        upvotes_.add(user.googleId_);
         rating_ += 1;
+        return true;
     }
 
     /**
      * Decrements user's rating by 1
      */
-    public void downvote() {
+    public boolean downvote(User user) {
+        if (downvotes_.contains(user.getGoogleId_())){
+            return false;
+        }
+
+        if (upvotes_.contains(user.getGoogleId_())){
+            upvotes_.remove(user.getGoogleId_());
+        }
+        downvotes_.add(user.googleId_);
         rating_ -= 1;
+        return true;
     }
 }

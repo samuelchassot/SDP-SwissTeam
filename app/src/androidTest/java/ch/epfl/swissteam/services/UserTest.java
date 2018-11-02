@@ -28,7 +28,7 @@ public class UserTest {
 
     @Test
     public void testUserWorks() {
-        User user = new User(googleID, name,email, description, categories, imageUrl,rating, 0, 0);
+        User user = new User(googleID, name,email, description, categories, imageUrl,rating, 0, 0, null,null);
         assertEquals(googleID, user.getGoogleId_());
         assertEquals(email, user.getEmail_());
         assertEquals(name, user.getName_());
@@ -41,19 +41,22 @@ public class UserTest {
 
     @Test
     public void upDownVoteTest(){
-        User user = new User(googleID, name,email, description, categories, imageUrl, rating, 0, 0);
-        user.upvote();
+        User user = new User(googleID, name,email, description, categories, imageUrl, rating, 0, 0,null,null);
+        User user2 = new User(googleID2, name,email, description, categories, imageUrl, rating, 0, 0,null,null);
+        user.upvote(user2);
         assertEquals(rating +1, user.getRating_());
-        user.downvote();
+        assertEquals(false, user.upvote(user2));
+        user.downvote(user2);
         assertEquals(rating, user.getRating_());
+        assertEquals(false, user.downvote((user2)));
 
 
     }
 
     @Test
     public void setAndGetChatRelationWorks() {
-        User user1 = new User(googleID, name, email, description, categories, imageUrl,rating, 0, 0);
-        User user2 = new User(googleID2, name2,  email2, description2, categories, imageUrl);
+        User user1 = new User(googleID, name, email, description, categories, imageUrl,rating, 0, 0,null,null);
+        User user2 = new User(googleID2, name2,  email2, description2, categories, imageUrl,rating,0,0,null,null);
         String id = "aksdjh287364ksdjbf";
         ChatRelation cR = new ChatRelation(user1, user2);
         cR.setId_(id);
@@ -64,9 +67,9 @@ public class UserTest {
 
     @Test
     public void relationExistsWorksForInexistentRelation(){
-        User user1 = new User(googleID, name, email, description, categories, imageUrl,rating, 0, 0);
-        User user2 = new User(googleID2, name2,  email2, description2, categories, imageUrl,rating, 0, 0);
-        User user3 = new User(googleID3, name3,  email3, description3, categories, imageUrl,rating, 0, 0);
+        User user1 = new User(googleID, name, email, description, categories, imageUrl,rating, 0, 0,null,null);
+        User user2 = new User(googleID2, name2,  email2, description2, categories, imageUrl,rating, 0, 0,null,null);
+        User user3 = new User(googleID3, name3,  email3, description3, categories, imageUrl,rating, 0, 0,null,null);
         ChatRelation cR = new ChatRelation(user1, user2);
         user1.addChatRelation(cR);
         user2.addChatRelation(cR);
@@ -75,9 +78,9 @@ public class UserTest {
 
     @Test
     public void relationExistsWorksForExistentRelation(){
-        User user1 = new User(googleID, name, email, description, categories, imageUrl,rating, 0, 0);
-        User user2 = new User(googleID2, name2, email2, description2, categories, imageUrl,rating, 0, 0);
-        User user2bis = new User("1frr", name2, email2, description2, categories, imageUrl,rating, 0, 0);
+        User user1 = new User(googleID, name, email, description, categories, imageUrl,rating, 0, 0,null,null);
+        User user2 = new User(googleID2, name2, email2, description2, categories, imageUrl,rating, 0, 0,null,null);
+        User user2bis = new User("1frr", name2, email2, description2, categories, imageUrl,rating, 0, 0,null,null);
         ChatRelation cR = new ChatRelation(user1, user2);
         user1.addChatRelation(cR);
         user2.addChatRelation(cR);
@@ -86,9 +89,9 @@ public class UserTest {
 
     @Test
     public void idRelationExistsWorksForInexistentRelation(){
-        User user1 = new User(googleID, name, email, description, categories, imageUrl);
-        User user2 = new User(googleID2, name2,  email2, description2, categories, imageUrl);
-        User user3 = new User(googleID3, name3,  email3, description3, categories, imageUrl);
+        User user1 = new User(googleID, name, email, description, categories, imageUrl,rating, 0, 0,null,null);
+        User user2 = new User(googleID2, name2,  email2, description2, categories, imageUrl,rating, 0, 0,null,null);
+        User user3 = new User(googleID3, name3,  email3, description3, categories, imageUrl,rating, 0, 0,null,null);
         ChatRelation cR = new ChatRelation(user1, user2);
         user1.addChatRelation(cR);
         user2.addChatRelation(cR);
@@ -97,8 +100,8 @@ public class UserTest {
 
     @Test
     public void idRelationExistsWorksForExistentRelation(){
-        User user1 = new User(googleID, name, email, description, categories, imageUrl);
-        User user2 = new User(googleID2, name2, email2, description2, categories, imageUrl);
+        User user1 = new User(googleID, name, email, description, categories, imageUrl,rating, 0, 0,null,null);
+        User user2 = new User(googleID2, name2, email2, description2, categories, imageUrl,rating, 0, 0,null,null);
         ChatRelation cR = new ChatRelation(user1, user2);
         user1.addChatRelation(cR);
         user2.addChatRelation(cR);
