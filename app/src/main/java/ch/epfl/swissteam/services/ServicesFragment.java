@@ -101,7 +101,7 @@ public class ServicesFragment extends Fragment {
 
                 for (String googleId : googleIds) {
                     DBUtility.get().getUser(googleId, user -> {
-                        if (user != null && !users.contains(user)) {
+                        if (user != null && !users.contains(user) && !user.getGoogleId_().equals(GoogleSignInSingleton.get().getClientUniqueID())) {
                             users.add(user);
                             Collections.sort(users, this::compareUsersUsingDistanceWithRef);
                             mAdapter_.notifyDataSetChanged();
