@@ -46,6 +46,7 @@ public class MainActivity extends NavigationDrawer {
     @Override
     protected void onStart() {
         super.onStart();
+        DBUtility.get().notifyNewMessages(this, GoogleSignInSingleton.get().getClientUniqueID());
         Intent intent = getIntent();
         chooseFragment(intent.getIntExtra(NAVIGATION_TAG, -1));
     }

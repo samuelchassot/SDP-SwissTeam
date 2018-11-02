@@ -35,7 +35,6 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initialization();
         setContentView(R.layout.activity_signin);
 
         // Configure sign-in to request the user's ID, email address, and basic
@@ -61,6 +60,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         // Check for existing Google Sign In account, if the user is already signed in
         // the GoogleSignInAccount will be non-null.
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+        initializeNotifications();
 
         if (account != null) {
             // Launch main
@@ -126,9 +126,9 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     /**
-     * Method called when the app is started
+     * Initializes the notifications and attaches the listeners.
      */
-    private void initialization() {
+    private void initializeNotifications() {
         // Create the NotificationChannel, but only on API 26+ because
         // the NotificationChannel class is new and not in the support library
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -142,6 +142,5 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
             NotificationManager notificationManager = getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(channel);
         }
-        DBUtility.get().notifyWhenUserChanges(this);
     }
 }
