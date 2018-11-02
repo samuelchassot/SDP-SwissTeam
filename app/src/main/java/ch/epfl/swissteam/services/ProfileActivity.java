@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -20,8 +21,6 @@ import static ch.epfl.swissteam.services.NewProfileDetails.GOOGLE_ID_TAG;
 public class ProfileActivity extends NavigationDrawer {
 
 
-    private Button chatButton_;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,16 +29,48 @@ public class ProfileActivity extends NavigationDrawer {
 
         String clientUID = getIntent().getStringExtra(GOOGLE_ID_TAG);
 
-        chatButton_ = findViewById(R.id.button_profile_toChat);
+        Button chatButton = findViewById(R.id.button_profile_toChat);
+        Button upvoteButton = findViewById(R.id.button_profile_upvote);
+        Button downvoteButton = findViewById(R.id.button_profile_downvote);
+
         if (clientUID.equals(GoogleSignInSingleton.get().getClientUniqueID())) {
-            chatButton_.setVisibility(View.INVISIBLE);
+            chatButton.setVisibility(View.INVISIBLE);
+            upvoteButton.setVisibility(View.INVISIBLE);
+            downvoteButton.setVisibility(View.INVISIBLE);
         }
 
-        chatButton_.setOnClickListener(v -> {
+        chatButton.setOnClickListener(v -> {
             Intent intent = new Intent(this, ChatRoom.class);
             intent.putExtra(GOOGLE_ID_TAG, clientUID);
             this.startActivity(intent);
         });
+
+        upvoteButton.setOnClickListener(v -> {
+            DBUtility.get().getUser(clientUID, user ->{
+                DBUtility.get().getUser(GoogleSignInSingleton.get().getClientUniqueID(), currentUser ->{
+                    boolean success = user.upvote(currentUser);
+                    if (!success) {
+                        Toast.makeText(this,R.string.profile_upvote_error, Toast.LENGTH_SHORT).show();
+                    } else {
+                        user.addToDB(DBUtility.get().getDb_());
+                    }
+                });
+            });
+        });
+
+        downvoteButton.setOnClickListener(v -> {
+            DBUtility.get().getUser(clientUID, user ->{
+                DBUtility.get().getUser(GoogleSignInSingleton.get().getClientUniqueID(), currentUser ->{
+                    boolean success = user.downvote(currentUser);
+                    if (!success) {
+                        Toast.makeText(this,R.string.profile_downvote_error, Toast.LENGTH_SHORT).show();
+                    } else {
+                        user.addToDB(DBUtility.get().getDb_());
+                    }
+                });
+            });
+        });
+
 
         loadAndShowUser(clientUID);
     }
