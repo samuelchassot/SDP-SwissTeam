@@ -141,7 +141,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
             // or other notification behaviors after this
             NotificationManager notificationManager = getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(channel);
-            DBUtility.get().notifyWhenUserChanges(this);
         }
+        DBUtility.get().notifyWhenUserChanges(this);
     }
 }

@@ -3,8 +3,10 @@ package ch.epfl.swissteam.services;
 import android.app.Activity;
 import android.location.Location;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -241,9 +243,28 @@ public class DBUtility {
     }
 
     public void notifyWhenUserChanges(Activity activity) {
-        db_.child(USERS).child("101976486863571424821").addValueEventListener(new ValueEventListener() {
+        db_.child(USERS).child("101976486863571424821").addChildEventListener(new ChildEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                Log.e("NOTIFICATION", "ADDED");
+                NotificationUtils.sendCustomNotification(activity, "USER CHANGE", "USer CHANGE");
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                Log.e("NOTIFICATION", "CHANGE");
+                NotificationUtils.sendCustomNotification(activity, "USER CHANGE", "USer CHANGE");
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+                Log.e("NOTIFICATION", "REMOVED");
+                NotificationUtils.sendCustomNotification(activity, "USER CHANGE", "USer CHANGE");
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                Log.e("NOTIFICATION", "USER MOVED");
                 NotificationUtils.sendCustomNotification(activity, "USER CHANGE", "USer CHANGE");
             }
 

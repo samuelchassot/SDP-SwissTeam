@@ -17,7 +17,6 @@ public class User implements DBSavable {
     private int rating_;
     private double latitude_, longitude_;
     private ArrayList<Categories> categories_;
-
     private ArrayList<ChatRelation> chatRelations_;
 
     /**
@@ -61,6 +60,7 @@ public class User implements DBSavable {
      * @param latitude_    User's last latitude
      * @param longitude_   User's last longitude
      */
+    @Deprecated
     public User(String googleID_, String name_, String email_, String description_, ArrayList<Categories> categories_, String imageUrl_, int rating_,
                 double latitude_, double longitude_) {
         this.googleId_ = googleID_;
@@ -75,23 +75,31 @@ public class User implements DBSavable {
         this.longitude_ = longitude_;
     }
 
-//    public User(String googleID_, String name_, String email_, String description_, ArrayList<Categories> categories_, String imageUrl_, int rating_, Location lastLocation) {
-//        this.googleId_ = googleID_;
-//        this.email_ = email_;
-//        this.name_ = name_;
-//        this.description_ = description_;
-//        this.imageUrl_ = imageUrl_;
-//        this.rating_ = rating_;
-//        this.categories_ = categories_ == null ? new ArrayList<Categories>() : (ArrayList<Categories>) categories_.clone();
-//        double lat = 0;
-//        double longt = 0;
-//        if(lastLocation != null) {
-//            lat= lastLocation.getLatitude();
-//            longt = lastLocation.getLongitude();
-//        }
-//        this.latitude_ = lat;
-//        this.longitude_= longt;
-//    }
+    /**
+     * Create a new user given its specificities
+     *
+     * @param googleID_    User's unique googleId
+     * @param name_        User's name
+     * @param email_       User's email
+     * @param description_ User's description
+     * @param categories_  User's categories of services
+     * @param rating_      User's rating score
+     * @param latitude_    User's last latitude
+     * @param longitude_   User's last longitude
+     */
+    public User(String googleID_, String name_, String email_, String description_, ArrayList<Categories> categories_, String imageUrl_, int rating_,
+                double latitude_, double longitude_, ArrayList<ChatRelation> chatRelations_) {
+        this.googleId_ = googleID_;
+        this.email_ = email_;
+        this.name_ = name_;
+        this.description_ = description_;
+        this.imageUrl_ = imageUrl_;
+        this.rating_ = rating_;
+        this.categories_ = categories_ == null ? new ArrayList<Categories>() : (ArrayList<Categories>) categories_.clone();
+        this.chatRelations_ = chatRelations_ == null ? new ArrayList<ChatRelation>() : (ArrayList<ChatRelation>) chatRelations_.clone();
+        this.latitude_ = latitude_;
+        this.longitude_ = longitude_;
+    }
 
     /**
      * Gives the google id of the user
@@ -146,21 +154,6 @@ public class User implements DBSavable {
     public int getRating_() {
         return rating_;
     }
-
-
-//    public Location getLastLocation() {
-//        Location lastLocation = new Location("");
-//        lastLocation.setLongitude(longitude_);
-//        lastLocation.setLatitude(latitude_);
-//        return lastLocation;
-//    }
-//    public void setLastLocation_(Location lastLocation){
-//        if(lastLocation != null){
-//          this.latitude_ = lastLocation.getLatitude();
-//          this.longitude_ = lastLocation.getLongitude();
-//        }
-//    }
-
 
     public double getLatitude_() {
         return latitude_;
