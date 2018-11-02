@@ -88,6 +88,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
      * ViewHolder for Posts
      */
     static class PostViewHolder extends RecyclerView.ViewHolder {
+
         protected TextView titleView_;
         protected TextView bodyView_;
         protected TextView distanceView_;

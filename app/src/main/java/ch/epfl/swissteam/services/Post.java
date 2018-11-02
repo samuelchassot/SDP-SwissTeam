@@ -124,9 +124,9 @@ public class Post implements DBSavable, Parcelable {
     }
 
     /**
-     * TODO : What is the key ?
+     * Gives the key of the post
      *
-     * @return
+     * @return the key of the post
      */
     public String getKey_() {
         return key_;
@@ -163,7 +163,7 @@ public class Post implements DBSavable, Parcelable {
     }
 
     /**
-     * TODO : Explain
+     * Transform a Post into a {@link Parcelable}
      */
     public static final Parcelable.Creator<Post> CREATOR = new Parcelable.Creator<Post>() {
 

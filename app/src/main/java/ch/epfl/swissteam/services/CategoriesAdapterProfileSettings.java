@@ -20,6 +20,12 @@ public class CategoriesAdapterProfileSettings extends RecyclerView.Adapter<Categ
     private Categories[] capabilities_;
     private ArrayList<Categories> userCapabilities_;
 
+    /**
+     * Creates an adapter for categories to be used in ProfileSettings
+     *
+     * @param capabilities the array of categories to be adapted
+     * @param userCapabilities a list of capabilities (of the user) to be checked
+     */
     public CategoriesAdapterProfileSettings(Categories[] capabilities, ArrayList<Categories> userCapabilities) {
         this.capabilities_ = capabilities;
         if (userCapabilities != null) {
@@ -36,9 +42,9 @@ public class CategoriesAdapterProfileSettings extends RecyclerView.Adapter<Categ
 
     @Override
     public void onBindViewHolder(@NonNull CategoriesViewHolder categoriesViewHolder, int i) {
-        categoriesViewHolder.nameView.setText(capabilities_[i].toString());
-        categoriesViewHolder.checkBox.setChecked(userCapabilities_.contains(capabilities_[i]));
-        categoriesViewHolder.checkBox.setOnClickListener(v -> {
+        categoriesViewHolder.nameView_.setText(capabilities_[i].toString());
+        categoriesViewHolder.checkBox_.setChecked(userCapabilities_.contains(capabilities_[i]));
+        categoriesViewHolder.checkBox_.setOnClickListener(v -> {
             ((ProfileSettings) v.getContext()).updateUserCapabilities(capabilities_[i], ((CheckBox) v).isChecked());
         });
 
@@ -49,15 +55,23 @@ public class CategoriesAdapterProfileSettings extends RecyclerView.Adapter<Categ
         return capabilities_.length;
     }
 
+    /**
+     * View Holder for the CategoriesAdapter.
+     */
     public static class CategoriesViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView nameView;
-        public CheckBox checkBox;
+        public TextView nameView_;
+        public CheckBox checkBox_;
 
+        /**
+         * Create a CategoriesViewHolder
+         *
+         * @param v the current View
+         */
         public CategoriesViewHolder(@NonNull View v) {
             super(v);
-            this.nameView = v.findViewById(R.id.textview_capabilitylayout_name);
-            this.checkBox = v.findViewById(R.id.checkbox_capabilitylayout_check);
+            this.nameView_ = v.findViewById(R.id.textview_capabilitylayout_name);
+            this.checkBox_ = v.findViewById(R.id.checkbox_capabilitylayout_check);
         }
     }
 }

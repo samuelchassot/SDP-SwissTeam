@@ -71,6 +71,7 @@ public class ChatRelationAdapter extends RecyclerView.Adapter<ChatRelationAdapte
      * ViewHolder for ChatRelations
      */
     static class ChatRelationsViewHolder extends RecyclerView.ViewHolder {
+        
         protected TextView contactName_;
         protected FrameLayout parentLayout_;
         protected ImageView contactImage_;

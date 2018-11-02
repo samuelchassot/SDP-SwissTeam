@@ -9,6 +9,9 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * The enum for Categories representing the different kind of user's capabilities
+ */
 public enum Categories implements DBSavable {
     ALL,
     IC,
@@ -23,10 +26,17 @@ public enum Categories implements DBSavable {
 
     private List<String> users_;
 
+
     Categories() {
         users_ = new ArrayList<>();
     }
 
+    /**
+     * Convert a category in String form into its enum form
+     *
+     * @param category a String corresponding to a category
+     * @return the enum corresponding to category
+     */
     public static Categories fromString(String category) {
         switch (category) {
             case "Computer":
@@ -53,6 +63,15 @@ public enum Categories implements DBSavable {
                 return null;
 
         }
+    }
+
+    /**
+     * Gives all the actual categories (all except ALL)
+     *
+     * @return the actual categories
+     */
+    public static Categories[] realCategories() {
+        return Arrays.copyOfRange(Categories.values(), 1, Categories.values().length);
     }
 
     @Override
@@ -83,16 +102,12 @@ public enum Categories implements DBSavable {
 
     }
 
-    public static Categories[] realCategories(){
-        return  Arrays.copyOfRange(Categories.values(),1, Categories.values().length);
-    }
-
     /**
      * Add a user to the list of users
      *
      * @param user a user
      */
-    public void addUser(User user){
+    public void addUser(User user) {
         addUser(user.getGoogleId_());
     }
 

@@ -5,7 +5,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
 /**
- * TODO : Explain the class
+ * Class containing utilities related to the network.
  */
 public class NetworkUtility {
 
@@ -13,10 +13,10 @@ public class NetworkUtility {
     public static final int NOT_CONNECTED = 1;
 
     /**
-     * TODO : Explain
+     * Returns the current internet connectivity status.
      *
-     * @param context
-     * @return
+     * @param context calling context
+     * @return current internet connectivity
      */
     public static int getConnectivityStatus(Context context) {
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);

@@ -155,10 +155,20 @@ public class User implements DBSavable {
         return rating_;
     }
 
+    /**
+     * Gives the latitude of the user
+     *
+     * @return the latitude of the user
+     */
     public double getLatitude_() {
         return latitude_;
     }
 
+    /**
+     * Gives the longitude of the user
+     *
+     * @return the longitude of the user
+     */
     public double getLongitude_() {
         return longitude_;
     }
@@ -226,7 +236,6 @@ public class User implements DBSavable {
 
     /**
      * Add a chatRelationId to the list of chatRelation of the user
-     * db
      *
      * @param chatRelation the id of the chatRelation
      */
