@@ -86,9 +86,12 @@ public class ServicesFragment extends Fragment {
         if (category == Categories.ALL) {
             DBUtility.get().getAllUsers((usersdb -> {
                 users.clear();
-                users.addAll(usersdb);
-
-
+                for (User u : usersdb) {
+                    if(! u.getGoogleId_().equals(GoogleSignInSingleton.get().getClientUniqueID())){
+                        //don't add current user to the list
+                        users.add(u);
+                    }
+                }
                 Collections.sort(users, this::compareUsersUsingDistanceWithRef);
                 mAdapter_.notifyDataSetChanged();
                 services_problem_text_udpate(view, users.isEmpty());
