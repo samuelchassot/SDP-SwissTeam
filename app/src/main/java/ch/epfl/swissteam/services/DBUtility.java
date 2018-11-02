@@ -244,7 +244,7 @@ public class DBUtility {
     }
 
     public void notifyNewMessages(Activity activity, String googleId) {
-        if (!isNotificationsSetupDone) {
+        if (!isNotificationsSetupDone && googleId != null) {
             db_.child(USERS).child(googleId).child("chatRelations_").addChildEventListener(new ChildEventListener() {
                 @Override
                 public void onChildAdded(@NonNull DataSnapshot relationDataSnapshot, @Nullable String s) {
