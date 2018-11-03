@@ -47,7 +47,7 @@ public class UserTest {
         assertEquals(rating +1, user.getRating_());
         assertEquals(false, user.upvote(user2));
         user.downvote(user2);
-        assertEquals(rating, user.getRating_());
+        assertEquals(rating - 1, user.getRating_());
         assertEquals(false, user.downvote((user2)));
 
 
