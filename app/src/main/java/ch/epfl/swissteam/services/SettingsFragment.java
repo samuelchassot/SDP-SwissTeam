@@ -6,6 +6,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.content.Intent;
 
 /**
  * A fragment to set the different settings of the application
@@ -33,12 +35,22 @@ public class SettingsFragment extends Fragment {
         super.onCreate(savedInstanceState);
         Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.toolbar_settings);
+
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_settings, container, false);
+
+        Button deleteAccountButton = (Button) view.findViewById(R.id.button_settings_deleteaccount);
+        deleteAccountButton.setOnClickListener(v->{
+            Intent intent = new Intent(v.getContext(), DeleteAccountActivity.class);
+            v.getContext().startActivity(intent);
+        });
+
+
         return view;
     }
 }
