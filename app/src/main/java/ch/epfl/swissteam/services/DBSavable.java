@@ -7,4 +7,7 @@ import com.google.firebase.database.DatabaseReference;
  */
 public interface DBSavable {
     void addToDB(DatabaseReference databaseReference);
+    default void removeFromDB(DatabaseReference databaseReference) throws Utility.IllegalCallException {
+        throw new Utility.IllegalCallException("This method needs to be defined to be call.");
+    }
 }
