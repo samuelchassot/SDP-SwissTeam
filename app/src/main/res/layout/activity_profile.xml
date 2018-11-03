@@ -90,6 +90,7 @@
             android:text="@string/profile_upvote"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/button_profile_toChat"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/button_profile_downvote"
             app:layout_constraintTop_toBottomOf="@+id/textView_profile_description"
             app:layout_constraintVertical_bias="0.847" />
@@ -98,15 +99,17 @@
             android:id="@+id/button_profile_downvote"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="38dp"
-            android:layout_marginTop="259dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="38dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
             android:text="@string/profile_downvote"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/button_profile_upvote"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.074"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageview_profile_picture" />
+            app:layout_constraintTop_toBottomOf="@+id/imageview_profile_picture"
+            app:layout_constraintVertical_bias="0.893" />
 
         <Button
           android:id="@+id/button_profile_toChat"
