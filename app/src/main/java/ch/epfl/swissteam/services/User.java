@@ -28,6 +28,8 @@ public class User implements DBSavable {
     public User() {
         categories_ = new ArrayList<>();
         chatRelations_ = new ArrayList<>();
+        downvotes_ = new ArrayList<>();
+        upvotes_ = new ArrayList<>();
     }
 
     /**
@@ -206,6 +208,30 @@ public class User implements DBSavable {
             return new ArrayList<>();
         }
         return (ArrayList<ChatRelation>) chatRelations_.clone();
+    }
+
+    /**
+     * Gives the list of users who upvoted this user
+     *
+     * @return the list of upvotes of the user
+     */
+    public ArrayList<String> getUpvotes_() {
+        if (upvotes_ == null) {
+            return new ArrayList<>();
+        }
+        return (ArrayList<String>) upvotes_.clone();
+    }
+
+    /**
+     * Gives the list of users who downvoted this user
+     *
+     * @return the list of downvotes of the user
+     */
+    public ArrayList<String> getDownvotes_() {
+        if (downvotes_ == null) {
+            return new ArrayList<>();
+        }
+        return (ArrayList<String>) downvotes_.clone();
     }
 
     /**
