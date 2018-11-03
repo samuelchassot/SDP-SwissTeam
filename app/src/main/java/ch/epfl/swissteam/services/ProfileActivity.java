@@ -53,6 +53,7 @@ public class ProfileActivity extends NavigationDrawer {
                         Toast.makeText(this,R.string.profile_upvote_error, Toast.LENGTH_SHORT).show();
                     } else {
                         user.addToDB(DBUtility.get().getDb_());
+                        loadAndShowUser(clientUID);
                     }
                 });
             });
@@ -66,6 +67,7 @@ public class ProfileActivity extends NavigationDrawer {
                         Toast.makeText(this,R.string.profile_downvote_error, Toast.LENGTH_SHORT).show();
                     } else {
                         user.addToDB(DBUtility.get().getDb_());
+                        loadAndShowUser(clientUID);
                     }
                 });
             });
