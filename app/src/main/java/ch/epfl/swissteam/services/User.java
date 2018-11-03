@@ -317,8 +317,11 @@ public class User implements DBSavable {
 
         if (downvotes_.contains(user.getGoogleId_())){
             downvotes_.remove(user.getGoogleId_());
+            //one downvote less
+            rating_ += 1;
         }
         upvotes_.add(user.googleId_);
+        //one upvote more
         rating_ += 1;
         return true;
     }
@@ -333,8 +336,11 @@ public class User implements DBSavable {
 
         if (upvotes_.contains(user.getGoogleId_())){
             upvotes_.remove(user.getGoogleId_());
+            //one upvote less
+            rating_ -=1;
         }
         downvotes_.add(user.googleId_);
+        //one downvote more
         rating_ -= 1;
         return true;
     }
