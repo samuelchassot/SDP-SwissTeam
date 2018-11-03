@@ -264,7 +264,8 @@ public class DBUtility {
                                     lastChild = child.getValue(ChatMessage.class);
                                 }
                                 if(lastChild != null) {
-                                    NotificationUtils.sendCustomNotification(activity, "New message!", lastChild.getUser_() + ": " + lastChild.getText_());
+                                    NotificationUtils.sendChatNotification(activity,
+                                            "New message!", lastChild.getUser_() + ": " + lastChild.getText_(), lastChild.getRelationId_());
                                 }
                             } else {
                                 isBound = true;

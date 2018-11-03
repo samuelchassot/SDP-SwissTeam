@@ -17,17 +17,26 @@ public class NotificationUtils {
 
     public static String CUSTOM_NOTIFICATION_CHANNEL_ID = "CUSTOM_NOTIFICATION";
 
-    public static void sendCustomNotification(Activity activity, String textTitle, String textContent){
+    /**
+     * Sends a chat notification to the user
+     *
+     * @param activity calling activity
+     * @param textTitle title of notification
+     * @param textContent body of notification
+     * @param relationId identifier of {@link ChatRelation}
+     */
+    public static void sendChatNotification(Activity activity, String textTitle, String textContent, String relationId){
         // Create an explicit intent for an Activity in your app
         Intent intent = new Intent(activity, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        intent.putExtra(ChatRelation.RELATION_ID_TEXT, relationId);
         PendingIntent pendingIntent = PendingIntent.getActivity(activity, 0, intent, 0);
 
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(activity, CUSTOM_NOTIFICATION_CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_google)
                 .setContentTitle(textTitle)
                 .setContentText(textContent)
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
                 // Set the intent that will fire when the user taps the notification
                 .setContentIntent(pendingIntent)
                 .setAutoCancel(true);
