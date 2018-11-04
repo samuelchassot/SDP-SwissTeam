@@ -39,7 +39,7 @@ public class User implements DBSavable {
      */
     public static User getDeletedUser(){
         User deletedUser = new User(getDeletedUserGoogleID(), "Deleted user",
-                "", "", new ArrayList<>(), "https://cdn.pixabay.com/photo/2014/03/25/15/19/cross-296507_960_720.png", 0, 0,0 );
+                "", "", new ArrayList<Categories>(), "https://cdn.pixabay.com/photo/2014/03/25/15/19/cross-296507_960_720.png", 0, 0.0,0.0 );
         return deletedUser;
     }
 
