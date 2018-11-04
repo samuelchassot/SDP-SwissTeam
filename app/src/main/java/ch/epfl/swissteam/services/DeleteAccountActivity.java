@@ -1,6 +1,8 @@
 package ch.epfl.swissteam.services;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -25,6 +27,17 @@ public class DeleteAccountActivity extends NavigationDrawer {
     }
 
     private void deleteAccount(){
-        
+        DBUtility.get().getUser(GoogleSignInSingleton.get().getClientUniqueID(), user ->{
+            try {
+                user.removeFromDB(DBUtility.get().getDb_());
+            } catch (Utility.IllegalCallException e) {
+                Log.e("REMOVE_USER", "Illegalcall of removeFromDB");
+            }
+            GoogleSignInSingleton.get().getClient().signOut();
+            GoogleSignInSingleton.putUniqueID(null);
+            Intent backToLogInIntent = new Intent(this, SignInActivity.class);
+            startActivity(backToLogInIntent);
+        });
+
     }
 }

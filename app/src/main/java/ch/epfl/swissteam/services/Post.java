@@ -101,6 +101,7 @@ public class Post implements DBSavable, Parcelable {
      */
     public void removeUser(){
         googleId_ = User.getDeletedUserGoogleID();
+        this.addToDB(DBUtility.get().getDb_());
     }
 
     /**

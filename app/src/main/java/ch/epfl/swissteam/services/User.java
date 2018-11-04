@@ -285,9 +285,20 @@ public class User implements DBSavable {
 
             }
             if(!removed){
+                //change the ID in all messages the user sent
+                DBUtility.get().getAllMessagesFromChatRelation(cr.getId_(), messages->{
+                    for(ChatMessage m : messages){
+                        m.setUserId_(User.getDeletedUserGoogleID());
+                        m.setUser_(User.getDeletedUser().getName_());
+                        m.addToDB(db);
+                    }
+                });
                 cr.addToDB(db);
             }
         }
+
+
+
 
 
 
