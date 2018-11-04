@@ -59,62 +59,25 @@ public class User implements DBSavable {
      * @param email_       User's email
      * @param description_ User's description
      * @param categories_  User's categories of services
-     */
-    @Deprecated
-    public User(String googleID_, String name_, String email_, String description_, ArrayList<Categories> categories_, String imageUrl_) {
-        this();
-        this.googleId_ = googleID_;
-        this.email_ = email_;
-        this.name_ = name_;
-        this.description_ = description_;
-        this.imageUrl_ = imageUrl_;
-        this.rating_ = 0;
-        this.categories_ = categories_ == null ? new ArrayList<Categories>() : (ArrayList<Categories>) categories_.clone();
-    }
-
-    /**
-     * Create a new user given its specificities
-     *
-     * @param googleID_    User's unique googleId
-     * @param name_        User's name
-     * @param email_       User's email
-     * @param description_ User's description
-     * @param categories_  User's categories of services
+     * @param chatRelations_ User's chat relations
      * @param rating_      User's rating score
      * @param latitude_    User's last latitude
      * @param longitude_   User's last longitude
      */
-    public User(String googleID_, String name_, String email_, String description_, ArrayList<Categories> categories_, String imageUrl_, int rating_,
-                double latitude_, double longitude_) {
+    public User(String googleID_, String name_, String email_, String description_,
+                ArrayList<Categories> categories_, ArrayList<ChatRelation> chatRelations_,
+                String imageUrl_, int rating_, double latitude_, double longitude_) {
         this.googleId_ = googleID_;
         this.email_ = email_;
         this.name_ = name_;
         this.description_ = description_;
         this.imageUrl_ = imageUrl_;
         this.rating_ = rating_;
-        this.categories_ = categories_ == null ? new ArrayList<Categories>() : (ArrayList<Categories>) categories_.clone();
-
+        this.categories_ = categories_ == null ? new ArrayList<>() : (ArrayList<Categories>) categories_.clone();
+        this.chatRelations_ = chatRelations_ == null ? new ArrayList<>() : (ArrayList<ChatRelation>)  chatRelations_.clone();
         this.latitude_ = latitude_;
         this.longitude_ = longitude_;
     }
-
-//    public User(String googleID_, String name_, String email_, String description_, ArrayList<Categories> categories_, String imageUrl_, int rating_, Location lastLocation) {
-//        this.googleId_ = googleID_;
-//        this.email_ = email_;
-//        this.name_ = name_;
-//        this.description_ = description_;
-//        this.imageUrl_ = imageUrl_;
-//        this.rating_ = rating_;
-//        this.categories_ = categories_ == null ? new ArrayList<Categories>() : (ArrayList<Categories>) categories_.clone();
-//        double lat = 0;
-//        double longt = 0;
-//        if(lastLocation != null) {
-//            lat= lastLocation.getLatitude();
-//            longt = lastLocation.getLongitude();
-//        }
-//        this.latitude_ = lat;
-//        this.longitude_= longt;
-//    }
 
     /**
      * Gives the google id of the user
