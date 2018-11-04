@@ -2,11 +2,14 @@ package ch.epfl.swissteam.services;
 
 import android.support.test.espresso.UiController;
 import android.support.test.espresso.ViewAction;
-import android.support.test.espresso.ViewInteraction;
 import android.support.test.espresso.contrib.RecyclerViewActions;
+
 import android.support.test.espresso.matcher.ViewMatchers;
+import android.support.v7.widget.AppCompatImageButton;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
@@ -21,28 +24,38 @@ import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.scrollTo;
 import static android.support.test.espresso.matcher.ViewMatchers.hasDescendant;
+import static android.support.test.espresso.matcher.ViewMatchers.withClassName;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static android.support.test.espresso.matcher.ViewMatchers.withParent;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.anyOf;
 
 public class TestUtils {
     protected static final String M_GOOGLE_ID = "1234";
     protected static final String O_GOOGLE_ID = "456";
-    protected static final String URL = TestUtils.getATestUser().getImageUrl_();
+    protected static final String URL = TestUtils.getTestUser().getImageUrl_();
     protected static final ArrayList<Categories> CATS = new ArrayList<>(Arrays.asList(Categories.COOKING));
-    protected static final User M_USER = new User(M_GOOGLE_ID,"Bear", "polar@north.nth","",null, URL,0);
-    protected static final User O_USER = new User(O_GOOGLE_ID, "Raeb", "hairy@north.nth", "", CATS, URL, 0);
+    protected static final User M_USER = new User(M_GOOGLE_ID,"Bear", "polar@north.nth","",
+            null,null, URL, 0, 0, 0);
+    protected static final User O_USER = new User(O_GOOGLE_ID, "Raeb", "hairy@north.nth",
+            "", CATS, null, URL, 0, 0, 0);
 
-    protected static User getATestUser(){
+    protected static User getTestUser(){
         ArrayList<Categories> cat = new ArrayList<>();
         cat.add(Categories.IC);
-        User testUser = new User("1234", "testuser", "test@gmail.com", "I am a test user", cat, "https://lh5.googleusercontent.com/-SYTkc6TIZHI/AAAAAAAAAAI/AAAAAAAAABc/EBrA4sSVWQc/photo.jpg");
+        User testUser = new User("1234", "testuser", "test@gmail.com",
+                "I am a test user", cat, null,
+                "https://lh5.googleusercontent.com/-SYTkc6TIZHI/AAAAAAAAAAI/AAAAAAAAABc/EBrA4sSVWQc/photo.jpg",
+                0,0,0);
         return testUser;
     }
 
     protected static void addTestPost() {
         long timestamp = (new Date()).getTime();
         String key = "1234" + "_" + timestamp;
-        DBUtility.get().setPost(new Post(key, "Hello there", "1234", "General Kenobi", timestamp));
+        DBUtility.get().setPost(new Post(key, "Hello there", "1234", "General Kenobi", timestamp, 10, 20));
 
 
     }
@@ -50,7 +63,7 @@ public class TestUtils {
     protected static Post getTestPost() {
         long timestamp = (new Date()).getTime();
         String key = "1234" + "_" + timestamp;
-        return new Post(key, "Hello there", "1234", "General Kenobi", timestamp);
+        return new Post(key, "Hello there", "1234", "General Kenobi", timestamp, 10, 20);
     }
 
     protected static void sleep(int ms){
@@ -88,11 +101,7 @@ public class TestUtils {
     }
 
     protected static void recyclerScrollToItemWithTextAndPerformOnItem(int recyclerViewId, String text, ViewAction perform){
-        onView(withId(recyclerViewId)).
-                perform(RecyclerViewActions.scrollTo(hasDescendant(withText(text))));
-        sleep(2000);
-        onView(withText(text)).perform(perform);
-        //onView(withId(recyclerViewId)).perform(RecyclerViewActions.actionOnItem(hasDescendant(withText(text)), perform));
+        onView(withId(recyclerViewId)).perform(RecyclerViewActions.actionOnItem(hasDescendant(withText(text)), perform));
     }
 
     protected static void recyclerScrollToItemWithTextAndPerformClickItem(int recyclerViewId, String text){
@@ -117,5 +126,15 @@ public class TestUtils {
             }
         };
     }
+
+    public static Matcher<View> navigationHomeMatcher() {
+        return allOf(
+                withParent(withClassName(is(Toolbar.class.getName()))),
+                withClassName(anyOf(
+                        is(ImageButton.class.getName()),
+                        is(AppCompatImageButton.class.getName())
+                )));
+    }
+
 }
 

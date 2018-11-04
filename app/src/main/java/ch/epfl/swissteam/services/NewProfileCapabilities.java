@@ -15,7 +15,6 @@ import java.util.ArrayList;
  * @author Sébastien Gachoud
  * @author Adrian Baudat
  */
-
 public class NewProfileCapabilities extends AppCompatActivity {
 
     private ArrayList<Categories> capabilitiesList_ = new ArrayList<>();
@@ -56,8 +55,11 @@ public class NewProfileCapabilities extends AppCompatActivity {
      * Saves the newly created user in the database.
      */
     private void saveUserInDB() {
-        User user = new User(googleID_, username_, email_, description_, capabilitiesList_, imageUrl_);
+
+        User user = new User(googleID_, username_, email_, description_, capabilitiesList_,
+                null, imageUrl_, 0, 0, 0);
         user.addToDB(DBUtility.get().getDb_());
+
     }
 
     /**
@@ -75,7 +77,7 @@ public class NewProfileCapabilities extends AppCompatActivity {
      * @param capability capability to remove.
      */
     public void removeCapability(Categories capability) {
-        if(capabilitiesList_.contains(capability)){
+        if (capabilitiesList_.contains(capability)) {
             capabilitiesList_.remove(capability);
         }
     }

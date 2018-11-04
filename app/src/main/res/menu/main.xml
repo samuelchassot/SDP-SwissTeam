@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu>
+<menu xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <!--
     <item
         android:id="@+id/action_settings"
@@ -8,4 +10,14 @@
         app:showAsAction="never" />
     -->
 
+    <group
+        android:id="@+id/group_cancel">
+
+        <item
+            android:id="@+id/action_save"
+            android:icon="@drawable/ic_menuitem_save"
+            android:orderInCategory="100"
+            android:title="Save"
+            app:showAsAction="ifRoom" />
+    </group>
 </menu>

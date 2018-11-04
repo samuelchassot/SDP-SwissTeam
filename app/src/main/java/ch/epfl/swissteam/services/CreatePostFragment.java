@@ -1,14 +1,24 @@
 package ch.epfl.swissteam.services;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.os.Build;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.google.android.gms.location.LocationServices;
 
 import java.util.Date;
 
@@ -18,7 +28,7 @@ import java.util.Date;
  *
  * @author Adrian Baudat
  */
-public class CreatePostFragment extends Fragment implements View.OnClickListener{
+public class CreatePostFragment extends Fragment implements View.OnClickListener {
 
     public CreatePostFragment() {
         // Required empty public constructor
@@ -26,6 +36,7 @@ public class CreatePostFragment extends Fragment implements View.OnClickListener
 
     /**
      * Creates a new {@link CreatePostFragment}.
+     *
      * @return new instance of <code>CreatePostFragment</code>
      */
     public static CreatePostFragment newInstance() {
@@ -42,21 +53,21 @@ public class CreatePostFragment extends Fragment implements View.OnClickListener
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View frag = inflater.inflate(R.layout.fragment_create_post, container, false);
-        ((Button)frag.findViewById(R.id.button_createpostfragment_send)).setOnClickListener(this);
+        ((Button) frag.findViewById(R.id.button_createpostfragment_send)).setOnClickListener(this);
         return frag;
     }
 
     @Override
     public void onClick(View v) {
-        EditText titleField = ((EditText)getView().findViewById(R.id.plaintext_createpostfragment_title));
-        EditText bodyField = ((EditText)getView().findViewById(R.id.plaintext_createpostfragment_body));
-        if(TextUtils.isEmpty(titleField.getText())) {
+
+        EditText titleField = ((EditText) getView().findViewById(R.id.plaintext_createpostfragment_title));
+        EditText bodyField = ((EditText) getView().findViewById(R.id.plaintext_createpostfragment_body));
+        
+        if (TextUtils.isEmpty(titleField.getText())) {
             Toast.makeText(getActivity(), R.string.createpostfragment_titleempty, Toast.LENGTH_SHORT).show();
-        }
-        else if(TextUtils.isEmpty(bodyField.getText())) {
+        } else if (TextUtils.isEmpty(bodyField.getText())) {
             Toast.makeText(getActivity(), R.string.createpostfragment_bodyempty, Toast.LENGTH_SHORT).show();
-        }
-        else {
+        } else {
             String title = titleField.getText().toString();
             String body = bodyField.getText().toString();
 
@@ -64,11 +75,20 @@ public class CreatePostFragment extends Fragment implements View.OnClickListener
             long timestamp = (new Date()).getTime();
             String key = googleID + "_" + timestamp;
 
-            DBUtility.get().getUser(googleID, user -> {
-                Post post = new Post(key, title, googleID, body, timestamp);
-                post.addToDB(DBUtility.get().getDb_());
-            });
+            Location location = LocationManager.get().getCurrentLocation_();
 
+            if(location != null) {
+                DBUtility.get().getUser(googleID, user -> {
+                    Post post = new Post(key, title, googleID, body, timestamp, location.getLongitude(), location.getLatitude());
+                    post.addToDB(DBUtility.get().getDb_());
+                });
+            }
+            else{
+                DBUtility.get().getUser(googleID, user -> {
+                    Post post = new Post(key, title, googleID, body, timestamp, 0, 0);
+                    post.addToDB(DBUtility.get().getDb_());
+                });
+            }
             ((MainActivity) getActivity()).showHomeFragment();
         }
     }

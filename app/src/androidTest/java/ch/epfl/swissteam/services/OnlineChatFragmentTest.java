@@ -5,7 +5,6 @@ import android.support.test.espresso.contrib.NavigationViewActions;
 import android.support.test.espresso.intent.Intents;
 import android.support.test.rule.ActivityTestRule;
 
-import org.junit.After;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -28,9 +27,11 @@ public class OnlineChatFragmentTest extends FirebaseTest {
 
     private static final String mGoogleId = "1234";
     private static final String oGoogleId = "5678";
-    private static final String url = TestUtils.getATestUser().getImageUrl_();
-    private static final User mUser = new User(mGoogleId,"Bear", "polar@north.nth","",null,url);
-    private static final User oUser = new User(oGoogleId, "Raeb", "hairy@north.nth", "", null, url);
+    private static final String url = TestUtils.getTestUser().getImageUrl_();
+    private static final User mUser = new User(mGoogleId,"Bear", "polar@north.nth","",
+            null, null, url,0,0,0);
+    private static final User oUser = new User(oGoogleId, "Raeb", "hairy@north.nth", "",
+            null, null, url,0,0,0);
     private static final ChatRelation chatRelation = new ChatRelation(mUser,oUser);
 
     @Rule
@@ -39,6 +40,7 @@ public class OnlineChatFragmentTest extends FirebaseTest {
 
     @Override
     public void initialize(){
+        LocationManager.get().setMock();
         GoogleSignInSingleton.putUniqueID(mGoogleId);
         chatRelation.addToDB(DBUtility.get().getDb_());
         mUser.addChatRelation(chatRelation, DBUtility.get().getDb_());
@@ -61,10 +63,10 @@ public class OnlineChatFragmentTest extends FirebaseTest {
     }
 
     @Override
-    public void terminate(){
+    public void terminate() {
         Intents.release();
+        LocationManager.get().unsetMock();
     }
-
     /* Examples
         - onView(nthChildOf(withId(R.id.recycleview), 0).check(matches(hasDescendant(withText("Some text"))))
         - onView(withId(R.id.recycleview)).check(matches(hasDescendant(withText("Some text"))))

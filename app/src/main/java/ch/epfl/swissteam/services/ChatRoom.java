@@ -1,13 +1,16 @@
 package ch.epfl.swissteam.services;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.app.Activity;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.text.format.DateFormat;
 import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,7 +23,7 @@ import com.google.firebase.database.DatabaseReference;
  *
  * @author Sébastien Gachoud
  */
-public class ChatRoom extends Activity {
+public class ChatRoom extends NavigationDrawer {
 
     private FirebaseRecyclerAdapter<ChatMessage, MessageHolder> adapter_;
     private DatabaseReference dataBase_;
@@ -31,6 +34,7 @@ public class ChatRoom extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_room);
+        super.onCreateDrawer(BACK);
         dataBase_ = DBUtility.get().getDb_();
         setCurrentRelationId_(getIntent().getExtras().getString(ChatRelation.RELATION_ID_TEXT, null));
         retrieveUserAndSetRelationId();
@@ -85,6 +89,14 @@ public class ChatRoom extends Activity {
                 viewHolder.messageText_.setText(message.getText_());
                 viewHolder.timeUserText_.setText(DateFormat.format("dd-mm-yyyy (hh:mm:ss)", message.getTime_()) +
                         message.getUser_());
+                viewHolder.parentLayout_.setOnLongClickListener(new View.OnLongClickListener(){
+                    private String ref_ = getRef(position).getKey();
+                    @Override
+                    public boolean onLongClick(View view) {
+                        askToDeleteMessage(message, ref_);
+                        return true;
+                    }
+                });
             }
         };
         chatRoom.setAdapter(adapter_);
@@ -133,20 +145,49 @@ public class ChatRoom extends Activity {
         } );
     }
 
+    private void askToDeleteMessage(ChatMessage message, String key){
+        AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+        alertDialog.setTitle(getResources().getString(R.string.chat_delete_alert_title));
+        alertDialog.setMessage(getResources().getString(R.string.chat_delete_alert_text));
+        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, getResources().getString(R.string.general_delete),
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        message.removeFromDB(DBUtility.get().getDb_(), key);
+                    }
+                });
+        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, getResources().getString(R.string.general_cancel),
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        alertDialog.show();
+    }
+
     private void toastUser(String text){
         Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
     }
+
     /**
      * ViewHolder class to handle the RecyclerView
      */
     private static class MessageHolder extends RecyclerView.ViewHolder{
-        TextView messageText_;
-        TextView timeUserText_;
+      
+        protected TextView messageText_;
+        protected TextView timeUserText_;
+        protected LinearLayout parentLayout_;
 
+        /**
+         * Create a MessageViewHolder
+         *
+         * @param view the current View
+         */
         public MessageHolder(View view) {
             super(view);
             messageText_ = view.findViewById(R.id.message_message);
             timeUserText_ = view.findViewById(R.id.message_time_stamp_user);
+            parentLayout_ = view.findViewById(R.id.chat_message_parent_layout);
         }
 
     }

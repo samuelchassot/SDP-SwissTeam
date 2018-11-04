@@ -1,5 +1,6 @@
 package ch.epfl.swissteam.services;
 
+import android.content.Intent;
 import android.support.test.espresso.contrib.DrawerActions;
 import android.support.test.espresso.contrib.NavigationViewActions;
 import android.support.test.rule.ActivityTestRule;
@@ -14,7 +15,6 @@ import org.junit.runner.RunWith;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.action.ViewActions.scrollTo;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.hasDescendant;
@@ -22,6 +22,9 @@ import static android.support.test.espresso.matcher.ViewMatchers.isClickable;
 import static android.support.test.espresso.matcher.ViewMatchers.isEnabled;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static ch.epfl.swissteam.services.NewProfileDetails.GOOGLE_ID_TAG;
+import static ch.epfl.swissteam.services.TestUtils.O_USER;
+import static ch.epfl.swissteam.services.TestUtils.personalClick;
 import static ch.epfl.swissteam.services.TestUtils.recyclerScrollToItemWithTextAndPerformClickItem;
 import static ch.epfl.swissteam.services.TestUtils.sleep;
 import static org.hamcrest.CoreMatchers.allOf;
@@ -35,24 +38,18 @@ import static org.hamcrest.CoreMatchers.allOf;
 public class ChatRoomTest extends FirebaseTest{
 
     @Rule
-    public final ActivityTestRule<MainActivity> mActivityRule =
-            new ActivityTestRule<>(MainActivity.class);
+    public final ActivityTestRule<ChatRoom> mActivityRule =
+            new ActivityTestRule<>(ChatRoom.class, true, false);
 
     @Override
     public void initialize(){
         GoogleSignInSingleton.putUniqueID(TestUtils.M_GOOGLE_ID);
-        TestUtils.O_USER.addToDB(FirebaseDatabase.getInstance().getReference());
-        TestUtils.M_USER.addToDB(FirebaseDatabase.getInstance().getReference());
+        TestUtils.O_USER.addToDB(DBUtility.get().getDb_());
+        TestUtils.M_USER.addToDB(DBUtility.get().getDb_());
         sleep(100);
-        onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
-        sleep(100);
-        onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_services));
-        sleep(2000);
-        recyclerScrollToItemWithTextAndPerformClickItem(R.id.services_recycler, TestUtils.O_USER.getName_());
-        sleep(2000);
-        //onView(withId(R.id.textView_profile_nameTag)).check(matches(withText(TestUtils.O_USER.getName_())));
-        sleep(1000);
-        onView(withId(R.id.button_profile_toChat)).check(matches(allOf(isEnabled(), isClickable()))).perform(TestUtils.personalClick());
+        Intent intent = new Intent();
+        intent.putExtra(GOOGLE_ID_TAG, O_USER.getGoogleId_());
+        mActivityRule.launchActivity(intent);
     }
 
     @Test

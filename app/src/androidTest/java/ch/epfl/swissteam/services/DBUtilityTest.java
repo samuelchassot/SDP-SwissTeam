@@ -14,4 +14,21 @@ public class DBUtilityTest {
     public void testSingleton() {
         assertEquals(DBUtility.get(), DBUtility.get());
     }
+
+    @Test
+    public void getCatTest(){
+        DBUtility.get().getCategory(Categories.fromString("Computer"), c->{
+
+        });
+    }
+
+    @Test
+    public void getUserfromCatTest(){
+        DBUtility.get().getUsersFromCategory(Categories.COOKING, c->{
+
+        });
+        DBUtility.get().getUsersFromCategory(Categories.ALL,c->{
+
+        });
+    }
 }

@@ -49,10 +49,10 @@ public class OnlineChatFragment extends Fragment {
 
         // Inflate the layout for this fragment
         View thatView = inflater.inflate(R.layout.fragment_online_chat, container, false);
-        DBUtility.get().getUser(GoogleSignInSingleton.get().getClientUniqueID(),new MyCallBack<User>() {
+        DBUtility.get().getUser(GoogleSignInSingleton.get().getClientUniqueID(), new MyCallBack<User>() {
             @Override
             public void onCallBack(User user) {
-                if(user != null){
+                if (user != null) {
                     displayChats(thatView, user);
                 }
             }
@@ -61,7 +61,8 @@ public class OnlineChatFragment extends Fragment {
         return thatView;
     }
 
-    private void displayChats(View view, User user){
+    //TODO find out why this does not work anymore
+    private void displayChats(View view, User user) {
 
         ArrayList<ChatRelation> relations = user.getChatRelations_();
         RecyclerView mRecyclerView_ = view.findViewById(R.id.fragment_online_chats_recycler_view);

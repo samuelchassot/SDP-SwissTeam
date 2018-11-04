@@ -2,66 +2,79 @@ package ch.epfl.swissteam.services;
 
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 
+/**
+ * Store the GoogleSignIn object and the uniqueClientID of the user currently logged in
+ */
 public class GoogleSignInSingleton {
+
+    private static GoogleSignInSingleton instance_;
     private GoogleSignInClient client_;
     private String clientUniqueID_;
-    private static GoogleSignInSingleton instance_;
 
-
-    /**
-     * if the instance of the singleton object doesn't exist, it creates it. If the clientUniqueID has not been instantiated yet, it instantiates it with the given parameter
-     * @param clientUniqueID
-     */
-    public static void putUniqueID(String clientUniqueID){
-        if(instance_ == null){
-            instance_ = new GoogleSignInSingleton();
-        }
-        if(instance_.clientUniqueID_ == null){
-            instance_.clientUniqueID_ = clientUniqueID;
-        }
-    }
-
-    /**
-     * if the instance of the singleton object doesn't exist, it creates it. If the client has not been instantiated yet, it instantiates it with the given parameter
-     * @param client
-     */
-    public static void putGoogleSignInClient(GoogleSignInClient client){
-        if(instance_ == null){
-            instance_ = new GoogleSignInSingleton();
-        }
-        if(instance_.client_ == null){
-            instance_.client_ = client;
-        }
-    }
-
-    public static GoogleSignInSingleton get(){
-        if(instance_ == null){
-            instance_ = new GoogleSignInSingleton();
-        }
-        return instance_;
-    }
-
-    private GoogleSignInSingleton(){
+    private GoogleSignInSingleton() {
         client_ = null;
         clientUniqueID_ = null;
 
     }
 
     /**
-     * Can be null
-     * @return GoogleSignInClient
+     * Creates the instance of the singleton object if it doesn't already exists.
+     * Instantiates the clientUniqueID, if it wasn't done yet.
+     *
+     * @param clientUniqueID the unique id of the client
      */
-    public GoogleSignInClient getClient(){
+    public static void putUniqueID(String clientUniqueID) {
+        if (instance_ == null) {
+            instance_ = new GoogleSignInSingleton();
+        }
+        if(instance_.clientUniqueID_ == null && clientUniqueID != null){
+            instance_.clientUniqueID_ = clientUniqueID;
+        }
+    }
+
+    /**
+     * Creates the instance of the singleton object if it doesn't already exists.
+     * Instantiates the client, if it wasn't done yet.
+     *
+     * @param client the client
+     */
+    public static void putGoogleSignInClient(GoogleSignInClient client) {
+        if (instance_ == null) {
+            instance_ = new GoogleSignInSingleton();
+        }
+        if(instance_.client_ == null && client != null){
+            instance_.client_ = client;
+        }
+    }
+
+    /**
+     * Gives the GoogleSignIn instance if it exists, otherwise creates it before.
+     *
+     * @return the GoogleSignIn singleton
+     */
+    public static GoogleSignInSingleton get() {
+        if (instance_ == null) {
+            instance_ = new GoogleSignInSingleton();
+        }
+        return instance_;
+    }
+
+    /**
+     * Gives the GoogleSignIn client (can be null)
+     *
+     * @return GoogleSignInClient or null if it doesn't exist
+     */
+    public GoogleSignInClient getClient() {
         return client_;
     }
 
     /**
-     * Can be null
+     * Gives the GoogleSignIn clientUniqueID (can be null)
+     *
      * @return the clientUniqueID
      */
-    public String getClientUniqueID(){
+    public String getClientUniqueID() {
         return clientUniqueID_;
     }
-
 
 }
