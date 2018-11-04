@@ -16,8 +16,10 @@ import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.scrollTo;
 import static android.support.test.espresso.action.ViewActions.typeText;
+import static android.support.test.espresso.matcher.ViewMatchers.assertThat;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static ch.epfl.swissteam.services.TestUtils.sleep;
+import static org.junit.Assert.assertEquals;
 
 public class DeleteAccountTest extends FirebaseTest {
 
@@ -46,6 +48,7 @@ public class DeleteAccountTest extends FirebaseTest {
 
     @Test
     public void deleteCurrentUser(){
+        User testUser = TestUtils.getTestUser();
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_settings));
         onView(withId(R.id.button_settings_deleteaccount)).perform(scrollTo()).perform(click());
@@ -55,5 +58,10 @@ public class DeleteAccountTest extends FirebaseTest {
         closeSoftKeyboard();
         sleep(1000);
         onView(withId(R.id.button_deleteaccount_deletebutton)).perform(click());
+        sleep(5000);
+
+        DBUtility.get().getUser(testUser.getGoogleId_(), u->{
+            assertEquals(u, null);
+        });
     }
 }
