@@ -36,16 +36,16 @@ public class ChatRoomTest extends FirebaseTest{
 
     @Override
     public void initialize(){
-        GoogleSignInSingleton.putUniqueID(TestUtils.M_GOOGLE_ID);
-        TestUtils.O_USER.addToDB(FirebaseDatabase.getInstance().getReference());
-        TestUtils.M_USER.addToDB(FirebaseDatabase.getInstance().getReference());
-        sleep(100);
-        onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
-        sleep(100);
-        onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_services));
-        sleep(2000);
-        recyclerScrollToItemWithTextAndPerformClickItem(R.id.services_recycler, TestUtils.O_USER.getName_());
-        sleep(1000);
+//        GoogleSignInSingleton.putUniqueID(TestUtils.M_GOOGLE_ID);
+//        TestUtils.O_USER.addToDB(FirebaseDatabase.getInstance().getReference());
+//        TestUtils.M_USER.addToDB(FirebaseDatabase.getInstance().getReference());
+//        sleep(100);
+//        onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
+//        sleep(100);
+//        onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_services));
+//        sleep(2000);
+//        recyclerScrollToItemWithTextAndPerformClickItem(R.id.services_recycler, TestUtils.O_USER.getName_());
+//        sleep(1000);
         //onView(withId(R.id.button_profile_toChat)).perform(personalClick());
     }
 
