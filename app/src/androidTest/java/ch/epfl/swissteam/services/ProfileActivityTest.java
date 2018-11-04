@@ -51,12 +51,7 @@ public class ProfileActivityTest extends FirebaseTest {
 
     @Test
     public void isProfileCorrectlyDisplayed(){
-        Intent intent = new Intent();
-        intent.putExtra(GOOGLE_ID_TAG, O_USER.getGoogleId_());
-        mActivityRule.launchActivity(intent);
-
-        sleep(SLEEP_TIME);
-
+        startIntentWith(O_USER.getGoogleId_());
         onView(withId(R.id.textView_profile_nameTag)).check(matches(withText(TestUtils.O_USER.getName_())));
         onView(withId(R.id.textView_profile_email)).check(matches(withText(TestUtils.O_USER.getEmail_())));
         onView(withId(R.id.textView_profile_description)).check(matches(withText(TestUtils.O_USER.getDescription_())));
@@ -64,23 +59,13 @@ public class ProfileActivityTest extends FirebaseTest {
 
     @Test
     public void canAccessToChatButtonIfOtherProfile() {
-        Intent intent = new Intent();
-        intent.putExtra(GOOGLE_ID_TAG, O_USER.getGoogleId_());
-        mActivityRule.launchActivity(intent);
-
-        sleep(SLEEP_TIME);
-
+        startIntentWith(O_USER.getGoogleId_());
         onView(withId(R.id.button_profile_toChat)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
     }
 
     @Test
     public void cantAccessToChatButtonIfMyProfile() {
-        Intent intent = new Intent();
-        intent.putExtra(GOOGLE_ID_TAG, M_USER.getGoogleId_());
-        mActivityRule.launchActivity(intent);
-
-        sleep(SLEEP_TIME);
-
+        startIntentWith(M_USER.getGoogleId_());
         onView(withId(R.id.button_profile_toChat)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.INVISIBLE)));
     }
 
@@ -88,5 +73,12 @@ public class ProfileActivityTest extends FirebaseTest {
     @Override
     public void terminate(){
         LocationManager.get().unsetMock();
+    }
+
+    private void startIntentWith(String id){
+        Intent intent = new Intent();
+        intent.putExtra(GOOGLE_ID_TAG, id);
+        mActivityRule.launchActivity(intent);
+        sleep(SLEEP_TIME);
     }
 }
