@@ -21,6 +21,26 @@ public class User implements DBSavable {
     private ArrayList<ChatRelation> chatRelations_;
 
     /**
+     * return the GoogleID that corresponds to a deleted user
+     *
+     * @return the deleted user's GoogleID
+     */
+    public static String getDeletedUserGoogleID() {
+        return "000000000000000000000";
+    }
+
+    /**
+     * return a deleted user
+     *
+     * @return a deleted user
+     */
+    public static User getDeletedUser(){
+        User deletedUser = new User(getDeletedUserGoogleID(), Resources.getSystem().getString(R.string.deleted_user_name),
+                "", "", new ArrayList<>(), "", 0, 0,0 );
+        return deletedUser;
+    }
+
+    /**
      * Default constructor, needed for database
      */
     public User() {
