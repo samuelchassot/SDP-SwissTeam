@@ -37,8 +37,8 @@ public class ChatRoomTest extends FirebaseTest{
     @Override
     public void initialize(){
         GoogleSignInSingleton.putUniqueID(TestUtils.M_GOOGLE_ID);
-        TestUtils.O_USER.addToDB(FirebaseDatabase.getInstance().getReference());
-        TestUtils.M_USER.addToDB(FirebaseDatabase.getInstance().getReference());
+        TestUtils.O_USER.addToDB(DBUtility.get().getDb_());
+        TestUtils.M_USER.addToDB(DBUtility.get().getDb_());
         sleep(100);
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
         sleep(100);
