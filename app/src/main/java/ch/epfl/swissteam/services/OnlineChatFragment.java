@@ -20,6 +20,7 @@ public class OnlineChatFragment extends Fragment {
 
     private ProfileDisplayFragment.OnFragmentInteractionListener mListener;
     private ChatRelationAdapter adapter_;
+    private View fragmentView_;
 
     public OnlineChatFragment() {
         // Required empty public constructor
@@ -46,19 +47,22 @@ public class OnlineChatFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         // Inflate the layout for this fragment
-        View thatView = inflater.inflate(R.layout.fragment_online_chat, container, false);
+        fragmentView_ = inflater.inflate(R.layout.fragment_online_chat, container, false);
+        refresh();
+
+        return fragmentView_;
+    }
+
+    private void refresh(){
         DBUtility.get().getUser(GoogleSignInSingleton.get().getClientUniqueID(), new MyCallBack<User>() {
             @Override
             public void onCallBack(User user) {
                 if (user != null) {
-                    displayChats(thatView, user);
+                    displayChats(fragmentView_, user);
                 }
             }
         });
-
-        return thatView;
     }
 
     private void displayChats(View view, User user) {

@@ -9,6 +9,7 @@ import org.junit.runner.RunWith;
 import java.util.ArrayList;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(AndroidJUnit4.class)
 public class UserTest {
@@ -50,6 +51,7 @@ public class UserTest {
 
     }
 
+    /*---------- ChatRelations tests -------------------------------------------------------------*/
     @Test
     public void setAndGetChatRelationWorks() {
         User user1 = new User(googleID, name, email, description, categories, null, imageUrl,rating, 0, 0);
@@ -57,6 +59,19 @@ public class UserTest {
         String id = "aksdjh287364ksdjbf";
         ChatRelation cR = new ChatRelation(user1, user2);
         cR.setId_(id);
+        user1.addChatRelation(cR);
+        assertEquals(1, user1.getChatRelations_().size());
+        assertEquals(cR, user1.getChatRelations_().get(0));
+    }
+
+    @Test
+    public void cannotAddSameRelationTwice() {
+        User user1 = new User(googleID, name, email, description, categories, null, imageUrl,rating, 0, 0);
+        User user2 = new User(googleID2, name2,  email2, description2, categories, null, imageUrl,0,0,0);
+        String id = "aksdjh287364ksdjbf";
+        ChatRelation cR = new ChatRelation(user1, user2);
+        cR.setId_(id);
+        user1.addChatRelation(cR);
         user1.addChatRelation(cR);
         assertEquals(1, user1.getChatRelations_().size());
         assertEquals(cR, user1.getChatRelations_().get(0));
@@ -103,5 +118,24 @@ public class UserTest {
         user1.addChatRelation(cR);
         user2.addChatRelation(cR);
         assertEquals(cR, user1.relationExists(googleID2));
+    }
+
+    @Test
+    public void removeChatRelationWorksWithoutRelations(){
+        User user1 = new User(googleID, name, email, description, categories, null, imageUrl,0,0,0);
+        User user2 = new User(googleID2, name2, email2, description2, categories, null, imageUrl,0,0,0);
+        ChatRelation cR = new ChatRelation(user1, user2);
+        user1.removeChatRelation(cR);
+        assertTrue(user1.getChatRelations_().isEmpty());
+    }
+
+    @Test
+    public void removeChatRelationWorksWithRelations(){
+        User user1 = new User(googleID, name, email, description, categories, null, imageUrl,0,0,0);
+        User user2 = new User(googleID2, name2, email2, description2, categories, null, imageUrl,0,0,0);
+        ChatRelation cR = new ChatRelation(user1, user2);
+        user1.addChatRelation(cR);
+        user1.removeChatRelation(cR);
+        assertTrue(user1.getChatRelations_().isEmpty());
     }
 }

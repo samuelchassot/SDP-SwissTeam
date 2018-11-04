@@ -50,13 +50,9 @@ public class ChatRelationAdapter extends RecyclerView.Adapter<ChatRelationAdapte
     @Override
     public void onBindViewHolder(ChatRelationsViewHolder holder, int i) {
         String otherId = relations_.get(i).getOtherId(currentUserId_);
-
-        DBUtility.get().getUser(otherId, new MyCallBack<User>() {
-            @Override
-            public void onCallBack(User oUser) {
-                holder.contactName_.setText(oUser.getName_());
-                Picasso.get().load(oUser.getImageUrl_()).into(holder.contactImage_);
-            }
+        DBUtility.get().getUser(otherId, oUser -> {
+            holder.contactName_.setText(oUser.getName_());
+            Picasso.get().load(oUser.getImageUrl_()).into(holder.contactImage_);
         });
 
         holder.parentLayout_.setOnClickListener((view) -> {
@@ -66,7 +62,7 @@ public class ChatRelationAdapter extends RecyclerView.Adapter<ChatRelationAdapte
         });
 
         holder.parentLayout_.setOnLongClickListener((view) -> {
-            askToDeleteRelation(view.getContext(), relations_.get(i));
+            askToDeleteRelation(view.getContext(), relations_.get(i), holder.contactName_.getText().toString());
             return true;
         });
     }
@@ -76,25 +72,18 @@ public class ChatRelationAdapter extends RecyclerView.Adapter<ChatRelationAdapte
         return relations_.size();
     }
 
-    private void askToDeleteRelation(Context context, ChatRelation chatRelation){
+    private void askToDeleteRelation(Context context, ChatRelation chatRelation, String othersName){
         Resources res = context.getResources();
-        AlertDialog alertDialog = new AlertDialog.Builder(context).create();
-        alertDialog.setTitle(res.getString(R.string.chat_delete_alert_title));
-        alertDialog.setMessage(res.getString(R.string.chat_delete_alert_text));
-        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, res.getString(R.string.general_delete),
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                        chatRelation.removeFromDB
+        Utility.askToDeleteAlertDialog(context, chatRelation, null,
+                res.getString(R.string.chat_relation_delete_alert_title) + " " + othersName,
+                res.getString(R.string.chat_relation_delete_alert_text),
+                (b) -> {
+                    if(b){
+                        relations_.remove(chatRelation);
+                        notifyDataSetChanged();
                     }
+
                 });
-        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, res.getString(R.string.general_cancel),
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-        alertDialog.show();
     }
 
     /**

@@ -186,22 +186,19 @@ public class User implements DBSavable {
     /**
      * Add a chatRelation to the list of chatRelationId of the user and save it into the database db
      *
-     * @param chatRelation the id of the chatRelation
+     * @param chatRelation the chatRelation to add
      * @param db           reference to the database to update the user
      */
     public void addChatRelation(ChatRelation chatRelation, DatabaseReference db) {
         if (chatRelations_ == null) {
             chatRelations_ = new ArrayList<>();
         }
-        chatRelations_.add(chatRelation);
+
+        if(!chatRelations_.contains(chatRelation)) chatRelations_.add(chatRelation);
+
         if (db != null) {
             addToDB(db);
         }
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        return this.googleId_.equals(((User) other).getGoogleId_());
     }
 
     /**
@@ -211,6 +208,31 @@ public class User implements DBSavable {
      */
     public void addChatRelation(ChatRelation chatRelation) {
         addChatRelation(chatRelation, null);
+    }
+
+    /**
+     * Remove a relation from the list of chatRelation of this user and save the user in the DB if db
+     * is not null
+     * @param chatRelation the chatRelation to remove
+     * @param db reference to the database to update the user
+     */
+    public void removeChatRelation(ChatRelation chatRelation, DatabaseReference db){
+        if(chatRelations_ != null) chatRelations_.remove(chatRelation);
+
+        if (db != null) {
+            addToDB(db);
+        }
+    }
+
+    /**
+     * Remove a relation from the list of chatRelation of this user
+     * @param chatRelation the chatRelation to remove
+     */
+    public void removeChatRelation(ChatRelation chatRelation){removeChatRelation(chatRelation, null);}
+
+    @Override
+    public boolean equals(Object other) {
+        return this.googleId_.equals(((User) other).getGoogleId_());
     }
 
     /**
