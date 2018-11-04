@@ -39,7 +39,7 @@ public class User implements DBSavable {
      */
     public static User getDeletedUser(){
         User deletedUser = new User(getDeletedUserGoogleID(), Resources.getSystem().getString(R.string.deleted_user_name),
-                "", "", new ArrayList<>(), "", 0, 0,0 );
+                "", "", new ArrayList<>(), Resources.getSystem().getDrawable(R.drawable.deleted_user_profileimage).toString(), 0, 0,0 );
         return deletedUser;
     }
 

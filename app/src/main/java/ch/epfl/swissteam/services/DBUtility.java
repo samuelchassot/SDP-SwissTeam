@@ -99,6 +99,11 @@ public class DBUtility {
             callBack.onCallBack(nullUser);
             return;
         }
+        if(googleId.equals(User.getDeletedUserGoogleID())){
+            User deletedUser = User.getDeletedUser();
+            callBack.onCallBack(deletedUser);
+            return;
+        }
         db_.child(USERS).child(googleId).addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
