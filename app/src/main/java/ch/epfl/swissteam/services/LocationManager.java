@@ -61,8 +61,8 @@ public class LocationManager {
                     if (googleClientID != null) {
                         DBUtility.get().getUser(googleClientID, (u) -> {
                             if (u != null && currentLocation_ != null) {
-                                User newUser = new User(u.getGoogleId_(), u.getName_(), u.getEmail_(), u.getDescription_(), u.getCategories_(), u.getImageUrl_(), u.getRating_(),
-                                        currentLocation_.getLatitude(), currentLocation_.getLongitude(), u.getChatRelations_());
+                                User newUser = new User(u.getGoogleId_(), u.getName_(), u.getEmail_(), u.getDescription_(), u.getCategories_(), u.getChatRelations_(), u.getImageUrl_(), u.getRating_(),
+                                        currentLocation_.getLatitude(), currentLocation_.getLongitude());
                                 newUser.addToDB(DBUtility.get().getDb_());
 
                             }
