@@ -47,18 +47,16 @@ public class ChatRoomTest extends FirebaseTest{
         //onView(withId(R.id.button_profile_toChat)).perform(personalClick());
     }
 
-    /*
     @Test
     public void sendMessageWorksWithNonEmpty() {
-        String text = "Le roi est mort ! Vive le roi !";
+        /*String text = "Le roi est mort ! Vive le roi !";
         sleep(100);
         onView(withId(R.id.message_input)).perform(typeText(text)).check(matches(withText(text)));
         sleep(100);
         onView(withId(R.id.message_send_button)).perform(click());
         sleep(100);
-        onView(withId(R.id.recycler_view_message)).check(matches(hasDescendant(withText(text))));
+        onView(withId(R.id.recycler_view_message)).check(matches(hasDescendant(withText(text))));*/
     }
-    */
 
     /* Examples
         - onView(nthChildOf(withId(R.id.recycleview), 0).check(matches(hasDescendant(withText("Some text"))))
