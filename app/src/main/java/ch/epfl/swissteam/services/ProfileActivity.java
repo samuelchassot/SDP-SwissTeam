@@ -49,9 +49,7 @@ public class ProfileActivity extends NavigationDrawer {
         upvoteButton.setOnClickListener(v -> {
             DBUtility.get().getUser(clientUID, user ->{
                 DBUtility.get().getUser(GoogleSignInSingleton.get().getClientUniqueID(), currentUser ->{
-                    user.upvote(currentUser);
-                    user.addToDB(DBUtility.get().getDb_());
-                    loadAndShowUser(clientUID);
+                    voteStoreAndRefresh(UPVOTE,user,currentUser);
                 });
             });
         });
@@ -59,9 +57,7 @@ public class ProfileActivity extends NavigationDrawer {
         downvoteButton.setOnClickListener(v -> {
             DBUtility.get().getUser(clientUID, user ->{
                 DBUtility.get().getUser(GoogleSignInSingleton.get().getClientUniqueID(), currentUser ->{
-                    user.downvote(currentUser);
-                    user.addToDB(DBUtility.get().getDb_());
-                    loadAndShowUser(clientUID);
+                    voteStoreAndRefresh(DOWNVOTE, user, currentUser);
                 });
             });
         });
@@ -70,6 +66,19 @@ public class ProfileActivity extends NavigationDrawer {
         loadAndShowUser(clientUID);
     }
 
+    private final int UPVOTE = 1;
+    private final int DOWNVOTE = 0;
+    private void voteStoreAndRefresh(int vote, User user, User currentUser){
+        if (vote == DOWNVOTE){
+            user.downvote(currentUser);
+        } else if (vote == UPVOTE){
+            user.upvote(currentUser);
+        }
+        user.addToDB(DBUtility.get().getDb_());
+        loadAndShowUser(user.getGoogleId_());
+    }
+
+    
     private void loadAndShowUser(String clientUniqueID) {
         //for now we use the username
         DBUtility.get().getUser(clientUniqueID, (user) -> {
