@@ -53,9 +53,7 @@ public class ProfileActivity extends NavigationDrawer {
 
         loadAndShowUser(clientUID);
     }
-
-    private final int UPVOTE = 1;
-    private final int DOWNVOTE = 0;
+    
     private void voteStoreAndRefresh(int vote, String clientUID){
         DBUtility.get().getUser(clientUID, user ->{
             DBUtility.get().getUser(GoogleSignInSingleton.get().getClientUniqueID(), currentUser ->{

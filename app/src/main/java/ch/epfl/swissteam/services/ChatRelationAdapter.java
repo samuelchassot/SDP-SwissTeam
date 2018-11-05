@@ -47,7 +47,7 @@ public class ChatRelationAdapter extends RecyclerView.Adapter<ChatRelationAdapte
     public void onBindViewHolder(ChatRelationsViewHolder holder, int i) {
         String otherId = relations_.get(holder.getAdapterPosition()).getOtherId(currentUserId_);
 
-        DBUtility.get().getUser(otherId, new MyCallBack<User>() {
+        DBUtility.get().getUser(otherId, new DBCallBack<User>() {
             @Override
             public void onCallBack(User oUser) {
                 holder.contactName_.setText(oUser.getName_());

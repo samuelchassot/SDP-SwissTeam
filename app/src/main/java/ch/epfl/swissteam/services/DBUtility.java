@@ -64,7 +64,7 @@ public class DBUtility {
      * @param category the category
      * @param callBack the CallBack to use
      */
-    public void getUsersFromCategory(Categories category, final MyCallBack<ArrayList<String>> callBack) {
+    public void getUsersFromCategory(Categories category, final DBCallBack<ArrayList<String>> callBack) {
 
         if (category == Categories.ALL) {
             Log.e("DBUtility", "Cannot retrieve all users that way");
@@ -92,7 +92,7 @@ public class DBUtility {
      * @param googleId unique user'Id
      * @param callBack the CallBack to use
      */
-    public void getUser(String googleId, final MyCallBack<User> callBack) {
+    public void getUser(String googleId, final DBCallBack<User> callBack) {
 
         if (googleId == null) {
             User nullUser = null;//new User(null, null, null, null, null, null);
@@ -119,7 +119,7 @@ public class DBUtility {
      *
      * @param callBack the callBack to use
      */
-    public void getAllUsers(final MyCallBack<ArrayList<User>> callBack) {
+    public void getAllUsers(final DBCallBack<ArrayList<User>> callBack) {
 
         db_.child(USERS).addListenerForSingleValueEvent(new ValueEventListener() {
             ArrayList<User> users = new ArrayList<>();
@@ -146,7 +146,7 @@ public class DBUtility {
      * @param callBack     the function called on the callBack
      * @param userLocation the location of the user
      */
-    public void getPostsFeed(final MyCallBack<ArrayList<Post>> callBack, Location userLocation) {
+    public void getPostsFeed(final DBCallBack<ArrayList<Post>> callBack, Location userLocation) {
         Query freshestPosts = db_.child(POSTS).orderByChild("timestamp_").limitToFirst(POSTS_DISPLAY_NUMBER);
         freshestPosts.addListenerForSingleValueEvent(new ValueEventListener() {
             ArrayList<Post> posts = new ArrayList<>();
@@ -180,7 +180,7 @@ public class DBUtility {
      * @param category Category wanted from DB
      * @param callBack Callback to execute
      */
-    public void getCategory(Categories category, final MyCallBack<Categories> callBack) {
+    public void getCategory(Categories category, final DBCallBack<Categories> callBack) {
         db_.child(CATEGORIES).child(category.toString()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -203,7 +203,7 @@ public class DBUtility {
      * @param googleID the ID of the user
      * @param callBack the function called on the callBack
      */
-    public void getUsersPosts(String googleID, final MyCallBack<ArrayList<Post>> callBack) {
+    public void getUsersPosts(String googleID, final DBCallBack<ArrayList<Post>> callBack) {
         Query usersPosts = db_.child(POSTS).orderByChild("googleId_").equalTo(googleID);
         Log.e("ID", googleID);
         usersPosts.addListenerForSingleValueEvent(new ValueEventListener() {

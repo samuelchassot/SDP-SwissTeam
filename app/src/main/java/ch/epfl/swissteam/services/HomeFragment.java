@@ -1,13 +1,8 @@
 package ch.epfl.swissteam.services;
 
-import android.Manifest;
-import android.app.Activity;
-import android.content.pm.PackageManager;
 import android.location.Location;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,8 +11,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.google.android.gms.location.LocationServices;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -89,7 +82,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private void refresh(){
         Location userLocation = LocationManager.get().getCurrentLocation_();
         if(userLocation != null) {
-            DBUtility.get().getPostsFeed(new MyCallBack<ArrayList<Post>>() {
+            DBUtility.get().getPostsFeed(new DBCallBack<ArrayList<Post>>() {
                 @Override
                 public void onCallBack(ArrayList<Post> value) {
                     posts_.clear();
@@ -100,7 +93,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             }, userLocation);
         }
         else{
-            DBUtility.get().getPostsFeed(new MyCallBack<ArrayList<Post>>() {
+            DBUtility.get().getPostsFeed(new DBCallBack<ArrayList<Post>>() {
                 @Override
                 public void onCallBack(ArrayList<Post> value) {
                     posts_.clear();
