@@ -19,7 +19,7 @@ public class SettingsDbHelper extends SQLiteOpenHelper{
     public void onCreate(SQLiteDatabase db) {
         String createTable = "CREATE TABLE " + SettingsContract.SettingsEntry.TABLE_NAME + " (" +
                 SettingsContract.SettingsEntry._ID + " INTEGER PRIMARY KEY," +
-                SettingsContract.SettingsEntry.COLUMN_NAME_DARKMODE + " BIT DEFAULT 0," +
+                SettingsContract.SettingsEntry.COLUMN_NAME_DARKMODE + " INTEGER DEFAULT 0," +
                 SettingsContract.SettingsEntry.COLUMN_NAME_RADIUS + " FLOAT DEFAULT " + LocationManager.MAX_POST_DISTANCE + "," +
                 SettingsContract.SettingsEntry.COLUMN_NAME_HOME_LONGITUDE + " REAL," +
                 SettingsContract.SettingsEntry.COLUMN_NAME_HOME_LATITUDE+ " REAL)";

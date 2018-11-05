@@ -1,8 +1,10 @@
 package ch.epfl.swissteam.services;
 
 import android.content.ContentValues;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.provider.BaseColumns;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -78,7 +80,49 @@ public class SettingsFragment extends Fragment {
 
             db.update(SettingsContract.SettingsEntry.TABLE_NAME,
                     values, selection, selectionArgs);
+
+            db.close();
         });
+
+        //Retrieve data from locale database
+        SQLiteDatabase db = dbHelper_.getReadableDatabase();
+
+        // Define a projection that specifies which columns from the database
+        // you will actually use after this query.
+        String[] projection = {
+                SettingsContract.SettingsEntry.COLUMN_NAME_DARKMODE
+                //,SettingsContract.SettingsEntry.COLUMN_NAME_HOME_LONGITUDE...
+        };
+
+        // Filter results WHERE "title" = 'My Title'
+        //String selection = FeedEntry.COLUMN_NAME_TITLE + " = ?";
+        //String[] selectionArgs = { "My Title" };
+
+        // How you want the results sorted in the resulting Cursor
+        //String sortOrder =
+        //        FeedEntry.COLUMN_NAME_SUBTITLE + " DESC";
+
+        Cursor cursor = db.query(
+                SettingsContract.SettingsEntry.TABLE_NAME,   // The table to query
+                projection,             // The array of columns to return (pass null to get all)
+                null,              // The columns for the WHERE clause (selection)
+                null,          // The values for the WHERE clause (selectionArgs)
+                null,                   // don't group the rows
+                null,                   // don't filter by row groups
+                null              // The sort order (sortOrder)
+        );
+
+        int dark = 0;
+
+        if(cursor.moveToFirst()){
+            dark = cursor.getInt(
+                    cursor.getColumnIndexOrThrow(SettingsContract.SettingsEntry.COLUMN_NAME_DARKMODE));
+        }
+
+        boolean darkModeChecked = dark == 1;
+        darkModeSwitch.setChecked(darkModeChecked);
+
+        cursor.close();
 
         return view;
     }
