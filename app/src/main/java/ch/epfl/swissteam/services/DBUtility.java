@@ -57,6 +57,11 @@ public class DBUtility {
         return db_;
     }
 
+    /**
+     * Get the instance of the Database
+     * @return the instance of the database
+     */
+    public FirebaseDatabase getInstance(){ return FirebaseDatabase.getInstance();};
 
     /**
      * Get all users' ID for a given category
