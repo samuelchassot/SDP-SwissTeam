@@ -1,10 +1,13 @@
 package ch.epfl.swissteam.services;
 
+import android.content.res.Resources;
 import android.util.Log;
 
 import com.google.firebase.database.DatabaseReference;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Class representing a user in the database
@@ -18,6 +21,26 @@ public class User implements DBSavable {
     private double latitude_, longitude_;
     private ArrayList<Categories> categories_;
     private ArrayList<ChatRelation> chatRelations_;
+
+    /**
+     * return the GoogleID that corresponds to a deleted user
+     *
+     * @return the deleted user's GoogleID
+     */
+    public static String getDeletedUserGoogleID() {
+        return "000000000000000000000";
+    }
+
+    /**
+     * return a deleted user
+     *
+     * @return a deleted user
+     */
+    public static User getDeletedUser(){
+        User deletedUser = new User(getDeletedUserGoogleID(), "Deleted user",
+                "", "", new ArrayList<Categories>(), new ArrayList<ChatRelation>(), "https://cdn.pixabay.com/photo/2014/03/25/15/19/cross-296507_960_720.png", 0, 0.0,0.0 );
+        return deletedUser;
+    }
 
     /**
      * Default constructor, needed for database
@@ -165,6 +188,67 @@ public class User implements DBSavable {
         }
 
         Log.e("USER", "ADDED");
+    }
+
+    @Override
+    public void removeFromDB(DatabaseReference db) throws Utility.IllegalCallException {
+        //remove the user's entry
+        db.child(DBUtility.USERS).child(googleId_).removeValue();
+
+        //remove user's from all categories
+        List<Categories> allCat = new ArrayList<Categories>(Arrays.asList(Categories.values()));
+        for (Categories c : allCat) {
+            DBUtility.get().getCategory(c, cat -> {
+                cat.removeUser(this);
+                cat.addToDB(db);
+            });
+        }
+
+        //remove the user from posts he/she made
+        DBUtility.get().getUsersPosts(googleId_, posts -> {
+            for (Post p : posts) {
+                p.removeUser();
+            }
+        });
+
+        //remove the user from all ChatRelations and delete the relation if both users are removed
+        boolean removed = false;
+        for (ChatRelation cr : chatRelations_) {
+            if (cr.getFirstUserId_().equals(googleId_)) {
+                if (cr.getSecondUserId_().equals(User.getDeletedUserGoogleID())) {
+                    cr.removeFromDB(db);
+                    removed = true;
+                } else {
+                    cr.setFirstUserId_(User.getDeletedUserGoogleID());
+                }
+            }
+            if (cr.getSecondUserId_().equals(googleId_) && !removed) {
+                if (cr.getFirstUserId_().equals(User.getDeletedUserGoogleID())) {
+                    cr.removeFromDB(db);
+                    removed = true;
+                } else {
+                    cr.setSecondUserId_(User.getDeletedUserGoogleID());
+                }
+
+            }
+            if(!removed){
+                //change the ID in all messages the user sent
+                DBUtility.get().getAllMessagesFromChatRelation(cr.getId_(), messages->{
+                    for(ChatMessage m : messages){
+                        m.setUserId_(User.getDeletedUserGoogleID());
+                        m.setUser_(User.getDeletedUser().getName_());
+                        m.addToDB(db);
+                    }
+                });
+                cr.addToDB(db);
+            }
+        }
+
+
+
+
+
+
     }
 
     /**

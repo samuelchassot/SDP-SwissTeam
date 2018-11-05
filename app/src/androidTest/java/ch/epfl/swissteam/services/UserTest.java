@@ -8,6 +8,7 @@ import org.junit.runner.RunWith;
 
 import java.util.ArrayList;
 
+import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(AndroidJUnit4.class)
@@ -104,5 +105,11 @@ public class UserTest {
         user1.addChatRelation(cR);
         user2.addChatRelation(cR);
         assertEquals(cR, user1.relationExists(googleID2));
+    }
+
+    @Test
+    public void testDeletedUser(){
+        User deleted = User.getDeletedUser();
+        assertTrue(deleted.getGoogleId_().equals(User.getDeletedUserGoogleID()));
     }
 }
