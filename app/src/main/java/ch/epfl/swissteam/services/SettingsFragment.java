@@ -90,6 +90,7 @@ public class SettingsFragment extends Fragment {
         // Define a projection that specifies which columns from the database
         // you will actually use after this query.
         String[] projection = {
+                SettingsContract.SettingsEntry._ID,
                 SettingsContract.SettingsEntry.COLUMN_NAME_DARKMODE
                 //,SettingsContract.SettingsEntry.COLUMN_NAME_HOME_LONGITUDE...
         };
