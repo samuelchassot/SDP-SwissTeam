@@ -41,7 +41,7 @@ public class SignInActivityTest {
 
     @Test
     public void connectWithNonexistentAccount() {
-        /*if(GoogleSignIn.getLastSignedInAccount(signInActivityRule_.getActivity()) != null) {
+        if(GoogleSignIn.getLastSignedInAccount(signInActivityRule_.getActivity()) != null) {
             GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                     .requestEmail()
                     .build();
@@ -52,6 +52,6 @@ public class SignInActivityTest {
         Intent intent = new Intent();
         Instrumentation.ActivityResult result = new Instrumentation.ActivityResult(Activity.RESULT_OK, intent);
         intending(anyIntent()).respondWith(result);
-        onView(withId(R.id.button_signin_googlesignin)).perform(click());*/
+        onView(withId(R.id.button_signin_googlesignin)).perform(click());
     }
 }

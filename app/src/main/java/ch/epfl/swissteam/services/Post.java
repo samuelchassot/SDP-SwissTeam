@@ -97,6 +97,14 @@ public class Post implements DBSavable, Parcelable {
     }
 
     /**
+     * Used when the author of the post delete his/her account, it changes the googleID to the "deleted user" one
+     */
+    public void removeUser(){
+        googleId_ = User.getDeletedUserGoogleID();
+        this.addToDB(DBUtility.get().getDb_());
+    }
+
+    /**
      * Gives the description of the post
      *
      * @return the description of the post

@@ -19,16 +19,15 @@ public abstract class FirebaseTest {
 
     @Before
     public final void setUp() {
-        DBUtility.get();
-        FirebaseDatabase.getInstance().goOffline();
+        DBUtility.get().getInstance().goOffline();
         initialize();
     }
 
     @After
     public final void tearDown() {
         terminate();
-        FirebaseDatabase.getInstance().purgeOutstandingWrites();
-        FirebaseDatabase.getInstance().goOnline();
+        DBUtility.get().getInstance().purgeOutstandingWrites();
+        DBUtility.get().getInstance().goOnline();
     }
 
     /**

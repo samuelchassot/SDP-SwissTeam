@@ -1,8 +1,10 @@
 package ch.epfl.swissteam.services;
 
+import android.support.test.espresso.UiController;
 import android.support.test.espresso.ViewAction;
-import android.support.test.espresso.ViewInteraction;
 import android.support.test.espresso.contrib.RecyclerViewActions;
+
+import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.v7.widget.AppCompatImageButton;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -17,8 +19,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 
+import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.scrollTo;
 import static android.support.test.espresso.matcher.ViewMatchers.hasDescendant;
 import static android.support.test.espresso.matcher.ViewMatchers.withClassName;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
@@ -96,14 +100,31 @@ public class TestUtils {
         DBUtility.get().getDb_().getDatabase().goOffline();
     }
 
-    protected static ViewInteraction recyclerScrollToItemWithTextAndPerformOnItem(int recyclerViewId, String text, ViewAction perform){
-        return onView(withId(recyclerViewId)).
-                perform(RecyclerViewActions.scrollTo(hasDescendant(withText(text)))).
-                perform(RecyclerViewActions.actionOnItem(hasDescendant(withText(text)), perform));
+    protected static void recyclerScrollToItemWithTextAndPerformOnItem(int recyclerViewId, String text, ViewAction perform){
+        onView(withId(recyclerViewId)).perform(RecyclerViewActions.actionOnItem(hasDescendant(withText(text)), perform));
     }
 
-    protected static ViewInteraction recyclerScrollToItemWithTextAndPerformClickItem(int recyclerViewId, String text){
-        return recyclerScrollToItemWithTextAndPerformOnItem(recyclerViewId, text, click());
+    protected static void recyclerScrollToItemWithTextAndPerformClickItem(int recyclerViewId, String text){
+        recyclerScrollToItemWithTextAndPerformOnItem(recyclerViewId, text, click());
+    }
+
+    protected static ViewAction personalClick(){
+        return new ViewAction() {
+            @Override
+            public Matcher<View> getConstraints() {
+                return ViewMatchers.isEnabled(); // no constraints, they are checked above
+            }
+
+            @Override
+            public String getDescription() {
+                return "click plus button";
+            }
+
+            @Override
+            public void perform(UiController uiController, View view) {
+                view.performClick();
+            }
+        };
     }
 
     public static Matcher<View> navigationHomeMatcher() {

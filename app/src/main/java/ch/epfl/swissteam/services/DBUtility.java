@@ -1,9 +1,12 @@
 package ch.epfl.swissteam.services;
 
+import android.app.Activity;
 import android.location.Location;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -28,6 +31,7 @@ public class DBUtility {
 
     private DatabaseReference db_;
     private static DBUtility instance;
+    private boolean isNotificationsSetupDone = false;
 
 
     private DBUtility(DatabaseReference db) {
@@ -57,6 +61,11 @@ public class DBUtility {
         return db_;
     }
 
+    /**
+     * Get the instance of the Database
+     * @return the instance of the database
+     */
+    public FirebaseDatabase getInstance(){ return FirebaseDatabase.getInstance();};
 
     /**
      * Get all users' ID for a given category
@@ -99,6 +108,11 @@ public class DBUtility {
             callBack.onCallBack(nullUser);
             return;
         }
+        if(googleId.equals(User.getDeletedUserGoogleID())){
+            User deletedUser = User.getDeletedUser();
+            callBack.onCallBack(deletedUser);
+            return;
+        }
         db_.child(USERS).child(googleId).addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
@@ -138,6 +152,23 @@ public class DBUtility {
             }
         });
 
+    }
+
+    public void getAllMessagesFromChatRelation(String chatRelationId, final MyCallBack<ArrayList<ChatMessage>> callBack){
+        db_.child(DBUtility.CHATS).child(chatRelationId).addListenerForSingleValueEvent(new ValueEventListener() {
+            ArrayList<ChatMessage> messages = new ArrayList<>();
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot data : dataSnapshot.getChildren()) {
+                    messages.add(data.getValue(ChatMessage.class));
+                }
+                callBack.onCallBack(messages);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
     }
 
     /**
@@ -238,9 +269,64 @@ public class DBUtility {
     /**
      * Add a post to the database
      *
-     * @param post
+     * @param post post to add
      */
     public void setPost(Post post) {
         db_.child(POSTS).child(post.getKey_()).setValue(post);
+    }
+
+    public void notifyNewMessages(Activity activity, String googleId) {
+        if (!isNotificationsSetupDone && googleId != null) {
+            db_.child(USERS).child(googleId).child("chatRelations_").addChildEventListener(new ChildEventListener() {
+                @Override
+                public void onChildAdded(@NonNull DataSnapshot relationDataSnapshot, @Nullable String s) {
+                    db_.child(CHATS).child(relationDataSnapshot.getValue(ChatRelation.class).getId_()).addValueEventListener(new ValueEventListener() {
+                        private boolean isBound = false;
+
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            if (isBound) {
+                                ChatMessage lastChild = null;
+                                for(DataSnapshot child : dataSnapshot.getChildren()){
+                                    lastChild = child.getValue(ChatMessage.class);
+                                }
+                                if(lastChild != null) {
+                                    NotificationUtils.sendChatNotification(activity,
+                                            "New message!", lastChild.getUser_() + ": " + lastChild.getText_(), lastChild.getRelationId_());
+                                }
+                            } else {
+                                isBound = true;
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+                }
+
+                @Override
+                public void onChildChanged(@NonNull DataSnapshot relationDataSnapshot, @Nullable String s) {
+
+                }
+
+                @Override
+                public void onChildRemoved(@NonNull DataSnapshot relationDataSnapshot) {
+
+                }
+
+                @Override
+                public void onChildMoved(@NonNull DataSnapshot relationDataSnapshot, @Nullable String s) {
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+        }
+        isNotificationsSetupDone = true;
     }
 }

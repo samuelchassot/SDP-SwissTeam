@@ -8,6 +8,7 @@ import org.junit.runner.RunWith;
 
 import java.util.ArrayList;
 
+import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
@@ -19,7 +20,8 @@ public class UserTest extends FirebaseTest {
     public static String googleID3 = "145r", email3 = "d@a.c", name3 = "Jeannette", description3 = "45 ans.";
     public int rating = 42;
 
-    public static ArrayList<Categories> categories = new ArrayList<Categories>();
+    public static ArrayList<Categories> categories = new ArrayList<>();
+    public static ArrayList<ChatRelation> chatRelations = new ArrayList<>();
 
     @Before
     public void setCats() {
@@ -115,5 +117,11 @@ public class UserTest extends FirebaseTest {
         user1.addChatRelation(cR);
         user2.addChatRelation(cR);
         assertEquals(cR, user1.relationExists(googleID2));
+    }
+
+    @Test
+    public void testDeletedUser(){
+        User deleted = User.getDeletedUser();
+        assertTrue(deleted.getGoogleId_().equals(User.getDeletedUserGoogleID()));
     }
 }
