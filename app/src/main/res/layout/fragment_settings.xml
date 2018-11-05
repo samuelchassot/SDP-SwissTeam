@@ -139,7 +139,9 @@
                 android:id="@+id/seekbar_settings_radius"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:max= "200"
+                android:progress="200"/>
         </LinearLayout>
 
         <Space
