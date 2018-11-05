@@ -89,4 +89,38 @@ public class DeleteAccountTest extends FirebaseTest {
             assertEquals(u, null);
         });
     }
+
+    @Test
+    public void addMessagesThenDeleteUser(){
+        User firstUser = TestUtils.getTestUser();
+        User secondUser = TestUtils.O_USER;
+        secondUser.addToDB(DBUtility.get().getDb_());
+        sleep(1000);
+        ChatRelation newRelation = new ChatRelation(firstUser, secondUser);
+        newRelation.addToDB(DBUtility.get().getDb_());
+        firstUser.addChatRelation(newRelation,  DBUtility.get().getDb_());
+        secondUser.addChatRelation(newRelation, DBUtility.get().getDb_());
+        sleep(1000);
+
+        String testMessage = "Goodbye !";
+        ChatMessage chatMessage = new ChatMessage(testMessage, firstUser.getName_(), firstUser.getGoogleId_(), newRelation.getId_());
+        chatMessage.addToDB(DBUtility.get().getDb_());
+        sleep(1000);
+
+        onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
+        onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_settings));
+        onView(withId(R.id.button_settings_deleteaccount)).perform(scrollTo()).perform(click());
+        sleep(1000);
+
+        onView(withId(R.id.edittext_deleteaccount_continue)).perform(typeText("CONTINUE"));
+        closeSoftKeyboard();
+        sleep(1000);
+        onView(withId(R.id.button_deleteaccount_deletebutton)).perform(click());
+        sleep(5000);
+
+        DBUtility.get().getUser(firstUser.getGoogleId_(), u->{
+            assertEquals(u, null);
+        });
+
+    }
 }
