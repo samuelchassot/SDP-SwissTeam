@@ -46,10 +46,17 @@ public class UserTest {
         User user2 = new User(googleID, name,email, description, categories,null,  imageUrl, rating, 0, 0,null,null);
         user.upvote(user2);
         assertEquals(rating +1, user.getRating_());
-        assertFalse(user.upvote(user2));
+        user.upvote(user2);
+        assertEquals(rating , user.getRating_());
         user.downvote(user2);
         assertEquals(rating - 1, user.getRating_());
-        assertFalse(user.downvote((user2)));
+        user.downvote(user2);
+        assertEquals(rating , user.getRating_());
+        user.downvote(user2);
+        user.upvote(user2);
+        assertEquals(rating + 1, user.getRating_());
+        user.downvote(user2);
+        assertEquals(rating - 1, user.getRating_());
 
 
     }
