@@ -22,6 +22,11 @@ public class User implements DBSavable {
 
     private ArrayList<ChatRelation> chatRelations_;
 
+    public static enum Vote{
+        UPVOTE,
+        DOWNVOTE
+    }
+
     /**
      * Default constructor, needed for database
      */
@@ -271,10 +276,17 @@ public class User implements DBSavable {
         return null;
     }
 
-    /**
-     * Increments user's rating by 1
-     */
-    public void upvote(User user) {
+    public void vote(Vote vote, User user){
+        if (vote == Vote.UPVOTE){
+            this.upvote(user);
+        } else if (vote == Vote.DOWNVOTE){
+            this.downvote(user);
+        }
+        this.addToDB(DBUtility.get().getDb_());
+
+    }
+
+    private void upvote(User user) {
         //If already upvoted, remove it
         if (upvotes_.contains(user.getGoogleId_())){
             upvotes_.remove(user.getGoogleId_());
@@ -294,10 +306,8 @@ public class User implements DBSavable {
         return;
     }
 
-    /**
-     * Decrements user's rating by 1
-     */
-    public void downvote(User user) {
+
+    private void downvote(User user) {
         if (downvotes_.contains(user.getGoogleId_())){
             downvotes_.remove(user.getGoogleId_());
             rating_ += 1;

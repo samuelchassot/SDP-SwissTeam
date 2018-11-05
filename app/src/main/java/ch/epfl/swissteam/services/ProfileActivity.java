@@ -13,6 +13,8 @@ import android.widget.Toast;
 import com.squareup.picasso.Picasso;
 
 import static ch.epfl.swissteam.services.NewProfileDetails.GOOGLE_ID_TAG;
+import static ch.epfl.swissteam.services.User.Vote.DOWNVOTE;
+import static ch.epfl.swissteam.services.User.Vote.UPVOTE;
 
 /**
  * An activity to display the profile of a user
@@ -53,16 +55,11 @@ public class ProfileActivity extends NavigationDrawer {
 
         loadAndShowUser(clientUID);
     }
-    
-    private void voteStoreAndRefresh(int vote, String clientUID){
+
+    private void voteStoreAndRefresh(User.Vote vote, String clientUID){
         DBUtility.get().getUser(clientUID, user ->{
             DBUtility.get().getUser(GoogleSignInSingleton.get().getClientUniqueID(), currentUser ->{
-                if (vote == DOWNVOTE){
-                    user.downvote(currentUser);
-                } else if (vote == UPVOTE){
-                    user.upvote(currentUser);
-                }
-                user.addToDB(DBUtility.get().getDb_());
+                user.vote(vote, currentUser);
                 loadAndShowUser(user.getGoogleId_());
             });
         });
