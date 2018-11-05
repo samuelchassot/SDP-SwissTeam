@@ -154,7 +154,7 @@ public class DBUtility {
 
     }
 
-    public void getAllMessagesFromChatRelation(String chatRelationId, final MyCallBack<ArrayList<ChatMessage>> callBack){
+    public void getAllMessagesFromChatRelation(String chatRelationId, final DBCallBack<ArrayList<ChatMessage>> callBack){
         db_.child(DBUtility.CHATS).child(chatRelationId).addListenerForSingleValueEvent(new ValueEventListener() {
             ArrayList<ChatMessage> messages = new ArrayList<>();
             @Override
