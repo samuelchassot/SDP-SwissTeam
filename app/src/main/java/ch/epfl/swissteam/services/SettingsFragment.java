@@ -1,5 +1,7 @@
 package ch.epfl.swissteam.services;
 
+import android.content.ContentValues;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
@@ -8,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.content.Intent;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 
 /**
  * A fragment to set the different settings of the application
@@ -15,6 +19,8 @@ import android.content.Intent;
  * @author Ghali Chraïbi
  */
 public class SettingsFragment extends Fragment {
+
+    private SettingsDbHelper dbHelper_;
 
     public SettingsFragment() {
         // Required empty public constructor
@@ -36,6 +42,7 @@ public class SettingsFragment extends Fragment {
         Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.toolbar_settings);
 
+        dbHelper_ = new SettingsDbHelper(this.getContext());
 
     }
 
@@ -50,6 +57,28 @@ public class SettingsFragment extends Fragment {
             v.getContext().startActivity(intent);
         });
 
+        Switch darkModeSwitch = view.findViewById(R.id.switch_settings_darkmode);
+        darkModeSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+
+            SQLiteDatabase db = dbHelper_.getWritableDatabase();
+
+            // New value for one column
+            ContentValues values = new ContentValues();
+
+            // Which row to update, based on the mode
+            String selection = SettingsContract.SettingsEntry.COLUMN_NAME_DARKMODE + " LIKE ?";
+            String[] selectionArgs = {"0"};
+
+            if(isChecked){
+                values.put(SettingsContract.SettingsEntry.COLUMN_NAME_DARKMODE, 1);
+            }else{
+                values.put(SettingsContract.SettingsEntry.COLUMN_NAME_DARKMODE, 0);
+                selectionArgs[0] = "1";
+            }
+
+            db.update(SettingsContract.SettingsEntry.TABLE_NAME,
+                    values, selection, selectionArgs);
+        });
 
         return view;
     }
