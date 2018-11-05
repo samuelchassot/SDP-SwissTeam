@@ -12,7 +12,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
 @RunWith(AndroidJUnit4.class)
-public class UserTest {
+public class UserTest extends FirebaseTest {
 
     public static String googleID = "1337", email = "a@b.c", name = "Jean", description = "45 ans.", imageUrl = "www.com";
     public static String googleID2 = "1frr", email2 = "b@a.c", name2 = "Jeanne", description2 = "45 ans.";
@@ -26,6 +26,7 @@ public class UserTest {
         categories.add(Categories.COOKING);
         categories.add(Categories.DAILYLIFE);
     }
+    
 
     @Test
     public void testUserWorks() {
@@ -44,18 +45,18 @@ public class UserTest {
     public void upDownVoteTest(){
         User user = new User(googleID, name,email, description, categories,null, imageUrl, rating, 0, 0,null,null);
         User user2 = new User(googleID, name,email, description, categories,null,  imageUrl, rating, 0, 0,null,null);
-        user.upvote(user2);
+        user.vote(User.Vote.UPVOTE, user2);
         assertEquals(rating +1, user.getRating_());
-        user.upvote(user2);
+        user.vote(User.Vote.UPVOTE, user2);
         assertEquals(rating , user.getRating_());
-        user.downvote(user2);
+        user.vote(User.Vote.DOWNVOTE, user2);
         assertEquals(rating - 1, user.getRating_());
-        user.downvote(user2);
+        user.vote(User.Vote.DOWNVOTE, user2);
         assertEquals(rating , user.getRating_());
-        user.downvote(user2);
-        user.upvote(user2);
+        user.vote(User.Vote.DOWNVOTE, user2);
+        user.vote(User.Vote.UPVOTE, user2);
         assertEquals(rating + 1, user.getRating_());
-        user.downvote(user2);
+        user.vote(User.Vote.DOWNVOTE, user2);
         assertEquals(rating - 1, user.getRating_());
 
 

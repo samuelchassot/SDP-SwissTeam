@@ -19,6 +19,7 @@ public abstract class FirebaseTest {
 
     @Before
     public final void setUp() {
+        DBUtility.get();
         FirebaseDatabase.getInstance().goOffline();
         initialize();
     }
