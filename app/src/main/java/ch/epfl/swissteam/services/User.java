@@ -20,7 +20,6 @@ public class User implements DBSavable {
     private int rating_;
     private double latitude_, longitude_;
     private ArrayList<Categories> categories_;
-
     private ArrayList<ChatRelation> chatRelations_;
 
     /**
@@ -132,21 +131,6 @@ public class User implements DBSavable {
     public int getRating_() {
         return rating_;
     }
-
-
-//    public Location getLastLocation() {
-//        Location lastLocation = new Location("");
-//        lastLocation.setLongitude(longitude_);
-//        lastLocation.setLatitude(latitude_);
-//        return lastLocation;
-//    }
-//    public void setLastLocation_(Location lastLocation){
-//        if(lastLocation != null){
-//          this.latitude_ = lastLocation.getLatitude();
-//          this.longitude_ = lastLocation.getLongitude();
-//        }
-//    }
-
 
     /**
      * Gives the latitude of the user

@@ -19,7 +19,8 @@ public class UserTest {
     public static String googleID3 = "145r", email3 = "d@a.c", name3 = "Jeannette", description3 = "45 ans.";
     public int rating = 42;
 
-    public static ArrayList<Categories> categories = new ArrayList<Categories>();
+    public static ArrayList<Categories> categories = new ArrayList<>();
+    public static ArrayList<ChatRelation> chatRelations = new ArrayList<>();
 
     @Before
     public void setCats() {

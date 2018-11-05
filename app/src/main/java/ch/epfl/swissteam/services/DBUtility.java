@@ -1,9 +1,12 @@
 package ch.epfl.swissteam.services;
 
+import android.app.Activity;
 import android.location.Location;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -28,6 +31,7 @@ public class DBUtility {
 
     private DatabaseReference db_;
     private static DBUtility instance;
+    private boolean isNotificationsSetupDone = false;
 
 
     private DBUtility(DatabaseReference db) {
@@ -265,9 +269,64 @@ public class DBUtility {
     /**
      * Add a post to the database
      *
-     * @param post
+     * @param post post to add
      */
     public void setPost(Post post) {
         db_.child(POSTS).child(post.getKey_()).setValue(post);
+    }
+
+    public void notifyNewMessages(Activity activity, String googleId) {
+        if (!isNotificationsSetupDone && googleId != null) {
+            db_.child(USERS).child(googleId).child("chatRelations_").addChildEventListener(new ChildEventListener() {
+                @Override
+                public void onChildAdded(@NonNull DataSnapshot relationDataSnapshot, @Nullable String s) {
+                    db_.child(CHATS).child(relationDataSnapshot.getValue(ChatRelation.class).getId_()).addValueEventListener(new ValueEventListener() {
+                        private boolean isBound = false;
+
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            if (isBound) {
+                                ChatMessage lastChild = null;
+                                for(DataSnapshot child : dataSnapshot.getChildren()){
+                                    lastChild = child.getValue(ChatMessage.class);
+                                }
+                                if(lastChild != null) {
+                                    NotificationUtils.sendChatNotification(activity,
+                                            "New message!", lastChild.getUser_() + ": " + lastChild.getText_(), lastChild.getRelationId_());
+                                }
+                            } else {
+                                isBound = true;
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+                }
+
+                @Override
+                public void onChildChanged(@NonNull DataSnapshot relationDataSnapshot, @Nullable String s) {
+
+                }
+
+                @Override
+                public void onChildRemoved(@NonNull DataSnapshot relationDataSnapshot) {
+
+                }
+
+                @Override
+                public void onChildMoved(@NonNull DataSnapshot relationDataSnapshot, @Nullable String s) {
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+        }
+        isNotificationsSetupDone = true;
     }
 }
