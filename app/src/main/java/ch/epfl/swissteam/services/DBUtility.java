@@ -104,6 +104,11 @@ public class DBUtility {
             callBack.onCallBack(nullUser);
             return;
         }
+        if(googleId.equals(User.getDeletedUserGoogleID())){
+            User deletedUser = User.getDeletedUser();
+            callBack.onCallBack(deletedUser);
+            return;
+        }
         db_.child(USERS).child(googleId).addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
@@ -143,6 +148,23 @@ public class DBUtility {
             }
         });
 
+    }
+
+    public void getAllMessagesFromChatRelation(String chatRelationId, final MyCallBack<ArrayList<ChatMessage>> callBack){
+        db_.child(DBUtility.CHATS).child(chatRelationId).addListenerForSingleValueEvent(new ValueEventListener() {
+            ArrayList<ChatMessage> messages = new ArrayList<>();
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot data : dataSnapshot.getChildren()) {
+                    messages.add(data.getValue(ChatMessage.class));
+                }
+                callBack.onCallBack(messages);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
     }
 
     /**
