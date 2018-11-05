@@ -46,21 +46,9 @@ public class ProfileActivity extends NavigationDrawer {
             this.startActivity(intent);
         });
 
-        upvoteButton.setOnClickListener(v -> {
-            DBUtility.get().getUser(clientUID, user ->{
-                DBUtility.get().getUser(GoogleSignInSingleton.get().getClientUniqueID(), currentUser ->{
-                    voteStoreAndRefresh(UPVOTE,user,currentUser);
-                });
-            });
-        });
+        upvoteButton.setOnClickListener(v -> voteStoreAndRefresh(UPVOTE, clientUID));
 
-        downvoteButton.setOnClickListener(v -> {
-            DBUtility.get().getUser(clientUID, user ->{
-                DBUtility.get().getUser(GoogleSignInSingleton.get().getClientUniqueID(), currentUser ->{
-                    voteStoreAndRefresh(DOWNVOTE, user, currentUser);
-                });
-            });
-        });
+        downvoteButton.setOnClickListener(v -> voteStoreAndRefresh(DOWNVOTE, clientUID));
 
 
         loadAndShowUser(clientUID);
@@ -68,17 +56,21 @@ public class ProfileActivity extends NavigationDrawer {
 
     private final int UPVOTE = 1;
     private final int DOWNVOTE = 0;
-    private void voteStoreAndRefresh(int vote, User user, User currentUser){
-        if (vote == DOWNVOTE){
-            user.downvote(currentUser);
-        } else if (vote == UPVOTE){
-            user.upvote(currentUser);
-        }
-        user.addToDB(DBUtility.get().getDb_());
-        loadAndShowUser(user.getGoogleId_());
+    private void voteStoreAndRefresh(int vote, String clientUID){
+        DBUtility.get().getUser(clientUID, user ->{
+            DBUtility.get().getUser(GoogleSignInSingleton.get().getClientUniqueID(), currentUser ->{
+                if (vote == DOWNVOTE){
+                    user.downvote(currentUser);
+                } else if (vote == UPVOTE){
+                    user.upvote(currentUser);
+                }
+                user.addToDB(DBUtility.get().getDb_());
+                loadAndShowUser(user.getGoogleId_());
+            });
+        });
     }
 
-    
+
     private void loadAndShowUser(String clientUniqueID) {
         //for now we use the username
         DBUtility.get().getUser(clientUniqueID, (user) -> {
