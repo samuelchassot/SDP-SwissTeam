@@ -1,6 +1,7 @@
 package ch.epfl.swissteam.services;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -48,13 +49,9 @@ public class ProfileActivity extends NavigationDrawer {
         upvoteButton.setOnClickListener(v -> {
             DBUtility.get().getUser(clientUID, user ->{
                 DBUtility.get().getUser(GoogleSignInSingleton.get().getClientUniqueID(), currentUser ->{
-                    boolean success = user.upvote(currentUser);
-                    if (!success) {
-                        Toast.makeText(this,R.string.profile_upvote_error, Toast.LENGTH_SHORT).show();
-                    } else {
-                        user.addToDB(DBUtility.get().getDb_());
-                        loadAndShowUser(clientUID);
-                    }
+                    user.upvote(currentUser);
+                    user.addToDB(DBUtility.get().getDb_());
+                    loadAndShowUser(clientUID);
                 });
             });
         });
@@ -62,13 +59,9 @@ public class ProfileActivity extends NavigationDrawer {
         downvoteButton.setOnClickListener(v -> {
             DBUtility.get().getUser(clientUID, user ->{
                 DBUtility.get().getUser(GoogleSignInSingleton.get().getClientUniqueID(), currentUser ->{
-                    boolean success = user.downvote(currentUser);
-                    if (!success) {
-                        Toast.makeText(this,R.string.profile_downvote_error, Toast.LENGTH_SHORT).show();
-                    } else {
-                        user.addToDB(DBUtility.get().getDb_());
-                        loadAndShowUser(clientUID);
-                    }
+                    user.downvote(currentUser);
+                    user.addToDB(DBUtility.get().getDb_());
+                    loadAndShowUser(clientUID);
                 });
             });
         });
@@ -93,6 +86,19 @@ public class ProfileActivity extends NavigationDrawer {
             ratingView.setText(Integer.toString(user.getRating_()));
 
             Picasso.get().load(user.getImageUrl_()).into((ImageView) findViewById(R.id.imageview_profile_picture));
+            if (user.getUpvotes_().contains(GoogleSignInSingleton.get().getClientUniqueID())){
+                findViewById(R.id.button_profile_upvote).setBackgroundResource(R.drawable.thumbs_up_blue);
+            } else {
+                findViewById(R.id.button_profile_upvote).setBackgroundResource(R.drawable.thumbs_up);
+            }
+            if (user.getDownvotes_().contains(GoogleSignInSingleton.get().getClientUniqueID())){
+                findViewById(R.id.button_profile_downvote).setBackgroundResource(R.drawable.thumbs_down_red);
+            } else {
+                findViewById(R.id.button_profile_downvote).setBackgroundResource(R.drawable.thumbs_down);
+            }
+
+
+
 
         });
     }
