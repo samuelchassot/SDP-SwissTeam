@@ -274,11 +274,15 @@ public class User implements DBSavable {
     /**
      * Increments user's rating by 1
      */
-    public boolean upvote(User user) {
+    public void upvote(User user) {
+        //If already upvoted, remove it
         if (upvotes_.contains(user.getGoogleId_())){
-            return false;
+            upvotes_.remove(user.getGoogleId_());
+            rating_ -= 1;
+            return;
         }
 
+        //if downvoted, correct the vote
         if (downvotes_.contains(user.getGoogleId_())){
             downvotes_.remove(user.getGoogleId_());
             //one downvote less
@@ -287,15 +291,17 @@ public class User implements DBSavable {
         upvotes_.add(user.googleId_);
         //one upvote more
         rating_ += 1;
-        return true;
+        return;
     }
 
     /**
      * Decrements user's rating by 1
      */
-    public boolean downvote(User user) {
+    public void downvote(User user) {
         if (downvotes_.contains(user.getGoogleId_())){
-            return false;
+            downvotes_.remove(user.getGoogleId_());
+            rating_ += 1;
+            return;
         }
 
         if (upvotes_.contains(user.getGoogleId_())){
@@ -306,6 +312,6 @@ public class User implements DBSavable {
         downvotes_.add(user.googleId_);
         //one downvote more
         rating_ -= 1;
-        return true;
+        return;
     }
 }
