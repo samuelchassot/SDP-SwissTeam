@@ -61,27 +61,11 @@ public class SettingsFragment extends Fragment {
 
         Switch darkModeSwitch = view.findViewById(R.id.switch_settings_darkmode);
         darkModeSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
-
-            SQLiteDatabase db = dbHelper_.getWritableDatabase();
-
-            // New value for one column
-            ContentValues values = new ContentValues();
-
-            // Which row to update, based on the mode
-            String selection = SettingsContract.SettingsEntry.COLUMN_SETTINGS_DARKMODE + " LIKE ?";
-            String[] selectionArgs = {"0"};
-
             if(isChecked){
-                values.put(SettingsContract.SettingsEntry.COLUMN_SETTINGS_DARKMODE, 1);
+                SettingsDBUtility.updateDarkMode(dbHelper_, id_, 1);
             }else{
-                values.put(SettingsContract.SettingsEntry.COLUMN_SETTINGS_DARKMODE, 0);
-                selectionArgs[0] = "1";
+                SettingsDBUtility.updateDarkMode(dbHelper_, id_, 0);
             }
-
-            db.update(SettingsContract.SettingsEntry.TABLE_NAME,
-                    values, selection, selectionArgs);
-
-            db.close();
         });
 
         int dark = SettingsDBUtility.retrieveDarkMode(dbHelper_, id_);

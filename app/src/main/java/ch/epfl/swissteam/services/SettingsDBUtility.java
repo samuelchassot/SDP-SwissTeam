@@ -72,6 +72,23 @@ public interface SettingsDBUtility {
         return dark;
     }
 
+    static void updateDarkMode(SettingsDbHelper helper, String id, int newValue){
+        SQLiteDatabase db = helper.getWritableDatabase();
+
+        // New value for one column
+        ContentValues values = new ContentValues();
+        values.put(SettingsContract.SettingsEntry.COLUMN_SETTINGS_DARKMODE, newValue);
+
+        // Which row to update, based on the id
+        String selection = SettingsContract.SettingsEntry.COLUMN_ID + " LIKE ?";
+        String[] selectionArgs = { id };
+
+        db.update(SettingsContract.SettingsEntry.TABLE_NAME,
+                values, selection, selectionArgs);
+
+        db.close();
+    }
+
     static long addRowIfNeeded(SettingsDbHelper helper, String id){
         long rowKey = -1;
         if(!userHasAlreadyARow(helper, id)){
