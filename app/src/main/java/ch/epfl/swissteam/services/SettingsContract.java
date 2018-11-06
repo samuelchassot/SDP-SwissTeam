@@ -14,8 +14,11 @@ public class SettingsContract {
 
     private SettingsContract(){}
 
-    public static class SettingsEntry implements BaseColumns{
+    public static class SettingsEntry{
         public static final String TABLE_NAME = "entry";
+
+        //Column for the id of the logged in user
+        public static final String COLUMN_NAME_ID = "id";
 
         //Column for the dark mode
         //By default 0, which means normal mode
