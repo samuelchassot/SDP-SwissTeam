@@ -72,7 +72,7 @@ public class ProfileActivityTest extends FirebaseTest {
 
     @Test
     public void votesWorks(){
-        recyclerScrollToItemWithTextAndPerformClickItem(R.id.services_recycler, TestUtils.O_USER.getName_());
+        startIntentWith(O_USER.getGoogleId_());
         onView(withId(R.id.button_profile_upvote)).perform(click());
         onView(withId(R.id.button_profile_downvote)).perform(click());
     }
