@@ -4,7 +4,6 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.provider.BaseColumns;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -12,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.content.Intent;
-import android.widget.CompoundButton;
 import android.widget.Switch;
 
 /**
@@ -68,13 +66,13 @@ public class SettingsFragment extends Fragment {
             ContentValues values = new ContentValues();
 
             // Which row to update, based on the mode
-            String selection = SettingsContract.SettingsEntry.COLUMN_NAME_DARKMODE + " LIKE ?";
+            String selection = SettingsContract.SettingsEntry.COLUMN_SETTINGS_DARKMODE + " LIKE ?";
             String[] selectionArgs = {"0"};
 
             if(isChecked){
-                values.put(SettingsContract.SettingsEntry.COLUMN_NAME_DARKMODE, 1);
+                values.put(SettingsContract.SettingsEntry.COLUMN_SETTINGS_DARKMODE, 1);
             }else{
-                values.put(SettingsContract.SettingsEntry.COLUMN_NAME_DARKMODE, 0);
+                values.put(SettingsContract.SettingsEntry.COLUMN_SETTINGS_DARKMODE, 0);
                 selectionArgs[0] = "1";
             }
 
@@ -91,8 +89,8 @@ public class SettingsFragment extends Fragment {
         // you will actually use after this query.
         String[] projection = {
                 SettingsContract.SettingsEntry._ID,
-                SettingsContract.SettingsEntry.COLUMN_NAME_DARKMODE
-                //,SettingsContract.SettingsEntry.COLUMN_NAME_HOME_LONGITUDE...
+                SettingsContract.SettingsEntry.COLUMN_SETTINGS_DARKMODE
+                //,SettingsContract.SettingsEntry.COLUMN_SETTINGS_HOME_LONGITUDE...
         };
 
         // Filter results WHERE "title" = 'My Title'
@@ -117,7 +115,7 @@ public class SettingsFragment extends Fragment {
 
         if(cursor.moveToFirst()){
             dark = cursor.getInt(
-                    cursor.getColumnIndexOrThrow(SettingsContract.SettingsEntry.COLUMN_NAME_DARKMODE));
+                    cursor.getColumnIndexOrThrow(SettingsContract.SettingsEntry.COLUMN_SETTINGS_DARKMODE));
         }
 
         boolean darkModeChecked = dark == 1;

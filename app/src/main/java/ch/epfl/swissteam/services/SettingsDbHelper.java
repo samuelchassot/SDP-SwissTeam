@@ -18,11 +18,12 @@ public class SettingsDbHelper extends SQLiteOpenHelper{
     @Override
     public void onCreate(SQLiteDatabase db) {
         String createTable = "CREATE TABLE " + SettingsContract.SettingsEntry.TABLE_NAME + " (" +
-                SettingsContract.SettingsEntry._ID + " INTEGER PRIMARY KEY," +
-                SettingsContract.SettingsEntry.COLUMN_NAME_DARKMODE + " INTEGER DEFAULT 0," +
-                SettingsContract.SettingsEntry.COLUMN_NAME_RADIUS + " FLOAT DEFAULT " + LocationManager.MAX_POST_DISTANCE + "," +
-                SettingsContract.SettingsEntry.COLUMN_NAME_HOME_LONGITUDE + " REAL," +
-                SettingsContract.SettingsEntry.COLUMN_NAME_HOME_LATITUDE+ " REAL)";
+                SettingsContract.SettingsEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                SettingsContract.SettingsEntry.COLUMN_ID + " VARCHAR(30) NOT NULL," +
+                SettingsContract.SettingsEntry.COLUMN_SETTINGS_DARKMODE + " INTEGER DEFAULT 0," +
+                SettingsContract.SettingsEntry.COLUMN_SETTINGS_RADIUS + " FLOAT DEFAULT " + LocationManager.MAX_POST_DISTANCE + "," +
+                SettingsContract.SettingsEntry.COLUMN_SETTINGS_HOME_LONGITUDE + " REAL," +
+                SettingsContract.SettingsEntry.COLUMN_SETTINGS_HOME_LATITUDE + " REAL)";
 
         db.execSQL(createTable);
     }
