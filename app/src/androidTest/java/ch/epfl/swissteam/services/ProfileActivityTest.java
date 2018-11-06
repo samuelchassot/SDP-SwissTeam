@@ -15,6 +15,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
@@ -67,6 +68,13 @@ public class ProfileActivityTest extends FirebaseTest {
     public void cantAccessToChatButtonIfMyProfile() {
         startIntentWith(M_USER.getGoogleId_());
         onView(withId(R.id.button_profile_toChat)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.INVISIBLE)));
+    }
+
+    @Test
+    public void votesWorks(){
+        startIntentWith(O_USER.getGoogleId_());
+        onView(withId(R.id.button_profile_upvote)).perform(click());
+        onView(withId(R.id.button_profile_downvote)).perform(click());
     }
 
 
