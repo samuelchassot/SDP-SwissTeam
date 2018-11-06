@@ -68,10 +68,18 @@ public class SettingsFragment extends Fragment {
             }
         });
 
+        //Retrieve settings from local DB
+        //Dark mode
         int dark = SettingsDBUtility.retrieveDarkMode(dbHelper_, id_);
-
         boolean darkModeChecked = dark == 1;
         darkModeSwitch.setChecked(darkModeChecked);
+
+        //Radius
+        float radius = SettingsDBUtility.retrieveRadius(dbHelper_, id_);
+
+        //Home
+        double longitude = SettingsDBUtility.retrieveHome(dbHelper_, SettingsContract.SettingsEntry.COLUMN_SETTINGS_HOME_LONGITUDE, id_);
+        double latitude = SettingsDBUtility.retrieveHome(dbHelper_, SettingsContract.SettingsEntry.COLUMN_SETTINGS_HOME_LATITUDE, id_);
 
         return view;
     }

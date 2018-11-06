@@ -72,6 +72,56 @@ public interface SettingsDBUtility {
         return dark;
     }
 
+    static float retrieveRadius(SettingsDbHelper helper, String id){
+        SQLiteDatabase db = helper.getReadableDatabase();
+
+        String[] projection = {SettingsContract.SettingsEntry.COLUMN_SETTINGS_RADIUS};
+
+        String selection = SettingsContract.SettingsEntry.COLUMN_ID + " = ?";
+        String[] selectionArgs = { id };
+
+        Cursor cursor = db.query(
+                SettingsContract.SettingsEntry.TABLE_NAME,
+                projection, selection, selectionArgs,
+                null, null, null
+        );
+
+        float radius = -1f;
+
+        if(cursor.moveToFirst()){
+            radius = cursor.getFloat(cursor.getColumnIndexOrThrow(SettingsContract.SettingsEntry.COLUMN_SETTINGS_RADIUS));
+        }
+        cursor.close();
+        db.close();
+
+        return radius;
+    }
+
+    static double retrieveHome(SettingsDbHelper helper, String column, String id){
+        SQLiteDatabase db = helper.getReadableDatabase();
+
+        String[] projection = {column};
+
+        String selection = SettingsContract.SettingsEntry.COLUMN_ID + " = ?";
+        String[] selectionArgs = { id };
+
+        Cursor cursor = db.query(
+                SettingsContract.SettingsEntry.TABLE_NAME,
+                projection, selection, selectionArgs,
+                null, null, null
+        );
+
+        double coord = -1;
+
+        if(cursor.moveToFirst()){
+            coord = cursor.getDouble(cursor.getColumnIndexOrThrow(column));
+        }
+        cursor.close();
+        db.close();
+
+        return coord;
+    }
+
     static void updateDarkMode(SettingsDbHelper helper, String id, int newValue){
         SQLiteDatabase db = helper.getWritableDatabase();
 
