@@ -17,7 +17,7 @@ import java.util.Date;
  */
 public class LocationManager {
 
-    public final static float MAX_POST_DISTANCE = 200000; //in meters
+    public final static float MAX_POST_DISTANCE = 200000; //in meters (previous : 10 km)
     public final static int M_IN_ONE_KM = 1000;
     private final static int TIME_BETWEEN_UPDATES = 10000; //in ms
 
