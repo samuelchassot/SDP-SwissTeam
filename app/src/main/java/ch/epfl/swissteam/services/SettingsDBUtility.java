@@ -12,7 +12,6 @@ public interface SettingsDBUtility {
         // Define a projection that specifies which columns from the database
         // you will actually use after this query.
         String[] projection = {
-                SettingsContract.SettingsEntry._ID,
                 SettingsContract.SettingsEntry.COLUMN_ID
         };
 
@@ -43,6 +42,34 @@ public interface SettingsDBUtility {
         db.close();
 
         return exists;
+    }
+
+    static int retrieveDarkMode(SettingsDbHelper helper, String id){
+        SQLiteDatabase db = helper.getReadableDatabase();
+
+        String[] projection = {
+                SettingsContract.SettingsEntry.COLUMN_SETTINGS_DARKMODE
+        };
+
+        String selection = SettingsContract.SettingsEntry.COLUMN_ID + " = ?";
+        String[] selectionArgs = { id };
+
+        Cursor cursor = db.query(
+                SettingsContract.SettingsEntry.TABLE_NAME,
+                projection, selection, selectionArgs,
+                null, null, null
+        );
+
+        int dark = -1;
+
+        if(cursor.moveToFirst()){
+            dark = cursor.getInt(
+                    cursor.getColumnIndexOrThrow(SettingsContract.SettingsEntry.COLUMN_SETTINGS_DARKMODE));
+        }
+        cursor.close();
+        db.close();
+
+        return dark;
     }
 
     static long addRowIfNeeded(SettingsDbHelper helper, String id){
