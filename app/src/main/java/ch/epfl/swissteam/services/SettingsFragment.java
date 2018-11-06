@@ -123,6 +123,8 @@ public class SettingsFragment extends Fragment {
 
         cursor.close();
 
+        db.close();
+
         return view;
     }
 }

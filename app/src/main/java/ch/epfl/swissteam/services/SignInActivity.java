@@ -2,9 +2,7 @@ package ch.epfl.swissteam.services;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.content.ContentValues;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -34,6 +32,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
     private final String ERROR_MSG = "signInResult:failed code=";
 
     private GoogleSignInClient mGoogleSignInClient_;
+    private SettingsDbHelper settingsDbHelper_;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +54,8 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
 
         //Listen to clicks on the signIn button
         findViewById(R.id.button_signin_googlesignin).setOnClickListener(this);
+
+        settingsDbHelper_ = new SettingsDbHelper(this);
     }
 
     @Override
@@ -70,6 +71,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
 
             // put uniqueID in the singleton
             GoogleSignInSingleton.putUniqueID(account.getId());
+            SettingsDBUtility.addRowIfNeeded(settingsDbHelper_, account.getId());
             Intent mainIntent = new Intent(this, MainActivity.class);
             mainIntent.putExtra(ACCOUNT_TAG , account);
 
@@ -112,6 +114,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
             DBUtility.get().getUser(account.getId(), user -> {
                 if(user != null){
                     GoogleSignInSingleton.putUniqueID(account.getId());
+                    SettingsDBUtility.addRowIfNeeded(settingsDbHelper_, account.getId());
                     Intent mainIntent = new Intent(this, MainActivity.class);
                     mainIntent.putExtra(ACCOUNT_TAG , account);
                     startActivity(mainIntent);
@@ -119,7 +122,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                 else{
                     // Signed in successfully, show authenticated UI
                     GoogleSignInSingleton.putUniqueID(account.getId());
-                    addRowToSettingsDB(account.getId());
+                    SettingsDBUtility.addRowIfNeeded(settingsDbHelper_, account.getId());
                     Intent newProfileIntent = new Intent(this, NewProfileDetails.class);
                     newProfileIntent.putExtra(ACCOUNT_TAG , account);
                     startActivity(newProfileIntent);
@@ -157,21 +160,9 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         }
     }
 
-    private void addRowToSettingsDB(String id){
-        SettingsDbHelper settingsDbHelper = new SettingsDbHelper(this);
 
-        SQLiteDatabase settingsDb = settingsDbHelper.getWritableDatabase();
 
-        //Value which will be stored as a row in the local DB
-        ContentValues values = new ContentValues();
-        values.put(SettingsContract.SettingsEntry.COLUMN_ID, id);
 
-        //Store the new row in the DB
-        settingsDb.insertWithOnConflict(SettingsContract.SettingsEntry.TABLE_NAME,
-                null,
-                values,
-                SQLiteDatabase.CONFLICT_REPLACE);
-        settingsDb.close();
 
-    }
+
 }
