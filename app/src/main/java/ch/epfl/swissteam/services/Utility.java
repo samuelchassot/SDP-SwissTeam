@@ -15,7 +15,7 @@ public class Utility {
             super(m);
         }
     }
-
+  
     /**
      * alert dialog with a title 'title' that ask 'message' and as two buttons, on 'delete' and one 'cancel'
      * if delete is pressed then 'savable' is removed from the database, if cancel is pressed then nothing happens

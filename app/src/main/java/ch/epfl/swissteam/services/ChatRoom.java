@@ -4,13 +4,11 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.app.Activity;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateFormat;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -42,7 +40,7 @@ public class ChatRoom extends NavigationDrawer {
     }
 
     private void retrieveUserAndSetRelationId(){
-        DBUtility.get().getUser(GoogleSignInSingleton.get().getClientUniqueID(), new MyCallBack<User>(){
+        DBUtility.get().getUser(GoogleSignInSingleton.get().getClientUniqueID(), new DBCallBack<User>(){
             @Override
             public void onCallBack(User mUser) {
                 if(mUser == null){
@@ -128,7 +126,7 @@ public class ChatRoom extends NavigationDrawer {
     }
 
     private void newRelationWith(String contactId ){
-        DBUtility.get().getUser(contactId, new MyCallBack<User>(){
+        DBUtility.get().getUser(contactId, new DBCallBack<User>(){
             @Override
             public void onCallBack(User cUser) {
                 if(cUser == null){

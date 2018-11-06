@@ -49,10 +49,14 @@ public class ChatRelationAdapter extends RecyclerView.Adapter<ChatRelationAdapte
 
     @Override
     public void onBindViewHolder(ChatRelationsViewHolder holder, int i) {
-        String otherId = relations_.get(i).getOtherId(currentUserId_);
-        DBUtility.get().getUser(otherId, oUser -> {
-            holder.contactName_.setText(oUser.getName_());
-            Picasso.get().load(oUser.getImageUrl_()).into(holder.contactImage_);
+        String otherId = relations_.get(holder.getAdapterPosition()).getOtherId(currentUserId_);
+
+        DBUtility.get().getUser(otherId, new DBCallBack<User>() {
+            @Override
+            public void onCallBack(User oUser) {
+                holder.contactName_.setText(oUser.getName_());
+                Picasso.get().load(oUser.getImageUrl_()).into(holder.contactImage_);
+            }
         });
 
         holder.parentLayout_.setOnClickListener((view) -> {

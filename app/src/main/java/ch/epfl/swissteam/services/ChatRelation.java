@@ -3,6 +3,8 @@ package ch.epfl.swissteam.services;
 
 import com.google.firebase.database.DatabaseReference;
 
+import java.util.List;
+
 /**
  * Class to represent chatRelation between users.
  *
@@ -173,7 +175,6 @@ public class ChatRelation implements DBSavable {
     }
 
 
-    //Overrides
     @Override
     public void addToDB(DatabaseReference databaseReference) {
         if(id_ == null) {
@@ -198,4 +199,6 @@ public class ChatRelation implements DBSavable {
                 && getFirstUserId_().equals(((ChatRelation)other).getFirstUserId_())
                 && getSecondUserId_().equals(((ChatRelation)other).getSecondUserId_());
     }
+
+
 }

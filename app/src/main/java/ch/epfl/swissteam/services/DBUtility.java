@@ -1,9 +1,12 @@
 package ch.epfl.swissteam.services;
 
+import android.app.Activity;
 import android.location.Location;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -28,6 +31,7 @@ public class DBUtility {
 
     private DatabaseReference db_;
     private static DBUtility instance;
+    private boolean isNotificationsSetupDone = false;
 
 
     private DBUtility(DatabaseReference db) {
@@ -69,7 +73,7 @@ public class DBUtility {
      * @param category the category
      * @param callBack the CallBack to use
      */
-    public void getUsersFromCategory(Categories category, final MyCallBack<ArrayList<String>> callBack) {
+    public void getUsersFromCategory(Categories category, final DBCallBack<ArrayList<String>> callBack) {
 
         if (category == Categories.ALL) {
             Log.e("DBUtility", "Cannot retrieve all users that way");
@@ -97,11 +101,16 @@ public class DBUtility {
      * @param googleId unique user'Id
      * @param callBack the CallBack to use
      */
-    public void getUser(String googleId, final MyCallBack<User> callBack) {
+    public void getUser(String googleId, final DBCallBack<User> callBack) {
 
         if (googleId == null) {
             User nullUser = null;//new User(null, null, null, null, null, null);
             callBack.onCallBack(nullUser);
+            return;
+        }
+        if(googleId.equals(User.getDeletedUserGoogleID())){
+            User deletedUser = User.getDeletedUser();
+            callBack.onCallBack(deletedUser);
             return;
         }
         db_.child(USERS).child(googleId).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -124,7 +133,7 @@ public class DBUtility {
      *
      * @param callBack the callBack to use
      */
-    public void getAllUsers(final MyCallBack<ArrayList<User>> callBack) {
+    public void getAllUsers(final DBCallBack<ArrayList<User>> callBack) {
 
         db_.child(USERS).addListenerForSingleValueEvent(new ValueEventListener() {
             ArrayList<User> users = new ArrayList<>();
@@ -145,13 +154,30 @@ public class DBUtility {
 
     }
 
+    public void getAllMessagesFromChatRelation(String chatRelationId, final DBCallBack<ArrayList<ChatMessage>> callBack){
+        db_.child(DBUtility.CHATS).child(chatRelationId).addListenerForSingleValueEvent(new ValueEventListener() {
+            ArrayList<ChatMessage> messages = new ArrayList<>();
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot data : dataSnapshot.getChildren()) {
+                    messages.add(data.getValue(ChatMessage.class));
+                }
+                callBack.onCallBack(messages);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
+    }
+
     /**
      * Retrieves the POSTS_DISPLAY_NUMBER freshest post of the database in geographical range of the user.
      *
      * @param callBack     the function called on the callBack
      * @param userLocation the location of the user
      */
-    public void getPostsFeed(final MyCallBack<ArrayList<Post>> callBack, Location userLocation) {
+    public void getPostsFeed(final DBCallBack<ArrayList<Post>> callBack, Location userLocation) {
         Query freshestPosts = db_.child(POSTS).orderByChild("timestamp_").limitToFirst(POSTS_DISPLAY_NUMBER);
         freshestPosts.addListenerForSingleValueEvent(new ValueEventListener() {
             ArrayList<Post> posts = new ArrayList<>();
@@ -185,7 +211,7 @@ public class DBUtility {
      * @param category Category wanted from DB
      * @param callBack Callback to execute
      */
-    public void getCategory(Categories category, final MyCallBack<Categories> callBack) {
+    public void getCategory(Categories category, final DBCallBack<Categories> callBack) {
         db_.child(CATEGORIES).child(category.toString()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -208,7 +234,7 @@ public class DBUtility {
      * @param googleID the ID of the user
      * @param callBack the function called on the callBack
      */
-    public void getUsersPosts(String googleID, final MyCallBack<ArrayList<Post>> callBack) {
+    public void getUsersPosts(String googleID, final DBCallBack<ArrayList<Post>> callBack) {
         Query usersPosts = db_.child(POSTS).orderByChild("googleId_").equalTo(googleID);
         Log.e("ID", googleID);
         usersPosts.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -243,9 +269,64 @@ public class DBUtility {
     /**
      * Add a post to the database
      *
-     * @param post
+     * @param post post to add
      */
     public void setPost(Post post) {
         db_.child(POSTS).child(post.getKey_()).setValue(post);
+    }
+
+    public void notifyNewMessages(Activity activity, String googleId) {
+        if (!isNotificationsSetupDone && googleId != null) {
+            db_.child(USERS).child(googleId).child("chatRelations_").addChildEventListener(new ChildEventListener() {
+                @Override
+                public void onChildAdded(@NonNull DataSnapshot relationDataSnapshot, @Nullable String s) {
+                    db_.child(CHATS).child(relationDataSnapshot.getValue(ChatRelation.class).getId_()).addValueEventListener(new ValueEventListener() {
+                        private boolean isBound = false;
+
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            if (isBound) {
+                                ChatMessage lastChild = null;
+                                for(DataSnapshot child : dataSnapshot.getChildren()){
+                                    lastChild = child.getValue(ChatMessage.class);
+                                }
+                                if(lastChild != null) {
+                                    NotificationUtils.sendChatNotification(activity,
+                                            "New message!", lastChild.getUser_() + ": " + lastChild.getText_(), lastChild.getRelationId_());
+                                }
+                            } else {
+                                isBound = true;
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+                }
+
+                @Override
+                public void onChildChanged(@NonNull DataSnapshot relationDataSnapshot, @Nullable String s) {
+
+                }
+
+                @Override
+                public void onChildRemoved(@NonNull DataSnapshot relationDataSnapshot) {
+
+                }
+
+                @Override
+                public void onChildMoved(@NonNull DataSnapshot relationDataSnapshot, @Nullable String s) {
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+        }
+        isNotificationsSetupDone = true;
     }
 }

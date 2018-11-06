@@ -7,7 +7,6 @@ import com.google.firebase.database.DatabaseReference;
  */
 public interface DBSavable {
     void addToDB(DatabaseReference databaseReference);
-
     /**
      * remove this DBSavable with id child from the database databaseReference
      * @param databaseReference the reference to the database

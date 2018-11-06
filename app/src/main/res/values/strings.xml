@@ -132,7 +132,6 @@
     <string name="toolbar_services">Services</string>
 
 
-
     <string-array name="language_arrays">
         <item>English</item>
         <item>French</item>
@@ -140,5 +139,12 @@
 
     <string name="usersearch_distanceunavailable">Unavailable</string>
     <string name="usersearch_distancedisplay">%1dkm away</string>
+    <string name="channel_name" translatable="false">Notification Channel</string>
+    <string name="channel_description" translatable="false">Notification Channel for Socialize</string>
+    <string name="settings_deletemyaccount">Delete my account</string>
+    <string name="warning">WARNING</string>
+    <string name="settings_deleteaccount_warningmessage">You are about to permanently delete your account ! \nThis will have these consequences : \n1. You will not be able to recover your data. \n2. All conversations you have will be lost. \n3. If you want to come back, you will have to configure everything once again.</string>
+    <string name="continue_confirmation_deleteaccount">CONTINUE</string>
+    <string name="deleted_user_name">Deleted user</string>
 
 </resources>
