@@ -2,7 +2,9 @@ package ch.epfl.swissteam.services;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -117,6 +119,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                 else{
                     // Signed in successfully, show authenticated UI
                     GoogleSignInSingleton.putUniqueID(account.getId());
+                    addRowToSettingsDB(account.getId());
                     Intent newProfileIntent = new Intent(this, NewProfileDetails.class);
                     newProfileIntent.putExtra(ACCOUNT_TAG , account);
                     startActivity(newProfileIntent);
@@ -152,5 +155,23 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
             NotificationManager notificationManager = getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(channel);
         }
+    }
+
+    private void addRowToSettingsDB(String id){
+        SettingsDbHelper settingsDbHelper = new SettingsDbHelper(this);
+
+        SQLiteDatabase settingsDb = settingsDbHelper.getWritableDatabase();
+
+        //Value which will be stored as a row in the local DB
+        ContentValues values = new ContentValues();
+        values.put(SettingsContract.SettingsEntry.COLUMN_ID, id);
+
+        //Store the new row in the DB
+        settingsDb.insertWithOnConflict(SettingsContract.SettingsEntry.TABLE_NAME,
+                null,
+                values,
+                SQLiteDatabase.CONFLICT_REPLACE);
+        settingsDb.close();
+
     }
 }

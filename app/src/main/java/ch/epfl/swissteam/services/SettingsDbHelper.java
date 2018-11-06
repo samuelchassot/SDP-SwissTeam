@@ -22,8 +22,8 @@ public class SettingsDbHelper extends SQLiteOpenHelper{
                 SettingsContract.SettingsEntry.COLUMN_ID + " VARCHAR(30) NOT NULL," +
                 SettingsContract.SettingsEntry.COLUMN_SETTINGS_DARKMODE + " INTEGER DEFAULT 0," +
                 SettingsContract.SettingsEntry.COLUMN_SETTINGS_RADIUS + " FLOAT DEFAULT " + LocationManager.MAX_POST_DISTANCE + "," +
-                SettingsContract.SettingsEntry.COLUMN_SETTINGS_HOME_LONGITUDE + " REAL," +
-                SettingsContract.SettingsEntry.COLUMN_SETTINGS_HOME_LATITUDE + " REAL)";
+                SettingsContract.SettingsEntry.COLUMN_SETTINGS_HOME_LONGITUDE + " REAL DEFAULT 0," +
+                SettingsContract.SettingsEntry.COLUMN_SETTINGS_HOME_LATITUDE + " REAL DEFAULT 0)";
 
         db.execSQL(createTable);
     }
