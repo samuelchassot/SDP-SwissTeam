@@ -3,6 +3,7 @@ package ch.epfl.swissteam.services;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,8 +47,6 @@ public class SettingsFragment extends Fragment implements OnMapReadyCallback {
         super.onCreate(savedInstanceState);
         Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.toolbar_settings);
-
-
     }
 
     @Override
@@ -130,7 +129,7 @@ public class SettingsFragment extends Fragment implements OnMapReadyCallback {
     public void onMapReady(GoogleMap googleMap) {
         googleMap_ = googleMap;
         googleMap_.setMinZoomPreference(12);
-        LatLng ny = new LatLng(0, 0);
+        LatLng ny = new LatLng(40.7143528, -74.0059731);
         googleMap_.moveCamera(CameraUpdateFactory.newLatLng(ny));
     }
 }
