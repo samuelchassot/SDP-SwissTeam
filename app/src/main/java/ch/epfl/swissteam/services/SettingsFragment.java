@@ -1,13 +1,9 @@
 package ch.epfl.swissteam.services;
 
-import android.content.ContentValues;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +11,7 @@ import android.widget.Button;
 import android.content.Intent;
 import android.widget.SeekBar;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Locale;
@@ -99,6 +96,12 @@ public class SettingsFragment extends Fragment {
         //Retrieve radius from local DB
         int radius = SettingsDBUtility.retrieveRadius(dbHelper_, id_);
 
+        TextView textview = view.findViewById(R.id.textview_settings_currentradius);
+        String currentRadius = String.format(Locale.ENGLISH,
+                getResources().getString(R.string.settings_seekbar_currentradius) + " %.2f km",
+                radius/1000.0);
+        textview.setText(currentRadius);
+
         SeekBar radiusSeekBar = view.findViewById(R.id.seekbar_settings_radius);
         radiusSeekBar.setProgress(radius);
         radiusSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -111,15 +114,21 @@ public class SettingsFragment extends Fragment {
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-                //String km = String.format(Locale.ENGLISH, getResources().getString(R.string.settings_seekbar_toast_start) + " %d km", progress);
-                //Toast.makeText(view.getContext(), km, Toast.LENGTH_LONG).show();
             }
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 SettingsDBUtility.updateRadius(dbHelper_, id_, progress);
-                String km = String.format(Locale.ENGLISH, " %.2f km", progress/1000.0);
-                Toast.makeText(view.getContext(), getResources().getString(R.string.settings_seekbar_toast_end) + km, Toast.LENGTH_LONG).show();
+
+                String displayToast = String.format(Locale.ENGLISH,
+                        getResources().getString(R.string.settings_seekbar_toast_end) + " %.2f km",
+                        progress/1000.0);
+                Toast.makeText(view.getContext(), displayToast, Toast.LENGTH_LONG).show();
+
+                String displayCurrentRadius = String.format(Locale.ENGLISH,
+                        getResources().getString(R.string.settings_seekbar_currentradius) + " %.2f km",
+                        radius/1000.0);
+                textview.setText(displayCurrentRadius);
             }
         });
     }
