@@ -1,8 +1,6 @@
 package ch.epfl.swissteam.services;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.support.annotation.NonNull;
@@ -49,7 +47,8 @@ public class ChatRelationAdapter extends RecyclerView.Adapter<ChatRelationAdapte
 
     @Override
     public void onBindViewHolder(ChatRelationsViewHolder holder, int i) {
-        String otherId = relations_.get(i).getOtherId(currentUserId_);
+        String otherId = relations_.get(holder.getAdapterPosition()).getOtherId(currentUserId_);
+
         DBUtility.get().getUser(otherId, oUser -> {
             holder.contactName_.setText(oUser.getName_());
             Picasso.get().load(oUser.getImageUrl_()).into(holder.contactImage_);

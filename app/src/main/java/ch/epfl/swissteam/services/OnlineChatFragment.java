@@ -55,12 +55,9 @@ public class OnlineChatFragment extends Fragment {
     }
 
     private void refresh(){
-        DBUtility.get().getUser(GoogleSignInSingleton.get().getClientUniqueID(), new MyCallBack<User>() {
-            @Override
-            public void onCallBack(User user) {
-                if (user != null) {
-                    displayChats(fragmentView_, user);
-                }
+        DBUtility.get().getUser(GoogleSignInSingleton.get().getClientUniqueID(), user -> {
+            if (user != null) {
+                displayChats(fragmentView_, user);
             }
         });
     }

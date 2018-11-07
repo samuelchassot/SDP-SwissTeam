@@ -27,9 +27,8 @@ public class GoogleSignInSingleton {
         if (instance_ == null) {
             instance_ = new GoogleSignInSingleton();
         }
-        if(instance_.clientUniqueID_ == null && clientUniqueID != null){
             instance_.clientUniqueID_ = clientUniqueID;
-        }
+
     }
 
     /**
@@ -42,9 +41,8 @@ public class GoogleSignInSingleton {
         if (instance_ == null) {
             instance_ = new GoogleSignInSingleton();
         }
-        if(instance_.client_ == null && client != null){
             instance_.client_ = client;
-        }
+
     }
 
     /**

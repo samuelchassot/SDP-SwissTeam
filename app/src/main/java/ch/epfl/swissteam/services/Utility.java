@@ -1,5 +1,6 @@
 package ch.epfl.swissteam.services;
 
+
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.res.Resources;
@@ -27,7 +28,7 @@ public class Utility {
      * @param callback call back with true if deleted, false if canceled
      */
     public static void askToDeleteAlertDialog(Context context, DBSavable savable, String child, String title,
-                                              String message, MyCallBack<Boolean> callback){
+                                              String message, DBCallBack<Boolean> callback){
         Resources res = context.getResources();
         AlertDialog alertDialog = new AlertDialog.Builder(context).create();
         alertDialog.setTitle(title);

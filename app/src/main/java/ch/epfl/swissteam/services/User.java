@@ -1,10 +1,13 @@
 package ch.epfl.swissteam.services;
 
+import android.content.res.Resources;
 import android.util.Log;
 
 import com.google.firebase.database.DatabaseReference;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Class representing a user in the database
@@ -17,8 +20,35 @@ public class User implements DBSavable {
     private int rating_;
     private double latitude_, longitude_;
     private ArrayList<Categories> categories_;
+    private ArrayList<String> upvotes_;
+    private ArrayList<String> downvotes_;
 
     private ArrayList<ChatRelation> chatRelations_;
+
+    public static enum Vote{
+        UPVOTE,
+        DOWNVOTE
+    }
+
+    /**
+     * return the GoogleID that corresponds to a deleted user
+     *
+     * @return the deleted user's GoogleID
+     */
+    public static String getDeletedUserGoogleID() {
+        return "000000000000000000000";
+    }
+
+    /**
+     * return a deleted user
+     *
+     * @return a deleted user
+     */
+    public static User getDeletedUser(){
+        User deletedUser = new User(getDeletedUserGoogleID(), "Deleted user",
+                "", "", new ArrayList<Categories>(), new ArrayList<ChatRelation>(), "https://cdn.pixabay.com/photo/2014/03/25/15/19/cross-296507_960_720.png", 0, 0.0,0.0, new ArrayList<String>(),new ArrayList<String>() );
+        return deletedUser;
+    }
 
     /**
      * Default constructor, needed for database
@@ -26,6 +56,8 @@ public class User implements DBSavable {
     public User() {
         categories_ = new ArrayList<>();
         chatRelations_ = new ArrayList<>();
+        downvotes_ = new ArrayList<>();
+        upvotes_ = new ArrayList<>();
     }
 
     /**
@@ -43,7 +75,8 @@ public class User implements DBSavable {
      */
     public User(String googleID_, String name_, String email_, String description_,
                 ArrayList<Categories> categories_, ArrayList<ChatRelation> chatRelations_,
-                String imageUrl_, int rating_, double latitude_, double longitude_) {
+                String imageUrl_, int rating_, double latitude_, double longitude_,
+                ArrayList<String> upvotes_, ArrayList<String> downvotes_) {
         this.googleId_ = googleID_;
         this.email_ = email_;
         this.name_ = name_;
@@ -52,6 +85,8 @@ public class User implements DBSavable {
         this.rating_ = rating_;
         this.categories_ = categories_ == null ? new ArrayList<>() : (ArrayList<Categories>) categories_.clone();
         this.chatRelations_ = chatRelations_ == null ? new ArrayList<>() : (ArrayList<ChatRelation>)  chatRelations_.clone();
+        this.upvotes_ = upvotes_ == null ? new ArrayList<String>() : (ArrayList<String>) upvotes_.clone();
+        this.downvotes_ = downvotes_ == null ? new ArrayList<String>() : (ArrayList<String>) upvotes_.clone();
         this.latitude_ = latitude_;
         this.longitude_ = longitude_;
     }
@@ -110,21 +145,6 @@ public class User implements DBSavable {
         return rating_;
     }
 
-
-//    public Location getLastLocation() {
-//        Location lastLocation = new Location("");
-//        lastLocation.setLongitude(longitude_);
-//        lastLocation.setLatitude(latitude_);
-//        return lastLocation;
-//    }
-//    public void setLastLocation_(Location lastLocation){
-//        if(lastLocation != null){
-//          this.latitude_ = lastLocation.getLatitude();
-//          this.longitude_ = lastLocation.getLongitude();
-//        }
-//    }
-
-
     /**
      * Gives the latitude of the user
      *
@@ -168,6 +188,30 @@ public class User implements DBSavable {
     }
 
     /**
+     * Gives the list of users who upvoted this user
+     *
+     * @return the list of upvotes of the user
+     */
+    public ArrayList<String> getUpvotes_() {
+        if (upvotes_ == null) {
+            return new ArrayList<>();
+        }
+        return (ArrayList<String>) upvotes_.clone();
+    }
+
+    /**
+     * Gives the list of users who downvoted this user
+     *
+     * @return the list of downvotes of the user
+     */
+    public ArrayList<String> getDownvotes_() {
+        if (downvotes_ == null) {
+            return new ArrayList<>();
+        }
+        return (ArrayList<String>) downvotes_.clone();
+    }
+
+    /**
      * Add the user to a database
      *
      * @param db the database in which to add the user
@@ -181,6 +225,67 @@ public class User implements DBSavable {
         }
 
         Log.e("USER", "ADDED");
+    }
+
+    @Override
+    public void removeFromDB(DatabaseReference db) throws Utility.IllegalCallException {
+        //remove the user's entry
+        db.child(DBUtility.USERS).child(googleId_).removeValue();
+
+        //remove user's from all categories
+        List<Categories> allCat = new ArrayList<Categories>(Arrays.asList(Categories.values()));
+        for (Categories c : allCat) {
+            DBUtility.get().getCategory(c, cat -> {
+                cat.removeUser(this);
+                cat.addToDB(db);
+            });
+        }
+
+        //remove the user from posts he/she made
+        DBUtility.get().getUsersPosts(googleId_, posts -> {
+            for (Post p : posts) {
+                p.removeUser();
+            }
+        });
+
+        //remove the user from all ChatRelations and delete the relation if both users are removed
+        boolean removed = false;
+        for (ChatRelation cr : chatRelations_) {
+            if (cr.getFirstUserId_().equals(googleId_)) {
+                if (cr.getSecondUserId_().equals(User.getDeletedUserGoogleID())) {
+                    cr.removeFromDB(db);
+                    removed = true;
+                } else {
+                    cr.setFirstUserId_(User.getDeletedUserGoogleID());
+                }
+            }
+            if (cr.getSecondUserId_().equals(googleId_) && !removed) {
+                if (cr.getFirstUserId_().equals(User.getDeletedUserGoogleID())) {
+                    cr.removeFromDB(db);
+                    removed = true;
+                } else {
+                    cr.setSecondUserId_(User.getDeletedUserGoogleID());
+                }
+
+            }
+            if(!removed){
+                //change the ID in all messages the user sent
+                DBUtility.get().getAllMessagesFromChatRelation(cr.getId_(), messages->{
+                    for(ChatMessage m : messages){
+                        m.setUserId_(User.getDeletedUserGoogleID());
+                        m.setUser_(User.getDeletedUser().getName_());
+                        m.addToDB(db);
+                    }
+                });
+                cr.addToDB(db);
+            }
+        }
+
+
+
+
+
+
     }
 
     /**
@@ -262,17 +367,52 @@ public class User implements DBSavable {
         return null;
     }
 
-    /**
-     * Increments user's rating by 1
-     */
-    public void upvote() {
-        rating_ += 1;
+    public void vote(Vote vote, User user){
+        if (vote == Vote.UPVOTE){
+            this.upvote(user);
+        } else if (vote == Vote.DOWNVOTE){
+            this.downvote(user);
+        }
+        this.addToDB(DBUtility.get().getDb_());
+
     }
 
-    /**
-     * Decrements user's rating by 1
-     */
-    public void downvote() {
+    private void upvote(User user) {
+        //If already upvoted, remove it
+        if (upvotes_.contains(user.getGoogleId_())){
+            upvotes_.remove(user.getGoogleId_());
+            rating_ -= 1;
+            return;
+        }
+
+        //if downvoted, correct the vote
+        if (downvotes_.contains(user.getGoogleId_())){
+            downvotes_.remove(user.getGoogleId_());
+            //one downvote less
+            rating_ += 1;
+        }
+        upvotes_.add(user.googleId_);
+        //one upvote more
+        rating_ += 1;
+        return;
+    }
+
+
+    private void downvote(User user) {
+        if (downvotes_.contains(user.getGoogleId_())){
+            downvotes_.remove(user.getGoogleId_());
+            rating_ += 1;
+            return;
+        }
+
+        if (upvotes_.contains(user.getGoogleId_())){
+            upvotes_.remove(user.getGoogleId_());
+            //one upvote less
+            rating_ -=1;
+        }
+        downvotes_.add(user.googleId_);
+        //one downvote more
         rating_ -= 1;
+        return;
     }
 }
