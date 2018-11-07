@@ -11,6 +11,10 @@ import android.database.sqlite.SQLiteOpenHelper;
  */
 public class SettingsDbHelper extends SQLiteOpenHelper{
 
+    /**
+     * Creates a SettingsDbHelper
+     * @param context, the context of the creator.
+     */
     public SettingsDbHelper(Context context){
         super(context, SettingsContract.LOCAL_DB_NAME, null, SettingsContract.DB_VERSION);
     }

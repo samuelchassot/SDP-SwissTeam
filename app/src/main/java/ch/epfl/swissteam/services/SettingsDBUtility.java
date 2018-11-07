@@ -4,8 +4,19 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+/**
+ * Interface that provides some static methods to interact with the local settings DB.
+ *
+ * @author Julie Giunta
+ */
 public interface SettingsDBUtility {
 
+    /**
+     * Check if an user has already a corresponding row in the database.
+     * @param helper, a SettingsDbHelper created with the context of the caller,
+     * @param id, the google ID of the user,
+     * @return true if the user has already a row.
+     */
     static boolean userHasAlreadyARow(SettingsDbHelper helper, String id){
         SQLiteDatabase db = helper.getReadableDatabase();
 
@@ -44,6 +55,13 @@ public interface SettingsDBUtility {
         return exists;
     }
 
+    /**
+     * Retrieve the value of the darkmode column for the row of the specified user.
+     * @param helper, a SettingsDbHelper created with the context of the caller,
+     * @param id, the google ID of the user,
+     * @return an int corresponding to the value in the darkmode column of the table
+     *          or -1 if there was a problem when retrieving the value.
+     */
     static int retrieveDarkMode(SettingsDbHelper helper, String id){
         SQLiteDatabase db = helper.getReadableDatabase();
 
@@ -72,6 +90,13 @@ public interface SettingsDBUtility {
         return dark;
     }
 
+    /**
+     * Retrieve the value of the radius column for the row of the specified user.
+     * @param helper, a SettingsDbHelper created with the context of the caller,
+     * @param id, the google ID of the user,
+     * @return an int corresponding to the value in the radius column of the table
+     *          or -1 if there was a problem when retrieving the value.
+     */
     static int retrieveRadius(SettingsDbHelper helper, String id){
         SQLiteDatabase db = helper.getReadableDatabase();
 
@@ -97,6 +122,13 @@ public interface SettingsDBUtility {
         return radius;
     }
 
+    /**
+     * Retrieve the value of the specified home column for a specified user
+     * @param helper, a SettingsDbHelper created with the context of the caller,
+     * @param column, the column we want to retrieve, either the longitude or the latitude column
+     * @param id, the google ID of the user,
+     * @return a double corresponding to the wanted value or -1 if there was a problem.
+     */
     static double retrieveHome(SettingsDbHelper helper, String column, String id){
         SQLiteDatabase db = helper.getReadableDatabase();
 
@@ -122,6 +154,12 @@ public interface SettingsDBUtility {
         return coord;
     }
 
+    /**
+     * Update the value of the darkmode column for the row of the specified user.
+     * @param helper, a SettingsDbHelper created with the context of the caller,
+     * @param id, the google ID of the user,
+     * @param newValue, the value to put in the table.
+     */
     static void updateDarkMode(SettingsDbHelper helper, String id, int newValue){
         SQLiteDatabase db = helper.getWritableDatabase();
 
@@ -139,6 +177,12 @@ public interface SettingsDBUtility {
         db.close();
     }
 
+    /**
+     * Update the value of the radius column for the row of the specified user.
+     * @param helper, a SettingsDbHelper created with the context of the caller,
+     * @param id, the google ID of the user,
+     * @param newValue, the value to put in the table.
+     */
     static void updateRadius(SettingsDbHelper helper, String id, int newValue){
         SQLiteDatabase db = helper.getWritableDatabase();
 
@@ -154,6 +198,13 @@ public interface SettingsDBUtility {
         db.close();
     }
 
+    /**
+     * Insert a new row of settings for a specified user if the user does not have already a row
+     * @param helper, a SettingsDbHelper created with the context of the caller,
+     * @param id, the google ID of the user,
+     * @return the key of the newly inserted row or -1 either if there was already a row
+     *          or if there was a problem during the insertion.
+     */
     static long addRowIfNeeded(SettingsDbHelper helper, String id){
         long rowKey = -1;
         if(!userHasAlreadyARow(helper, id)){
