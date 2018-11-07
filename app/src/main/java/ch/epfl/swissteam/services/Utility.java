@@ -1,6 +1,5 @@
 package ch.epfl.swissteam.services;
 
-
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.res.Resources;
