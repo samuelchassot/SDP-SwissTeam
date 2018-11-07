@@ -173,11 +173,12 @@ public class DBUtility {
 
     /**
      * Retrieves the POSTS_DISPLAY_NUMBER freshest post of the database in geographical range of the user.
-     *
-     * @param callBack     the function called on the callBack
+     *  @param callBack     the function called on the callBack
      * @param userLocation the location of the user
+     * @param currentUserId
+     * @param helper
      */
-    public void getPostsFeed(final MyCallBack<ArrayList<Post>> callBack, Location userLocation) {
+    public void getPostsFeed(final MyCallBack<ArrayList<Post>> callBack, Location userLocation, String currentUserId, SettingsDbHelper helper) {
         Query freshestPosts = db_.child(POSTS).orderByChild("timestamp_").limitToFirst(POSTS_DISPLAY_NUMBER);
         freshestPosts.addListenerForSingleValueEvent(new ValueEventListener() {
             ArrayList<Post> posts = new ArrayList<>();
@@ -191,7 +192,8 @@ public class DBUtility {
                     Location postLocation = new Location("");
                     postLocation.setLongitude(post.getLongitude_());
                     postLocation.setLatitude(post.getLatitude_());
-                    if (postLocation.distanceTo(userLocation) <= LocationManager.MAX_POST_DISTANCE) {
+                    int radius = SettingsDBUtility.retrieveRadius(helper, currentUserId);
+                    if (postLocation.distanceTo(userLocation) <= radius) {
                         posts.add(0, post);
                     }
                 }
@@ -236,7 +238,6 @@ public class DBUtility {
      */
     public void getUsersPosts(String googleID, final MyCallBack<ArrayList<Post>> callBack) {
         Query usersPosts = db_.child(POSTS).orderByChild("googleId_").equalTo(googleID);
-        Log.e("ID", googleID);
         usersPosts.addListenerForSingleValueEvent(new ValueEventListener() {
             ArrayList<Post> posts = new ArrayList<>();
 

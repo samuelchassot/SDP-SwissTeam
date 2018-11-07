@@ -12,6 +12,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,11 +41,18 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         return new HomeFragment();
     }
 
+    private String currentUserId_;
+    private SettingsDbHelper helper_;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.toolbar_home);
+
+        currentUserId_ = GoogleSignInSingleton.get().getClientUniqueID();
+        helper_ = new SettingsDbHelper(getContext());
+
     }
 
     @Override
@@ -90,7 +99,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                     adapter_.notifyDataSetChanged();
                     swipeRefreshLayout_.setRefreshing(false);
                 }
-            }, userLocation);
+            }, userLocation, currentUserId_, helper_);
         }
         else{
             DBUtility.get().getPostsFeed(new MyCallBack<ArrayList<Post>>() {
@@ -101,7 +110,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                     adapter_.notifyDataSetChanged();
                     swipeRefreshLayout_.setRefreshing(false);
                 }
-            }, LocationManager.get().getZeroLocation());
+            }, LocationManager.get().getZeroLocation(), currentUserId_, helper_);
         }
         ((MainActivity) getActivity()).showHomeFragment();
     }
