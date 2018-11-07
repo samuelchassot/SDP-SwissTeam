@@ -127,7 +127,7 @@ public class SettingsFragment extends Fragment {
 
                 String displayCurrentRadius = String.format(Locale.ENGLISH,
                         getResources().getString(R.string.settings_seekbar_currentradius) + " %.2f km",
-                        radius/1000.0);
+                        progress/1000.0);
                 textview.setText(displayCurrentRadius);
             }
         });
