@@ -1,5 +1,6 @@
 package ch.epfl.swissteam.services;
 
+import android.content.Context;
 import android.support.test.espresso.UiController;
 import android.support.test.espresso.ViewAction;
 import android.support.test.espresso.contrib.RecyclerViewActions;
@@ -134,6 +135,11 @@ public class TestUtils {
                         is(ImageButton.class.getName()),
                         is(AppCompatImageButton.class.getName())
                 )));
+    }
+
+    public static void addRowToLocalSettingsDB(Context context, String id){
+        SettingsDbHelper helper = new SettingsDbHelper(context);
+        SettingsDBUtility.addRowIfNeeded(helper, id);
     }
 
 }
