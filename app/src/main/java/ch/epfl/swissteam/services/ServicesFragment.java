@@ -25,7 +25,7 @@ import java.util.Collections;
  */
 public class ServicesFragment extends Fragment {
 
-    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.Adapter mAdapter_;
     private ArrayList<User> users = new ArrayList<>();
     private Location currentUserLocation_;
 
@@ -56,8 +56,8 @@ public class ServicesFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_services, container, false);
         RecyclerView mRecyclerView = view.findViewById(R.id.services_recycler);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
-        mAdapter = new UserAdapter(users, getContext());
-        mRecyclerView.setAdapter(mAdapter);
+        mAdapter_ = new UserAdapter(users, getContext());
+        mRecyclerView.setAdapter(mAdapter_);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         Spinner filterSpinner = (Spinner) view.findViewById(R.id.services_spinner);
@@ -86,28 +86,31 @@ public class ServicesFragment extends Fragment {
         if (category == Categories.ALL) {
             DBUtility.get().getAllUsers((usersdb -> {
                 users.clear();
-                users.addAll(usersdb);
-
-
+                for (User u : usersdb) {
+                    if(! u.getGoogleId_().equals(GoogleSignInSingleton.get().getClientUniqueID())){
+                        //don't add current user to the list
+                        users.add(u);
+                    }
+                }
                 Collections.sort(users, this::compareUsersUsingDistanceWithRef);
-                mAdapter.notifyDataSetChanged();
+                mAdapter_.notifyDataSetChanged();
                 services_problem_text_udpate(view, users.isEmpty());
             }));
         } else {
             DBUtility.get().getUsersFromCategory(category, (googleIds) -> {
                 users.clear();
                 services_problem_text_udpate(view, googleIds.isEmpty());
-                mAdapter.notifyDataSetChanged();
+                mAdapter_.notifyDataSetChanged();
 
-                    for (String googleId : googleIds) {
-                        DBUtility.get().getUser(googleId, user -> {
-                            if (user != null && !users.contains(user)) {
-                                users.add(user);
-                                Collections.sort(users, this::compareUsersUsingDistanceWithRef);
-                                mAdapter.notifyDataSetChanged();
-                            }
-                        });
-                    }
+                for (String googleId : googleIds) {
+                    DBUtility.get().getUser(googleId, user -> {
+                        if (user != null && !users.contains(user) && !user.getGoogleId_().equals(GoogleSignInSingleton.get().getClientUniqueID())) {
+                            users.add(user);
+                            Collections.sort(users, this::compareUsersUsingDistanceWithRef);
+                            mAdapter_.notifyDataSetChanged();
+                        }
+                    });
+                }
             });
         }
 

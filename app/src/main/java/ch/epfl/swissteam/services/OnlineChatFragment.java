@@ -49,7 +49,7 @@ public class OnlineChatFragment extends Fragment {
 
         // Inflate the layout for this fragment
         View thatView = inflater.inflate(R.layout.fragment_online_chat, container, false);
-        DBUtility.get().getUser(GoogleSignInSingleton.get().getClientUniqueID(), new MyCallBack<User>() {
+        DBUtility.get().getUser(GoogleSignInSingleton.get().getClientUniqueID(), new DBCallBack<User>() {
             @Override
             public void onCallBack(User user) {
                 if (user != null) {
@@ -61,6 +61,7 @@ public class OnlineChatFragment extends Fragment {
         return thatView;
     }
 
+    //TODO find out why this does not work anymore
     private void displayChats(View view, User user) {
 
         ArrayList<ChatRelation> relations = user.getChatRelations_();

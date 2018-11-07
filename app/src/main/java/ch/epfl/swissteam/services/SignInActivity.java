@@ -1,6 +1,9 @@
 package ch.epfl.swissteam.services;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -27,6 +30,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
     private static final int RC_SIGN_IN = 42;
     private final String ERROR_TAG = "SignInActivity";
     private final String ERROR_MSG = "signInResult:failed code=";
+
     private GoogleSignInClient mGoogleSignInClient_;
 
     @Override
@@ -57,6 +61,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         // Check for existing Google Sign In account, if the user is already signed in
         // the GoogleSignInAccount will be non-null.
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+        initializeNotifications();
 
         if (account != null) {
             // Launch main
@@ -101,13 +106,22 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
 
-            // Signed in successfully, show authenticated UI
-            GoogleSignInSingleton.putUniqueID(account.getId());
-            Intent newProfileIntent = new Intent(this, NewProfileDetails.class);
-            newProfileIntent.putExtra(ACCOUNT_TAG , account);
-
-            startActivity(newProfileIntent);
-
+            //TODO: Maybe load a list of all users while the user is connecting then check here if the googleId is in it to avoid the wait time.
+            DBUtility.get().getUser(account.getId(), user -> {
+                if(user != null){
+                    GoogleSignInSingleton.putUniqueID(account.getId());
+                    Intent mainIntent = new Intent(this, MainActivity.class);
+                    mainIntent.putExtra(ACCOUNT_TAG , account);
+                    startActivity(mainIntent);
+                }
+                else{
+                    // Signed in successfully, show authenticated UI
+                    GoogleSignInSingleton.putUniqueID(account.getId());
+                    Intent newProfileIntent = new Intent(this, NewProfileDetails.class);
+                    newProfileIntent.putExtra(ACCOUNT_TAG , account);
+                    startActivity(newProfileIntent);
+                }
+            });
         } catch (ApiException e) {
             // The ApiException status code indicates the detailed failure reason.
             // Please refer to the GoogleSignInStatusCodes class reference for more information.
@@ -119,5 +133,24 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     public void onUserInteraction() {
         LocationManager.get().refresh(this);
+    }
+
+    /**
+     * Initializes the notifications and attaches the listeners.
+     */
+    private void initializeNotifications() {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = getString(R.string.channel_name);
+            String description = getString(R.string.channel_description);
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(NotificationUtils.CUSTOM_NOTIFICATION_CHANNEL_ID, name, importance);
+            channel.setDescription(description);
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
     }
 }

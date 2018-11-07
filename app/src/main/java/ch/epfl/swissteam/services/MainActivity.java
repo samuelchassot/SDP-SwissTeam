@@ -3,22 +3,7 @@ package ch.epfl.swissteam.services;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.ImageView;
-import android.widget.TextView;
-
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
-import com.squareup.picasso.Picasso;
 
 /**
  * This class is the MainActivity of the application, this is
@@ -31,7 +16,7 @@ public class MainActivity extends NavigationDrawer {
             servicesFragment_, createPostFragment_, settingsFragment_,
             onlineChatFragment_, myPostsFragment_;
 
-    private NetworkStatusReceiver br;
+    private NetworkStatusReceiver br_;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,13 +24,14 @@ public class MainActivity extends NavigationDrawer {
         setContentView(R.layout.activity_main);
         super.onCreateDrawer(MAIN);
 
-        br = new NetworkStatusReceiver();
-        br.setActivity_(this);
+        br_ = new NetworkStatusReceiver();
+        br_.setActivity_(this);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
+        DBUtility.get().notifyNewMessages(this, GoogleSignInSingleton.get().getClientUniqueID());
         Intent intent = getIntent();
         chooseFragment(intent.getIntExtra(NAVIGATION_TAG, -1));
     }
@@ -55,16 +41,20 @@ public class MainActivity extends NavigationDrawer {
         super.onResume();
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
-        registerReceiver(br, intentFilter);
+        registerReceiver(br_, intentFilter);
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        unregisterReceiver(br);
+        unregisterReceiver(br_);
     }
-    
-      
+
+    /**
+     * Switch to a fragment depending on the selected button in the maindrawer
+     *
+     * @param id the id of the button
+     */
     public void chooseFragment(int id) {
         switch (id) {
             case (R.id.button_maindrawer_home):

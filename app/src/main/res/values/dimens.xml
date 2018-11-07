@@ -27,6 +27,7 @@
                                
     <dimen name="post_maxheight">100dp</dimen>
     <dimen name="post_image_maxsize">50dp</dimen>
+    <dimen name="usersearch_image_size">72dp</dimen>
 
     /* ----- Settings dimens ----- */
     <dimen name="settings_space_height">20dp</dimen>
@@ -35,8 +36,6 @@
 
     <dimen name="settings_police_big_title">26dp</dimen>
     <dimen name="settings_police_medium_title">18dp</dimen>
-
-
 
 </resources>
 

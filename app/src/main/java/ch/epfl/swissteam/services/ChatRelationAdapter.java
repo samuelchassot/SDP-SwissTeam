@@ -21,7 +21,7 @@ import java.util.List;
  * @author Sébastien gachoud
  */
 public class ChatRelationAdapter extends RecyclerView.Adapter<ChatRelationAdapter.ChatRelationsViewHolder> {
-    
+
     private List<ChatRelation> relations_;
     private String currentUserId_;
 
@@ -47,7 +47,7 @@ public class ChatRelationAdapter extends RecyclerView.Adapter<ChatRelationAdapte
     public void onBindViewHolder(ChatRelationsViewHolder holder, int i) {
         String otherId = relations_.get(holder.getAdapterPosition()).getOtherId(currentUserId_);
 
-        DBUtility.get().getUser(otherId, new MyCallBack<User>() {
+        DBUtility.get().getUser(otherId, new DBCallBack<User>() {
             @Override
             public void onCallBack(User oUser) {
                 holder.contactName_.setText(oUser.getName_());
@@ -71,6 +71,7 @@ public class ChatRelationAdapter extends RecyclerView.Adapter<ChatRelationAdapte
      * ViewHolder for ChatRelations
      */
     static class ChatRelationsViewHolder extends RecyclerView.ViewHolder {
+        
         protected TextView contactName_;
         protected FrameLayout parentLayout_;
         protected ImageView contactImage_;

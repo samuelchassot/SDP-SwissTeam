@@ -11,7 +11,7 @@ import android.view.WindowManager;
 import android.widget.Toast;
 
 /**
- * TODO : Explain Class
+ * Broadcast receiver for network status.
  */
 public class NetworkStatusReceiver extends BroadcastReceiver {
 
@@ -35,7 +35,7 @@ public class NetworkStatusReceiver extends BroadcastReceiver {
     /**
      * Set the status bar's color given a color in parameter
      *
-     * @param color a color (in TODO *** RGB? ***)
+     * @param color color to use
      */
     public void setStatusBarColor(int color) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {

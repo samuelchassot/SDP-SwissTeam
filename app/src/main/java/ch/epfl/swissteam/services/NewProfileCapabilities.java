@@ -56,8 +56,8 @@ public class NewProfileCapabilities extends AppCompatActivity {
      */
     private void saveUserInDB() {
 
-        User user = new User(googleID_, username_, email_, description_, capabilitiesList_, imageUrl_, 0,
-               0, 0);
+        User user = new User(googleID_, username_, email_, description_, capabilitiesList_,
+                null, imageUrl_, 0, 0, 0,null,null);
         user.addToDB(DBUtility.get().getDb_());
 
     }

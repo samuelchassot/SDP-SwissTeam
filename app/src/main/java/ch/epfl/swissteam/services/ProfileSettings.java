@@ -56,8 +56,8 @@ public class ProfileSettings extends NavigationDrawer {
         String uniqueID = GoogleSignInSingleton.get().getClientUniqueID();
         String email = ((TextView) findViewById(R.id.textview_profilesettings_email)).getText().toString();
         String descr = ((TextView) findViewById(R.id.edittext_profilesettings_description)).getText().toString();
-        User updatedUser = new User(uniqueID, name, email, descr, userCapabilities_, imageUrl_, oldUser_.getRating_(),
-                oldUser_.getLatitude_(), oldUser_.getLongitude_());
+        User updatedUser = new User(uniqueID, name, email, descr, userCapabilities_, oldUser_.getChatRelations_(),
+                imageUrl_, oldUser_.getRating_(), oldUser_.getLatitude_(), oldUser_.getLongitude_(), oldUser_.getUpvotes_(), oldUser_.getDownvotes_());
 
 
         ArrayList<Categories> categoriesThatHaveBeenRemoved = oldUser_.getCategories_();
@@ -76,10 +76,10 @@ public class ProfileSettings extends NavigationDrawer {
     }
 
     /**
-     * TODO : Explain
+     * Updates the status of a capability for a user.
      *
-     * @param cat
-     * @param checked
+     * @param cat capability to update
+     * @param checked whether to add or remove the capability
      */
     public void updateUserCapabilities(Categories cat, boolean checked){
         if(checked){
@@ -131,12 +131,12 @@ public class ProfileSettings extends NavigationDrawer {
             return true;
         }
 
-        /**
+        /*
          //noinspection SimplifiableIfStatement
          if (id == R.id.action_settings) {
          return true;
          }
-         **/
+         */
 
         return super.onOptionsItemSelected(item);
     }

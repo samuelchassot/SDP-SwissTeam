@@ -13,9 +13,12 @@ public class ChatRelationTest {
     String surname1 = "Latex King"; String surname2 = "des Cailloux"; String surname3 = "Romarin";
     String userId1 = "123dfv"; String userId2 = "456dsf"; String userId3 = "789dsf";
     String email1 = "MLK@gmail.com"; String email2 = "RC@gmail.com"; String email3 = "BR@gmail.com";
-    User user1 = new User(userId1, name1, email1, "bla", null, "www.com");
-    User user2 = new User(userId2, name2, email2, "bla", null, "www.com");
-    User user3 = new User(userId3, name3, email3, "bla", null, "www.com");
+    User user1 = new User(userId1, name1, email1, "bla", null,
+            null, "www.com",0,0,0,null,null);
+    User user2 = new User(userId2, name2, email2, "bla", null,
+            null, "www.com",0,0,0,null,null);
+    User user3 = new User(userId3, name3, email3, "bla", null,
+            null, "www.com",0,0,0,null,null);
 
     String CRId = "abu723ddl92ndk";
 
@@ -46,11 +49,11 @@ public class ChatRelationTest {
         ChatRelation relation = new ChatRelation(user1, null);
     }
 
-    //setUsers(User,User)
+    //assignUsers(User,User)
     @Test
     public void setUsersYieldSortedIds() {
         ChatRelation relation = new ChatRelation();
-        relation.setUsers(user1, user2);
+        relation.assignUsers(user1, user2);
 
         assertEquals(userId1, relation.getFirstUserId_());
         assertEquals(userId2, relation.getSecondUserId_());
@@ -59,13 +62,13 @@ public class ChatRelationTest {
     @Test(expected = NullPointerException.class)
     public void setUsersYieldExceptionOnNullValuesForFirstUser() {
         ChatRelation relation = new ChatRelation();
-        relation.setUsers(null, user2);
+        relation.assignUsers(null, user2);
     }
 
     @Test(expected = NullPointerException.class)
     public void setUsersYieldExceptionOnNullValuesForSecondUser() {
         ChatRelation relation = new ChatRelation();
-        relation.setUsers(user1, null);
+        relation.assignUsers(user1, null);
     }
 
     //setFirstUserId
@@ -90,7 +93,7 @@ public class ChatRelationTest {
         ChatRelation relation = new ChatRelation();
         relation.setFirstUserId_(userId3);
         assertEquals(userId3, relation.getFirstUserId_());
-        assertEquals(userId3, relation.getSecondUserId_());
+        assertEquals(null, relation.getSecondUserId_());
     }
 
     @Test(expected = NullPointerException.class)
@@ -120,7 +123,7 @@ public class ChatRelationTest {
     public void setSecondUserIdYieldSingleUserRelationWhenTheSecondWasNull() {
         ChatRelation relation = new ChatRelation();
         relation.setSecondUserId_(userId3);
-        assertEquals(userId3, relation.getFirstUserId_());
+        assertEquals(null, relation.getFirstUserId_());
         assertEquals(userId3, relation.getSecondUserId_());
     }
 

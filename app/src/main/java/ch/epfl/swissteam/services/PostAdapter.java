@@ -55,7 +55,9 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         holder.bodyView_.setText(posts_.get(holder.getAdapterPosition()).getBody_());
 
         DBUtility.get().getUser(posts_.get(holder.getAdapterPosition()).getGoogleId_(), user -> {
-            Picasso.get().load(user.getImageUrl_()).into(holder.imageView_);
+            if (user != null) {
+                Picasso.get().load(user.getImageUrl_()).into(holder.imageView_);
+            }
         });
 
         Location postLocation = new Location("");
@@ -64,11 +66,10 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
         Location userLocation = LocationManager.get().getCurrentLocation_();
 
-        if(userLocation != null) {
+        if (userLocation != null) {
             float distance = postLocation.distanceTo(userLocation) / LocationManager.M_IN_ONE_KM;
             holder.distanceView_.setText(holder.parentLayout_.getContext().getResources().getString(R.string.homefragment_postdistance, distance));
-        }
-        else{
+        } else {
             holder.distanceView_.setText(holder.parentLayout_.getContext().getResources().getString(R.string.homefragment_postdistance, LocationManager.MAX_POST_DISTANCE / LocationManager.M_IN_ONE_KM));
         }
 
@@ -88,6 +89,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
      * ViewHolder for Posts
      */
     static class PostViewHolder extends RecyclerView.ViewHolder {
+
         protected TextView titleView_;
         protected TextView bodyView_;
         protected TextView distanceView_;
