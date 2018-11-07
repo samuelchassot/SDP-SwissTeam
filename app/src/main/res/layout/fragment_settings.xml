@@ -62,11 +62,10 @@
                 android:layout_height="match_parent" />
 
             <com.google.android.gms.maps.MapView
+                android:id="@+id/mapview_settings"
                 android:layout_width="wrap_content"
-                android:layout_height="150dp">
+                android:layout_height="150dp" />
 
-
-            </com.google.android.gms.maps.MapView>
 
             <Space
                 android:layout_width="@dimen/settings_space_indent"

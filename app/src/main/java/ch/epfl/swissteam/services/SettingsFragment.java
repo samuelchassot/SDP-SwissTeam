@@ -9,12 +9,23 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.content.Intent;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+
 /**
  * A fragment to set the different settings of the application
  *
  * @author Ghali Chraïbi
  */
-public class SettingsFragment extends Fragment {
+public class SettingsFragment extends Fragment implements OnMapReadyCallback {
+
+    private GoogleMap googleMap_;
+    private MapView mapView_;
+
+    private static final String MAPVIEW_BUNDLE_KEY = "MapViewBundleKey";
 
     public SettingsFragment() {
         // Required empty public constructor
@@ -42,7 +53,19 @@ public class SettingsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
+
         View view = inflater.inflate(R.layout.fragment_settings, container, false);
+
+        Bundle mapViewBundle = null;
+        if (savedInstanceState != null) {
+            mapViewBundle = savedInstanceState.getBundle(MAPVIEW_BUNDLE_KEY);
+        }
+
+        mapView_ = view.findViewById(R.id.mapview_settings);
+        mapView_.onCreate(mapViewBundle);
+        mapView_.getMapAsync(this);
+
 
         Button deleteAccountButton = (Button) view.findViewById(R.id.button_settings_deleteaccount);
         deleteAccountButton.setOnClickListener(v->{
@@ -52,5 +75,62 @@ public class SettingsFragment extends Fragment {
 
 
         return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mapView_.onStart();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mapView_.onResume();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        mapView_.onStop();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mapView_.onDestroy();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mapView_.onPause();
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        mapView_.onLowMemory();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        Bundle mapViewBundle = outState.getBundle(MAPVIEW_BUNDLE_KEY);
+        if (mapViewBundle == null) {
+            mapViewBundle = new Bundle();
+            outState.putBundle(MAPVIEW_BUNDLE_KEY, mapViewBundle);
+        }
+
+        mapView_.onSaveInstanceState(mapViewBundle);
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        googleMap_ = googleMap;
+        googleMap_.setMinZoomPreference(12);
+        LatLng ny = new LatLng(0, 0);
+        googleMap_.moveCamera(CameraUpdateFactory.newLatLng(ny));
     }
 }
