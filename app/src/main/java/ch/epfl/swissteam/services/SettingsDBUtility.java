@@ -72,7 +72,7 @@ public interface SettingsDBUtility {
         return dark;
     }
 
-    static float retrieveRadius(SettingsDbHelper helper, String id){
+    static int retrieveRadius(SettingsDbHelper helper, String id){
         SQLiteDatabase db = helper.getReadableDatabase();
 
         String[] projection = {SettingsContract.SettingsEntry.COLUMN_SETTINGS_RADIUS};
@@ -86,10 +86,10 @@ public interface SettingsDBUtility {
                 null, null, null
         );
 
-        float radius = -1f;
+        int radius = -1;
 
         if(cursor.moveToFirst()){
-            radius = cursor.getFloat(cursor.getColumnIndexOrThrow(SettingsContract.SettingsEntry.COLUMN_SETTINGS_RADIUS));
+            radius = cursor.getInt(cursor.getColumnIndexOrThrow(SettingsContract.SettingsEntry.COLUMN_SETTINGS_RADIUS));
         }
         cursor.close();
         db.close();
@@ -130,6 +130,21 @@ public interface SettingsDBUtility {
         values.put(SettingsContract.SettingsEntry.COLUMN_SETTINGS_DARKMODE, newValue);
 
         // Which row to update, based on the id
+        String selection = SettingsContract.SettingsEntry.COLUMN_ID + " LIKE ?";
+        String[] selectionArgs = { id };
+
+        db.update(SettingsContract.SettingsEntry.TABLE_NAME,
+                values, selection, selectionArgs);
+
+        db.close();
+    }
+
+    static void updateRadius(SettingsDbHelper helper, String id, int newValue){
+        SQLiteDatabase db = helper.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(SettingsContract.SettingsEntry.COLUMN_SETTINGS_RADIUS, newValue);
+
         String selection = SettingsContract.SettingsEntry.COLUMN_ID + " LIKE ?";
         String[] selectionArgs = { id };
 

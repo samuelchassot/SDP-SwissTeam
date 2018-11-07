@@ -4,14 +4,20 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.content.Intent;
+import android.widget.SeekBar;
 import android.widget.Switch;
+import android.widget.Toast;
+
+import java.util.Locale;
 
 /**
  * A fragment to set the different settings of the application
@@ -49,7 +55,7 @@ public class SettingsFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_settings, container, false);
 
@@ -59,6 +65,21 @@ public class SettingsFragment extends Fragment {
             v.getContext().startActivity(intent);
         });
 
+        constructDarkModeSettings(view);
+        constructRadiusSettings(view);
+
+        //Retrieve settings from local DB
+        //Radius
+
+
+        //Home
+        double longitude = SettingsDBUtility.retrieveHome(dbHelper_, SettingsContract.SettingsEntry.COLUMN_SETTINGS_HOME_LONGITUDE, id_);
+        double latitude = SettingsDBUtility.retrieveHome(dbHelper_, SettingsContract.SettingsEntry.COLUMN_SETTINGS_HOME_LATITUDE, id_);
+
+        return view;
+    }
+
+    private void constructDarkModeSettings(View view){
         Switch darkModeSwitch = view.findViewById(R.id.switch_settings_darkmode);
         darkModeSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if(isChecked){
@@ -68,19 +89,38 @@ public class SettingsFragment extends Fragment {
             }
         });
 
-        //Retrieve settings from local DB
-        //Dark mode
+        //Retrieve Dark mode from local DB
         int dark = SettingsDBUtility.retrieveDarkMode(dbHelper_, id_);
         boolean darkModeChecked = dark == 1;
         darkModeSwitch.setChecked(darkModeChecked);
+    }
 
-        //Radius
-        float radius = SettingsDBUtility.retrieveRadius(dbHelper_, id_);
+    private void constructRadiusSettings(View view){
+        //Retrieve radius from local DB
+        int radius = SettingsDBUtility.retrieveRadius(dbHelper_, id_);
 
-        //Home
-        double longitude = SettingsDBUtility.retrieveHome(dbHelper_, SettingsContract.SettingsEntry.COLUMN_SETTINGS_HOME_LONGITUDE, id_);
-        double latitude = SettingsDBUtility.retrieveHome(dbHelper_, SettingsContract.SettingsEntry.COLUMN_SETTINGS_HOME_LATITUDE, id_);
+        SeekBar radiusSeekBar = view.findViewById(R.id.seekbar_settings_radius);
+        radiusSeekBar.setProgress(radius);
+        radiusSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            int progress = radius;
 
-        return view;
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progressValue, boolean fromUser) {
+                progress = progressValue;
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                //String km = String.format(Locale.ENGLISH, getResources().getString(R.string.settings_seekbar_toast_start) + " %d km", progress);
+                //Toast.makeText(view.getContext(), km, Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                SettingsDBUtility.updateRadius(dbHelper_, id_, progress);
+                String km = String.format(Locale.ENGLISH, " %.2f km", progress/1000.0);
+                Toast.makeText(view.getContext(), getResources().getString(R.string.settings_seekbar_toast_end) + km, Toast.LENGTH_LONG).show();
+            }
+        });
     }
 }
