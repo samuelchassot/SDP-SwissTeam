@@ -53,12 +53,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View frag = inflater.inflate(R.layout.fragment_home, container, false);
-        (frag.findViewById(R.id.button_homefragment_refresh)).setOnClickListener(this);
 
         swipeRefreshLayout_ = frag.findViewById(R.id.swiperefresh_homefragment_refresh);
-        swipeRefreshLayout_.setOnRefreshListener(() -> {
-            refresh();
-        });
+        swipeRefreshLayout_.setOnRefreshListener(this::refresh);
         swipeRefreshLayout_.setColorSchemeResources(R.color.colorAccent);
 
         //setup recyclerview for posts
