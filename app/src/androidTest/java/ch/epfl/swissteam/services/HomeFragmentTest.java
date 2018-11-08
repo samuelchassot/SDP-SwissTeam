@@ -56,7 +56,7 @@ public class HomeFragmentTest extends FirebaseTest{
 
     @Test
     public void canRefreshWithMenuItem() {
-        onView(withId(R.id.action_save)).perform(click());
+        onView(withId(R.id.action_refresh)).perform(click());
     }
 
     @Test
