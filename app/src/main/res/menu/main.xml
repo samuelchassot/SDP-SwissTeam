@@ -18,6 +18,8 @@
             android:icon="@drawable/ic_menuitem_save"
             android:orderInCategory="100"
             android:title="Save"
+            android:visible="false"
+            android:enabled="false"
             app:showAsAction="ifRoom" />
     </group>
 
