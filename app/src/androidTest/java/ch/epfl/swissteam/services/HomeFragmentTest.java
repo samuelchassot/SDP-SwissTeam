@@ -55,9 +55,8 @@ public class HomeFragmentTest extends FirebaseTest{
     }
 
     @Test
-    public void canRefreshButton() {
-        (mActivityRule.getActivity().findViewById(R.id.button_homefragment_refresh)).setOnClickListener(null);
-        onView(withId(R.id.button_homefragment_refresh)).perform(click());
+    public void canRefreshWithMenuItem() {
+        onView(withId(R.id.action_save)).perform(click());
     }
 
     @Test
