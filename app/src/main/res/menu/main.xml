@@ -20,4 +20,18 @@
             android:title="Save"
             app:showAsAction="ifRoom" />
     </group>
+
+    <group
+        android:id="@+id/group_refresh">
+
+        <item
+            android:id="@+id/action_refresh"
+            android:icon="@android:drawable/ic_popup_sync"
+            android:orderInCategory="100"
+            android:title="Refresh"
+            android:visible="false"
+            android:enabled="false"
+            app:showAsAction="always" />
+    </group>
+
 </menu>

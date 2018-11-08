@@ -8,7 +8,9 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -66,6 +68,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             adapter_ = new PostAdapter(posts_);
             mRecyclerView_.setAdapter(adapter_);
         }
+        setHasOptionsMenu(true);
+        getActivity().invalidateOptionsMenu();
 
         //refresh();
         return frag;
@@ -111,4 +115,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         super.onResume();
         refresh();
     }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu){
+        menu.setGroupEnabled(R.id.group_refresh, true);
+        menu.setGroupVisible(R.id.group_refresh, true);
+    }
+
 }
