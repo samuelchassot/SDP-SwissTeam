@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 
 /**
  * This class is the MainActivity of the application, this is
@@ -176,4 +177,5 @@ public class MainActivity extends NavigationDrawer {
     public void onUserInteraction() {
         LocationManager.get().refresh(this);
     }
+
 }
