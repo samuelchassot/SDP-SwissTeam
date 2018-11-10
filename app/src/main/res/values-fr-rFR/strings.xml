@@ -99,9 +99,14 @@
     <string name="category_Dailylife">Vie quotidienne</string>
     <string name="category_Transportation">Transport</string>
 
-    /* ----- ChatRoom strings ----- */
-
-    <string name="chat_room_message_hint">Ecrivez votre message ici</string>
+    /* ----- Chat string ----- */
+    <string name="chat_room_message_hint">Entrez votre message ici</string>
+    <string name="chat_delete_alert_title">Etes-vous sur ?</string>
+    <string name="chat_delete_alert_text">Voulez-vous supprimer ce message ?</string>
+    <string name="chat_message_not_found">Message introuvable.</string>
+    <string name="chat_relation_delete_alert_title">Supprimer la conversation avec </string>
+    <string name="chat_relation_delete_alert_text">Voulez-vous supprimer cette conversation ?</string>
+    <string name="chat_online_search_hint">Ecrivez un nom pour trouver une conversation !</string>
 
     /* ----- Settings string ----- */
 
