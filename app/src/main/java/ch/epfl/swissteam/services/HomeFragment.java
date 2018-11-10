@@ -8,7 +8,10 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -56,9 +59,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         (frag.findViewById(R.id.button_homefragment_refresh)).setOnClickListener(this);
 
         swipeRefreshLayout_ = frag.findViewById(R.id.swiperefresh_homefragment_refresh);
-        swipeRefreshLayout_.setOnRefreshListener(() -> {
-            refresh();
-        });
+        swipeRefreshLayout_.setOnRefreshListener(this::refresh);
         swipeRefreshLayout_.setColorSchemeResources(R.color.colorAccent);
 
         //setup recyclerview for posts
@@ -69,6 +70,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             adapter_ = new PostAdapter(posts_);
             mRecyclerView_.setAdapter(adapter_);
         }
+        setHasOptionsMenu(true);
+        getActivity().invalidateOptionsMenu();
 
         //refresh();
         return frag;
@@ -114,4 +117,23 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         super.onResume();
         refresh();
     }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu){
+        menu.setGroupEnabled(R.id.group_refresh, true);
+        menu.setGroupVisible(R.id.group_refresh, true);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if(id == R.id.action_refresh){
+            refresh();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
 }

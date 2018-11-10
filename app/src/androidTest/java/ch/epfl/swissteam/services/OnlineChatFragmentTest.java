@@ -10,10 +10,14 @@ import org.junit.Test;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.longClick;
+import static android.support.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.intent.Intents.init;
 import static android.support.test.espresso.intent.Intents.intended;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static android.support.test.espresso.matcher.ViewMatchers.hasDescendant;
+import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static ch.epfl.swissteam.services.TestUtils.sleep;
@@ -47,19 +51,54 @@ public class OnlineChatFragmentTest extends FirebaseTest {
         oUser.addChatRelation(chatRelation, DBUtility.get().getDb_());
 
         Intents.init();
-    }
 
-    @Test
-    public void relationIsDisplayed() {
+
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
         sleep(100);
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_chats));
         sleep(100);
+    }
+
+    @Test
+    public void relationIsDisplayed() {
+        onView(withId(R.id.fragment_online_chats_recycler_view)).check(matches(hasDescendant(withText(oUser.getName_()))));
+        sleep(100);
+        onView(withText(oUser.getName_())).check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void relationCanOpenChat() {
         onView(withId(R.id.fragment_online_chats_recycler_view)).check(matches(hasDescendant(withText(oUser.getName_()))));
         sleep(100);
         onView(withText(oUser.getName_())).perform(click());
         sleep(100);
         intended(hasComponent(ChatRoom.class.getName()));
+    }
+
+    @Test
+    public void canChooseToDeleteRelation() {
+        onView(withText(oUser.getName_())).perform(longClick());
+        sleep(100);
+        onView(withText(mainActivityRule_.getActivity().getResources().getString(R.string.chat_relation_delete_alert_text)))
+                .check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void canDeleteRelation() {
+        onView(withText(oUser.getName_())).perform(longClick());
+        sleep(100);
+        onView(withText(mainActivityRule_.getActivity().getResources().getString(R.string.general_delete))).perform(click());
+        onView(withText(oUser.getName_())).check(doesNotExist());
+    }
+
+    @Test
+    public void canCancelDeleteRelation() {
+        onView(withText(oUser.getName_())).perform(longClick());
+        sleep(100);
+        onView(withText(mainActivityRule_.getActivity().getResources().getString(R.string.chat_relation_delete_alert_text)))
+                .check(matches(isDisplayed()));
+        onView(withText(mainActivityRule_.getActivity().getResources().getString(R.string.general_cancel))).perform(click());
+        onView(withText(oUser.getName_())).check(matches(isDisplayed()));
     }
 
     @Override
