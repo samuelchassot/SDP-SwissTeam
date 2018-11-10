@@ -15,10 +15,13 @@ import org.junit.runner.RunWith;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.longClick;
 import static android.support.test.espresso.action.ViewActions.typeText;
+import static android.support.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.hasDescendant;
 import static android.support.test.espresso.matcher.ViewMatchers.isClickable;
+import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.isEnabled;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
@@ -55,12 +58,62 @@ public class ChatRoomTest extends FirebaseTest{
     @Test
     public void sendMessageWorksWithNonEmpty() {
         String text = "Le roi est mort ! Vive le roi !";
+        sendMessage(text);
+        onView(withId(R.id.recycler_view_message)).check(matches(hasDescendant(withText(text))));
+    }
+
+    @Test
+    public void canChooseToDeleteMessage() {
+        String text = "I can be deleted";
+        sendMessage(text);
+        onView(withText(text)).perform(longClick());
+        sleep(100);
+        onView(withText(mActivityRule.getActivity().getResources().getString(R.string.chat_delete_alert_text)))
+                .check(matches(isDisplayed()));
+
+    }
+
+    @Test
+    public void canClickDeleteMessage() {
+        String text = "I can be deleted";
+        sendMessage(text);
+        deleteMessageWithText(text);
+        onView(withText(text)).check(doesNotExist());
+
+    }
+
+    @Test
+    public void canClickCancelDeleteMessage() {
+        String text = "I can be deleted";
+        sendMessage(text);
+        onView(withText(text)).perform(longClick());
+        sleep(100);
+        onView(withText(mActivityRule.getActivity().getResources().getString(R.string.general_cancel))).perform(click());
+        onView(withText(text)).check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void canDeleteMessagesInDisorder() {
+        String text = "I can be deleted";
+        String textToo = "I can be deleted too";
+        sendMessage(text);
+        sendMessage(textToo);
+        deleteMessageWithText(textToo);
+        deleteMessageWithText(text);
+    }
+
+    private void sendMessage(String text){
         sleep(100);
         onView(withId(R.id.message_input)).perform(typeText(text)).check(matches(withText(text)));
         sleep(100);
         onView(withId(R.id.message_send_button)).perform(click());
         sleep(100);
-        onView(withId(R.id.recycler_view_message)).check(matches(hasDescendant(withText(text))));
+    }
+
+    private void deleteMessageWithText(String text){
+        onView(withText(text)).perform(longClick());
+        sleep(100);
+        onView(withText(mActivityRule.getActivity().getResources().getString(R.string.general_delete))).perform(click());
     }
 
     /* Examples
