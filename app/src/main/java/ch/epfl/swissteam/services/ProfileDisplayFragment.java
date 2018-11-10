@@ -116,9 +116,9 @@ public class ProfileDisplayFragment extends Fragment {
 
                 TextView ratingView = (TextView) view.findViewById(R.id.textview_profiledisplay_rating);
                 ratingView.setText(Integer.toString(user.getRating_()));
+                Picasso.get().load(user.getImageUrl_()).into((ImageView) view.findViewById(R.id.imageview_profiledisplay_picture));
             }
 
-            Picasso.get().load(user.getImageUrl_()).into((ImageView) getView().findViewById(R.id.imageview_profiledisplay_picture));
 
             //for the recyclerview
             mCapabilities_.clear();
