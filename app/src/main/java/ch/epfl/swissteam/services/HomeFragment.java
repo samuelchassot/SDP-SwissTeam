@@ -99,7 +99,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                     adapter_.notifyDataSetChanged();
                     swipeRefreshLayout_.setRefreshing(false);
                 }
-            }, userLocation, currentUserId_, helper_);
+            }, userLocation, helper_);
         }
         else{
             DBUtility.get().getPostsFeed(new DBCallBack<ArrayList<Post>>() {
@@ -110,7 +110,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                     adapter_.notifyDataSetChanged();
                     swipeRefreshLayout_.setRefreshing(false);
                 }
-            }, LocationManager.get().getZeroLocation(), currentUserId_, helper_);
+            }, LocationManager.get().getZeroLocation(), helper_);
         }
         ((MainActivity) getActivity()).showHomeFragment();
     }
