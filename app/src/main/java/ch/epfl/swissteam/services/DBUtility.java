@@ -177,7 +177,7 @@ public class DBUtility {
      * @param userLocation the location of the user
      * @param helper the helper for the settings local database
      */
-    public void getPostsFeed(final MyCallBack<ArrayList<Post>> callBack, Location userLocation, SettingsDbHelper helper) {
+    public void getPostsFeed(final DBCallBack<ArrayList<Post>> callBack, Location userLocation, SettingsDbHelper helper) {
         Query freshestPosts = db_.child(POSTS).orderByChild("timestamp_").limitToFirst(POSTS_DISPLAY_NUMBER);
         freshestPosts.addListenerForSingleValueEvent(new ValueEventListener() {
             ArrayList<Post> posts = new ArrayList<>();
