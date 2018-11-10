@@ -124,8 +124,6 @@ public class NavigationDrawer extends AppCompatActivity implements NavigationVie
         if(toggleButton_.equals(CANCEL)){
             menu.setGroupEnabled(R.id.group_cancel, true);
             menu.setGroupVisible(R.id.group_cancel, true);
-        }else{
-            menu.removeGroup(R.id.group_cancel);
         }
 
         setNavUserName();

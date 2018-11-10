@@ -20,7 +20,15 @@ public class User implements DBSavable {
     private int rating_;
     private double latitude_, longitude_;
     private ArrayList<Categories> categories_;
+    private ArrayList<String> upvotes_;
+    private ArrayList<String> downvotes_;
+
     private ArrayList<ChatRelation> chatRelations_;
+
+    public static enum Vote{
+        UPVOTE,
+        DOWNVOTE
+    }
 
     /**
      * return the GoogleID that corresponds to a deleted user
@@ -38,7 +46,7 @@ public class User implements DBSavable {
      */
     public static User getDeletedUser(){
         User deletedUser = new User(getDeletedUserGoogleID(), "Deleted user",
-                "", "", new ArrayList<Categories>(), new ArrayList<ChatRelation>(), "https://cdn.pixabay.com/photo/2014/03/25/15/19/cross-296507_960_720.png", 0, 0.0,0.0 );
+                "", "", new ArrayList<Categories>(), new ArrayList<ChatRelation>(), "https://cdn.pixabay.com/photo/2014/03/25/15/19/cross-296507_960_720.png", 0, 0.0,0.0, new ArrayList<String>(),new ArrayList<String>() );
         return deletedUser;
     }
 
@@ -48,6 +56,8 @@ public class User implements DBSavable {
     public User() {
         categories_ = new ArrayList<>();
         chatRelations_ = new ArrayList<>();
+        downvotes_ = new ArrayList<>();
+        upvotes_ = new ArrayList<>();
     }
 
     /**
@@ -65,7 +75,8 @@ public class User implements DBSavable {
      */
     public User(String googleID_, String name_, String email_, String description_,
                 ArrayList<Categories> categories_, ArrayList<ChatRelation> chatRelations_,
-                String imageUrl_, int rating_, double latitude_, double longitude_) {
+                String imageUrl_, int rating_, double latitude_, double longitude_,
+                ArrayList<String> upvotes_, ArrayList<String> downvotes_) {
         this.googleId_ = googleID_;
         this.email_ = email_;
         this.name_ = name_;
@@ -74,6 +85,8 @@ public class User implements DBSavable {
         this.rating_ = rating_;
         this.categories_ = categories_ == null ? new ArrayList<>() : (ArrayList<Categories>) categories_.clone();
         this.chatRelations_ = chatRelations_ == null ? new ArrayList<>() : (ArrayList<ChatRelation>)  chatRelations_.clone();
+        this.upvotes_ = upvotes_ == null ? new ArrayList<String>() : (ArrayList<String>) upvotes_.clone();
+        this.downvotes_ = downvotes_ == null ? new ArrayList<String>() : (ArrayList<String>) upvotes_.clone();
         this.latitude_ = latitude_;
         this.longitude_ = longitude_;
     }
@@ -175,6 +188,30 @@ public class User implements DBSavable {
     }
 
     /**
+     * Gives the list of users who upvoted this user
+     *
+     * @return the list of upvotes of the user
+     */
+    public ArrayList<String> getUpvotes_() {
+        if (upvotes_ == null) {
+            return new ArrayList<>();
+        }
+        return (ArrayList<String>) upvotes_.clone();
+    }
+
+    /**
+     * Gives the list of users who downvoted this user
+     *
+     * @return the list of downvotes of the user
+     */
+    public ArrayList<String> getDownvotes_() {
+        if (downvotes_ == null) {
+            return new ArrayList<>();
+        }
+        return (ArrayList<String>) downvotes_.clone();
+    }
+
+    /**
      * Add the user to a database
      *
      * @param db the database in which to add the user
@@ -254,22 +291,19 @@ public class User implements DBSavable {
     /**
      * Add a chatRelation to the list of chatRelationId of the user and save it into the database db
      *
-     * @param chatRelation the id of the chatRelation
+     * @param chatRelation the chatRelation to add
      * @param db           reference to the database to update the user
      */
     public void addChatRelation(ChatRelation chatRelation, DatabaseReference db) {
         if (chatRelations_ == null) {
             chatRelations_ = new ArrayList<>();
         }
-        chatRelations_.add(chatRelation);
+
+        if(!chatRelations_.contains(chatRelation)) chatRelations_.add(chatRelation);
+
         if (db != null) {
             addToDB(db);
         }
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        return this.googleId_.equals(((User) other).getGoogleId_());
     }
 
     /**
@@ -279,6 +313,31 @@ public class User implements DBSavable {
      */
     public void addChatRelation(ChatRelation chatRelation) {
         addChatRelation(chatRelation, null);
+    }
+
+    /**
+     * Remove a relation from the list of chatRelation of this user and save the user in the DB if db
+     * is not null
+     * @param chatRelation the chatRelation to remove
+     * @param db reference to the database to update the user
+     */
+    public void removeChatRelation(ChatRelation chatRelation, DatabaseReference db){
+        if(chatRelations_ != null) chatRelations_.remove(chatRelation);
+
+        if (db != null) {
+            addToDB(db);
+        }
+    }
+
+    /**
+     * Remove a relation from the list of chatRelation of this user
+     * @param chatRelation the chatRelation to remove
+     */
+    public void removeChatRelation(ChatRelation chatRelation){removeChatRelation(chatRelation, null);}
+
+    @Override
+    public boolean equals(Object other) {
+        return this.googleId_.equals(((User) other).getGoogleId_());
     }
 
     /**
@@ -308,17 +367,52 @@ public class User implements DBSavable {
         return null;
     }
 
-    /**
-     * Increments user's rating by 1
-     */
-    public void upvote() {
-        rating_ += 1;
+    public void vote(Vote vote, User user){
+        if (vote == Vote.UPVOTE){
+            this.upvote(user);
+        } else if (vote == Vote.DOWNVOTE){
+            this.downvote(user);
+        }
+        this.addToDB(DBUtility.get().getDb_());
+
     }
 
-    /**
-     * Decrements user's rating by 1
-     */
-    public void downvote() {
+    private void upvote(User user) {
+        //If already upvoted, remove it
+        if (upvotes_.contains(user.getGoogleId_())){
+            upvotes_.remove(user.getGoogleId_());
+            rating_ -= 1;
+            return;
+        }
+
+        //if downvoted, correct the vote
+        if (downvotes_.contains(user.getGoogleId_())){
+            downvotes_.remove(user.getGoogleId_());
+            //one downvote less
+            rating_ += 1;
+        }
+        upvotes_.add(user.googleId_);
+        //one upvote more
+        rating_ += 1;
+        return;
+    }
+
+
+    private void downvote(User user) {
+        if (downvotes_.contains(user.getGoogleId_())){
+            downvotes_.remove(user.getGoogleId_());
+            rating_ += 1;
+            return;
+        }
+
+        if (upvotes_.contains(user.getGoogleId_())){
+            upvotes_.remove(user.getGoogleId_());
+            //one upvote less
+            rating_ -=1;
+        }
+        downvotes_.add(user.googleId_);
+        //one downvote more
         rating_ -= 1;
+        return;
     }
 }

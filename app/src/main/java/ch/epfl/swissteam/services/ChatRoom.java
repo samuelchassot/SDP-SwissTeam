@@ -2,14 +2,13 @@ package ch.epfl.swissteam.services;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.res.Resources;
 import android.os.Bundle;
-import android.app.Activity;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateFormat;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,7 +40,7 @@ public class ChatRoom extends NavigationDrawer {
     }
 
     private void retrieveUserAndSetRelationId(){
-        DBUtility.get().getUser(GoogleSignInSingleton.get().getClientUniqueID(), new MyCallBack<User>(){
+        DBUtility.get().getUser(GoogleSignInSingleton.get().getClientUniqueID(), new DBCallBack<User>(){
             @Override
             public void onCallBack(User mUser) {
                 if(mUser == null){
@@ -127,7 +126,7 @@ public class ChatRoom extends NavigationDrawer {
     }
 
     private void newRelationWith(String contactId ){
-        DBUtility.get().getUser(contactId, new MyCallBack<User>(){
+        DBUtility.get().getUser(contactId, new DBCallBack<User>(){
             @Override
             public void onCallBack(User cUser) {
                 if(cUser == null){
@@ -146,23 +145,10 @@ public class ChatRoom extends NavigationDrawer {
     }
 
     private void askToDeleteMessage(ChatMessage message, String key){
-        AlertDialog alertDialog = new AlertDialog.Builder(this).create();
-        alertDialog.setTitle(getResources().getString(R.string.chat_delete_alert_title));
-        alertDialog.setMessage(getResources().getString(R.string.chat_delete_alert_text));
-        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, getResources().getString(R.string.general_delete),
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                        message.removeFromDB(DBUtility.get().getDb_(), key);
-                    }
-                });
-        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, getResources().getString(R.string.general_cancel),
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-        alertDialog.show();
+        Resources res = getResources();
+        Utility.askToDeleteAlertDialog(this, message, key,
+                res.getString(R.string.chat_delete_alert_title),
+                res.getString(R.string.chat_delete_alert_text));
     }
 
     private void toastUser(String text){

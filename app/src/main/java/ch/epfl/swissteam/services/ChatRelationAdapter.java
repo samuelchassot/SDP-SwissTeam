@@ -1,6 +1,8 @@
 package ch.epfl.swissteam.services;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -47,24 +49,40 @@ public class ChatRelationAdapter extends RecyclerView.Adapter<ChatRelationAdapte
     public void onBindViewHolder(ChatRelationsViewHolder holder, int i) {
         String otherId = relations_.get(holder.getAdapterPosition()).getOtherId(currentUserId_);
 
-        DBUtility.get().getUser(otherId, new MyCallBack<User>() {
-            @Override
-            public void onCallBack(User oUser) {
-                holder.contactName_.setText(oUser.getName_());
-                Picasso.get().load(oUser.getImageUrl_()).into(holder.contactImage_);
-            }
+        DBUtility.get().getUser(otherId, oUser -> {
+            holder.contactName_.setText(oUser.getName_());
+            Picasso.get().load(oUser.getImageUrl_()).into(holder.contactImage_);
         });
 
         holder.parentLayout_.setOnClickListener((view) -> {
             Intent intent = new Intent(holder.itemView.getContext(), ChatRoom.class);
-            intent.putExtra(ChatRelation.RELATION_ID_TEXT, relations_.get(holder.getAdapterPosition()).getId_());
+            intent.putExtra(ChatRelation.RELATION_ID_TEXT, relations_.get(i).getId_());
             holder.itemView.getContext().startActivity(intent);
+        });
+
+        holder.parentLayout_.setOnLongClickListener((view) -> {
+            askToDeleteRelation(view.getContext(), relations_.get(i), holder.contactName_.getText().toString());
+            return true;
         });
     }
 
     @Override
     public int getItemCount() {
         return relations_.size();
+    }
+
+    private void askToDeleteRelation(Context context, ChatRelation chatRelation, String othersName){
+        Resources res = context.getResources();
+        Utility.askToDeleteAlertDialog(context, chatRelation, null,
+                res.getString(R.string.chat_relation_delete_alert_title) + " " + othersName,
+                res.getString(R.string.chat_relation_delete_alert_text),
+                (b) -> {
+                    if(b){
+                        relations_.remove(chatRelation);
+                        notifyDataSetChanged();
+                    }
+
+                });
     }
 
     /**

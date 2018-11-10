@@ -39,9 +39,9 @@ public class TestUtils {
     protected static final String URL = TestUtils.getTestUser().getImageUrl_();
     protected static final ArrayList<Categories> CATS = new ArrayList<>(Arrays.asList(Categories.COOKING));
     protected static final User M_USER = new User(M_GOOGLE_ID,"Bear", "polar@north.nth","",
-            null,null, URL, 0, 0, 0);
+            null,null, URL, 0, 0, 0,null,null);
     protected static final User O_USER = new User(O_GOOGLE_ID, "Raeb", "hairy@north.nth",
-            "", CATS, null, URL, 0, 0, 0);
+            "", CATS, null, URL, 0, 0, 0,null,null);
 
     protected static User getTestUser(){
         ArrayList<Categories> cat = new ArrayList<>();
@@ -49,7 +49,7 @@ public class TestUtils {
         User testUser = new User("1234", "testuser", "test@gmail.com",
                 "I am a test user", cat, null,
                 "https://lh5.googleusercontent.com/-SYTkc6TIZHI/AAAAAAAAAAI/AAAAAAAAABc/EBrA4sSVWQc/photo.jpg",
-                0,0,0);
+                0,0,0,null,null);
         return testUser;
     }
 

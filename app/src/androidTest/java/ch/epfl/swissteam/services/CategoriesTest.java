@@ -13,7 +13,7 @@ import static org.junit.Assert.assertEquals;
 public class CategoriesTest {
     String googleId = "1234";
     User user1 = new User(googleId,"Jean-Marc Michel", "jmm@google.ch", "",
-            null,null,"",0, 0,0);
+            null,null,"",0, 0,0,null,null);
 
 
     @Test
