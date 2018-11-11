@@ -45,7 +45,6 @@ public class UserTest extends FirebaseTest {
         assertEquals(name, user.getName_());
         assertEquals(description, user.getDescription_());
         assertEquals(categories, user.getCategories_());
-        keyWords.put(Categories.DAILYLIFE.toString(), new ArrayList<>());
         assertEquals(keyWords, user.getKeyWords_());
         assertEquals(imageUrl, user.getImageUrl_());
         assertEquals(rating, user.getRating_());
