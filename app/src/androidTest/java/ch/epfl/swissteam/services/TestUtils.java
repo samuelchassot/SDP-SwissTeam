@@ -18,6 +18,7 @@ import org.hamcrest.TypeSafeMatcher;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 
 import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
@@ -45,6 +46,8 @@ public class TestUtils {
     protected static User getTestUser(){
         ArrayList<Categories> cat = new ArrayList<>();
         cat.add(Categories.IC);
+        HashMap<String, ArrayList<String>> kW = new HashMap<>();
+        kW.put(Categories.IC.toString(), new ArrayList<>(Arrays.asList("Python", "Java")));
         User testUser = new User("1234", "testuser", "test@gmail.com",
                 "I am a test user", cat, null,
                 "https://lh5.googleusercontent.com/-SYTkc6TIZHI/AAAAAAAAAAI/AAAAAAAAABc/EBrA4sSVWQc/photo.jpg",

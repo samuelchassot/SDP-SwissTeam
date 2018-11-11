@@ -146,5 +146,6 @@
     <string name="settings_deleteaccount_warningmessage">You are about to permanently delete your account ! \nThis will have these consequences : \n1. You will not be able to recover your data. \n2. All conversations you have will be lost. \n3. If you want to come back, you will have to configure everything once again.</string>
     <string name="continue_confirmation_deleteaccount">CONTINUE</string>
     <string name="deleted_user_name">Deleted user</string>
+    <string name="capabilitylayout_hintkeywords">Type some keywords separated by ;</string>
 
 </resources>

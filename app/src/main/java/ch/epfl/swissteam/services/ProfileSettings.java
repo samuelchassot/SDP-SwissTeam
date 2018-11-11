@@ -56,7 +56,7 @@ public class ProfileSettings extends NavigationDrawer {
         String uniqueID = GoogleSignInSingleton.get().getClientUniqueID();
         String email = ((TextView) findViewById(R.id.textview_profilesettings_email)).getText().toString();
         String descr = ((TextView) findViewById(R.id.edittext_profilesettings_description)).getText().toString();
-        User updatedUser = new User(uniqueID, name, email, descr, userCapabilities_, oldUser_.getChatRelations_(),
+        User updatedUser = new User(uniqueID, name, email, descr, userCapabilities_, oldUser_.getKeyWords_(), oldUser_.getChatRelations_(),
                 imageUrl_, oldUser_.getRating_(), oldUser_.getLatitude_(), oldUser_.getLongitude_(), oldUser_.getUpvotes_(), oldUser_.getDownvotes_());
 
 
