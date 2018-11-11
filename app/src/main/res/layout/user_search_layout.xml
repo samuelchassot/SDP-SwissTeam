@@ -44,13 +44,44 @@
         app:layout_constraintStart_toStartOf="@+id/textview_usersearchlayout_name"
         app:layout_constraintTop_toBottomOf="@+id/textview_usersearchlayout_name" />
 
-    <TextView
-        android:id="@+id/textview_usersearchlayout_rating"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <ImageView
+        android:id="@+id/imageview_usersearchlayout_star0"
+        android:layout_width="@dimen/ranking_star_size"
+        android:layout_height="@dimen/ranking_star_size"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/imageview_usersearchlayout_star1" />
+
+    <ImageView
+        android:id="@+id/imageview_usersearchlayout_star1"
+        android:layout_width="@dimen/ranking_star_size"
+        android:layout_height="@dimen/ranking_star_size"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/imageview_usersearchlayout_star2" />
+
+    <ImageView
+        android:id="@+id/imageview_usersearchlayout_star2"
+        android:layout_width="@dimen/ranking_star_size"
+        android:layout_height="@dimen/ranking_star_size"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/imageview_usersearchlayout_star3" />
+
+    <ImageView
+        android:id="@+id/imageview_usersearchlayout_star3"
+        android:layout_width="@dimen/ranking_star_size"
+        android:layout_height="@dimen/ranking_star_size"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/imageview_usersearchlayout_star4" />
+
+    <ImageView
+        android:id="@+id/imageview_usersearchlayout_star4"
+        android:layout_width="@dimen/ranking_star_size"
+        android:layout_height="@dimen/ranking_star_size"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:text="42"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
