@@ -49,7 +49,7 @@ public class TestUtils {
         HashMap<String, ArrayList<String>> kW = new HashMap<>();
         kW.put(Categories.IC.toString(), new ArrayList<>(Arrays.asList("Python", "Java")));
         User testUser = new User("1234", "testuser", "test@gmail.com",
-                "I am a test user", cat, null,
+                "I am a test user", cat, kW, null,
                 "https://lh5.googleusercontent.com/-SYTkc6TIZHI/AAAAAAAAAAI/AAAAAAAAABc/EBrA4sSVWQc/photo.jpg",
                 0,0,0,null,null);
         return testUser;
