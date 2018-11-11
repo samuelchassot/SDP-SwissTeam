@@ -7,6 +7,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
@@ -21,22 +23,30 @@ public class UserTest extends FirebaseTest {
 
     public static ArrayList<Categories> categories = new ArrayList<>();
     public static ArrayList<ChatRelation> chatRelations = new ArrayList<>();
+    public static HashMap<String, ArrayList<String>> keyWords = new HashMap<>();
 
     @Before
     public void setCats() {
         categories.add(Categories.COOKING);
         categories.add(Categories.DAILYLIFE);
     }
+    @Before
+    public void setKeyWords(){
+        ArrayList<String> cookingKeyWords = new ArrayList<>(Arrays.asList("Cake", "IceCream"));
+        keyWords.put(Categories.COOKING.toString(), cookingKeyWords);
+    }
     
 
     @Test
     public void testUserWorks() {
-        User user = new User(googleID, name,email, description, categories, null, imageUrl,rating, 0, 0,null,null);
+        User user = new User(googleID, name,email, description, categories, keyWords, null, imageUrl,rating, 0, 0,null,null);
         assertEquals(googleID, user.getGoogleId_());
         assertEquals(email, user.getEmail_());
         assertEquals(name, user.getName_());
         assertEquals(description, user.getDescription_());
         assertEquals(categories, user.getCategories_());
+        keyWords.put(Categories.DAILYLIFE.toString(), new ArrayList<>());
+        assertEquals(keyWords, user.getKeyWords_());
         assertEquals(imageUrl, user.getImageUrl_());
         assertEquals(rating, user.getRating_());
         assertEquals(true, user.equals(user));
@@ -149,6 +159,14 @@ public class UserTest extends FirebaseTest {
         user1.addChatRelation(cR);
         user1.removeChatRelation(cR);
         assertTrue(user1.getChatRelations_().isEmpty());
+    }
+
+    @Test
+    public void getKeyWordsForParticularCat(){
+        User user = new User(googleID, name,email, description, categories, keyWords, null,
+                imageUrl,rating, 0, 0,null,null);
+        assertEquals(user.getKeyWords(Categories.COOKING), keyWords.get(Categories.COOKING.toString()));
+        assertEquals(user.getKeyWords(Categories.DAILYLIFE), new ArrayList<>());
     }
 
     public void testDeletedUser(){

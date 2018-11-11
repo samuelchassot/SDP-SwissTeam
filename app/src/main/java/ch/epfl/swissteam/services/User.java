@@ -7,7 +7,9 @@ import com.google.firebase.database.DatabaseReference;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Class representing a user in the database
@@ -20,6 +22,7 @@ public class User implements DBSavable {
     private int rating_;
     private double latitude_, longitude_;
     private ArrayList<Categories> categories_;
+    private HashMap<String, ArrayList<String>> keyWords_;
     private ArrayList<String> upvotes_;
     private ArrayList<String> downvotes_;
 
@@ -73,6 +76,7 @@ public class User implements DBSavable {
      * @param latitude_    User's last latitude
      * @param longitude_   User's last longitude
      */
+    @Deprecated
     public User(String googleID_, String name_, String email_, String description_,
                 ArrayList<Categories> categories_, ArrayList<ChatRelation> chatRelations_,
                 String imageUrl_, int rating_, double latitude_, double longitude_,
@@ -90,6 +94,43 @@ public class User implements DBSavable {
         this.latitude_ = latitude_;
         this.longitude_ = longitude_;
     }
+
+    /**
+     * Create a new user given its specificities
+     *
+     * @param googleID_    User's unique googleId
+     * @param name_        User's name
+     * @param email_       User's email
+     * @param description_ User's description
+     * @param categories_  User's categories of services
+     * @param keyWords_    User's keywords for each Categories
+     * @param chatRelations_ User's chat relations
+     * @param rating_      User's rating score
+     * @param latitude_    User's last latitude
+     * @param longitude_   User's last longitude
+     */
+
+    public User(String googleID_, String name_, String email_, String description_,
+                ArrayList<Categories> categories_,
+                HashMap<String, ArrayList<String>> keyWords_,
+                ArrayList<ChatRelation> chatRelations_,
+                String imageUrl_, int rating_, double latitude_, double longitude_,
+                ArrayList<String> upvotes_, ArrayList<String> downvotes_) {
+        this.googleId_ = googleID_;
+        this.email_ = email_;
+        this.name_ = name_;
+        this.description_ = description_;
+        this.imageUrl_ = imageUrl_;
+        this.rating_ = rating_;
+        this.categories_ = categories_ == null ? new ArrayList<>() : (ArrayList<Categories>) categories_.clone();
+        this.keyWords_ = keyWords_ == null ? new HashMap<>() : (HashMap<String, ArrayList<String>>) keyWords_.clone();
+        this.chatRelations_ = chatRelations_ == null ? new ArrayList<>() : (ArrayList<ChatRelation>)  chatRelations_.clone();
+        this.upvotes_ = upvotes_ == null ? new ArrayList<String>() : (ArrayList<String>) upvotes_.clone();
+        this.downvotes_ = downvotes_ == null ? new ArrayList<String>() : (ArrayList<String>) upvotes_.clone();
+        this.latitude_ = latitude_;
+        this.longitude_ = longitude_;
+    }
+
 
     /**
      * Gives the google id of the user
@@ -173,6 +214,46 @@ public class User implements DBSavable {
             return new ArrayList<>();
         }
         return (ArrayList<Categories>) categories_.clone();
+    }
+
+    /**
+     * Gives the Map of keywords for each categories the User has in his Categories
+     *
+     * @return the map of keywords for each categories
+     */
+    public HashMap<String, ArrayList<String>> getKeyWords_() {
+        HashMap<String, ArrayList<String>> keyW = new HashMap<>();
+        if (keyWords_ == null) {
+            if(categories_ != null){
+                for(Categories c : categories_){
+                    keyW.put(c.toString(), new ArrayList<>());
+                }
+            }
+        }else {
+            if(categories_ != null) {
+                for (Categories c : categories_) {
+                    if(keyWords_.containsKey(c.toString())){
+                        keyW.put(c.toString(), keyWords_.get(c.toString()));
+                    }else{
+                        keyW.put(c.toString(), new ArrayList<>());
+                    }
+                }
+            }
+        }
+        return keyW;
+    }
+
+    /**
+     * Gives the List<String> of keywords the user has for the given Categories
+     * @param c
+     * @return ArrayList<String> of keyWords (can be empty)
+     */
+    public ArrayList<String> getKeyWords(Categories c){
+        ArrayList<String> kWords = new ArrayList<>();
+        if(keyWords_.containsKey(c.toString())){
+            kWords.addAll(keyWords_.get(c.toString()));
+        }
+        return kWords;
     }
 
     /**
