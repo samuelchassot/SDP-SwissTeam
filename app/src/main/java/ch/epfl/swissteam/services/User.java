@@ -297,7 +297,7 @@ public class User implements DBSavable {
             }
         }
 
-        Log.i("USER ADDED", keyWords_.keySet().isEmpty() + "");
+
     }
 
     @Override

@@ -52,9 +52,8 @@ public class CapabilitiesAdapter extends RecyclerView.Adapter<CapabilitiesAdapte
         mViewHolder.mCapabilityName_.setText(capabilities_.get(position).toString());
         StringBuilder builder = new StringBuilder();
         for (String kw : keyWords_.get(capabilities_.get(position).toString())){
-            builder.append(kw).append("; ");
+            builder.append("#").append(kw).append(" ");
         }
-        //builder.delete(builder.length() - 2, builder.length());
         mViewHolder.mKeywordsEditText_.setText(builder.toString());
     }
 
