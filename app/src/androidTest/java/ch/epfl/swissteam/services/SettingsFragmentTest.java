@@ -27,6 +27,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.isChecked;
 import static android.support.test.espresso.matcher.ViewMatchers.isNotChecked;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static ch.epfl.swissteam.services.TestUtils.sleep;
 
 @RunWith(AndroidJUnit4.class)
 public class SettingsFragmentTest {
@@ -73,10 +74,11 @@ public class SettingsFragmentTest {
 
         onView(withId(R.id.seekbar_settings_radius)).perform(scrollTo()).perform(new GeneralClickAction(Tap.SINGLE, GeneralLocation.CENTER_LEFT, Press.FINGER));
 
+        sleep(200);
         String s = String.format(Locale.ENGLISH,
                 mActivityRule.getActivity().getResources().getString(R.string.settings_seekbar_currentradius) + " %.2f km",
                 0/1000.0);
-        onView(withId(R.id.textview_settings_currentradius)).check(matches(withText(s)));
+        onView(withId(R.id.textview_settings_currentradius)).perform(scrollTo()).check(matches(withText(s)));
     }
 
     @Test
