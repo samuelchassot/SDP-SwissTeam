@@ -74,7 +74,7 @@ public class SettingsFragmentTest {
 
         onView(withId(R.id.seekbar_settings_radius)).perform(scrollTo()).perform(new GeneralClickAction(Tap.SINGLE, GeneralLocation.CENTER_LEFT, Press.FINGER));
 
-        sleep(200);
+        sleep(1000);
         String s = String.format(Locale.ENGLISH,
                 mActivityRule.getActivity().getResources().getString(R.string.settings_seekbar_currentradius) + " %.2f km",
                 0/1000.0);
