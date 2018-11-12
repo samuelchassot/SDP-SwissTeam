@@ -11,6 +11,7 @@ import android.util.Log;
  * @author Julie Giunta
  */
 public interface SettingsDBUtility {
+    String selection = SettingsContract.SettingsEntry.COLUMN_ID + " = ?";
 
     /**
      * Check if an user has already a corresponding row in the database.
@@ -28,7 +29,6 @@ public interface SettingsDBUtility {
         };
 
         // Filter results WHERE "id" = 'id'
-        String selection = SettingsContract.SettingsEntry.COLUMN_ID + " = ?";
         String[] selectionArgs = { id };
 
         // How you want the results sorted in the resulting Cursor
@@ -70,7 +70,6 @@ public interface SettingsDBUtility {
                 SettingsContract.SettingsEntry.COLUMN_SETTINGS_DARKMODE
         };
 
-        String selection = SettingsContract.SettingsEntry.COLUMN_ID + " = ?";
         String[] selectionArgs = { id };
         int dark = 0;
         try{
@@ -105,7 +104,6 @@ public interface SettingsDBUtility {
 
         String[] projection = {SettingsContract.SettingsEntry.COLUMN_SETTINGS_RADIUS};
 
-        String selection = SettingsContract.SettingsEntry.COLUMN_ID + " = ?";
         String[] selectionArgs = { id };
 
         int radius = (int)LocationManager.MAX_POST_DISTANCE;
@@ -141,7 +139,6 @@ public interface SettingsDBUtility {
 
         String[] projection = {column};
 
-        String selection = SettingsContract.SettingsEntry.COLUMN_ID + " = ?";
         String[] selectionArgs = { id };
 
         double coord = 0;
@@ -172,20 +169,7 @@ public interface SettingsDBUtility {
      * @param newValue, the value to put in the table.
      */
     static void updateDarkMode(SettingsDbHelper helper, String id, int newValue){
-        SQLiteDatabase db = helper.getWritableDatabase();
-
-        // New value for one column
-        ContentValues values = new ContentValues();
-        values.put(SettingsContract.SettingsEntry.COLUMN_SETTINGS_DARKMODE, newValue);
-
-        // Which row to update, based on the id
-        String selection = SettingsContract.SettingsEntry.COLUMN_ID + " LIKE ?";
-        String[] selectionArgs = { id };
-
-        db.update(SettingsContract.SettingsEntry.TABLE_NAME,
-                values, selection, selectionArgs);
-
-        db.close();
+        updateInt(helper, SettingsContract.SettingsEntry.COLUMN_SETTINGS_DARKMODE, id, newValue);
     }
 
     /**
@@ -195,35 +179,23 @@ public interface SettingsDBUtility {
      * @param newValue, the value to put in the table.
      */
     static void updateRadius(SettingsDbHelper helper, String id, int newValue){
-        SQLiteDatabase db = helper.getWritableDatabase();
-
-        ContentValues values = new ContentValues();
-        values.put(SettingsContract.SettingsEntry.COLUMN_SETTINGS_RADIUS, newValue);
-
-        String selection = SettingsContract.SettingsEntry.COLUMN_ID + " LIKE ?";
-        String[] selectionArgs = { id };
-
-        db.update(SettingsContract.SettingsEntry.TABLE_NAME,
-                values, selection, selectionArgs);
-
-        db.close();
+        updateInt(helper, SettingsContract.SettingsEntry.COLUMN_SETTINGS_RADIUS, id, newValue);
     }
 
 
     /**
-     * Update the value of the radius column for the row of the specified user.
+     * Update the value of one of the home column for the row of the specified user.
      * @param helper, a SettingsDbHelper created with the context of the caller,     *
      * @param column, the column you want to update, either the longitude or the latitude column
      * @param id, the google ID of the user,
      * @param newValue, the value to put in the table.
      */
-    static void updateHome(SettingsDbHelper helper, String column, String id, int newValue){
+    static void updateHome(SettingsDbHelper helper, String column, String id, double newValue){
         SQLiteDatabase db = helper.getWritableDatabase();
 
         ContentValues values = new ContentValues();
         values.put(column, newValue);
 
-        String selection = SettingsContract.SettingsEntry.COLUMN_ID + " LIKE ?";
         String[] selectionArgs = { id };
 
         db.update(SettingsContract.SettingsEntry.TABLE_NAME,
@@ -255,5 +227,27 @@ public interface SettingsDBUtility {
             db.close();
         }
         return rowKey;
+    }
+
+    /**
+     * Update the value of one of the column which contains int (like darkmode or radius)
+     * for the row of the specified user.
+     * @param helper, a SettingsDbHelper created with the context of the caller,     *
+     * @param column, the column you want to update,
+     * @param id, the google ID of the user,
+     * @param newValue, the value to put in the table.
+     */
+     static void updateInt(SettingsDbHelper helper, String column, String id, int newValue){
+         SQLiteDatabase db = helper.getWritableDatabase();
+
+         ContentValues values = new ContentValues();
+         values.put(column, newValue);
+
+         String[] selectionArgs = { id };
+
+         db.update(SettingsContract.SettingsEntry.TABLE_NAME,
+                 values, selection, selectionArgs);
+
+         db.close();
     }
 }
