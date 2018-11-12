@@ -3,6 +3,7 @@ package ch.epfl.swissteam.services;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 /**
  * Interface that provides some static methods to interact with the local settings DB.
@@ -60,7 +61,7 @@ public interface SettingsDBUtility {
      * @param helper, a SettingsDbHelper created with the context of the caller,
      * @param id, the google ID of the user,
      * @return an int corresponding to the value in the darkmode column of the table
-     *          or -1 if there was a problem when retrieving the value.
+     *          or 0 if there was a problem when retrieving the value.
      */
     static int retrieveDarkMode(SettingsDbHelper helper, String id){
         SQLiteDatabase db = helper.getReadableDatabase();
@@ -71,20 +72,22 @@ public interface SettingsDBUtility {
 
         String selection = SettingsContract.SettingsEntry.COLUMN_ID + " = ?";
         String[] selectionArgs = { id };
+        int dark = 0;
+        try{
+            Cursor cursor = db.query(
+                    SettingsContract.SettingsEntry.TABLE_NAME,
+                    projection, selection, selectionArgs,
+                    null, null, null
+            );
 
-        Cursor cursor = db.query(
-                SettingsContract.SettingsEntry.TABLE_NAME,
-                projection, selection, selectionArgs,
-                null, null, null
-        );
-
-        int dark = -1;
-
-        if(cursor.moveToFirst()){
-            dark = cursor.getInt(
-                    cursor.getColumnIndexOrThrow(SettingsContract.SettingsEntry.COLUMN_SETTINGS_DARKMODE));
+            if(cursor.moveToFirst()){
+                dark = cursor.getInt(
+                        cursor.getColumnIndexOrThrow(SettingsContract.SettingsEntry.COLUMN_SETTINGS_DARKMODE));
+            }
+            cursor.close();
+        }catch(Exception e){
+            Log.e("SETTINGSDBUTILITY", "Could not query the DB");
         }
-        cursor.close();
         db.close();
 
         return dark;
@@ -95,7 +98,7 @@ public interface SettingsDBUtility {
      * @param helper, a SettingsDbHelper created with the context of the caller,
      * @param id, the google ID of the user,
      * @return an int corresponding to the value in the radius column of the table
-     *          or -1 if there was a problem when retrieving the value.
+     *          or LocationManager.MAX_POST_DISTANCE if there was a problem when retrieving the value.
      */
     static int retrieveRadius(SettingsDbHelper helper, String id){
         SQLiteDatabase db = helper.getReadableDatabase();
@@ -105,18 +108,22 @@ public interface SettingsDBUtility {
         String selection = SettingsContract.SettingsEntry.COLUMN_ID + " = ?";
         String[] selectionArgs = { id };
 
-        Cursor cursor = db.query(
-                SettingsContract.SettingsEntry.TABLE_NAME,
-                projection, selection, selectionArgs,
-                null, null, null
-        );
+        int radius = (int)LocationManager.MAX_POST_DISTANCE;
 
-        int radius = -1;
+        try{
+            Cursor cursor = db.query(
+                    SettingsContract.SettingsEntry.TABLE_NAME,
+                    projection, selection, selectionArgs,
+                    null, null, null
+            );
 
-        if(cursor.moveToFirst()){
-            radius = cursor.getInt(cursor.getColumnIndexOrThrow(SettingsContract.SettingsEntry.COLUMN_SETTINGS_RADIUS));
+            if(cursor.moveToFirst()){
+                radius = cursor.getInt(cursor.getColumnIndexOrThrow(SettingsContract.SettingsEntry.COLUMN_SETTINGS_RADIUS));
+            }
+            cursor.close();
+        }catch(Exception e){
+            Log.e("SETTINGSDBUTILITY", "Could not query the DB");
         }
-        cursor.close();
         db.close();
 
         return radius;
@@ -127,7 +134,7 @@ public interface SettingsDBUtility {
      * @param helper, a SettingsDbHelper created with the context of the caller,
      * @param column, the column we want to retrieve, either the longitude or the latitude column
      * @param id, the google ID of the user,
-     * @return a double corresponding to the wanted value or -1 if there was a problem.
+     * @return a double corresponding to the wanted value or 0 if there was a problem.
      */
     static double retrieveHome(SettingsDbHelper helper, String column, String id){
         SQLiteDatabase db = helper.getReadableDatabase();
@@ -137,18 +144,22 @@ public interface SettingsDBUtility {
         String selection = SettingsContract.SettingsEntry.COLUMN_ID + " = ?";
         String[] selectionArgs = { id };
 
-        Cursor cursor = db.query(
-                SettingsContract.SettingsEntry.TABLE_NAME,
-                projection, selection, selectionArgs,
-                null, null, null
-        );
+        double coord = 0;
 
-        double coord = -1;
+        try{
+            Cursor cursor = db.query(
+                    SettingsContract.SettingsEntry.TABLE_NAME,
+                    projection, selection, selectionArgs,
+                    null, null, null
+            );
 
-        if(cursor.moveToFirst()){
-            coord = cursor.getDouble(cursor.getColumnIndexOrThrow(column));
+            if(cursor.moveToFirst()){
+                coord = cursor.getDouble(cursor.getColumnIndexOrThrow(column));
+            }
+            cursor.close();
+        }catch(Exception e){
+            Log.e("SETTINGSDBUTILITY", "Could not query the DB");
         }
-        cursor.close();
         db.close();
 
         return coord;

@@ -65,9 +65,6 @@ public class SettingsFragment extends Fragment {
         constructDarkModeSettings(view);
         constructRadiusSettings(view);
 
-        //Retrieve settings from local DB
-        //Radius
-
 
         //Home
         double longitude = SettingsDBUtility.retrieveHome(dbHelper_, SettingsContract.SettingsEntry.COLUMN_SETTINGS_HOME_LONGITUDE, id_);
