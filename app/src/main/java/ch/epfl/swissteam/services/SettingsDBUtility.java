@@ -209,6 +209,29 @@ public interface SettingsDBUtility {
         db.close();
     }
 
+
+    /**
+     * Update the value of the radius column for the row of the specified user.
+     * @param helper, a SettingsDbHelper created with the context of the caller,     *
+     * @param column, the column you want to update, either the longitude or the latitude column
+     * @param id, the google ID of the user,
+     * @param newValue, the value to put in the table.
+     */
+    static void updateHome(SettingsDbHelper helper, String column, String id, int newValue){
+        SQLiteDatabase db = helper.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(column, newValue);
+
+        String selection = SettingsContract.SettingsEntry.COLUMN_ID + " LIKE ?";
+        String[] selectionArgs = { id };
+
+        db.update(SettingsContract.SettingsEntry.TABLE_NAME,
+                values, selection, selectionArgs);
+
+        db.close();
+    }
+
     /**
      * Insert a new row of settings for a specified user if the user does not have already a row
      * @param helper, a SettingsDbHelper created with the context of the caller,
