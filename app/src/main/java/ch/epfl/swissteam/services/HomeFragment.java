@@ -56,8 +56,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.toolbar_home);
 
-        (frag.findViewById(R.id.button_homefragment_refresh)).setOnClickListener(this);
-
         swipeRefreshLayout_ = frag.findViewById(R.id.swiperefresh_homefragment_refresh);
         swipeRefreshLayout_.setOnRefreshListener(this::refresh);
         swipeRefreshLayout_.setColorSchemeResources(R.color.colorAccent);
