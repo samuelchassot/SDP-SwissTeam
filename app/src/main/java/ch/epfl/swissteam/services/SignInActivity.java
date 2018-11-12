@@ -32,6 +32,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
     private final String ERROR_MSG = "signInResult:failed code=";
 
     private GoogleSignInClient mGoogleSignInClient_;
+    private SettingsDbHelper settingsDbHelper_;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +54,8 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
 
         //Listen to clicks on the signIn button
         findViewById(R.id.button_signin_googlesignin).setOnClickListener(this);
+
+        settingsDbHelper_ = new SettingsDbHelper(this);
     }
 
     @Override
@@ -68,6 +71,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
 
             // put uniqueID in the singleton
             GoogleSignInSingleton.putUniqueID(account.getId());
+            SettingsDBUtility.addRowIfNeeded(settingsDbHelper_, account.getId());
             Intent mainIntent = new Intent(this, MainActivity.class);
             mainIntent.putExtra(ACCOUNT_TAG , account);
 
@@ -105,6 +109,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
+            SettingsDBUtility.addRowIfNeeded(settingsDbHelper_, account.getId());
 
             //TODO: Maybe load a list of all users while the user is connecting then check here if the googleId is in it to avoid the wait time.
             DBUtility.get().getUser(account.getId(), user -> {
@@ -153,4 +158,10 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
             notificationManager.createNotificationChannel(channel);
         }
     }
+
+
+
+
+
+
 }

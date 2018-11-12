@@ -14,7 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,9 +42,15 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         return new HomeFragment();
     }
 
+    private String currentUserId_;
+    private SettingsDbHelper helper_;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        currentUserId_ = GoogleSignInSingleton.get().getClientUniqueID();
+        helper_ = new SettingsDbHelper(getContext());
     }
 
     @Override
@@ -94,7 +100,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                     adapter_.notifyDataSetChanged();
                     swipeRefreshLayout_.setRefreshing(false);
                 }
-            }, userLocation);
+            }, userLocation, helper_);
         }
         else{
             DBUtility.get().getPostsFeed(new DBCallBack<ArrayList<Post>>() {
@@ -105,7 +111,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                     adapter_.notifyDataSetChanged();
                     swipeRefreshLayout_.setRefreshing(false);
                 }
-            }, LocationManager.get().getZeroLocation());
+            }, LocationManager.get().getZeroLocation(), helper_);
         }
         ((MainActivity) getActivity()).showHomeFragment();
     }
