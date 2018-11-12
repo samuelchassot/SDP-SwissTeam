@@ -49,14 +49,14 @@ public class TestUtils {
         User testUser = new User("1234", "testuser", "test@gmail.com",
                 "I am a test user", cat, null,
                 "https://lh5.googleusercontent.com/-SYTkc6TIZHI/AAAAAAAAAAI/AAAAAAAAABc/EBrA4sSVWQc/photo.jpg",
-                0,0,0,null,null);
+                0,0, 0,null,null);
         return testUser;
     }
 
     protected static void addTestPost() {
         long timestamp = (new Date()).getTime();
         String key = "1234" + "_" + timestamp;
-        DBUtility.get().setPost(new Post(key, "Hello there", "1234", "General Kenobi", timestamp, 10, 20));
+        DBUtility.get().setPost(new Post(key, "Hello there", "1234", "General Kenobi", timestamp, 0, 0));
 
 
     }
@@ -64,7 +64,7 @@ public class TestUtils {
     protected static Post getTestPost() {
         long timestamp = (new Date()).getTime();
         String key = "1234" + "_" + timestamp;
-        return new Post(key, "Hello there", "1234", "General Kenobi", timestamp, 10, 20);
+        return new Post(key, "Hello there", "1234", "General Kenobi", timestamp, 0, 0);
     }
 
     protected static void sleep(int ms){

@@ -38,11 +38,8 @@ public class HomeFragmentTest extends FirebaseTest{
         TestUtils.addTestPost();
         user = TestUtils.getTestUser();
         post = TestUtils.getTestPost();
-        GoogleSignInSingleton.putUniqueID(user.getGoogleId_());
         post.addToDB(DBUtility.get().getDb_());
         user.addToDB(DBUtility.get().getDb_());
-        SettingsDbHelper helper = new SettingsDbHelper(mActivityRule.getActivity().getApplicationContext());
-        SettingsDBUtility.addRowIfNeeded(helper, user.getGoogleId_());
         sleep(400);
     }
 
