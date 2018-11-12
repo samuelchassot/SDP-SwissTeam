@@ -36,6 +36,7 @@
 
     <dimen name="settings_police_big_title">26dp</dimen>
     <dimen name="settings_police_medium_title">18dp</dimen>
+    <dimen name="ranking_star_size">10dp</dimen>
 
 </resources>
 

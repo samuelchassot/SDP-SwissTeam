@@ -59,9 +59,6 @@ public class ProfileDisplayFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
-        toolbar.setTitle(R.string.toolbar_profile);
-
     }
 
     @Override
@@ -69,6 +66,9 @@ public class ProfileDisplayFragment extends Fragment {
                              Bundle savedInstanceState) {
         View thisView = inflater.inflate(R.layout.fragment_profile_display, container, false);
 
+        // Toolbar
+        Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
+        toolbar.setTitle(R.string.toolbar_profile);
 
         Button button = (Button) thisView.findViewById(R.id.button_profiledisplay_modify);
         button.setOnClickListener(new View.OnClickListener() {
@@ -120,9 +120,9 @@ public class ProfileDisplayFragment extends Fragment {
 
                 TextView ratingView = (TextView) view.findViewById(R.id.textview_profiledisplay_rating);
                 ratingView.setText(Integer.toString(user.getRating_()));
+                Picasso.get().load(user.getImageUrl_()).into((ImageView) view.findViewById(R.id.imageview_profiledisplay_picture));
             }
 
-            Picasso.get().load(user.getImageUrl_()).into((ImageView) getView().findViewById(R.id.imageview_profiledisplay_picture));
 
             //for the recyclerview
             mCapabilities_.clear();

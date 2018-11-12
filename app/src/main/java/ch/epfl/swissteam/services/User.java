@@ -28,10 +28,12 @@ public class User implements DBSavable {
 
     private ArrayList<ChatRelation> chatRelations_;
 
-    public static enum Vote {
+    public enum Vote{
         UPVOTE,
         DOWNVOTE
     }
+
+    public static int RATING_[] = {-2,-1,0,1,2};
 
     /**
      * return the GoogleID that corresponds to a deleted user
@@ -297,7 +299,7 @@ public class User implements DBSavable {
             }
         }
 
-
+        Log.i("USER", "ADDED");
     }
 
     @Override
