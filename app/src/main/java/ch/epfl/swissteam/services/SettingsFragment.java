@@ -101,6 +101,10 @@ public class SettingsFragment extends Fragment {
                 radius/1000.0);
         textview.setText(currentRadius);
 
+        constructSeekBar(view, radius, textview);
+    }
+
+    private void constructSeekBar(View view, int radius, TextView textview){
         SeekBar radiusSeekBar = view.findViewById(R.id.seekbar_settings_radius);
         radiusSeekBar.setProgress(radius);
         radiusSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -118,11 +122,6 @@ public class SettingsFragment extends Fragment {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 SettingsDBUtility.updateRadius(dbHelper_, id_, progress);
-
-                String displayToast = String.format(Locale.ENGLISH,
-                        getResources().getString(R.string.settings_seekbar_toast_end) + " %.2f km",
-                        progress/1000.0);
-                Toast.makeText(view.getContext(), displayToast, Toast.LENGTH_LONG).show();
 
                 String displayCurrentRadius = String.format(Locale.ENGLISH,
                         getResources().getString(R.string.settings_seekbar_currentradius) + " %.2f km",
