@@ -30,8 +30,6 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
 @RunWith(AndroidJUnit4.class)
 public class SettingsFragmentTest {
-    private SettingsDbHelper helper;
-    private String id;
     @Rule
     public final ActivityTestRule<MainActivity> mActivityRule =
             new ActivityTestRule<>(MainActivity.class);
@@ -39,9 +37,6 @@ public class SettingsFragmentTest {
     @Before
     public void initialize() {
         LocationManager.get().setMock();
-        id = "1234";
-        helper = new SettingsDbHelper(mActivityRule.getActivity().getApplicationContext());
-        SettingsDBUtility.addRowIfNeeded(helper, id);
     }
 
     @After
@@ -63,7 +58,7 @@ public class SettingsFragmentTest {
 
         String s = String.format(Locale.ENGLISH,
                 mActivityRule.getActivity().getResources().getString(R.string.settings_seekbar_currentradius) + " %.2f km",
-                SettingsDBUtility.retrieveRadius(helper, id)/1000.0);
+                LocationManager.MAX_POST_DISTANCE/1000.0);
         onView(withId(R.id.textview_settings_currentradius)).check(matches(withText(s)));
     }
 

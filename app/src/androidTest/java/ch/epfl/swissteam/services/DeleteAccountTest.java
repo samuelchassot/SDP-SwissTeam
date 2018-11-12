@@ -35,9 +35,6 @@ public class DeleteAccountTest extends FirebaseTest {
         User testUser = TestUtils.getTestUser();
         testUser.addToDB(DBUtility.get().getDb_());
         GoogleSignInSingleton.putUniqueID(testUser.getGoogleId_());
-        SettingsDbHelper helper = new SettingsDbHelper(mainActivityRule_.getActivity().getApplicationContext());
-        SettingsDBUtility.addRowIfNeeded(helper, testUser.getGoogleId_());
-
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build();
