@@ -37,6 +37,10 @@ public class SettingsFragmentTest {
     @Before
     public void initialize() {
         LocationManager.get().setMock();
+        SettingsDbHelper helper = new SettingsDbHelper(mActivityRule.getActivity().getApplicationContext());
+        helper.getWritableDatabase().delete(SettingsContract.SettingsEntry.TABLE_NAME, null, null);
+        SettingsDBUtility.addRowIfNeeded(helper, "1234");
+        GoogleSignInSingleton.putUniqueID("1234");
     }
 
     @After
@@ -46,7 +50,6 @@ public class SettingsFragmentTest {
 
     @Test
     public void canOpenSettingsFragment() {
-        TestUtils.addRowToLocalSettingsDB(mActivityRule.getActivity(), TestUtils.M_GOOGLE_ID);
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_settings));
     }
@@ -56,6 +59,7 @@ public class SettingsFragmentTest {
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_settings));
 
+        //Default value for radius
         String s = String.format(Locale.ENGLISH,
                 mActivityRule.getActivity().getResources().getString(R.string.settings_seekbar_currentradius) + " %.2f km",
                 LocationManager.MAX_POST_DISTANCE/1000.0);
