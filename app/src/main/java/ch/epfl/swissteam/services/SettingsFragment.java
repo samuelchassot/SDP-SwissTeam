@@ -1,5 +1,6 @@
 package ch.epfl.swissteam.services;
 
+import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
@@ -65,6 +66,13 @@ public class SettingsFragment extends Fragment implements OnMapReadyCallback {
         mapView_.onCreate(mapViewBundle);
         mapView_.getMapAsync(this);
 
+        Button setHome = view.findViewById(R.id.button_settings_sethome);
+        setHome.setOnClickListener(v -> {
+            // TODO : Change the home location in the Database and call to update the map
+            Location userLocation = LocationManager.get().getCurrentLocation_();
+            LatLng currentLatLng = new LatLng(userLocation.getLatitude(), userLocation.getLongitude());
+            googleMap_.moveCamera(CameraUpdateFactory.newLatLng(currentLatLng));
+        });
 
         Button deleteAccountButton = (Button) view.findViewById(R.id.button_settings_deleteaccount);
         deleteAccountButton.setOnClickListener(v->{

@@ -88,6 +88,7 @@
                 android:layout_height="match_parent" />
 
             <Button
+                android:id="@+id/button_settings_sethome"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/settings_button_set_home"
