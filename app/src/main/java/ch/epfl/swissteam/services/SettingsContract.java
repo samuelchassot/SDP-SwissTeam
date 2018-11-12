@@ -15,7 +15,7 @@ public class SettingsContract {
     private SettingsContract(){}
 
     public static class SettingsEntry implements BaseColumns{
-        public static final String TABLE_NAME = "settings_entry";
+        public static final String TABLE_NAME = "entry";
 
         //Column for the id of the logged in user
         public static final String COLUMN_ID = "id";
