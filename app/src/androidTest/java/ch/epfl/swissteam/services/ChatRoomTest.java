@@ -1,6 +1,7 @@
 package ch.epfl.swissteam.services;
 
 import android.content.Intent;
+import android.support.test.espresso.Espresso;
 import android.support.test.espresso.contrib.DrawerActions;
 import android.support.test.espresso.contrib.NavigationViewActions;
 import android.support.test.rule.ActivityTestRule;
@@ -15,6 +16,7 @@ import org.junit.runner.RunWith;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static android.support.test.espresso.action.ViewActions.longClick;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.doesNotExist;
@@ -103,8 +105,9 @@ public class ChatRoomTest extends FirebaseTest{
     }
 
     private void sendMessage(String text){
+        Espresso.closeSoftKeyboard();
         sleep(100);
-        onView(withId(R.id.message_input)).perform(typeText(text)).check(matches(withText(text)));
+        onView(withId(R.id.message_input)).perform(typeText(text), closeSoftKeyboard()).check(matches(withText(text)));
         sleep(100);
         onView(withId(R.id.message_send_button)).perform(click());
         sleep(100);
