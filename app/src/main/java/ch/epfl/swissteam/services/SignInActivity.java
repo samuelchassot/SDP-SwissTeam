@@ -109,12 +109,12 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
+            SettingsDBUtility.addRowIfNeeded(settingsDbHelper_, account.getId());
 
             //TODO: Maybe load a list of all users while the user is connecting then check here if the googleId is in it to avoid the wait time.
             DBUtility.get().getUser(account.getId(), user -> {
                 if(user != null){
                     GoogleSignInSingleton.putUniqueID(account.getId());
-                    SettingsDBUtility.addRowIfNeeded(settingsDbHelper_, account.getId());
                     Intent mainIntent = new Intent(this, MainActivity.class);
                     mainIntent.putExtra(ACCOUNT_TAG , account);
                     startActivity(mainIntent);
@@ -122,7 +122,6 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                 else{
                     // Signed in successfully, show authenticated UI
                     GoogleSignInSingleton.putUniqueID(account.getId());
-                    SettingsDBUtility.addRowIfNeeded(settingsDbHelper_, account.getId());
                     Intent newProfileIntent = new Intent(this, NewProfileDetails.class);
                     newProfileIntent.putExtra(ACCOUNT_TAG , account);
                     startActivity(newProfileIntent);
