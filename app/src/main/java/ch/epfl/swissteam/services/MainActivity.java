@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -184,4 +185,5 @@ public class MainActivity extends NavigationDrawer {
     public void onUserInteraction() {
         LocationManager.get().refresh(this);
     }
+
 }

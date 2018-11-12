@@ -42,14 +42,16 @@ public class MyPostsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
-        toolbar.setTitle(R.string.toolbar_my_posts);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View frag = inflater.inflate(R.layout.fragment_my_posts, container, false);
+
+        // Toolbar
+        Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
+        toolbar.setTitle(R.string.toolbar_my_posts);
 
         clientUniqueID_ = GoogleSignInSingleton.get().getClientUniqueID();
         loadAndShowPostsFromUser();

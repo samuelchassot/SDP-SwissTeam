@@ -46,8 +46,6 @@ public class SettingsFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
-        toolbar.setTitle(R.string.toolbar_settings);
     }
 
     @Override
@@ -55,6 +53,10 @@ public class SettingsFragment extends Fragment implements OnMapReadyCallback {
                              Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
 
+        // Toolbar
+        Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
+        toolbar.setTitle(R.string.toolbar_settings);
+      
         View view = inflater.inflate(R.layout.fragment_settings, container, false);
 
         Bundle mapViewBundle = null;
@@ -73,6 +75,7 @@ public class SettingsFragment extends Fragment implements OnMapReadyCallback {
             LatLng currentLatLng = new LatLng(userLocation.getLatitude(), userLocation.getLongitude());
             googleMap_.moveCamera(CameraUpdateFactory.newLatLng(currentLatLng));
         });
+
 
         Button deleteAccountButton = (Button) view.findViewById(R.id.button_settings_deleteaccount);
         deleteAccountButton.setOnClickListener(v->{
