@@ -70,10 +70,7 @@ public class SettingsFragment extends Fragment implements OnMapReadyCallback {
 
         Button setHome = view.findViewById(R.id.button_settings_sethome);
         setHome.setOnClickListener(v -> {
-            // TODO : Change the home location in the Database and call to update the map
-            Location userLocation = LocationManager.get().getCurrentLocation_();
-            LatLng currentLatLng = new LatLng(userLocation.getLatitude(), userLocation.getLongitude());
-            googleMap_.moveCamera(CameraUpdateFactory.newLatLng(currentLatLng));
+            // TODO : Change the home location in the Database and move Camera to getHomeLocation()
         });
 
 
@@ -140,6 +137,7 @@ public class SettingsFragment extends Fragment implements OnMapReadyCallback {
     public void onMapReady(GoogleMap googleMap) {
         googleMap_ = googleMap;
         googleMap_.setMinZoomPreference(12);
+        // TODO : moveCamera to getHomeLocation()
         LatLng ny = new LatLng(40.7143528, -74.0059731);
         googleMap_.moveCamera(CameraUpdateFactory.newLatLng(ny));
     }
