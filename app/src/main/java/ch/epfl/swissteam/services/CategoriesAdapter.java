@@ -2,11 +2,16 @@ package ch.epfl.swissteam.services;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.TextView;
+
+import java.util.Map;
 
 /**
  * Adapter for categories used in {@link RecyclerView}.
@@ -36,11 +41,35 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Ca
     public void onBindViewHolder(@NonNull CategoriesViewHolder categoriesViewHolder, int i) {
         categoriesViewHolder.nameView_.setText(capabilities_[i].toString());
         addAddListener(categoriesViewHolder.checkBox_, capabilities_[i]);
+        addKeyWordsListener(categoriesViewHolder.keywordsInput_, capabilities_[i]);
+
     }
 
     @Override
     public int getItemCount() {
         return capabilities_.length;
+    }
+
+    private void addKeyWordsListener(EditText edittext, Categories capability){
+        edittext.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count,
+                                          int after) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+                ((NewProfileCapabilities) edittext.getContext()).addKeyWords(capability, s.toString());
+            }
+        });
     }
 
     private void addAddListener(View view, Categories capability) {
@@ -53,6 +82,7 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Ca
     private void addRemoveListener(View view, Categories capability) {
         view.setOnClickListener(v -> {
             ((NewProfileCapabilities) v.getContext()).removeCapability(capability);
+            ((NewProfileCapabilities) v.getContext()).removeKeyWords(capability);
             addAddListener(view, capability);
         });
     }
@@ -64,6 +94,7 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Ca
 
         public TextView nameView_;
         public CheckBox checkBox_;
+        public EditText keywordsInput_;
 
         /**
          * Create a CategoriesViewHolder
@@ -74,6 +105,7 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Ca
             super(v);
             this.nameView_ = v.findViewById(R.id.textview_capabilitylayout_name);
             this.checkBox_ = v.findViewById(R.id.checkbox_capabilitylayout_check);
+            this.keywordsInput_ = v.findViewById(R.id.edittext_capabilitylayout_keywords);
         }
     }
 }

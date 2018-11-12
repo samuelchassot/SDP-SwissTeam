@@ -17,7 +17,9 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -36,6 +38,8 @@ public class ProfileDisplayFragment extends Fragment {
     private LinearLayoutManager mLayoutManager_;
     private CapabilitiesAdapter mAdapter_;
     private List<Categories> mCapabilities_ = new ArrayList<Categories>();
+    private Map<String, List<String>> mKeyWords_ = new HashMap<>();
+
 
     public ProfileDisplayFragment() {
         // Required empty public constructor
@@ -91,7 +95,7 @@ public class ProfileDisplayFragment extends Fragment {
                 mLayoutManager_ = new LinearLayoutManager(this.getContext());
                 mRecyclerView_.setLayoutManager(mLayoutManager_);
 
-                mAdapter_ = new CapabilitiesAdapter(mCapabilities_);
+                mAdapter_ = new CapabilitiesAdapter(mCapabilities_, mKeyWords_);
                 mRecyclerView_.setAdapter(mAdapter_);
             }
         }
@@ -123,6 +127,10 @@ public class ProfileDisplayFragment extends Fragment {
             //for the recyclerview
             mCapabilities_.clear();
             mCapabilities_.addAll(user.getCategories_());
+            mKeyWords_.clear();
+            for(Categories c : user.getCategories_()){
+                mKeyWords_.put(c.toString(), user.getKeyWords(c));
+            }
             if (mAdapter_ != null) {
                 mAdapter_.notifyDataSetChanged();
             }
