@@ -16,6 +16,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 /**
  * A fragment to set the different settings of the application
@@ -71,6 +72,8 @@ public class SettingsFragment extends Fragment implements OnMapReadyCallback {
         Button setHome = view.findViewById(R.id.button_settings_sethome);
         setHome.setOnClickListener(v -> {
             // TODO : Change the home location in the Database and move Camera to getHomeLocation()
+
+            updateMapView(new LatLng(46.5333,6.6667));
         });
 
 
@@ -137,8 +140,15 @@ public class SettingsFragment extends Fragment implements OnMapReadyCallback {
     public void onMapReady(GoogleMap googleMap) {
         googleMap_ = googleMap;
         googleMap_.setMinZoomPreference(12);
+
         // TODO : moveCamera to getHomeLocation()
         LatLng ny = new LatLng(40.7143528, -74.0059731);
-        googleMap_.moveCamera(CameraUpdateFactory.newLatLng(ny));
+
+        updateMapView(ny);
+    }
+
+    private void updateMapView(LatLng newLatLng) {
+        googleMap_.moveCamera(CameraUpdateFactory.newLatLng(newLatLng));
+        googleMap_.addMarker(new MarkerOptions().position(newLatLng));
     }
 }
