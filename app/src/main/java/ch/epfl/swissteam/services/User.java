@@ -7,7 +7,9 @@ import com.google.firebase.database.DatabaseReference;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Class representing a user in the database
@@ -20,15 +22,18 @@ public class User implements DBSavable {
     private int rating_;
     private double latitude_, longitude_;
     private ArrayList<Categories> categories_;
+    private HashMap<String, ArrayList<String>> keyWords_;
     private ArrayList<String> upvotes_;
     private ArrayList<String> downvotes_;
 
     private ArrayList<ChatRelation> chatRelations_;
 
-    public static enum Vote{
+    public enum Vote{
         UPVOTE,
         DOWNVOTE
     }
+
+    public static int RATING_[] = {-2,-1,0,1,2};
 
     /**
      * return the GoogleID that corresponds to a deleted user
@@ -44,9 +49,9 @@ public class User implements DBSavable {
      *
      * @return a deleted user
      */
-    public static User getDeletedUser(){
+    public static User getDeletedUser() {
         User deletedUser = new User(getDeletedUserGoogleID(), "Deleted user",
-                "", "", new ArrayList<Categories>(), new ArrayList<ChatRelation>(), "https://cdn.pixabay.com/photo/2014/03/25/15/19/cross-296507_960_720.png", 0, 0.0,0.0, new ArrayList<String>(),new ArrayList<String>() );
+                "", "", new ArrayList<Categories>(), new ArrayList<ChatRelation>(), "https://cdn.pixabay.com/photo/2014/03/25/15/19/cross-296507_960_720.png", 0, 0.0, 0.0, new ArrayList<String>(), new ArrayList<String>());
         return deletedUser;
     }
 
@@ -56,6 +61,7 @@ public class User implements DBSavable {
     public User() {
         categories_ = new ArrayList<>();
         chatRelations_ = new ArrayList<>();
+        keyWords_ = new HashMap<>();
         downvotes_ = new ArrayList<>();
         upvotes_ = new ArrayList<>();
     }
@@ -63,16 +69,17 @@ public class User implements DBSavable {
     /**
      * Create a new user given its specificities
      *
-     * @param googleID_    User's unique googleId
-     * @param name_        User's name
-     * @param email_       User's email
-     * @param description_ User's description
-     * @param categories_  User's categories of services
+     * @param googleID_      User's unique googleId
+     * @param name_          User's name
+     * @param email_         User's email
+     * @param description_   User's description
+     * @param categories_    User's categories of services
      * @param chatRelations_ User's chat relations
-     * @param rating_      User's rating score
-     * @param latitude_    User's last latitude
-     * @param longitude_   User's last longitude
+     * @param rating_        User's rating score
+     * @param latitude_      User's last latitude
+     * @param longitude_     User's last longitude
      */
+    @Deprecated
     public User(String googleID_, String name_, String email_, String description_,
                 ArrayList<Categories> categories_, ArrayList<ChatRelation> chatRelations_,
                 String imageUrl_, int rating_, double latitude_, double longitude_,
@@ -84,12 +91,49 @@ public class User implements DBSavable {
         this.imageUrl_ = imageUrl_;
         this.rating_ = rating_;
         this.categories_ = categories_ == null ? new ArrayList<>() : (ArrayList<Categories>) categories_.clone();
-        this.chatRelations_ = chatRelations_ == null ? new ArrayList<>() : (ArrayList<ChatRelation>)  chatRelations_.clone();
+        this.chatRelations_ = chatRelations_ == null ? new ArrayList<>() : (ArrayList<ChatRelation>) chatRelations_.clone();
         this.upvotes_ = upvotes_ == null ? new ArrayList<String>() : (ArrayList<String>) upvotes_.clone();
         this.downvotes_ = downvotes_ == null ? new ArrayList<String>() : (ArrayList<String>) upvotes_.clone();
         this.latitude_ = latitude_;
         this.longitude_ = longitude_;
     }
+
+    /**
+     * Create a new user given its specificities
+     *
+     * @param googleID_      User's unique googleId
+     * @param name_          User's name
+     * @param email_         User's email
+     * @param description_   User's description
+     * @param categories_    User's categories of services
+     * @param keyWords_      User's keywords for each Categories
+     * @param chatRelations_ User's chat relations
+     * @param rating_        User's rating score
+     * @param latitude_      User's last latitude
+     * @param longitude_     User's last longitude
+     */
+
+    public User(String googleID_, String name_, String email_, String description_,
+                ArrayList<Categories> categories_,
+                HashMap<String, ArrayList<String>> keyWords_,
+                ArrayList<ChatRelation> chatRelations_,
+                String imageUrl_, int rating_, double latitude_, double longitude_,
+                ArrayList<String> upvotes_, ArrayList<String> downvotes_) {
+        this.googleId_ = googleID_;
+        this.email_ = email_;
+        this.name_ = name_;
+        this.description_ = description_;
+        this.imageUrl_ = imageUrl_;
+        this.rating_ = rating_;
+        this.categories_ = categories_ == null ? new ArrayList<>() : (ArrayList<Categories>) categories_.clone();
+        this.keyWords_ = keyWords_ == null ? new HashMap<>() : (HashMap<String, ArrayList<String>>) keyWords_.clone();
+        this.chatRelations_ = chatRelations_ == null ? new ArrayList<>() : (ArrayList<ChatRelation>) chatRelations_.clone();
+        this.upvotes_ = upvotes_ == null ? new ArrayList<String>() : (ArrayList<String>) upvotes_.clone();
+        this.downvotes_ = downvotes_ == null ? new ArrayList<String>() : (ArrayList<String>) upvotes_.clone();
+        this.latitude_ = latitude_;
+        this.longitude_ = longitude_;
+    }
+
 
     /**
      * Gives the google id of the user
@@ -176,6 +220,37 @@ public class User implements DBSavable {
     }
 
     /**
+     * Gives the Map of keywords for each categories the User has in his Categories
+     * If the USer hadn't put any keywords for a given categories, it will not appear in the Map
+     *
+     * @return the map of keywords for each categories
+     */
+    public HashMap<String, ArrayList<String>> getKeyWords_() {
+        if(keyWords_ != null){
+            return (HashMap<String, ArrayList<String>>) keyWords_.clone();
+        }
+        return new HashMap<>();
+
+
+
+
+    }
+
+    /**
+     * Gives the List<String> of keywords the user has for the given Categories
+     *
+     * @param c
+     * @return ArrayList<String> of keyWords (can be empty)
+     */
+    public ArrayList<String> getKeyWords(Categories c) {
+        ArrayList<String> kWords = new ArrayList<>();
+        if (keyWords_.containsKey(c.toString())) {
+            kWords.addAll(keyWords_.get(c.toString()));
+        }
+        return kWords;
+    }
+
+    /**
      * Gives the list of chat relations of the user if it exists, creates a new empty list otherwise
      *
      * @return the list of categories of the user
@@ -224,7 +299,7 @@ public class User implements DBSavable {
             }
         }
 
-        Log.e("USER", "ADDED");
+        Log.i("USER", "ADDED");
     }
 
     @Override
@@ -268,10 +343,10 @@ public class User implements DBSavable {
                 }
 
             }
-            if(!removed){
+            if (!removed) {
                 //change the ID in all messages the user sent
-                DBUtility.get().getAllMessagesFromChatRelation(cr.getId_(), messages->{
-                    for(ChatMessage m : messages){
+                DBUtility.get().getAllMessagesFromChatRelation(cr.getId_(), messages -> {
+                    for (ChatMessage m : messages) {
                         m.setUserId_(User.getDeletedUserGoogleID());
                         m.setUser_(User.getDeletedUser().getName_());
                         m.addToDB(db);
@@ -280,10 +355,6 @@ public class User implements DBSavable {
                 cr.addToDB(db);
             }
         }
-
-
-
-
 
 
     }
@@ -299,7 +370,7 @@ public class User implements DBSavable {
             chatRelations_ = new ArrayList<>();
         }
 
-        if(!chatRelations_.contains(chatRelation)) chatRelations_.add(chatRelation);
+        if (!chatRelations_.contains(chatRelation)) chatRelations_.add(chatRelation);
 
         if (db != null) {
             addToDB(db);
@@ -318,11 +389,12 @@ public class User implements DBSavable {
     /**
      * Remove a relation from the list of chatRelation of this user and save the user in the DB if db
      * is not null
+     *
      * @param chatRelation the chatRelation to remove
-     * @param db reference to the database to update the user
+     * @param db           reference to the database to update the user
      */
-    public void removeChatRelation(ChatRelation chatRelation, DatabaseReference db){
-        if(chatRelations_ != null) chatRelations_.remove(chatRelation);
+    public void removeChatRelation(ChatRelation chatRelation, DatabaseReference db) {
+        if (chatRelations_ != null) chatRelations_.remove(chatRelation);
 
         if (db != null) {
             addToDB(db);
@@ -331,9 +403,12 @@ public class User implements DBSavable {
 
     /**
      * Remove a relation from the list of chatRelation of this user
+     *
      * @param chatRelation the chatRelation to remove
      */
-    public void removeChatRelation(ChatRelation chatRelation){removeChatRelation(chatRelation, null);}
+    public void removeChatRelation(ChatRelation chatRelation) {
+        removeChatRelation(chatRelation, null);
+    }
 
     @Override
     public boolean equals(Object other) {
@@ -367,10 +442,10 @@ public class User implements DBSavable {
         return null;
     }
 
-    public void vote(Vote vote, User user){
-        if (vote == Vote.UPVOTE){
+    public void vote(Vote vote, User user) {
+        if (vote == Vote.UPVOTE) {
             this.upvote(user);
-        } else if (vote == Vote.DOWNVOTE){
+        } else if (vote == Vote.DOWNVOTE) {
             this.downvote(user);
         }
         this.addToDB(DBUtility.get().getDb_());
@@ -379,14 +454,14 @@ public class User implements DBSavable {
 
     private void upvote(User user) {
         //If already upvoted, remove it
-        if (upvotes_.contains(user.getGoogleId_())){
+        if (upvotes_.contains(user.getGoogleId_())) {
             upvotes_.remove(user.getGoogleId_());
             rating_ -= 1;
             return;
         }
 
         //if downvoted, correct the vote
-        if (downvotes_.contains(user.getGoogleId_())){
+        if (downvotes_.contains(user.getGoogleId_())) {
             downvotes_.remove(user.getGoogleId_());
             //one downvote less
             rating_ += 1;
@@ -399,16 +474,16 @@ public class User implements DBSavable {
 
 
     private void downvote(User user) {
-        if (downvotes_.contains(user.getGoogleId_())){
+        if (downvotes_.contains(user.getGoogleId_())) {
             downvotes_.remove(user.getGoogleId_());
             rating_ += 1;
             return;
         }
 
-        if (upvotes_.contains(user.getGoogleId_())){
+        if (upvotes_.contains(user.getGoogleId_())) {
             upvotes_.remove(user.getGoogleId_());
             //one upvote less
-            rating_ -=1;
+            rating_ -= 1;
         }
         downvotes_.add(user.googleId_);
         //one downvote more

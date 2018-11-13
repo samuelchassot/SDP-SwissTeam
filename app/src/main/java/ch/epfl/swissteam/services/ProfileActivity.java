@@ -78,9 +78,6 @@ public class ProfileActivity extends NavigationDrawer {
             TextView descrView = findViewById(R.id.textView_profile_description);
             descrView.setText(user.getDescription_());
 
-            TextView ratingView = findViewById(R.id.textView_profile_rating);
-            ratingView.setText(Integer.toString(user.getRating_()));
-
             Picasso.get().load(user.getImageUrl_()).into((ImageView) findViewById(R.id.imageview_profile_picture));
             if (user.getUpvotes_().contains(GoogleSignInSingleton.get().getClientUniqueID())){
                 findViewById(R.id.button_profile_upvote).setBackgroundResource(R.drawable.thumbs_up_blue);
@@ -92,6 +89,24 @@ public class ProfileActivity extends NavigationDrawer {
             } else {
                 findViewById(R.id.button_profile_downvote).setBackgroundResource(R.drawable.thumbs_down);
             }
+
+            int rating = user.getRating_();
+            ImageView starView[] = new ImageView[5];
+            starView[0] = findViewById(R.id.imageview_usersearchlayout_star0);
+            starView[1] = findViewById(R.id.imageview_usersearchlayout_star1);
+            starView[2] = findViewById(R.id.imageview_usersearchlayout_star2);
+            starView[3] = findViewById(R.id.imageview_usersearchlayout_star3);
+            starView[4] = findViewById(R.id.imageview_usersearchlayout_star4);
+
+            for (int i = 1; i < 5;i++){
+                if (rating >= User.RATING_[i]){
+                    starView[i].setBackgroundResource(R.drawable.star_yellow);
+                } else {
+                    starView[i].setBackgroundResource(R.drawable.star_grey);
+                }
+            }
+
+
 
 
 

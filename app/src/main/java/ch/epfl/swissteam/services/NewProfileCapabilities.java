@@ -5,9 +5,12 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 
 /**
  * This activity is meant to fill the user profile with service capabilities at the first connection
@@ -18,6 +21,7 @@ import java.util.ArrayList;
 public class NewProfileCapabilities extends AppCompatActivity {
 
     private ArrayList<Categories> capabilitiesList_ = new ArrayList<>();
+    private HashMap<String, ArrayList<String>> keyWords_ = new HashMap<>();
     private String googleID_, username_, email_, description_, imageUrl_;
 
     @Override
@@ -56,8 +60,8 @@ public class NewProfileCapabilities extends AppCompatActivity {
      */
     private void saveUserInDB() {
 
-        User user = new User(googleID_, username_, email_, description_, capabilitiesList_,
-                null, imageUrl_, 0, 0, 0,null,null);
+        User user = new User(googleID_, username_, email_, description_, capabilitiesList_, keyWords_,
+                null, imageUrl_, 0, 0, 0, null, null);
         user.addToDB(DBUtility.get().getDb_());
 
     }
@@ -72,6 +76,22 @@ public class NewProfileCapabilities extends AppCompatActivity {
     }
 
     /**
+     * Add a list of keyWords for the given categories
+     *
+     * @param capability capability for which add the keywords.
+     * @param keyWords   String containing the keywords separated by ;
+     */
+    public void addKeyWords(Categories capability, String keyWords) {
+        ArrayList<String> kW = new ArrayList<>(Arrays.asList(keyWords.split(";")));
+        if (keyWords_.containsKey(capability.toString())) {
+            keyWords_.remove(capability.toString());
+        }
+        Log.i("ADDKEYWORD", "key words for " + capability.toString() + " added");
+        keyWords_.put(capability.toString(), kW);
+
+    }
+
+    /**
      * Remove a capability to the user.
      *
      * @param capability capability to remove.
@@ -79,6 +99,17 @@ public class NewProfileCapabilities extends AppCompatActivity {
     public void removeCapability(Categories capability) {
         if (capabilitiesList_.contains(capability)) {
             capabilitiesList_.remove(capability);
+        }
+    }
+
+    /**
+     * Remove a list of keyWords for the given categories
+     *
+     * @param capability capability for which remove the keywords.
+     */
+    public void removeKeyWords(Categories capability) {
+        if (keyWords_.containsKey(capability.toString())) {
+            keyWords_.remove(capability.toString());
         }
     }
 }
