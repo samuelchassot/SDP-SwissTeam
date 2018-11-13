@@ -3,6 +3,7 @@ package ch.epfl.swissteam.services;
 import android.support.test.espresso.contrib.DrawerActions;
 import android.support.test.espresso.contrib.NavigationViewActions;
 import android.support.test.rule.ActivityTestRule;
+import android.util.Log;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -34,7 +35,6 @@ public class DeleteAccountTest extends FirebaseTest {
         User testUser = TestUtils.getTestUser();
         testUser.addToDB(DBUtility.get().getDb_());
         GoogleSignInSingleton.putUniqueID(testUser.getGoogleId_());
-
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build();

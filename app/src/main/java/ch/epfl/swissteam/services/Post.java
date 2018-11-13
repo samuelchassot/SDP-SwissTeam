@@ -1,6 +1,5 @@
 package ch.epfl.swissteam.services;
 
-import android.location.Location;
 import android.os.Parcel;
 import android.os.Parcelable;
 

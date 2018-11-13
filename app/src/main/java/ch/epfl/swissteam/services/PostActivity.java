@@ -1,20 +1,12 @@
 package ch.epfl.swissteam.services;
 
-import android.Manifest;
-import android.app.Activity;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.location.Location;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.google.android.gms.location.LocationServices;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
