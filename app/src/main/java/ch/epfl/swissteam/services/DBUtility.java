@@ -61,6 +61,11 @@ public class DBUtility {
         return db_;
     }
 
+    /**
+     * Get the instance of the Database
+     * @return the instance of the database
+     */
+    public FirebaseDatabase getInstance(){ return FirebaseDatabase.getInstance();};
 
     /**
      * Get all users' ID for a given category
@@ -68,7 +73,7 @@ public class DBUtility {
      * @param category the category
      * @param callBack the CallBack to use
      */
-    public void getUsersFromCategory(Categories category, final MyCallBack<ArrayList<String>> callBack) {
+    public void getUsersFromCategory(Categories category, final DBCallBack<ArrayList<String>> callBack) {
 
         if (category == Categories.ALL) {
             Log.e("DBUtility", "Cannot retrieve all users that way");
@@ -96,11 +101,16 @@ public class DBUtility {
      * @param googleId unique user'Id
      * @param callBack the CallBack to use
      */
-    public void getUser(String googleId, final MyCallBack<User> callBack) {
+    public void getUser(String googleId, final DBCallBack<User> callBack) {
 
         if (googleId == null) {
             User nullUser = null;//new User(null, null, null, null, null, null);
             callBack.onCallBack(nullUser);
+            return;
+        }
+        if(googleId.equals(User.getDeletedUserGoogleID())){
+            User deletedUser = User.getDeletedUser();
+            callBack.onCallBack(deletedUser);
             return;
         }
         db_.child(USERS).child(googleId).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -123,7 +133,7 @@ public class DBUtility {
      *
      * @param callBack the callBack to use
      */
-    public void getAllUsers(final MyCallBack<ArrayList<User>> callBack) {
+    public void getAllUsers(final DBCallBack<ArrayList<User>> callBack) {
 
         db_.child(USERS).addListenerForSingleValueEvent(new ValueEventListener() {
             ArrayList<User> users = new ArrayList<>();
@@ -144,13 +154,30 @@ public class DBUtility {
 
     }
 
+    public void getAllMessagesFromChatRelation(String chatRelationId, final DBCallBack<ArrayList<ChatMessage>> callBack){
+        db_.child(DBUtility.CHATS).child(chatRelationId).addListenerForSingleValueEvent(new ValueEventListener() {
+            ArrayList<ChatMessage> messages = new ArrayList<>();
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot data : dataSnapshot.getChildren()) {
+                    messages.add(data.getValue(ChatMessage.class));
+                }
+                callBack.onCallBack(messages);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
+    }
+
     /**
      * Retrieves the POSTS_DISPLAY_NUMBER freshest post of the database in geographical range of the user.
-     *
-     * @param callBack     the function called on the callBack
+     *  @param callBack     the function called on the callBack
      * @param userLocation the location of the user
+     * @param helper the helper for the settings local database
      */
-    public void getPostsFeed(final MyCallBack<ArrayList<Post>> callBack, Location userLocation) {
+    public void getPostsFeed(final DBCallBack<ArrayList<Post>> callBack, Location userLocation, SettingsDbHelper helper) {
         Query freshestPosts = db_.child(POSTS).orderByChild("timestamp_").limitToFirst(POSTS_DISPLAY_NUMBER);
         freshestPosts.addListenerForSingleValueEvent(new ValueEventListener() {
             ArrayList<Post> posts = new ArrayList<>();
@@ -164,7 +191,8 @@ public class DBUtility {
                     Location postLocation = new Location("");
                     postLocation.setLongitude(post.getLongitude_());
                     postLocation.setLatitude(post.getLatitude_());
-                    if (postLocation.distanceTo(userLocation) <= LocationManager.MAX_POST_DISTANCE) {
+                    int radius = SettingsDBUtility.retrieveRadius(helper, GoogleSignInSingleton.get().getClientUniqueID());
+                    if (postLocation.distanceTo(userLocation) <= radius) {
                         posts.add(0, post);
                     }
                 }
@@ -184,7 +212,7 @@ public class DBUtility {
      * @param category Category wanted from DB
      * @param callBack Callback to execute
      */
-    public void getCategory(Categories category, final MyCallBack<Categories> callBack) {
+    public void getCategory(Categories category, final DBCallBack<Categories> callBack) {
         db_.child(CATEGORIES).child(category.toString()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -207,9 +235,8 @@ public class DBUtility {
      * @param googleID the ID of the user
      * @param callBack the function called on the callBack
      */
-    public void getUsersPosts(String googleID, final MyCallBack<ArrayList<Post>> callBack) {
+    public void getUsersPosts(String googleID, final DBCallBack<ArrayList<Post>> callBack) {
         Query usersPosts = db_.child(POSTS).orderByChild("googleId_").equalTo(googleID);
-        Log.e("ID", googleID);
         usersPosts.addListenerForSingleValueEvent(new ValueEventListener() {
             ArrayList<Post> posts = new ArrayList<>();
 

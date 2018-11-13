@@ -17,7 +17,9 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -36,6 +38,8 @@ public class ProfileDisplayFragment extends Fragment {
     private LinearLayoutManager mLayoutManager_;
     private CapabilitiesAdapter mAdapter_;
     private List<Categories> mCapabilities_ = new ArrayList<Categories>();
+    private Map<String, List<String>> mKeyWords_ = new HashMap<>();
+
 
     public ProfileDisplayFragment() {
         // Required empty public constructor
@@ -55,9 +59,6 @@ public class ProfileDisplayFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
-        toolbar.setTitle(R.string.toolbar_profile);
-
     }
 
     @Override
@@ -65,6 +66,9 @@ public class ProfileDisplayFragment extends Fragment {
                              Bundle savedInstanceState) {
         View thisView = inflater.inflate(R.layout.fragment_profile_display, container, false);
 
+        // Toolbar
+        Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
+        toolbar.setTitle(R.string.toolbar_profile);
 
         Button button = (Button) thisView.findViewById(R.id.button_profiledisplay_modify);
         button.setOnClickListener(new View.OnClickListener() {
@@ -91,7 +95,7 @@ public class ProfileDisplayFragment extends Fragment {
                 mLayoutManager_ = new LinearLayoutManager(this.getContext());
                 mRecyclerView_.setLayoutManager(mLayoutManager_);
 
-                mAdapter_ = new CapabilitiesAdapter(mCapabilities_);
+                mAdapter_ = new CapabilitiesAdapter(mCapabilities_, mKeyWords_);
                 mRecyclerView_.setAdapter(mAdapter_);
             }
         }
@@ -116,13 +120,17 @@ public class ProfileDisplayFragment extends Fragment {
 
                 TextView ratingView = (TextView) view.findViewById(R.id.textview_profiledisplay_rating);
                 ratingView.setText(Integer.toString(user.getRating_()));
+                Picasso.get().load(user.getImageUrl_()).into((ImageView) view.findViewById(R.id.imageview_profiledisplay_picture));
             }
 
-            Picasso.get().load(user.getImageUrl_()).into((ImageView) getView().findViewById(R.id.imageview_profiledisplay_picture));
 
             //for the recyclerview
             mCapabilities_.clear();
             mCapabilities_.addAll(user.getCategories_());
+            mKeyWords_.clear();
+            for(Categories c : user.getCategories_()){
+                mKeyWords_.put(c.toString(), user.getKeyWords(c));
+            }
             if (mAdapter_ != null) {
                 mAdapter_.notifyDataSetChanged();
             }

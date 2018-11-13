@@ -79,7 +79,39 @@
           app:layout_constraintStart_toStartOf="parent"
           app:layout_constraintTop_toTopOf="parent" />
 
-      <Button
+        <Button
+            android:id="@+id/button_profile_downvote"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="6dp"
+            android:background="@drawable/thumbs_down"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/button_profile_toChat"
+            app:layout_constraintHorizontal_bias="0.591"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.936" />
+
+        <Button
+            android:id="@+id/button_profile_upvote"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/thumbs_up"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.075"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.94" />
+
+        <Button
           android:id="@+id/button_profile_toChat"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
@@ -97,36 +129,46 @@
           app:layout_constraintTop_toTopOf="parent"
           app:layout_constraintVertical_bias="0.94" />
 
-      <TextView
-          android:id="@+id/textView_profile_ratingtag"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_marginBottom="8dp"
-          android:layout_marginLeft="8dp"
-          android:layout_marginStart="8dp"
-          android:layout_marginTop="8dp"
-          android:text="@string/profiledisplay_ratingtag"
-          app:layout_constraintBottom_toBottomOf="parent"
-          app:layout_constraintStart_toStartOf="@+id/guideline"
-          app:layout_constraintTop_toBottomOf="@+id/textView_profile_email"
-          app:layout_constraintVertical_bias="0.0" />
+        <ImageView
+            android:id="@+id/imageview_usersearchlayout_star0"
+            android:layout_width="@dimen/ranking_star_size"
+            android:layout_height="@dimen/ranking_star_size"
+            android:layout_marginTop="183dp"
+            app:layout_constraintEnd_toStartOf="@+id/imageview_usersearchlayout_star1"
+            app:layout_constraintTop_toTopOf="parent" />
 
-      <TextView
-          android:id="@+id/textView_profile_rating"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_marginBottom="8dp"
-          android:layout_marginEnd="8dp"
-          android:layout_marginLeft="8dp"
-          android:layout_marginRight="8dp"
-          android:layout_marginStart="8dp"
-          android:layout_marginTop="8dp"
-          app:layout_constraintBottom_toBottomOf="parent"
-          app:layout_constraintEnd_toEndOf="parent"
-          app:layout_constraintHorizontal_bias="0.1"
-          app:layout_constraintStart_toEndOf="@+id/textView_profile_ratingtag"
-          app:layout_constraintTop_toBottomOf="@+id/textView_profile_email"
-          app:layout_constraintVertical_bias="0.0" />
+        <ImageView
+            android:id="@+id/imageview_usersearchlayout_star1"
+            android:layout_width="@dimen/ranking_star_size"
+            android:layout_height="@dimen/ranking_star_size"
+            android:layout_marginTop="183dp"
+            app:layout_constraintEnd_toStartOf="@+id/imageview_usersearchlayout_star2"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/imageview_usersearchlayout_star2"
+            android:layout_width="@dimen/ranking_star_size"
+            android:layout_height="@dimen/ranking_star_size"
+            android:layout_marginTop="183dp"
+            app:layout_constraintEnd_toStartOf="@+id/imageview_usersearchlayout_star3"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/imageview_usersearchlayout_star3"
+            android:layout_width="@dimen/ranking_star_size"
+            android:layout_height="@dimen/ranking_star_size"
+            android:layout_marginTop="183dp"
+            app:layout_constraintEnd_toStartOf="@+id/imageview_usersearchlayout_star4"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/imageview_usersearchlayout_star4"
+            android:layout_width="@dimen/ranking_star_size"
+            android:layout_height="@dimen/ranking_star_size"
+            android:layout_marginTop="183dp"
+            android:layout_marginEnd="175dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
       <android.support.constraint.Guideline
           android:id="@+id/guideline"

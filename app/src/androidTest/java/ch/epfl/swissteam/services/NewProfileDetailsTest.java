@@ -20,6 +20,7 @@ import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static android.support.test.espresso.action.ViewActions.replaceText;
+import static android.support.test.espresso.action.ViewActions.scrollTo;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.intent.Intents.intended;
@@ -29,6 +30,7 @@ import static android.support.test.espresso.intent.matcher.IntentMatchers.hasCom
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static ch.epfl.swissteam.services.TestUtils.sleep;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.anyInt;
 import static org.mockito.Mockito.doCallRealMethod;
@@ -112,6 +114,8 @@ public class NewProfileDetailsTest extends FirebaseTest{
         onView(withId(R.id.plaintext_newprofiledetails_name)).check(matches(withText(username)));
         onView(withId(R.id.button_newprofiledetails_next)).perform(click());
         intended(hasComponent(NewProfileCapabilities.class.getName()));
+        closeSoftKeyboard();
+        sleep(1000);
         onView(withId(R.id.button_newprofilecapabilites_done)).perform(click());
         intended(hasComponent(MainActivity.class.getName()));
     }

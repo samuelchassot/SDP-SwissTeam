@@ -20,6 +20,7 @@ public class OnlineChatFragment extends Fragment {
 
     private ProfileDisplayFragment.OnFragmentInteractionListener mListener;
     private ChatRelationAdapter adapter_;
+    private View fragmentView_;
 
     public OnlineChatFragment() {
         // Required empty public constructor
@@ -39,29 +40,31 @@ public class OnlineChatFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
-        toolbar.setTitle(R.string.toolbar_chats);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        // Inflate the layout for this fragment
-        View thatView = inflater.inflate(R.layout.fragment_online_chat, container, false);
-        DBUtility.get().getUser(GoogleSignInSingleton.get().getClientUniqueID(), new MyCallBack<User>() {
-            @Override
-            public void onCallBack(User user) {
-                if (user != null) {
-                    displayChats(thatView, user);
-                }
-            }
-        });
+        // Toolbar
+        Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
+        toolbar.setTitle(R.string.toolbar_chats);
 
-        return thatView;
+        // Inflate the layout for this fragment
+        fragmentView_ = inflater.inflate(R.layout.fragment_online_chat, container, false);
+        refresh();
+
+        return fragmentView_;
     }
 
-    //TODO find out why this does not work anymore
+    private void refresh(){
+        DBUtility.get().getUser(GoogleSignInSingleton.get().getClientUniqueID(), user -> {
+            if (user != null) {
+                displayChats(fragmentView_, user);
+            }
+        });
+    }
+
     private void displayChats(View view, User user) {
 
         ArrayList<ChatRelation> relations = user.getChatRelations_();

@@ -1,8 +1,11 @@
 package ch.epfl.swissteam.services;
 
+import android.content.Context;
+import android.support.test.espresso.UiController;
 import android.support.test.espresso.ViewAction;
-import android.support.test.espresso.ViewInteraction;
 import android.support.test.espresso.contrib.RecyclerViewActions;
+
+import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.v7.widget.AppCompatImageButton;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -16,9 +19,12 @@ import org.hamcrest.TypeSafeMatcher;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 
+import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.scrollTo;
 import static android.support.test.espresso.matcher.ViewMatchers.hasDescendant;
 import static android.support.test.espresso.matcher.ViewMatchers.withClassName;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
@@ -34,24 +40,26 @@ public class TestUtils {
     protected static final String URL = TestUtils.getTestUser().getImageUrl_();
     protected static final ArrayList<Categories> CATS = new ArrayList<>(Arrays.asList(Categories.COOKING));
     protected static final User M_USER = new User(M_GOOGLE_ID,"Bear", "polar@north.nth","",
-            null,null, URL, 0, 0, 0);
+            null,null, URL, 0, 0, 0,null,null);
     protected static final User O_USER = new User(O_GOOGLE_ID, "Raeb", "hairy@north.nth",
-            "", CATS, null, URL, 0, 0, 0);
+            "", CATS, null, URL, 0, 0, 0,null,null);
 
     protected static User getTestUser(){
         ArrayList<Categories> cat = new ArrayList<>();
         cat.add(Categories.IC);
+        HashMap<String, ArrayList<String>> kW = new HashMap<>();
+        kW.put(Categories.IC.toString(), new ArrayList<>(Arrays.asList("Python", "Java")));
         User testUser = new User("1234", "testuser", "test@gmail.com",
-                "I am a test user", cat, null,
+                "I am a test user", cat, kW, null,
                 "https://lh5.googleusercontent.com/-SYTkc6TIZHI/AAAAAAAAAAI/AAAAAAAAABc/EBrA4sSVWQc/photo.jpg",
-                0,0,0);
+                0,0, 0,null,null);
         return testUser;
     }
 
     protected static void addTestPost() {
         long timestamp = (new Date()).getTime();
         String key = "1234" + "_" + timestamp;
-        DBUtility.get().setPost(new Post(key, "Hello there", "1234", "General Kenobi", timestamp, 10, 20));
+        DBUtility.get().setPost(new Post(key, "Hello there", "1234", "General Kenobi", timestamp, 0, 0));
 
 
     }
@@ -59,7 +67,7 @@ public class TestUtils {
     protected static Post getTestPost() {
         long timestamp = (new Date()).getTime();
         String key = "1234" + "_" + timestamp;
-        return new Post(key, "Hello there", "1234", "General Kenobi", timestamp, 10, 20);
+        return new Post(key, "Hello there", "1234", "General Kenobi", timestamp, 0, 0);
     }
 
     protected static void sleep(int ms){
@@ -96,14 +104,31 @@ public class TestUtils {
         DBUtility.get().getDb_().getDatabase().goOffline();
     }
 
-    protected static ViewInteraction recyclerScrollToItemWithTextAndPerformOnItem(int recyclerViewId, String text, ViewAction perform){
-        return onView(withId(recyclerViewId)).
-                perform(RecyclerViewActions.scrollTo(hasDescendant(withText(text)))).
-                perform(RecyclerViewActions.actionOnItem(hasDescendant(withText(text)), perform));
+    protected static void recyclerScrollToItemWithTextAndPerformOnItem(int recyclerViewId, String text, ViewAction perform){
+        onView(withId(recyclerViewId)).perform(RecyclerViewActions.actionOnItem(hasDescendant(withText(text)), perform));
     }
 
-    protected static ViewInteraction recyclerScrollToItemWithTextAndPerformClickItem(int recyclerViewId, String text){
-        return recyclerScrollToItemWithTextAndPerformOnItem(recyclerViewId, text, click());
+    protected static void recyclerScrollToItemWithTextAndPerformClickItem(int recyclerViewId, String text){
+        recyclerScrollToItemWithTextAndPerformOnItem(recyclerViewId, text, click());
+    }
+
+    protected static ViewAction personalClick(){
+        return new ViewAction() {
+            @Override
+            public Matcher<View> getConstraints() {
+                return ViewMatchers.isEnabled(); // no constraints, they are checked above
+            }
+
+            @Override
+            public String getDescription() {
+                return "click plus button";
+            }
+
+            @Override
+            public void perform(UiController uiController, View view) {
+                view.performClick();
+            }
+        };
     }
 
     public static Matcher<View> navigationHomeMatcher() {
@@ -113,6 +138,11 @@ public class TestUtils {
                         is(ImageButton.class.getName()),
                         is(AppCompatImageButton.class.getName())
                 )));
+    }
+
+    public static void addRowToLocalSettingsDB(Context context, String id){
+        SettingsDbHelper helper = new SettingsDbHelper(context);
+        SettingsDBUtility.addRowIfNeeded(helper, id);
     }
 
 }

@@ -3,6 +3,8 @@ package ch.epfl.swissteam.services;
 
 import com.google.firebase.database.DatabaseReference;
 
+import java.util.List;
+
 /**
  * Class to represent chatRelation between users.
  *
@@ -173,12 +175,30 @@ public class ChatRelation implements DBSavable {
     }
 
 
-    //Overrides
     @Override
     public void addToDB(DatabaseReference databaseReference) {
         if(id_ == null) {
-            id_ = databaseReference.child(DBUtility.get().CHATS_RELATIONS).push().getKey();
+            id_ = databaseReference.child(DBUtility.CHATS_RELATIONS).push().getKey();
         }
-        databaseReference.child(DBUtility.get().CHATS_RELATIONS).child(id_).setValue(this);
+        databaseReference.child(DBUtility.CHATS_RELATIONS).child(id_).setValue(this);
     }
+
+    @Override
+    public void removeFromDB(DatabaseReference databaseReference){
+        databaseReference.child(DBUtility.CHATS_RELATIONS).child(id_).removeValue();
+        databaseReference.child(DBUtility.CHATS).child(id_).removeValue();
+        DBUtility.get().getUser(firstUserId_,
+                user -> user.removeChatRelation(this, DBUtility.get().getDb_()));
+        DBUtility.get().getUser(secondUserId_,
+                user -> user.removeChatRelation(this, DBUtility.get().getDb_()));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other.getClass() == ChatRelation.class
+                && getFirstUserId_().equals(((ChatRelation)other).getFirstUserId_())
+                && getSecondUserId_().equals(((ChatRelation)other).getSecondUserId_());
+    }
+
+
 }

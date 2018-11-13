@@ -46,14 +46,17 @@ public class ServicesFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
-        toolbar.setTitle(R.string.toolbar_services);
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_services, container, false);
+
+        // Toolbar
+        Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
+        toolbar.setTitle(R.string.toolbar_services);
+
         RecyclerView mRecyclerView = view.findViewById(R.id.services_recycler);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         mAdapter_ = new UserAdapter(users, getContext());

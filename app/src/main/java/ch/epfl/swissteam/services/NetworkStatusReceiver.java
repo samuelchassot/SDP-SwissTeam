@@ -21,7 +21,7 @@ public class NetworkStatusReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         int status = NetworkUtility.getConnectivityStatus(context);
         if ("android.net.conn.CONNECTIVITY_CHANGE".equals(intent.getAction())) {
-            Log.e("NetworkChange", "onReceive triggered");
+            Log.i("NetworkChange", "onReceive triggered");
             if (status == NetworkUtility.NOT_CONNECTED) {
                 Toast.makeText(context, "No Internet connection!", Toast.LENGTH_SHORT).show();
                 setStatusBarColor(R.color.no_network);

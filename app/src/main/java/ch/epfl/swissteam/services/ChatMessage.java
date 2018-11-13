@@ -132,10 +132,11 @@ public class ChatMessage implements DBSavable {
     /**
      * remove the message in databaseReference designed by key. Does nothing if key is null.
      * @param databaseReference The database reference of the target database
-     * @param key   The id of the message in the database, if null nothing happens.
+     * @param child   The id of the message in the database, if null nothing happens.
      */
-    public void removeFromDB(DatabaseReference databaseReference, String key){
-        if(key != null)
-            databaseReference.child(DBUtility.CHATS).child(relationId_).child(key).removeValue();
+    @Override
+    public void removeFromDB(DatabaseReference databaseReference, String child){
+        if(child != null)
+            databaseReference.child(DBUtility.CHATS).child(relationId_).child(child).removeValue();
     }
 }

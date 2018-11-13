@@ -50,7 +50,16 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
     public void onBindViewHolder(UserViewHolder holder, int i) {
         holder.nameView_.setText(users_.get(i).getName_());
         holder.bodyView_.setText(users_.get(i).getDescription_());
-        holder.ratingView_.setText(Integer.toString(users_.get(i).getRating_()));
+        int rating = users_.get(i).getRating_();
+
+        for (int j = 0; j < 5; j++) {
+            if (rating >= User.RATING_[j]){
+                holder.starView_[j].setBackgroundResource(R.drawable.star_yellow);
+            } else {
+                holder.starView_[j].setBackgroundResource(R.drawable.star_grey);
+            }
+        }
+
         int distance = -1;
         if(referenceLocation_ != null){
             Location userLoc = new Location("");
@@ -84,9 +93,9 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
 
         public TextView nameView_;
         public TextView bodyView_;
-        public TextView ratingView_;
         public TextView distanceView_;
         public ImageView imageView_;
+        public ImageView starView_[] = new ImageView[5];
         private View parentLayout_;
 
         /**
@@ -99,9 +108,13 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
             nameView_ = (TextView) v.findViewById(R.id.textview_usersearchlayout_name);
             bodyView_ = (TextView) v.findViewById(R.id.textview_usersearchlayout_body);
             imageView_ = v.findViewById(R.id.imageview_usersearchlayout_image);
-            ratingView_ = v.findViewById(R.id.textview_usersearchlayout_rating);
             distanceView_ = v.findViewById(R.id.textview_usersearchlayout_distance);
             parentLayout_ = v.findViewById(R.id.parent_layout);
+            starView_[0] = v.findViewById(R.id.imageview_usersearchlayout_star0);
+            starView_[1] = v.findViewById(R.id.imageview_usersearchlayout_star1);
+            starView_[2] = v.findViewById(R.id.imageview_usersearchlayout_star2);
+            starView_[3] = v.findViewById(R.id.imageview_usersearchlayout_star3);
+            starView_[4] = v.findViewById(R.id.imageview_usersearchlayout_star4);
         }
     }
 }

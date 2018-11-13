@@ -1,6 +1,5 @@
 package ch.epfl.swissteam.services;
 
-import android.location.Location;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -94,6 +93,14 @@ public class Post implements DBSavable, Parcelable {
      */
     public String getGoogleId_() {
         return googleId_;
+    }
+
+    /**
+     * Used when the author of the post delete his/her account, it changes the googleID to the "deleted user" one
+     */
+    public void removeUser(){
+        googleId_ = User.getDeletedUserGoogleID();
+        this.addToDB(DBUtility.get().getDb_());
     }
 
     /**

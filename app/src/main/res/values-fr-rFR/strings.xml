@@ -107,6 +107,10 @@
 
     <string name="settings_title_localisation">Localisation</string>
     <string name="settings_subtitle_current_localisation">Position actuelle de la maison</string>
+    <string name="settings_switch_darkmode">Mode de nuit</string>
+    <string name="settings_seekbar_radius">Rayon pour voir les posts des autres utilisateurs</string>
+    <string name="settings_seekbar_currentradius">Rayon actuel : </string>
+    <string name="settings_seekbar_toast_end">Nouvelle valeur du rayon : </string>
     <string name="settings_button_set_home">Définissez votre position actuelle comme étant celle de votre maison</string>
 
 
