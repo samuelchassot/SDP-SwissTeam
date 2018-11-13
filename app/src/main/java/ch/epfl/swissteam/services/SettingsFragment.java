@@ -23,6 +23,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 /**
@@ -34,11 +35,14 @@ public class SettingsFragment extends Fragment implements OnMapReadyCallback {
 
     private GoogleMap googleMap_;
     private MapView mapView_;
+    private Marker homeMarker_;
 
     private static final String MAPVIEW_BUNDLE_KEY = "MapViewBundleKey";
 
     private SettingsDbHelper dbHelper_;
     private String id_;
+
+    private double homeLng_, homeLat_;
 
     public SettingsFragment() {
         // Required empty public constructor
@@ -60,7 +64,7 @@ public class SettingsFragment extends Fragment implements OnMapReadyCallback {
 
         dbHelper_ = new SettingsDbHelper(this.getContext());
         id_ = GoogleSignInSingleton.get().getClientUniqueID();
-
+        retrieveHomeLocation();
     }
 
     @Override
@@ -85,9 +89,9 @@ public class SettingsFragment extends Fragment implements OnMapReadyCallback {
 
         Button setHome = view.findViewById(R.id.button_settings_sethome);
         setHome.setOnClickListener(v -> {
-            // TODO : Change the home location in the Database and move Camera to getHomeLocation()
-
-            updateMapView(new LatLng(46.5333,6.6667));
+            Location currentLocation = LocationManager.get().getCurrentLocation_();
+            updateHomeLocation(currentLocation.getLatitude(), currentLocation.getLongitude());
+            updateMapView();
         });
 
 
@@ -99,11 +103,6 @@ public class SettingsFragment extends Fragment implements OnMapReadyCallback {
 
         constructDarkModeSettings(view);
         constructRadiusSettings(view);
-
-
-        //Home
-        double longitude = SettingsDBUtility.retrieveHome(dbHelper_, SettingsContract.SettingsEntry.COLUMN_SETTINGS_HOME_LONGITUDE, id_);
-        double latitude = SettingsDBUtility.retrieveHome(dbHelper_, SettingsContract.SettingsEntry.COLUMN_SETTINGS_HOME_LATITUDE, id_);
 
         return view;
     }
@@ -161,17 +160,32 @@ public class SettingsFragment extends Fragment implements OnMapReadyCallback {
     public void onMapReady(GoogleMap googleMap) {
         googleMap_ = googleMap;
         googleMap_.setMinZoomPreference(12);
-
-        // TODO : moveCamera to getHomeLocation()
-        LatLng ny = new LatLng(40.7143528, -74.0059731);
-
-        updateMapView(ny);
+        updateMapView();
     }
 
-    private void updateMapView(LatLng newLatLng) {
+    private void updateMapView() {
+        retrieveHomeLocation();
+
+        LatLng newLatLng = new LatLng(homeLat_, homeLng_);
         googleMap_.moveCamera(CameraUpdateFactory.newLatLng(newLatLng));
-        googleMap_.addMarker(new MarkerOptions().position(newLatLng));
+
+        if (homeMarker_ == null) {
+            homeMarker_ = googleMap_.addMarker(new MarkerOptions().position(newLatLng));
+        } else {
+            homeMarker_.setPosition(newLatLng);
+        }
     }
+
+    private void retrieveHomeLocation() {
+        homeLng_ = SettingsDBUtility.retrieveHome(dbHelper_, SettingsContract.SettingsEntry.COLUMN_SETTINGS_HOME_LONGITUDE, id_);
+        homeLat_ = SettingsDBUtility.retrieveHome(dbHelper_, SettingsContract.SettingsEntry.COLUMN_SETTINGS_HOME_LATITUDE, id_);
+    }
+
+    private void updateHomeLocation(double newLat, double newLng) {
+        SettingsDBUtility.updateHome(dbHelper_, SettingsContract.SettingsEntry.COLUMN_SETTINGS_HOME_LATITUDE, id_, newLat);
+        SettingsDBUtility.updateHome(dbHelper_, SettingsContract.SettingsEntry.COLUMN_SETTINGS_HOME_LONGITUDE, id_, newLng);
+    }
+
       
     private void constructDarkModeSettings(View view){
         Switch darkModeSwitch = view.findViewById(R.id.switch_settings_darkmode);
