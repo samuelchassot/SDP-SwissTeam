@@ -17,9 +17,25 @@
             android:id="@+id/fragment_online_chats_recycler_view"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/textInputLayout2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
+
+        </android.support.v7.widget.RecyclerView>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/textInputLayout2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/online_chat_fragment_search_bar"
+                android:layout_width="match_parent"
+                android:layout_height="54dp"
+                android:hint="@string/chat_online_search_hint" />
+
+        </android.support.design.widget.TextInputLayout>
     </android.support.constraint.ConstraintLayout>
 </FrameLayout>

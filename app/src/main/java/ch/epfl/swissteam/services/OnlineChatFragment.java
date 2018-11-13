@@ -5,9 +5,12 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import java.util.ArrayList;
 
@@ -53,6 +56,19 @@ public class OnlineChatFragment extends Fragment {
         // Inflate the layout for this fragment
         fragmentView_ = inflater.inflate(R.layout.fragment_online_chat, container, false);
         refresh();
+        EditText searchBar = fragmentView_.findViewById(R.id.online_chat_fragment_search_bar);
+        searchBar.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                adapter_.setFilterName(searchBar.getText().toString());
+            }
+        });
 
         return fragmentView_;
     }

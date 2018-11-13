@@ -13,8 +13,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
-
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -22,9 +20,10 @@ import java.util.List;
  *
  * @author Sébastien gachoud
  */
-public class ChatRelationAdapter extends RecyclerView.Adapter<ChatRelationAdapter.ChatRelationsViewHolder> {
+public class ChatRelationAdapter extends RecyclerView.Adapter<ChatRelationAdapter.ChatRelationsViewHolder> implements Observer{
 
-    private List<ChatRelation> relations_;
+    private ExtendedChatRelationsList relations_;
+    private List<ExtendedChatRelation> filteredRelation_;
     private String currentUserId_;
 
     /**
@@ -33,7 +32,9 @@ public class ChatRelationAdapter extends RecyclerView.Adapter<ChatRelationAdapte
      * @param relations the list of chatRelations to be managed by the adapter
      */
     public ChatRelationAdapter(List<ChatRelation> relations, String currentUserId) {
-        relations_ = relations == null ? new ArrayList<>() : relations;
+        relations_ = new ExtendedChatRelationsList(relations, currentUserId);
+        relations_.addObserver(this);
+        filteredRelation_ = relations_.getFilteredRelations();
         currentUserId_ = currentUserId;
     }
 
@@ -47,42 +48,56 @@ public class ChatRelationAdapter extends RecyclerView.Adapter<ChatRelationAdapte
 
     @Override
     public void onBindViewHolder(ChatRelationsViewHolder holder, int i) {
-        String otherId = relations_.get(holder.getAdapterPosition()).getOtherId(currentUserId_);
 
-        DBUtility.get().getUser(otherId, oUser -> {
-            holder.contactName_.setText(oUser.getName_());
-            Picasso.get().load(oUser.getImageUrl_()).into(holder.contactImage_);
-        });
+        ExtendedChatRelation relation = filteredRelation_.get(holder.getAdapterPosition());
+        String oUserName = relation.getOthersName_();
+
+        holder.contactName_.setText(oUserName);
+        Picasso.get().load(relation.getOthersImageUrl_()).into(holder.contactImage_);
 
         holder.parentLayout_.setOnClickListener((view) -> {
             Intent intent = new Intent(holder.itemView.getContext(), ChatRoom.class);
-            intent.putExtra(ChatRelation.RELATION_ID_TEXT, relations_.get(i).getId_());
+            intent.putExtra(ChatRelation.RELATION_ID_TEXT, relation.getChatRelation_().getId_());
             holder.itemView.getContext().startActivity(intent);
         });
 
         holder.parentLayout_.setOnLongClickListener((view) -> {
-            askToDeleteRelation(view.getContext(), relations_.get(i), holder.contactName_.getText().toString());
+            askToDeleteRelation(view.getContext(), relation, oUserName);
             return true;
         });
     }
 
     @Override
     public int getItemCount() {
-        return relations_.size();
+        return filteredRelation_.size();
     }
 
-    private void askToDeleteRelation(Context context, ChatRelation chatRelation, String othersName){
+    private void askToDeleteRelation(Context context, ExtendedChatRelation chatRelation, String othersName){
         Resources res = context.getResources();
-        Utility.askToDeleteAlertDialog(context, chatRelation, null,
+        Utility.askToDeleteAlertDialog(context, chatRelation.getChatRelation_(), null,
                 res.getString(R.string.chat_relation_delete_alert_title) + " " + othersName,
                 res.getString(R.string.chat_relation_delete_alert_text),
                 (b) -> {
                     if(b){
                         relations_.remove(chatRelation);
-                        notifyDataSetChanged();
+                        refresh();
                     }
 
                 });
+    }
+
+    @Override
+    public void update(Observable observable) {
+        refresh();
+    }
+
+    public void refresh(){
+        filteredRelation_ = relations_.getFilteredRelations();
+        notifyDataSetChanged();
+    }
+
+    public void setFilterName(String filterName){
+        relations_.setFilterName_(filterName);
     }
 
     /**
