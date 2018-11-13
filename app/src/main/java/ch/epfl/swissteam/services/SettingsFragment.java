@@ -33,11 +33,12 @@ import com.google.android.gms.maps.model.MarkerOptions;
  */
 public class SettingsFragment extends Fragment implements OnMapReadyCallback {
 
+    private static final String MAPVIEW_BUNDLE_KEY = "MapViewBundleKey";
+    private static final double KILOMETER_TO_METER_FACTOR = 1000.0;
+
     private GoogleMap googleMap_;
     private MapView mapView_;
     private Marker homeMarker_;
-
-    private static final String MAPVIEW_BUNDLE_KEY = "MapViewBundleKey";
 
     private SettingsDbHelper dbHelper_;
     private String id_;
@@ -210,7 +211,7 @@ public class SettingsFragment extends Fragment implements OnMapReadyCallback {
         TextView textview = view.findViewById(R.id.textview_settings_currentradius);
         String currentRadius = String.format(Locale.ENGLISH,
                 getResources().getString(R.string.settings_seekbar_currentradius) + " %.2f km",
-                radius/1000.0);
+                radius/KILOMETER_TO_METER_FACTOR);
         textview.setText(currentRadius);
 
         constructSeekBar(view, radius, textview);
@@ -237,7 +238,7 @@ public class SettingsFragment extends Fragment implements OnMapReadyCallback {
 
                 String displayCurrentRadius = String.format(Locale.ENGLISH,
                         getResources().getString(R.string.settings_seekbar_currentradius) + " %.2f km",
-                        progress/1000.0);
+                        progress/KILOMETER_TO_METER_FACTOR);
                 textview.setText(displayCurrentRadius);
             }
         });
