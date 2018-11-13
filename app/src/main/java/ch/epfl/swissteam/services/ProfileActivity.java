@@ -98,7 +98,7 @@ public class ProfileActivity extends NavigationDrawer {
             starView[3] = findViewById(R.id.imageview_usersearchlayout_star3);
             starView[4] = findViewById(R.id.imageview_usersearchlayout_star4);
 
-            for (int i = 1; i < 5;i++){
+            for (int i = 0; i < 5;i++){
                 if (rating >= User.RATING_[i]){
                     starView[i].setBackgroundResource(R.drawable.star_yellow);
                 } else {
