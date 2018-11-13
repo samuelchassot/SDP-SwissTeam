@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ExtendedChatRelationsList extends ArrayList<ExtendedChatRelation> implements Observable{
-    List<Observer> observers = new ArrayList<>();
+    List<Observer> observers_ = new ArrayList<>();
     String filterName_;
 
     public ExtendedChatRelationsList(List<ChatRelation> chatRelations, String currentUserId){
@@ -18,17 +18,17 @@ public class ExtendedChatRelationsList extends ArrayList<ExtendedChatRelation> i
 
     @Override
     public void addObserver(Observer observer) {
-        observers.add(observer);
+        observers_.add(observer);
     }
 
     @Override
     public void removeObserver(Observer observer) {
-        observers.remove(observer);
+        observers_.remove(observer);
     }
 
     @Override
     public void notifyObservers() {
-        for (Observer observer: observers) {
+        for (Observer observer: observers_) {
             observer.update(this);
         }
     }
