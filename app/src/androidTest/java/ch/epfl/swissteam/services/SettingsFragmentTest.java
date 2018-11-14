@@ -8,8 +8,6 @@ import android.support.test.espresso.contrib.DrawerActions;
 import android.support.test.espresso.contrib.NavigationViewActions;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
-import android.widget.Checkable;
-import android.widget.SeekBar;
 
 import org.junit.After;
 import org.junit.Before;
@@ -21,13 +19,16 @@ import java.util.Locale;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static android.support.test.espresso.action.ViewActions.scrollTo;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isChecked;
 import static android.support.test.espresso.matcher.ViewMatchers.isNotChecked;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
+
 import static ch.epfl.swissteam.services.TestUtils.sleep;
+import static org.junit.Assert.*;
 
 @RunWith(AndroidJUnit4.class)
 public class SettingsFragmentTest {
@@ -54,6 +55,39 @@ public class SettingsFragmentTest {
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_settings));
     }
+
+/*    @Test
+    public void setHomeCanBePressed() {
+        onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
+        onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_settings));
+        sleep(1000);
+        closeSoftKeyboard();
+        sleep(500);
+        onView(withId(R.id.button_settings_sethome)).perform(scrollTo()).perform(click());
+    }
+*/
+/*
+    @Test
+    public void setHomeToCurrentLocationWorks() {
+        onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
+        onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_settings));
+
+        onView(withId(R.id.button_settings_sethome)).perform(click());
+        double lat = ((SettingsFragment) mActivityRule.getActivity()).getHomeLat_();
+        double lng = (SettingsFragment) mActivityRule.getActivity().getView()
+        assertEquals().;
+    }
+*/
+/*
+    @Test
+    public void isHomeMarkerMatchHomeLocation() {
+        onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
+        onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_settings));
+
+        onView(withId(R.id.button_settings_sethome)).perform(click());
+
+    }
+*/
 
     @Test
     public void displayRadius(){
