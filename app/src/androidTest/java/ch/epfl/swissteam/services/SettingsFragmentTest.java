@@ -59,7 +59,7 @@ public class SettingsFragmentTest {
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_settings));
 
-        onView(withId(R.id.button_settings_sethome)).perform(click());
+        onView(withId(R.id.button_settings_sethome)).perform(scrollTo()).perform(click());
     }
 
 /*
