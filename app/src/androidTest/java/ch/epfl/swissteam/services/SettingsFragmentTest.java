@@ -27,6 +27,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.isNotChecked;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
+import static ch.epfl.swissteam.services.TestUtils.sleep;
 import static org.junit.Assert.*;
 
 @RunWith(AndroidJUnit4.class)
@@ -59,8 +60,10 @@ public class SettingsFragmentTest {
     public void setHomeCanBePressed() {
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_settings));
-
-        onView(withId(R.id.button_settings_sethome)).perform(closeSoftKeyboard()).perform(scrollTo()).perform(click());
+        sleep(100);
+        closeSoftKeyboard();
+        sleep(500);
+        onView(withId(R.id.button_settings_sethome)).perform(scrollTo()).perform(click());
     }
 
 /*
