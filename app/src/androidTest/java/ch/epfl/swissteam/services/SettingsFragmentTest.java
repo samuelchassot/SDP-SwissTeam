@@ -60,7 +60,7 @@ public class SettingsFragmentTest {
     public void setHomeCanBePressed() {
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_settings));
-        sleep(100);
+        sleep(1000);
         closeSoftKeyboard();
         sleep(500);
         onView(withId(R.id.button_settings_sethome)).perform(scrollTo()).perform(click());
