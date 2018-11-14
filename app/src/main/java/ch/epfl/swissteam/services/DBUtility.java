@@ -290,7 +290,7 @@ public class DBUtility {
                                 for(DataSnapshot child : dataSnapshot.getChildren()){
                                     lastChild = child.getValue(ChatMessage.class);
                                 }
-                                if(lastChild != null) {
+                                if(lastChild != null && !lastChild.getUserId_().equals(GoogleSignInSingleton.get().getClientUniqueID())) {
                                     NotificationUtils.sendChatNotification(activity,
                                             "New message!", lastChild.getUser_() + ": " + lastChild.getText_(), lastChild.getRelationId_());
                                 }

@@ -158,7 +158,7 @@ public class ChatRoom extends NavigationDrawer {
     /**
      * ViewHolder class to handle the RecyclerView
      */
-    private static class MessageHolder extends RecyclerView.ViewHolder{
+    public static class MessageHolder extends RecyclerView.ViewHolder{
       
         protected TextView messageText_;
         protected TextView timeUserText_;
