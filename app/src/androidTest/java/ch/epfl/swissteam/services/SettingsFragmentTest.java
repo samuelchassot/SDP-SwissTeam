@@ -19,6 +19,7 @@ import java.util.Locale;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static android.support.test.espresso.action.ViewActions.scrollTo;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isChecked;
@@ -59,7 +60,7 @@ public class SettingsFragmentTest {
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_settings));
 
-        onView(withId(R.id.button_settings_sethome)).perform(scrollTo()).perform(click());
+        onView(withId(R.id.button_settings_sethome)).perform(closeSoftKeyboard()).perform(scrollTo()).perform(click());
     }
 
 /*
