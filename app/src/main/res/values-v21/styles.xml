@@ -4,5 +4,9 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="statusBarColor">@color/DarkcolorPrimaryDark</item>
+        <item name="noNetwork">@color/no_network</item>
+        <item name="backgroundColor">?android:colorBackground</item>
+        <item name="mainColor">@color/DarkColorPrimary</item>
     </style>
 </resources>

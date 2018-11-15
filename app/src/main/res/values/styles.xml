@@ -6,8 +6,12 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="statusBarColor">@color/colorPrimaryDark</item>
+        <item name="noNetwork">@color/no_network</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="backgroundColor">?android:colorBackground</item>
+        <item name="mainColor">@color/colorPrimary</item>
 
     </style>
 
@@ -19,5 +23,7 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="DarkMode" parent="Theme.AppCompat.NoActionBar" />
 
 </resources>

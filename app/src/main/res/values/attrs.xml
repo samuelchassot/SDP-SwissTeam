@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <attr name="noNetwork" format="reference" />
+    <attr name="statusBarColor" format="reference" />
+    <attr name="backgroundColor" format="color" />
+    <attr name="mainColor" format="color" />
+
+</resources>
