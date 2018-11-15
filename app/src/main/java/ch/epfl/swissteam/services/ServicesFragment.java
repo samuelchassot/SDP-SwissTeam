@@ -20,6 +20,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 
 /**
@@ -103,6 +104,7 @@ public class ServicesFragment extends Fragment {
             @Override
             public void afterTextChanged(Editable s) {
                 String inKeywords = s.toString();
+                keywords_ = new ArrayList<>(Arrays.asList(inKeywords.split(" ")));
 
             }
         });
@@ -122,9 +124,11 @@ public class ServicesFragment extends Fragment {
             DBUtility.get().getAllUsers((usersdb -> {
                 users.clear();
                 for (User u : usersdb) {
-                    if(! u.getGoogleId_().equals(GoogleSignInSingleton.get().getClientUniqueID())){
-                        //don't add current user to the list
-                        users.add(u);
+                    if (userContainsKeywords(u, keywords, null)) {
+                        if (!u.getGoogleId_().equals(GoogleSignInSingleton.get().getClientUniqueID())) {
+                            //don't add current user to the list
+                            users.add(u);
+                        }
                     }
                 }
                 Collections.sort(users, this::compareUsersUsingDistanceWithRef);
@@ -139,7 +143,8 @@ public class ServicesFragment extends Fragment {
 
                 for (String googleId : googleIds) {
                     DBUtility.get().getUser(googleId, user -> {
-                        if (user != null && !users.contains(user) && !user.getGoogleId_().equals(GoogleSignInSingleton.get().getClientUniqueID())) {
+                        if (user != null && !users.contains(user) && !user.getGoogleId_().equals(GoogleSignInSingleton.get().getClientUniqueID()) &&
+                                userContainsKeywords(u, keywords, category)) {
                             users.add(user);
                             Collections.sort(users, this::compareUsersUsingDistanceWithRef);
                             mAdapter_.notifyDataSetChanged();
@@ -159,6 +164,29 @@ public class ServicesFragment extends Fragment {
                 view.findViewById(R.id.services_problem_text).setVisibility(View.INVISIBLE);
             }
         }
+    }
+
+    /**
+     * return true if keywords of the user contains at least one of the list kw
+     * for the given category
+     * the list of keywords kw must contains ONLY LOWERCASE words
+     * @param u the user
+     * @param kw list of keywords to search for
+     * @param cat the category for which want to search the keywords
+     * @return boolean user has or not
+     */
+    private boolean userContainsKeywords(User u, ArrayList<String> kw, Categories cat){
+        ArrayList<String> listForCat;
+        if(cat.compareTo(Categories.ALL) == 0){
+                = u.getKeyWords(cat);
+
+        }
+        if(kw.isEmpty()){
+            if(listForCat.contains(k.toLowerCase())){
+                return true;
+            }
+        }
+        return false;
     }
 
     private int compareUsersUsingDistanceWithRef(User u1, User u2){
