@@ -124,7 +124,7 @@ public class ServicesFragment extends Fragment {
             DBUtility.get().getAllUsers((usersdb -> {
                 users.clear();
                 for (User u : usersdb) {
-                    if (userContainsKeywords(u, keywords, null)) {
+                    if (userContainsKeywords(u, keywords, category)) {
                         if (!u.getGoogleId_().equals(GoogleSignInSingleton.get().getClientUniqueID())) {
                             //don't add current user to the list
                             users.add(u);
@@ -140,11 +140,10 @@ public class ServicesFragment extends Fragment {
                 users.clear();
                 services_problem_text_udpate(view, googleIds.isEmpty());
                 mAdapter_.notifyDataSetChanged();
-
                 for (String googleId : googleIds) {
                     DBUtility.get().getUser(googleId, user -> {
                         if (user != null && !users.contains(user) && !user.getGoogleId_().equals(GoogleSignInSingleton.get().getClientUniqueID()) &&
-                                userContainsKeywords(u, keywords, category)) {
+                                userContainsKeywords(user, keywords, category)) {
                             users.add(user);
                             Collections.sort(users, this::compareUsersUsingDistanceWithRef);
                             mAdapter_.notifyDataSetChanged();
@@ -178,11 +177,19 @@ public class ServicesFragment extends Fragment {
     private boolean userContainsKeywords(User u, ArrayList<String> kw, Categories cat){
         ArrayList<String> listForCat;
         if(cat.compareTo(Categories.ALL) == 0){
-                = u.getKeyWords(cat);
+            listForCat = new ArrayList<>();
+               for(Categories c : Categories.values()){
+                   listForCat.addAll(u.getKeyWords(c));
+               }
 
+        }else{
+            listForCat = u.getKeyWords(cat);
         }
         if(kw.isEmpty()){
-            if(listForCat.contains(k.toLowerCase())){
+            return true;
+        }
+        for (String k : kw){
+            if(listForCat.contains(k)){
                 return true;
             }
         }
