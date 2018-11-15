@@ -119,4 +119,53 @@ public class PostActivity extends NavigationDrawer implements OnMapReadyCallback
         googleMap_.addMarker(new MarkerOptions().position(postLatLng).title(post_.getTitle_()));
         googleMap_.moveCamera(CameraUpdateFactory.newLatLng(postLatLng));
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mapView_.onStart();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mapView_.onResume();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        mapView_.onStop();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mapView_.onDestroy();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mapView_.onPause();
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        mapView_.onLowMemory();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        Bundle mapViewBundle = outState.getBundle(POST_MAPVIEW_BUNDLE_KEY);
+        if (mapViewBundle == null) {
+            mapViewBundle = new Bundle();
+            outState.putBundle(POST_MAPVIEW_BUNDLE_KEY, mapViewBundle);
+        }
+
+        mapView_.onSaveInstanceState(mapViewBundle);
+    }
 }
