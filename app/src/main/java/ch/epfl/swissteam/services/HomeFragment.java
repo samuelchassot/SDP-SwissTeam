@@ -1,5 +1,6 @@
 package ch.epfl.swissteam.services;
 
+import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -139,7 +140,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             return true;
         }
         else if(id == R.id.action_switchtomap) {
-            ((MainActivity)getActivity()).showPostsMapFragment();
+            startActivity(new Intent(getContext(), PostsMapActivity.class));
         }
 
         return super.onOptionsItemSelected(item);

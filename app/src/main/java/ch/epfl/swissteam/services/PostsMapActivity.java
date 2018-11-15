@@ -1,20 +1,18 @@
 package ch.epfl.swissteam.services;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -30,56 +28,40 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * A fragment containing a map showing all surrounding posts.
+ * Activity to show a map with markers corresponding to posts
  *
  * @author Adrian Baudat
  */
-public class PostsMapFragment extends Fragment implements OnMapReadyCallback {
+public class PostsMapActivity extends Activity implements OnMapReadyCallback {
 
     private static final String MAPVIEW_BUNDLE_KEY = "MapViewBundleKeyPosts";
 
     private GoogleMap googleMap_;
     private MapView mapView_;
 
-    /**
-     * Create a new instance of this fragment
-     *
-     * @return new instance of the fragment
-     */
-    public static PostsMapFragment newInstance() {
-        PostsMapFragment fragment = new PostsMapFragment();
-        return fragment;
-    }
-
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-    }
-
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        super.onCreateView(inflater, container, savedInstanceState);
-        View view = inflater.inflate(R.layout.fragment_postsmap, container, false);
+        setContentView(R.layout.activity_postsmap);
 
         Bundle mapViewBundle = null;
         if (savedInstanceState != null) {
             mapViewBundle = savedInstanceState.getBundle(MAPVIEW_BUNDLE_KEY);
         }
 
-        mapView_ = view.findViewById(R.id.mapview_postsmap);
+        mapView_ = findViewById(R.id.mapview_postsmap);
         mapView_.onCreate(mapViewBundle);
         mapView_.getMapAsync(this);
 
-        setHasOptionsMenu(true);
-        getActivity().invalidateOptionsMenu();
-        return view;
+        invalidateOptionsMenu();
     }
 
+
     @Override
-    public void onPrepareOptionsMenu(Menu menu){
+    public boolean onPrepareOptionsMenu(Menu menu){
         menu.setGroupEnabled(R.id.group_switchtoposts, true);
         menu.setGroupVisible(R.id.group_switchtoposts, true);
+        return false;
     }
 
     @Override
@@ -87,7 +69,7 @@ public class PostsMapFragment extends Fragment implements OnMapReadyCallback {
         int id = item.getItemId();
 
         if(id == R.id.action_switchtoposts) {
-            ((MainActivity)getActivity()).showHomeFragment();
+            startActivity(new Intent(this, MainActivity.class));
         }
 
         return super.onOptionsItemSelected(item);
@@ -146,14 +128,17 @@ public class PostsMapFragment extends Fragment implements OnMapReadyCallback {
     public void onMapReady(GoogleMap googleMap) {
         googleMap_ = googleMap;
         googleMap_.setMinZoomPreference(12);
-        googleMap_.setInfoWindowAdapter(new CustomInfoWindowAdapter());
+        googleMap_.moveCamera(CameraUpdateFactory.zoomTo(12));
+        googleMap_.setMinZoomPreference(6);
+        googleMap_.setMaxZoomPreference(20);
+        googleMap_.setInfoWindowAdapter(new PostsMapActivity.CustomInfoWindowAdapter());
         googleMap_.setOnMarkerClickListener(marker -> {
             marker.showInfoWindow();
             return false;
         });
         googleMap_.setOnInfoWindowClickListener(marker -> {
             Post post = (Post)marker.getTag();
-            Intent intent = new Intent(getContext(), PostActivity.class);
+            Intent intent = new Intent(this, PostActivity.class);
             intent.putExtra(PostAdapter.POST_TAG, post);
             startActivity(intent);
         });
@@ -176,7 +161,7 @@ public class PostsMapFragment extends Fragment implements OnMapReadyCallback {
                         newMarker.setTag(post);
                     }
                 }
-            }, currentLocation, new SettingsDbHelper(getContext()));
+            }, currentLocation, new SettingsDbHelper(this));
         }
     }
 
