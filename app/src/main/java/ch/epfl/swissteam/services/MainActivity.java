@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -32,6 +33,15 @@ public class MainActivity extends NavigationDrawer {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         super.onCreateDrawer(MAIN);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        int darkmode = SettingsDBUtility.retrieveDarkMode(new SettingsDbHelper(this),GoogleSignInSingleton.get().getClientUniqueID());
+        if (darkmode == 1){
+            getTheme().applyStyle(R.style.DarkMode, true);
+            toolbar.setBackgroundColor(getResources().getColor(R.color.DarkColorPrimary));
+        } else {
+            getTheme().applyStyle(R.style.AppTheme, true);
+            toolbar.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+        }
 
         br_ = new NetworkStatusReceiver();
         br_.setActivity_(this);
