@@ -120,6 +120,14 @@
         </LinearLayout>
 
     </android.support.v7.widget.CardView>
+
+    <com.google.android.gms.maps.MapView
+        android:id="@+id/mapview_postactivity"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        app:layout_constraintEnd_toEndOf="@+id/textview_postactivity_date"
+        app:layout_constraintTop_toBottomOf="@+id/textview_postactivity_date"/>
+
 </android.support.constraint.ConstraintLayout>
 
     <include
