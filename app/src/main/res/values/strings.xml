@@ -153,6 +153,7 @@
     <string name="deleted_user_name">Deleted user</string>
     <string name="title_activity_maps">Map</string>
     <string name="capabilitylayout_hintkeywords">Type some keywords separated by ;</string>
+    <string name="mapinfo_unknownuser">Unknown</string>
 
 
 </resources>
