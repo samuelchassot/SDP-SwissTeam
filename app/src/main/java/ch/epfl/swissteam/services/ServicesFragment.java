@@ -7,12 +7,16 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 
 import java.util.ArrayList;
@@ -28,6 +32,8 @@ public class ServicesFragment extends Fragment {
     private RecyclerView.Adapter mAdapter_;
     private ArrayList<User> users = new ArrayList<>();
     private Location currentUserLocation_;
+    private ArrayList<String> keywords_;
+    private Categories currentCategory_;
 
 
     public ServicesFragment() {
@@ -71,7 +77,7 @@ public class ServicesFragment extends Fragment {
         filterSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                initDataSet((Categories) adapterView.getItemAtPosition(i));
+                currentCategory_ = (Categories) adapterView.getItemAtPosition(i);
             }
 
             @Override
@@ -80,11 +86,37 @@ public class ServicesFragment extends Fragment {
             }
         });
 
+        EditText keywordsInput = (EditText) view.findViewById(R.id.edittext_services_keywordsinput);
+        keywordsInput.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count,
+                                          int after) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String inKeywords = s.toString();
+
+            }
+        });
+
+        Button searchButton = (Button) view.findViewById(R.id.button_services_search);
+        searchButton.setOnClickListener(v ->{
+            initDataSet(currentCategory_, keywords_);
+        });
+
 
         return view;
     }
 
-    private void initDataSet(Categories category) {
+    private void initDataSet(Categories category, ArrayList<String> keywords) {
         View view = getView();
         if (category == Categories.ALL) {
             DBUtility.get().getAllUsers((usersdb -> {
