@@ -4,8 +4,10 @@ import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources.Theme;
 import android.os.Build;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
@@ -20,13 +22,18 @@ public class NetworkStatusReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         int status = NetworkUtility.getConnectivityStatus(context);
+        int darkmode = SettingsDBUtility.retrieveDarkMode(new SettingsDbHelper(activity_.getApplicationContext()),GoogleSignInSingleton.get().getClientUniqueID());
         if ("android.net.conn.CONNECTIVITY_CHANGE".equals(intent.getAction())) {
             Log.i("NetworkChange", "onReceive triggered");
             if (status == NetworkUtility.NOT_CONNECTED) {
                 Toast.makeText(context, "No Internet connection!", Toast.LENGTH_SHORT).show();
                 setStatusBarColor(R.color.no_network);
             } else {
-                setStatusBarColor(R.color.colorPrimaryDark);
+                if (darkmode == 1){
+                    setStatusBarColor(R.color.DarkStatusBar);
+                } else {
+                    setStatusBarColor(R.color.colorPrimaryDark);
+                }
 
             }
         }
