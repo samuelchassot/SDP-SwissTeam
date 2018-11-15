@@ -23,7 +23,7 @@ import com.squareup.picasso.Picasso;
 public class MainActivity extends NavigationDrawer {
     private Fragment profileShowerFragment_, homeFragment_,
             servicesFragment_, createPostFragment_, settingsFragment_,
-            onlineChatFragment_, myPostsFragment_;
+            onlineChatFragment_, myPostsFragment_, postsMapFragment_;
 
     private NetworkStatusReceiver br_;
 
@@ -165,6 +165,15 @@ public class MainActivity extends NavigationDrawer {
         this.startTransactionFragment(this.homeFragment_);
     }
 
+    /**
+     * Shows the posts map Fragment, with the map of spontaneous posts
+     */
+    public void showPostsMapFragment() {
+        if (this.postsMapFragment_ == null) {
+            this.postsMapFragment_ = PostsMapFragment.newInstance();
+        }
+        this.startTransactionFragment(this.postsMapFragment_);
+    }
 
     private void showChatsFragment() {
         if (this.onlineChatFragment_ == null) {

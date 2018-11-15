@@ -10,9 +10,11 @@ public class ExtendedChatRelation {
         ready_ = ready;
         chatRelation_ = chatRelation;
         DBUtility.get().getUser(chatRelation_.getOtherId(currentUserId),user ->{
-            othersName_ = user.getName_();
-            othersImageUrl_ = user.getImageUrl_();
-            ready_.onCallBack(this);
+            if(user != null) {
+                othersName_ = user.getName_();
+                othersImageUrl_ = user.getImageUrl_();
+                ready_.onCallBack(this);
+            }
         });
     }
 
