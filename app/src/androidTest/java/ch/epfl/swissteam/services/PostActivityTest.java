@@ -59,15 +59,16 @@ public class PostActivityTest extends FirebaseTest{
 
     @Test
     public void theLocationOfThePostOnTheMapCorrespondToThePost(){
-        sleep(1000);
+        sleep(10000);
         Marker marker = mActivityRule.getActivity().getMarker();
         mActivityRule.getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                if(marker != null){
                 LatLng markerPos = marker.getPosition();
                 assertEquals(markerPos.latitude, post.getLatitude_(), 0.01);
                 assertEquals(markerPos.longitude, post.getLongitude_(), 0.01);
-                assertEquals(marker.getTitle(), post.getTitle_());
+                assertEquals(marker.getTitle(), post.getTitle_());}
             }
         });
 
