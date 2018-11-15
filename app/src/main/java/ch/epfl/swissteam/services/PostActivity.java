@@ -40,6 +40,7 @@ public class PostActivity extends NavigationDrawer implements OnMapReadyCallback
 
     private GoogleMap googleMap_;
     private MapView mapView_;
+    private Marker marker_;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,7 +117,7 @@ public class PostActivity extends NavigationDrawer implements OnMapReadyCallback
 
         // Add a marker where the post is.
         LatLng postLatLng = new LatLng(postLat_, postLng_);
-        googleMap_.addMarker(new MarkerOptions().position(postLatLng).title(post_.getTitle_()));
+        marker_ = googleMap_.addMarker(new MarkerOptions().position(postLatLng).title(post_.getTitle_()));
         googleMap_.moveCamera(CameraUpdateFactory.newLatLng(postLatLng));
     }
 
@@ -167,5 +168,15 @@ public class PostActivity extends NavigationDrawer implements OnMapReadyCallback
         }
 
         mapView_.onSaveInstanceState(mapViewBundle);
+    }
+
+    /**
+     * !Just for testing!
+     * Methods to get the marker corresponding to the location of the post
+     * in the Google Maps view.
+     * @return the marker of the post
+     */
+    protected Marker getMarker(){
+        return marker_;
     }
 }
