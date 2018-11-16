@@ -56,7 +56,7 @@ public class SettingsFragmentTest {
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_settings));
     }
 
-/*    @Test
+    @Test
     public void setHomeCanBePressed() {
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_settings));
@@ -65,7 +65,7 @@ public class SettingsFragmentTest {
         sleep(500);
         onView(withId(R.id.button_settings_sethome)).perform(scrollTo()).perform(click());
     }
-*/
+
 /*
     @Test
     public void setHomeToCurrentLocationWorks() {
