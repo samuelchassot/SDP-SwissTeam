@@ -31,12 +31,6 @@ public class MainActivity extends NavigationDrawer {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        int darkmode = SettingsDBUtility.retrieveDarkMode(this);
-        if (darkmode == 1){
-            getTheme().applyStyle(R.style.DarkMode, true);
-        } else {
-            getTheme().applyStyle(R.style.AppTheme, true);
-        }
         setContentView(R.layout.activity_main);
         super.onCreateDrawer(MAIN);
 
