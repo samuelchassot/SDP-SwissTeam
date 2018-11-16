@@ -163,6 +163,7 @@ public class SettingsFragment extends Fragment implements OnMapReadyCallback {
         googleMap_.setMinZoomPreference(12);
         updateMapView();
     }
+    
 
     private void updateMapView() {
         retrieveHomeLocation();
