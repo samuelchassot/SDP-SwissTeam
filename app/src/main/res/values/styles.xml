@@ -11,7 +11,9 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="backgroundColor">?android:colorBackground</item>
-        <item name="mainColor">@color/colorPrimary</item>
+        <item name="thumbs_up_grey">@drawable/thumbs_up</item>
+        <item name="thumbs_down_grey">@drawable/thumbs_down</item>
+        <item name="star_grey">@drawable/star_grey</item>
 
     </style>
 
@@ -24,6 +26,13 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
-    <style name="DarkMode" parent="Theme.AppCompat.NoActionBar" />
+    <style name="DarkMode" parent="Theme.AppCompat.NoActionBar" >
+        <item name="statusBarColor">@color/DarkColorPrimaryDark</item>
+        <item name="noNetwork">@color/no_network</item>
+        <item name="backgroundColor">?android:colorBackground</item>
+        <item name="thumbs_up_grey">@drawable/thumbs_up_white</item>
+        <item name="thumbs_down_grey">@drawable/thumbs_down_white</item>
+        <item name="star_grey">@drawable/star_white</item>
+    </style>
 
 </resources>

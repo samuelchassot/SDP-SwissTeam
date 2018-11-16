@@ -2,10 +2,9 @@
 <resources>
     <color name="colorPrimary">#3f51b5</color>
     <color name="colorPrimaryDark">#303F9F</color>
-    <color name="DarkcolorPrimaryDark">#000949</color>
     <color name="colorSecondary">#7e8ad0</color>
     <color name="colorAccent">#85ff4081</color>
     <color name="no_network">#770000</color>
+    <color name="DarkColorPrimaryDark">#111</color>
     <color name="DarkColorPrimary">#212121</color>
-    <color name="DarkStatusBar">#111</color>
 </resources>

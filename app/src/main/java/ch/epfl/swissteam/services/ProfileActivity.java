@@ -1,9 +1,12 @@
 package ch.epfl.swissteam.services;
 
 import android.content.Intent;
+import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -87,16 +90,21 @@ public class ProfileActivity extends NavigationDrawer {
             descrView.setText(user.getDescription_());
 
             Picasso.get().load(user.getImageUrl_()).into((ImageView) findViewById(R.id.imageview_profile_picture));
+
+            int[] attrs = new int[] { R.attr.thumbs_up_grey, R.attr.thumbs_down_grey, R.attr.star_grey};
+            TypedArray ta = this.getTheme().obtainStyledAttributes(attrs);
+
             if (user.getUpvotes_().contains(GoogleSignInSingleton.get().getClientUniqueID())){
                 findViewById(R.id.button_profile_upvote).setBackgroundResource(R.drawable.thumbs_up_blue);
             } else {
-                findViewById(R.id.button_profile_upvote).setBackgroundResource(R.drawable.thumbs_up);
+                findViewById(R.id.button_profile_upvote).setBackgroundResource(ta.getResourceId(0,0));
             }
             if (user.getDownvotes_().contains(GoogleSignInSingleton.get().getClientUniqueID())){
                 findViewById(R.id.button_profile_downvote).setBackgroundResource(R.drawable.thumbs_down_red);
             } else {
-                findViewById(R.id.button_profile_downvote).setBackgroundResource(R.drawable.thumbs_down);
+                findViewById(R.id.button_profile_downvote).setBackgroundResource(ta.getResourceId(1,0));
             }
+
 
             int rating = user.getRating_();
             ImageView starView[] = new ImageView[5];
@@ -110,9 +118,10 @@ public class ProfileActivity extends NavigationDrawer {
                 if (rating >= User.RATING_[i]){
                     starView[i].setBackgroundResource(R.drawable.star_yellow);
                 } else {
-                    starView[i].setBackgroundResource(R.drawable.star_grey);
+                    starView[i].setBackgroundResource(ta.getResourceId(2,0));
                 }
             }
+            ta.recycle();
 
 
 

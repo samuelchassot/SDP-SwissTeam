@@ -2,6 +2,7 @@ package ch.epfl.swissteam.services;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.TypedArray;
 import android.location.Location;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -52,13 +53,17 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
         holder.bodyView_.setText(users_.get(i).getDescription_());
         int rating = users_.get(i).getRating_();
 
+        int[] attrs = new int[] {R.attr.star_grey};
+        TypedArray ta = context_.obtainStyledAttributes(attrs);
+
         for (int j = 0; j < 5; j++) {
             if (rating >= User.RATING_[j]){
                 holder.starView_[j].setBackgroundResource(R.drawable.star_yellow);
             } else {
-                holder.starView_[j].setBackgroundResource(R.drawable.star_grey);
+                holder.starView_[j].setBackgroundResource(ta.getResourceId(0,0));
             }
         }
+        ta.recycle();
 
         int distance = -1;
         if(referenceLocation_ != null){
