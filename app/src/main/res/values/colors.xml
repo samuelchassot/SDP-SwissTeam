@@ -5,4 +5,6 @@
     <color name="colorSecondary">#7e8ad0</color>
     <color name="colorAccent">#85ff4081</color>
     <color name="no_network">#770000</color>
+    <color name="DarkColorPrimaryDark">#111</color>
+    <color name="DarkColorPrimary">#212121</color>
 </resources>

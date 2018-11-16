@@ -5,6 +5,7 @@
     android:id="@+id/fragment_news_rootview"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?backgroundColor"
     android:gravity="center">
 
     <android.support.constraint.ConstraintLayout
@@ -20,7 +21,6 @@
         android:layout_marginLeft="33dp"
         android:text="@string/fragment_services_title"
         android:textAlignment="center"
-        android:textColor="#000"
         android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/services_spinner"

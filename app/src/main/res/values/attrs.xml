@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <attr name="noNetwork" format="reference" />
+    <attr name="statusBarColor" format="reference" />
+    <attr name="backgroundColor" format="color" />
+    <attr name="mainColor" format="color" />
+    <attr name="star_grey" format ="reference" />
+    <attr name="thumbs_up_grey" format="reference" />
+    <attr name="thumbs_down_grey" format="reference" />
+
+</resources>

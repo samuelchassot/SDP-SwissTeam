@@ -32,6 +32,8 @@ public class ChatRoom extends NavigationDrawer {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
         setContentView(R.layout.activity_chat_room);
         super.onCreateDrawer(BACK);
         dataBase_ = DBUtility.get().getDb_();

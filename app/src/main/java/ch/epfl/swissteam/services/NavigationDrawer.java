@@ -41,6 +41,12 @@ public class NavigationDrawer extends AppCompatActivity implements NavigationVie
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        int darkmode = SettingsDBUtility.retrieveDarkMode(this);
+        if (darkmode == 1){
+            getTheme().applyStyle(R.style.DarkMode, true);
+        } else {
+            getTheme().applyStyle(R.style.AppTheme, true);
+        }
         super.onCreate(savedInstanceState);
     }
 
