@@ -12,8 +12,8 @@ import org.junit.runners.JUnit4;
 public class PostsMapActivityTest {
 
     @Rule
-    public final ActivityTestRule<MainActivity> mainActivityRule_ =
-            new ActivityTestRule<>(MainActivity.class);
+    public final ActivityTestRule<PostsMapActivity> mainActivityRule_ =
+            new ActivityTestRule<>(PostsMapActivity.class);
 
     @Test
     public void canOpenActivity() {
