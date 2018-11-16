@@ -60,7 +60,7 @@ public class SettingsFragmentTest {
     public void setHomeCanBePressed() {
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_settings));
-        sleep(1000);
+        sleep(500);
         closeSoftKeyboard();
         sleep(500);
         onView(withId(R.id.button_settings_sethome)).perform(scrollTo()).perform(click());
@@ -78,16 +78,7 @@ public class SettingsFragmentTest {
         assertEquals().;
     }
 */
-/*
-    @Test
-    public void isHomeMarkerMatchHomeLocation() {
-        onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
-        onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_settings));
 
-        onView(withId(R.id.button_settings_sethome)).perform(click());
-
-    }
-*/
 
     @Test
     public void displayRadius(){
