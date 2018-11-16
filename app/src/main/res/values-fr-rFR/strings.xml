@@ -48,8 +48,8 @@
     <string name="navigation_drawer_open">Ouvrir le menu de navigation</string>
     <string name="navigation_drawer_close">Fermer le menu de navigation</string>
 
-    <string name="nav_header_title">Samuel Chassot</string>
-    <string name="nav_header_subtitle">samuel.chassot@epfl.ch</string>
+    <string name="nav_header_title">Inconnu</string>
+    <string name="nav_header_subtitle">inconnu@gmail.com</string>
     <string name="nav_header_desc">Navigation header</string>
 
     <string name="navigation_drawer_button_home">Accueil</string>

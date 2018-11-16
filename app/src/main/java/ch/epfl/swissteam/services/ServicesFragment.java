@@ -64,6 +64,8 @@ public class ServicesFragment extends Fragment {
         Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.toolbar_services);
 
+        keywords_ = new ArrayList<>();
+
         RecyclerView mRecyclerView = view.findViewById(R.id.services_recycler);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         mAdapter_ = new UserAdapter(users, getContext());
@@ -103,14 +105,19 @@ public class ServicesFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-                String inKeywords = s.toString();
-                keywords_ = new ArrayList<>(Arrays.asList(inKeywords.split(" ")));
 
+                String inKeywords = s.toString();
+                Log.i("KEYWORDS_LENGTH", "length = " + s.length());
+                keywords_ = new ArrayList<>(Arrays.asList(inKeywords.split(" ")));
+                Log.i("LIST_LENGTH", "list length = " + keywords_.size());
+                keywords_.remove("");
+                Log.i("LIST_LENGTH", "list length = " + keywords_.size());
             }
         });
 
         Button searchButton = (Button) view.findViewById(R.id.button_services_search);
         searchButton.setOnClickListener(v ->{
+            Log.i("KEYWORDS", "list of keywords is empty ? " + keywords_.isEmpty());
             initDataSet(currentCategory_, keywords_);
         });
 

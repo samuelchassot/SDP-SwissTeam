@@ -53,8 +53,8 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="nav_header_title">Samuel Chassot</string>
-    <string name="nav_header_subtitle">baudatadrian@gmail.com</string>
+    <string name="nav_header_title">Unknown</string>
+    <string name="nav_header_subtitle">unknown@gmail.com</string>
     <string name="nav_header_desc">Navigation header</string>
 
     <string name="navigation_drawer_button_home">Home</string>
