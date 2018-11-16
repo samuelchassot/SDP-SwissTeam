@@ -32,6 +32,14 @@ public class ChatRoom extends NavigationDrawer {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        int darkmode = SettingsDBUtility.retrieveDarkMode(this);
+        if (darkmode == 1){
+            getTheme().applyStyle(R.style.DarkMode, true);
+        } else {
+            getTheme().applyStyle(R.style.AppTheme, true);
+        }
+
         setContentView(R.layout.activity_chat_room);
         super.onCreateDrawer(BACK);
         dataBase_ = DBUtility.get().getDb_();

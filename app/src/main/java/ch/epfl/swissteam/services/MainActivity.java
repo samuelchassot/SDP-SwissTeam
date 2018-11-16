@@ -31,17 +31,14 @@ public class MainActivity extends NavigationDrawer {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        super.onCreateDrawer(MAIN);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        int darkmode = SettingsDBUtility.retrieveDarkMode(new SettingsDbHelper(this),GoogleSignInSingleton.get().getClientUniqueID());
+        int darkmode = SettingsDBUtility.retrieveDarkMode(this);
         if (darkmode == 1){
             getTheme().applyStyle(R.style.DarkMode, true);
-            toolbar.setBackgroundColor(getResources().getColor(R.color.DarkColorPrimary));
         } else {
             getTheme().applyStyle(R.style.AppTheme, true);
-            toolbar.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
         }
+        setContentView(R.layout.activity_main);
+        super.onCreateDrawer(MAIN);
 
         br_ = new NetworkStatusReceiver();
         br_.setActivity_(this);
