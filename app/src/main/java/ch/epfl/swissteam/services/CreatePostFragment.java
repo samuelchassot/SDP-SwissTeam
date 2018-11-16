@@ -15,7 +15,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.location.LocationServices;
@@ -54,6 +57,27 @@ public class CreatePostFragment extends Fragment implements View.OnClickListener
                              Bundle savedInstanceState) {
         View frag = inflater.inflate(R.layout.fragment_create_post, container, false);
         ((Button) frag.findViewById(R.id.button_createpostfragment_send)).setOnClickListener(this);
+
+        Switch switchButton = (Switch) frag.findViewById(R.id.switch_createpostfragment_location);
+        TextView switchTextInfo = (TextView) frag.findViewById(R.id.textView_createpostfragment);
+
+        if (switchButton.isChecked()) {
+            switchTextInfo.setText("Home Location");
+        } else {
+            switchTextInfo.setText("Current Location");
+        }
+
+        switchButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
+                if (checked) {
+                    switchTextInfo.setText("Home Location");
+                } else {
+                    switchTextInfo.setText("Current Location");
+                }
+            }
+        });
+
         return frag;
     }
 
@@ -62,7 +86,8 @@ public class CreatePostFragment extends Fragment implements View.OnClickListener
 
         EditText titleField = ((EditText) getView().findViewById(R.id.plaintext_createpostfragment_title));
         EditText bodyField = ((EditText) getView().findViewById(R.id.plaintext_createpostfragment_body));
-        
+
+
         if (TextUtils.isEmpty(titleField.getText())) {
             Toast.makeText(getActivity(), R.string.createpostfragment_titleempty, Toast.LENGTH_SHORT).show();
         } else if (TextUtils.isEmpty(bodyField.getText())) {
@@ -75,6 +100,7 @@ public class CreatePostFragment extends Fragment implements View.OnClickListener
             long timestamp = (new Date()).getTime();
             String key = googleID + "_" + timestamp;
 
+            // TODO : Change location according to the Slider
             Location location = LocationManager.get().getCurrentLocation_();
 
             if(location != null) {

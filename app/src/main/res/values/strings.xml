@@ -105,6 +105,11 @@
     <string name="new_service">New Service</string>
     <string name="enter_key_word">Enter key words</string>
 
+    <string name="switch_button_location">Location of the Post   </string>
+    <string name="location_switch_on">Home location</string>
+    <string name="location_switch_off">Current location</string>
+
+
     /* ----- Category strings ----- */
 
     <string name="category_IC">Computer</string>
