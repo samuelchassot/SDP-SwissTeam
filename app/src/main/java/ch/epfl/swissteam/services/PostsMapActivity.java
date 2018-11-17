@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,6 +26,7 @@ import com.squareup.picasso.Target;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -32,26 +34,31 @@ import java.util.Map;
  *
  * @author Adrian Baudat
  */
-public class PostsMapActivity extends Activity implements OnMapReadyCallback {
+public class PostsMapActivity extends NavigationDrawer implements OnMapReadyCallback {
 
     private static final String MAPVIEW_BUNDLE_KEY = "MapViewBundleKeyPosts";
 
     private GoogleMap googleMap_;
     private MapView mapView_;
+    private CustomInfoWindowAdapter infoWindow;
+    private List<Marker> markers = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_postsmap);
+        super.onCreateDrawer(NavigationDrawer.MAIN);
 
         Bundle mapViewBundle = null;
         if (savedInstanceState != null) {
             mapViewBundle = savedInstanceState.getBundle(MAPVIEW_BUNDLE_KEY);
         }
 
-        mapView_ = findViewById(R.id.mapview_postsmap);
+        mapView_ = findViewById(R.id.mapview_postsmap_map);
         mapView_.onCreate(mapViewBundle);
         mapView_.getMapAsync(this);
+
+        infoWindow = new PostsMapActivity.CustomInfoWindowAdapter();
 
         invalidateOptionsMenu();
     }
@@ -59,9 +66,12 @@ public class PostsMapActivity extends Activity implements OnMapReadyCallback {
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu){
+        boolean toReturn = super.onPrepareOptionsMenu(menu);
         menu.setGroupEnabled(R.id.group_switchtoposts, true);
         menu.setGroupVisible(R.id.group_switchtoposts, true);
-        return false;
+        menu.setGroupEnabled(R.id.group_refresh, true);
+        menu.setGroupVisible(R.id.group_refresh, true);
+        return toReturn;
     }
 
     @Override
@@ -70,6 +80,9 @@ public class PostsMapActivity extends Activity implements OnMapReadyCallback {
 
         if(id == R.id.action_switchtoposts) {
             startActivity(new Intent(this, MainActivity.class));
+        }
+        else if(id == R.id.action_refresh) {
+            updateMapView();
         }
 
         return super.onOptionsItemSelected(item);
@@ -131,7 +144,7 @@ public class PostsMapActivity extends Activity implements OnMapReadyCallback {
         googleMap_.moveCamera(CameraUpdateFactory.zoomTo(12));
         googleMap_.setMinZoomPreference(6);
         googleMap_.setMaxZoomPreference(20);
-        googleMap_.setInfoWindowAdapter(new PostsMapActivity.CustomInfoWindowAdapter());
+        googleMap_.setInfoWindowAdapter(infoWindow);
         googleMap_.setOnMarkerClickListener(marker -> {
             marker.showInfoWindow();
             return false;
@@ -149,16 +162,39 @@ public class PostsMapActivity extends Activity implements OnMapReadyCallback {
         Location currentLocation = LocationManager.get().getCurrentLocation_();
 
         if(currentLocation != null) {
-
             LatLng newLatLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
             googleMap_.moveCamera(CameraUpdateFactory.newLatLng(newLatLng));
+
+            for(Marker marker : markers) {
+                marker.remove();
+            }
 
             DBUtility.get().getPostsFeed(new DBCallBack<ArrayList<Post>>() {
                 @Override
                 public void onCallBack(ArrayList<Post> value) {
                     for (Post post : value) {
-                        Marker newMarker = googleMap_.addMarker(new MarkerOptions().position(new LatLng(post.getLatitude_(), post.getLongitude_())));
-                        newMarker.setTag(post);
+                        MarkerOptions newMarkerOptions = new MarkerOptions().position(new LatLng(post.getLatitude_(), post.getLongitude_()));
+                        DBUtility.get().getUser(post.getGoogleId_(), user -> {
+                            Picasso.get().load(user.getImageUrl_()).into(new Target() {
+                                @Override
+                                public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                                    infoWindow.addUser(post.getGoogleId_(), user, bitmap);
+                                    Marker newMarker = googleMap_.addMarker(newMarkerOptions);
+                                    newMarker.setTag(post);
+                                    markers.add(newMarker);
+                                }
+
+                                @Override
+                                public void onBitmapFailed(Exception e, Drawable errorDrawable) {
+
+                                }
+
+                                @Override
+                                public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+                                }
+                            });
+                        });
                     }
                 }
             }, currentLocation, new SettingsDbHelper(this));
@@ -178,27 +214,11 @@ public class PostsMapActivity extends Activity implements OnMapReadyCallback {
 
         CustomInfoWindowAdapter() {
             mContents_ = getLayoutInflater().inflate(R.layout.mapinfo_window, null);
-            DBUtility.get().getAllUsers(list -> {
-                for(User u : list) {
-                    users.put(u.getGoogleId_(), u);
-                    Picasso.get().load(u.getImageUrl_()).into(new Target() {
-                        @Override
-                        public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                            pictures.put(u.getGoogleId_(), bitmap);
-                        }
+        }
 
-                        @Override
-                        public void onBitmapFailed(Exception e, Drawable errorDrawable) {
-
-                        }
-
-                        @Override
-                        public void onPrepareLoad(Drawable placeHolderDrawable) {
-
-                        }
-                    });
-                }
-            });
+        public void addUser(String googleId, User user, Bitmap picture){
+            users.put(googleId, user);
+            pictures.put(googleId, picture);
         }
 
         @Override
