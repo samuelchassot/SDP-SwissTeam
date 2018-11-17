@@ -7,6 +7,13 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
@@ -20,12 +27,20 @@ import static ch.epfl.swissteam.services.NewProfileDetails.GOOGLE_ID_TAG;
  *
  * @author Julie Giunta
  */
-public class PostActivity extends NavigationDrawer{
+public class PostActivity extends NavigationDrawer implements OnMapReadyCallback {
+
+    private static final String POST_MAPVIEW_BUNDLE_KEY = "PostMapViewBundleKey";
+
     private Post post_;
     private User user_;
     private View headerLayout_;
     private TextView username_, title_, body_, date_;
     private ImageView picture_;
+    private double postLng_, postLat_;
+
+    private GoogleMap googleMap_;
+    private MapView mapView_;
+    private Marker marker_;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +52,20 @@ public class PostActivity extends NavigationDrawer{
         //Retrieve the post from the intent which started this activity
         Intent callingIntent = getIntent();
         post_ = callingIntent.getParcelableExtra(PostAdapter.POST_TAG);
+
+        //Retrieve the location of the post
+        postLng_ = post_.getLongitude_();
+        postLat_ = post_.getLatitude_();
+
+        //Connect Google Maps view
+        Bundle mapViewBundle = null;
+        if (savedInstanceState != null) {
+            mapViewBundle = savedInstanceState.getBundle(POST_MAPVIEW_BUNDLE_KEY);
+        }
+
+        mapView_ = findViewById(R.id.mapview_postactivity);
+        mapView_.onCreate(mapViewBundle);
+        mapView_.getMapAsync(this);
 
         //Connect the element of the layout with the corresponding attribute
         headerLayout_ = findViewById(R.id.framelayout_postactivity_header);
@@ -65,9 +94,10 @@ public class PostActivity extends NavigationDrawer{
             Picasso.get().load(user_.getImageUrl_()).into(picture_);
         }));
 
+        //Location of the post
         Location postLocation = new Location("");
-        postLocation.setLongitude(post_.getLongitude_());
-        postLocation.setLatitude(post_.getLatitude_());
+        postLocation.setLongitude(postLng_);
+        postLocation.setLatitude(postLat_);
 
         Location userLocation = LocationManager.get().getCurrentLocation_();
 
@@ -78,5 +108,76 @@ public class PostActivity extends NavigationDrawer{
         else {
             ((TextView)findViewById(R.id.textview_postactivity_distance)).setText(this.getResources().getString(R.string.homefragment_postdistance, LocationManager.MAX_POST_DISTANCE / LocationManager.M_IN_ONE_KM));
         }
+
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        googleMap_ = googleMap;
+        googleMap_.setMinZoomPreference(12);
+
+        // Add a marker where the post is.
+        LatLng postLatLng = new LatLng(postLat_, postLng_);
+        marker_ = googleMap_.addMarker(new MarkerOptions().position(postLatLng).title(post_.getTitle_()));
+        googleMap_.moveCamera(CameraUpdateFactory.newLatLng(postLatLng));
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mapView_.onStart();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mapView_.onResume();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        mapView_.onStop();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mapView_.onDestroy();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mapView_.onPause();
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        mapView_.onLowMemory();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        Bundle mapViewBundle = outState.getBundle(POST_MAPVIEW_BUNDLE_KEY);
+        if (mapViewBundle == null) {
+            mapViewBundle = new Bundle();
+            outState.putBundle(POST_MAPVIEW_BUNDLE_KEY, mapViewBundle);
+        }
+
+        mapView_.onSaveInstanceState(mapViewBundle);
+    }
+
+    /**
+     * !Just for testing!
+     * Methods to get the marker corresponding to the location of the post
+     * in the Google Maps view.
+     * @return the marker of the post
+     */
+    protected Marker getMarker(){
+        return marker_;
     }
 }

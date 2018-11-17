@@ -72,19 +72,6 @@ public class HomeFragmentTest extends FirebaseTest{
     }
 
     @Test
-    public void canClickOnPostAndSeeInfoAboutPost(){
-        onView(withId(R.id.swiperefresh_homefragment_refresh)).perform(swipeDown());
-        sleep(300);
-        onView(withId(R.id.recyclerview_homefragment_posts)).perform(RecyclerViewActions.actionOnItemAtPosition(0,click()));
-        sleep(500);
-        onView(withId(R.id.textview_postactivity_title)).check(matches(withText(post.getTitle_())));
-        onView(withId(R.id.textview_postactivity_body)).check(matches(withText(post.getBody_())));
-        onView(withId(R.id.textview_postactivity_date)).check(matches(withText(
-                (new SimpleDateFormat("dd/MM/yyyy", Locale.FRENCH)).format(new Date(post.getTimestamp_()).getTime()))));
-        onView(withId(R.id.textview_postactivity_username)).check(matches(withText(user.getName_())));
-    }
-
-    @Test
     public void canClickOnPostAndThenComeBack(){
         onView(withId(R.id.swiperefresh_homefragment_refresh)).perform(swipeDown());
         sleep(300);
