@@ -74,12 +74,20 @@ public class ChatRelationAdapter extends RecyclerView.Adapter<ChatRelationAdapte
 
     private void askToDeleteRelation(Context context, ExtendedChatRelation chatRelation, String othersName){
         Resources res = context.getResources();
-        Utility.askToDeleteAlertDialog(context, chatRelation.getChatRelation_(), null,
-                res.getString(R.string.chat_relation_delete_alert_title) + " " + othersName,
-                res.getString(R.string.chat_relation_delete_alert_text),
-                (b) -> {
+        Utility.askToDeleteAlertDialog(context, res.getString(R.string.chat_relation_delete_alert_title) + " " + othersName,
+                res.getString(R.string.chat_relation_delete_alert_text), b -> {
                     if(b){
-                        relations_.remove(chatRelation);
+                        ChatRelation cR = chatRelation.getChatRelation_();
+                        if(cR.isHalfDeleted_()){
+                            cR.removeFromDB(DBUtility.get().getDb_());
+                        }
+                        else {
+                            cR.setHalfDeleted_(true);
+                            cR.addToDB(DBUtility.get().getDb_());
+                            DBUtility.get().getUser(currentUserId_, user ->
+                                    user.removeChatRelation(chatRelation.getChatRelation_(), DBUtility.get().getDb_()));
+                            relations_.remove(chatRelation);
+                        }
                         refresh();
                     }
 

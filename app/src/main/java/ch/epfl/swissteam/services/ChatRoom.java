@@ -16,6 +16,8 @@ import android.widget.Toast;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DatabaseReference;
 
+import static ch.epfl.swissteam.services.DBUtility.get;
+
 
 /**
  * This activity is a chat room, it display messages and allow to write and send messages
@@ -28,6 +30,7 @@ public class ChatRoom extends NavigationDrawer {
     private DatabaseReference dataBase_;
     private String currentRelationId_;
     private User mUser_;
+    private boolean isDeletedRelation = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,6 +124,10 @@ public class ChatRoom extends NavigationDrawer {
         if(currentRelationId_ == null) {
             toastUser(getResources().getString(R.string.general_could_not_establish_relation));
         }
+        if(isDeletedRelation){
+            toastUser(getResources().getString(R.string.chat_deleted_chat));
+        }
+
         ChatMessage chatMessage = new ChatMessage(message, mUser_.getName_(), mUser_.getGoogleId_(), currentRelationId_);
         chatMessage.addToDB(dataBase_);
 
@@ -148,9 +155,12 @@ public class ChatRoom extends NavigationDrawer {
 
     private void askToDeleteMessage(ChatMessage message, String key){
         Resources res = getResources();
-        Utility.askToDeleteAlertDialog(this, message, key,
-                res.getString(R.string.chat_delete_alert_title),
-                res.getString(R.string.chat_delete_alert_text));
+        Utility.askToDeleteAlertDialog(this, res.getString(R.string.chat_delete_alert_title),
+                res.getString(R.string.chat_delete_alert_text), b -> {
+                    if(b) {
+                        message.removeFromDB(get().getDb_(), key);
+                    }
+                });
     }
 
     private void toastUser(String text){

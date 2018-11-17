@@ -107,6 +107,7 @@
     <string name="chat_relation_delete_alert_title">Supprimer la conversation avec </string>
     <string name="chat_relation_delete_alert_text">Voulez-vous supprimer cette conversation ?</string>
     <string name="chat_online_search_hint">Ecrivez un nom pour trouver une conversation !</string>
+    <string name="chat_deleted_chat">Cette conversation a été supprimée.</string>
 
     /* ----- Settings string ----- */
 
