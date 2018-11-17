@@ -63,7 +63,7 @@ public class SettingsFragmentTest {
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_settings));
         sleep(500);
         closeSoftKeyboard();
-        sleep(500);
+        sleep(1000);
         onView(withId(R.id.button_settings_sethome)).perform(scrollTo()).perform(personalClick());
     }
 
