@@ -24,6 +24,7 @@ public class UserTest extends FirebaseTest {
     public static ArrayList<Categories> categories = new ArrayList<>();
     public static ArrayList<ChatRelation> chatRelations = new ArrayList<>();
     public static HashMap<String, ArrayList<String>> keyWords = new HashMap<>();
+    public static HashMap<String, ArrayList<String>> lowerCaseKeyWords = new HashMap<>();
 
     @Before
     public void setCats() {
@@ -34,6 +35,7 @@ public class UserTest extends FirebaseTest {
     public void setKeyWords(){
         ArrayList<String> cookingKeyWords = new ArrayList<>(Arrays.asList("Cake", "IceCream"));
         keyWords.put(Categories.COOKING.toString(), cookingKeyWords);
+        lowerCaseKeyWords.put(Categories.COOKING.toString(), new ArrayList<>(Arrays.asList("cake", "icecream")));
     }
     
 
@@ -45,7 +47,7 @@ public class UserTest extends FirebaseTest {
         assertEquals(name, user.getName_());
         assertEquals(description, user.getDescription_());
         assertEquals(categories, user.getCategories_());
-        assertEquals(keyWords, user.getKeyWords_());
+        assertEquals(lowerCaseKeyWords, user.getKeyWords_());
         assertEquals(imageUrl, user.getImageUrl_());
         assertEquals(rating, user.getRating_());
         assertEquals(true, user.equals(user));
@@ -164,7 +166,7 @@ public class UserTest extends FirebaseTest {
     public void getKeyWordsForParticularCat(){
         User user = new User(googleID, name,email, description, categories, keyWords, null,
                 imageUrl,rating, 0, 0,null,null);
-        assertEquals(user.getKeyWords(Categories.COOKING), keyWords.get(Categories.COOKING.toString()));
+        assertEquals(user.getKeyWords(Categories.COOKING), lowerCaseKeyWords.get(Categories.COOKING.toString()));
         assertEquals(user.getKeyWords(Categories.DAILYLIFE), new ArrayList<>());
     }
 
