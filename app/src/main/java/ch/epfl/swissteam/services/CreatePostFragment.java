@@ -72,10 +72,10 @@ public class CreatePostFragment extends Fragment implements View.OnClickListener
 
             // Initialise the textView
         if (switchButton.isChecked()) {
-            switchTextInfo.setText("Home Location");
+            switchTextInfo.setText(R.string.location_switch_on);
             homeLocation = true;
         } else {
-            switchTextInfo.setText("Current Location");
+            switchTextInfo.setText(R.string.location_switch_off);
             homeLocation = false;
         }
 
@@ -84,10 +84,10 @@ public class CreatePostFragment extends Fragment implements View.OnClickListener
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
                 if (checked) {
-                    switchTextInfo.setText("Home Location");
+                    switchTextInfo.setText(R.string.location_switch_on);
                     homeLocation = true;
                 } else {
-                    switchTextInfo.setText("Current Location");
+                    switchTextInfo.setText(R.string.location_switch_off);
                     homeLocation = false;
                 }
             }
