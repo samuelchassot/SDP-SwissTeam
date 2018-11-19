@@ -27,6 +27,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.isNotChecked;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
+import static ch.epfl.swissteam.services.TestUtils.personalClick;
 import static ch.epfl.swissteam.services.TestUtils.sleep;
 import static org.junit.Assert.*;
 
@@ -56,38 +57,6 @@ public class SettingsFragmentTest {
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_settings));
     }
 
-/*    @Test
-    public void setHomeCanBePressed() {
-        onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
-        onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_settings));
-        sleep(1000);
-        closeSoftKeyboard();
-        sleep(500);
-        onView(withId(R.id.button_settings_sethome)).perform(scrollTo()).perform(click());
-    }
-*/
-/*
-    @Test
-    public void setHomeToCurrentLocationWorks() {
-        onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
-        onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_settings));
-
-        onView(withId(R.id.button_settings_sethome)).perform(click());
-        double lat = ((SettingsFragment) mActivityRule.getActivity()).getHomeLat_();
-        double lng = (SettingsFragment) mActivityRule.getActivity().getView()
-        assertEquals().;
-    }
-*/
-/*
-    @Test
-    public void isHomeMarkerMatchHomeLocation() {
-        onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
-        onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_settings));
-
-        onView(withId(R.id.button_settings_sethome)).perform(click());
-
-    }
-*/
 
     @Test
     public void displayRadius(){
