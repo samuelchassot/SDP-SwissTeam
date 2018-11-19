@@ -73,6 +73,12 @@ public class OnlineChatFragment extends Fragment {
         return fragmentView_;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        refresh();
+    }
+
     private void refresh(){
         DBUtility.get().getUser(GoogleSignInSingleton.get().getClientUniqueID(), user -> {
             if (user != null) {
