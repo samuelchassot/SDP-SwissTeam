@@ -83,13 +83,26 @@ public class CreatePostFragmentTest extends FirebaseTest{
     }
 
     @Test
-    public void canClickOnSlider() {
-        
+    public void canClickOnSliderSeveralTimes() {
+        onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
+        onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_myposts));
+        sleep(500);
+        onView(withId(R.id.floatingbutton_addpost)).perform(click());
+        onView(withId(R.id.switch_createpostfragment_location)).perform(click());
+        onView(withId(R.id.switch_createpostfragment_location)).perform(click());
     }
 
     @Test
     public void isSliderTextCoherentWithSlider() {
+        onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
+        onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_myposts));
+        sleep(500);
+        onView(withId(R.id.floatingbutton_addpost)).perform(click());
 
+        onView(withId(R.id.textView_createpostfragment)).check(matches(withText(R.string.location_switch_on)));
+
+        onView(withId(R.id.switch_createpostfragment_location)).perform(click());
+        onView(withId(R.id.textView_createpostfragment)).check(matches(withText(R.string.location_switch_off)));
     }
 
     @Test
