@@ -9,6 +9,7 @@ public class ExtendedChatRelation {
     public ExtendedChatRelation(ChatRelation chatRelation, String currentUserId, DBCallBack<ExtendedChatRelation> ready){
         ready_ = ready;
         chatRelation_ = chatRelation;
+        //TODO check what needs to be done if user is null. I(Seb) will take care of that.
         DBUtility.get().getUser(chatRelation_.getOtherId(currentUserId),user ->{
             if(user != null) {
                 othersName_ = user.getName_();
