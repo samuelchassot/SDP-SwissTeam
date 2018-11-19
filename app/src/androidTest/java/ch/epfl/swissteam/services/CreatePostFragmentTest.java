@@ -81,4 +81,24 @@ public class CreatePostFragmentTest extends FirebaseTest{
         onView(withId(R.id.plaintext_createpostfragment_body)).perform(replaceText(longBody), ViewActions.closeSoftKeyboard()).check(matches(withText(longBody)));
         onView(withId(R.id.button_createpostfragment_send)).perform(click());
     }
+
+    @Test
+    public void canClickOnSlider() {
+        
+    }
+
+    @Test
+    public void isSliderTextCoherentWithSlider() {
+
+    }
+
+    @Test
+    public void isPostAtCurrentLocationWhenSliderOff() {
+
+    }
+
+    @Test
+    public void isPostAtHomeLocationWhenSliderOn() {
+
+    }
 }
