@@ -91,8 +91,10 @@ public class SettingsFragment extends Fragment implements OnMapReadyCallback {
         Button setHome = view.findViewById(R.id.button_settings_sethome);
         setHome.setOnClickListener(v -> {
             Location currentLocation = LocationManager.get().getCurrentLocation_();
-            updateHomeLocation(currentLocation.getLatitude(), currentLocation.getLongitude());
-            updateMapView();
+            if(currentLocation != null) {
+                updateHomeLocation(currentLocation.getLatitude(), currentLocation.getLongitude());
+                updateMapView();
+            }
         });
 
 

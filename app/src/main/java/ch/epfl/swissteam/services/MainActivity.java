@@ -166,7 +166,6 @@ public class MainActivity extends NavigationDrawer {
         this.startTransactionFragment(this.homeFragment_);
     }
 
-
     private void showChatsFragment() {
         if (this.onlineChatFragment_ == null) {
             this.onlineChatFragment_ = OnlineChatFragment.newInstance();
