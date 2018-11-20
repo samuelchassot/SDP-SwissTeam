@@ -2,11 +2,15 @@
 <resources>
 
     /* ----- GENERAL string ----- */
+
     <string name="all_next">Suivant</string>
     <string name="done_text">Terminer</string>
     <string name="all_send">Envoyer</string>
     <string name="general_error">Erreur</string>
     <string name="general_ok">OK</string>
+    <string name="general_cancel">Annuler</string>
+    <string name="general_delete">Supprimer</string>
+    <string name="warning">ATTENTION</string>
 
     /* ----- Database string ----- */
 
@@ -14,29 +18,18 @@
     <string name="general_could_not_find_this_user_in_db">Nous n\'avons pas trouvé cet utilisateur dans la database !</string>
     <string name="general_could_not_establish_relation">Nous n\’avons pas réussi à établir une relation !</string>
 
-    /* ----- Profile string ----- */
-
-    <string name="newprofile_title">Mise en place du profil</string>
-    <string name="newprofile_name">Nom:</string>
-    <string name="newprofile_description">Description:</string>
-    <string name="newprofile_descriptionhint">Ecrivez une courte description de vous-même…</string>
-    <string name="newprofile_picture">Photo:</string>
-    <string name="newprofile_changepicture">Modifier</string>
-
-    <string name="profiledisplay_nametag">Nom</string>
-    <string name="profiledisplay_surnametag">Nom de famille</string>
-    <string name="profiledisplay_emailtag">Email</string>
-    <string name="profiledisplay_descriptiontag">Description</string>
-    <string name="profiledisplay_ratingtag">Note</string>
-    <string name="profilesettings_save">Sauvegarder</string>
-    <string name="profiledisplay_modify">Modifier</string>
-    <string name="profiledisplay_categoriestag">Mes capacités</string>
-
-    <string name="show_profile">Voir le profil</string>
-
     /* ----- SignIn string ----- */
 
     <string name="signin_welcomemessage">Bienvenue sur Socialize!</string>
+
+    /* ----- Toolbar string ----- */
+
+    <string name="toolbar_my_posts">Mes posts</string>
+    <string name="toolbar_home">Accueil</string>
+    <string name="toolbar_chats">Chats</string>
+    <string name="toolbar_settings">Paramètres</string>
+    <string name="toolbar_services">Services</string>
+    <string name="toolbar_profile">Profil</string>
 
     /* ----- Navigation string ----- */
 
@@ -61,7 +54,6 @@
     <string name="navigation_drawer_section_settings">Paramètres</string>
     <string name="navigation_drawer_button_logout">Déconnexion</string>
 
-
     /* ----- Home string ----- */
 
     <string name="homefragment_asktorefresh">Actualisez pour les derniers messages!</string>
@@ -69,10 +61,31 @@
     <string name="homefragment_hintrefreshbutton">Rafraîchir</string>
     <string name="homefragment_postdistance">à %1.0fkm</string>
 
+    /* ----- Profile string ----- */
+
+    <string name="newprofile_title">Mise en place du profil</string>
+    <string name="newprofile_name">Nom:</string>
+    <string name="newprofile_description">Description:</string>
+    <string name="newprofile_descriptionhint">Ecrivez une courte description de vous-même…</string>
+    <string name="newprofile_picture">Photo:</string>
+    <string name="newprofile_changepicture">Modifier</string>
+
+    <string name="profiledisplay_nametag">Nom</string>
+    <string name="profiledisplay_surnametag">Nom de famille</string>
+    <string name="profiledisplay_emailtag">Email</string>
+    <string name="profiledisplay_descriptiontag">Description</string>
+    <string name="profiledisplay_ratingtag">Note</string>
+    <string name="profilesettings_save">Sauvegarder</string>
+    <string name="profiledisplay_modify">Modifier</string>
+    <string name="profiledisplay_categoriestag">Mes capacités</string>
+
+    <string name="show_profile">Voir le profil</string>
 
     /* ----- Service string ----- */
 
     <string name="fragment_services_title">Utilisateurs qui peuvent vous aider</string>
+    <string name="servicesfragment_hintkeywords">Entrez des mot-clés séparés par un espace</string>
+    <string name="servicesfragment_search">Recherche</string>
 
     /* ----- Post string ----- */
 
@@ -82,10 +95,15 @@
     <string name="createpostfragment_enterbody">Entrez le contenu ici</string>
     <string name="createpostfragment_titleempty">Vous devez entrer un titre!</string>
     <string name="createpostfragment_bodyempty">Vous devez entrez un contenu!</string>
+
     <string name="fragment_services_problem">Oups! Il semblerait que personne ne puisse vous aider!\nSélectionnez une autre catégorie, ou vérifiez votre connextion internet.</string>
 
     <string name="new_service">Nouveau service</string>
     <string name="enter_key_word">Entrez des mots-clés</string>
+
+    <string name="switch_button_location">Localisation du post   </string>
+    <string name="location_switch_on">Position de la maison</string>
+    <string name="location_switch_off">Position actuelle</string>
 
     /* ----- Category strings ----- */
 
@@ -100,6 +118,7 @@
     <string name="category_Transportation">Transport</string>
 
     /* ----- Chat string ----- */
+
     <string name="chat_room_message_hint">Entrez votre message ici</string>
     <string name="chat_delete_alert_title">Etes-vous sur ?</string>
     <string name="chat_delete_alert_text">Voulez-vous supprimer ce message ?</string>
@@ -116,17 +135,15 @@
     <string name="settings_seekbar_radius">Rayon pour voir les posts des autres utilisateurs</string>
     <string name="settings_seekbar_currentradius">Rayon actuel : </string>
     <string name="settings_seekbar_toast_end">Nouvelle valeur du rayon : </string>
-    <string name="settings_button_set_home">Définissez votre position actuelle comme étant celle de votre maison</string>
+    <string name="settings_button_set_home">Définissez votre position actuelle comme maison</string>
 
+    <string name="settings_deletemyaccount">Supprimer mon compte</string>
+    <string name="settings_deleteaccount_warningmessage">Vous êtes en train de supprimer votre compte de manière permanente !
+        \nCela aura les conséquences suivantes :
+        \n1. Il vous sera impossible de récupérer vos données.
+        \n2. Toutes vos conversations seront perdus.
+        \n3. Si vous voulez revenir, vous devrez tout reconfigurer à nouveau.</string>
 
-    /* ----- Toolbar string ----- */
-
-    <string name="toolbar_my_posts">Mes posts</string>
-    <string name="toolbar_home">Accueil</string>
-    <string name="toolbar_chats">Chats</string>
-    <string name="toolbar_settings">Paramètres</string>
-    <string name="toolbar_services">Services</string>
-    <string name="toolbar_profile">Profil</string>
 
 
     <string-array name="language_arrays">
