@@ -4,6 +4,7 @@ import android.Manifest;
 import android.support.test.espresso.action.ViewActions;
 import android.support.test.espresso.contrib.DrawerActions;
 import android.support.test.espresso.contrib.NavigationViewActions;
+import android.support.test.espresso.contrib.RecyclerViewActions;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.rule.GrantPermissionRule;
 import android.support.test.runner.AndroidJUnit4;
@@ -107,11 +108,22 @@ public class CreatePostFragmentTest extends FirebaseTest{
 
     @Test
     public void isPostAtCurrentLocationWhenSliderOff() {
+        onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
+        onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_myposts));
+        sleep(500);
+        onView(withId(R.id.floatingbutton_addpost)).perform(click());
+
+        onView(withId(R.id.switch_createpostfragment_location)).perform(click());
+        onView(withId(R.id.plaintext_createpostfragment_title)).perform(replaceText(title));
+        onView(withId(R.id.plaintext_createpostfragment_body)).perform(replaceText(body));
+        onView(withId(R.id.button_createpostfragment_send)).perform(click());
+        sleep(200);
+        onView(withId(R.id.action_refresh)).perform(click());
+        sleep(200);
+        onView(withId(R.id.recyclerview_homefragment_posts)).perform(RecyclerViewActions.actionOnItemAtPosition(0,click()));
+        sleep(200);
+        onView(withId(R.id.textview_postactivity_distance)).check(matches(withText("0km away")));
 
     }
 
-    @Test
-    public void isPostAtHomeLocationWhenSliderOn() {
-
-    }
 }
