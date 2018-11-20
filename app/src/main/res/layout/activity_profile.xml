@@ -166,7 +166,7 @@
             android:layout_width="@dimen/ranking_star_size"
             android:layout_height="@dimen/ranking_star_size"
             android:layout_marginTop="183dp"
-            android:layout_marginEnd="175dp"
+            android:layout_marginEnd="148dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

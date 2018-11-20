@@ -1,6 +1,7 @@
 package ch.epfl.swissteam.services;
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
@@ -91,6 +92,19 @@ public interface SettingsDBUtility {
 
         return dark;
     }
+
+    /**
+     * Retrieve the value of the darkmode column for the row of the current user.
+     * @param context, a context to create a SettingsDbHelper with,
+     * @return an int corresponding to the value in the darkmode column of the table
+     *          or 0 if there was a problem when retrieving the value.
+     */
+    static int retrieveDarkMode(Context context) {
+        return retrieveDarkMode(new SettingsDbHelper(context),GoogleSignInSingleton.get().getClientUniqueID());
+    }
+
+
+
 
     /**
      * Retrieve the value of the radius column for the row of the specified user.

@@ -192,18 +192,24 @@ public class SettingsFragment extends Fragment implements OnMapReadyCallback {
       
     private void constructDarkModeSettings(View view){
         Switch darkModeSwitch = view.findViewById(R.id.switch_settings_darkmode);
-        darkModeSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if(isChecked){
-                SettingsDBUtility.updateDarkMode(dbHelper_, id_, 1);
-            }else{
-                SettingsDBUtility.updateDarkMode(dbHelper_, id_, 0);
-            }
-        });
-
         //Retrieve Dark mode from local DB
         int dark = SettingsDBUtility.retrieveDarkMode(dbHelper_, id_);
         boolean darkModeChecked = dark == 1;
         darkModeSwitch.setChecked(darkModeChecked);
+        darkModeSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if(isChecked){
+                SettingsDBUtility.updateDarkMode(dbHelper_, id_, 1);
+                getActivity().setTheme(R.style.DarkMode);
+            }else{
+                SettingsDBUtility.updateDarkMode(dbHelper_, id_, 0);
+                getActivity().setTheme(R.style.AppTheme);
+
+                Log.e("Dark", "Unset");
+            }
+            getActivity().recreate();
+
+        });
+
     }
 
     private void constructRadiusSettings(View view){

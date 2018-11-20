@@ -1,6 +1,9 @@
 package ch.epfl.swissteam.services;
 
+import android.util.Log;
+
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class ExtendedChatRelationsList extends ArrayList<ExtendedChatRelation> implements Observable{
@@ -11,6 +14,7 @@ public class ExtendedChatRelationsList extends ArrayList<ExtendedChatRelation> i
         for(ChatRelation chatRelation : chatRelations){
             new ExtendedChatRelation(chatRelation, currentUserId, eCR ->{
                 add(eCR);
+                sort();
                 notifyObservers();
             });
         }
@@ -46,5 +50,14 @@ public class ExtendedChatRelationsList extends ArrayList<ExtendedChatRelation> i
             }
         }
         return filteredRelations;
+    }
+
+    private void sort(){
+        Collections.sort(this, (eCR1, eCR2) -> {
+            long diff = eCR2.getTimestamp_() - eCR1.getTimestamp_();
+            if(diff < 0) return -1;
+            else if(diff > 0) return 1;
+            else return 0;
+        });
     }
 }
