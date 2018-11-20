@@ -3,20 +3,20 @@
 
     /* ----- GENERAL string ----- */
 
-    <string name="all_next">Suivant</string>
-    <string name="done_text">Terminer</string>
-    <string name="all_send">Envoyer</string>
+    <string name="general_next">Suivant</string>
+    <string name="general_done">Terminer</string>
+    <string name="general_send">Envoyer</string>
     <string name="general_error">Erreur</string>
     <string name="general_ok">OK</string>
     <string name="general_cancel">Annuler</string>
     <string name="general_delete">Supprimer</string>
-    <string name="warning">ATTENTION</string>
+    <string name="general_warning_uppercase">ATTENTION</string>
 
     /* ----- Database string ----- */
 
-    <string name="general_could_not_find_you_in_db">Nous ne vous avons pas trouvé dans la database !</string>
-    <string name="general_could_not_find_this_user_in_db">Nous n\'avons pas trouvé cet utilisateur dans la database !</string>
-    <string name="general_could_not_establish_relation">Nous n\’avons pas réussi à établir une relation !</string>
+    <string name="database_could_not_find_you_in_db">Nous ne vous avons pas trouvé dans la database !</string>
+    <string name="database_could_not_find_this_user_in_db">Nous n\'avons pas trouvé cet utilisateur dans la database !</string>
+    <string name="database_could_not_establish_relation">Nous n\’avons pas réussi à établir une relation !</string>
 
     /* ----- SignIn string ----- */
 
@@ -41,9 +41,9 @@
     <string name="navigation_drawer_open">Ouvrir le menu de navigation</string>
     <string name="navigation_drawer_close">Fermer le menu de navigation</string>
 
-    <string name="nav_header_title">Inconnu</string>
-    <string name="nav_header_subtitle">inconnu@gmail.com</string>
-    <string name="nav_header_desc">Navigation header</string>
+    <string name="navigation_header_title">Inconnu</string>
+    <string name="navigation_header_subtitle">inconnu@gmail.com</string>
+    <string name="navigation_header_desc">Navigation header</string>
 
     <string name="navigation_drawer_button_home">Accueil</string>
     <string name="navigation_drawer_button_profile">Profil</string>
@@ -83,27 +83,24 @@
 
     /* ----- Service string ----- */
 
-    <string name="fragment_services_title">Utilisateurs qui peuvent vous aider</string>
+    <string name="servicesfragment_title">Utilisateurs qui peuvent vous aider</string>
     <string name="servicesfragment_hintkeywords">Entrez des mot-clés séparés par un espace</string>
     <string name="servicesfragment_search">Recherche</string>
+    <string name="servicesfragment_problem">Oups! Il semblerait que personne ne puisse vous aider!\nSélectionnez une autre catégorie, ou vérifiez votre connextion internet.</string>
 
     /* ----- Post string ----- */
 
     <string name="post_hinteditbutton">Modifiez votre post</string>
+
     <string name="postadapter_hintdeletebutton">Supprimez votre post</string>
+
     <string name="createpostfragment_entertitle">Entrez un titre ici</string>
     <string name="createpostfragment_enterbody">Entrez le contenu ici</string>
     <string name="createpostfragment_titleempty">Vous devez entrer un titre!</string>
     <string name="createpostfragment_bodyempty">Vous devez entrez un contenu!</string>
-
-    <string name="fragment_services_problem">Oups! Il semblerait que personne ne puisse vous aider!\nSélectionnez une autre catégorie, ou vérifiez votre connextion internet.</string>
-
-    <string name="new_service">Nouveau service</string>
-    <string name="enter_key_word">Entrez des mots-clés</string>
-
-    <string name="switch_button_location">Localisation du post   </string>
-    <string name="location_switch_on">Position de la maison</string>
-    <string name="location_switch_off">Position actuelle</string>
+    <string name="createpostfragment_switch_button_location">Localisation du post   </string>
+    <string name="createpostfragment_location_switch_on">Position de la maison</string>
+    <string name="createpostfragment_location_switch_off">Position actuelle</string>
 
     /* ----- Category strings ----- */
 

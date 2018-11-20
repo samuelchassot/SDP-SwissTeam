@@ -1,7 +1,5 @@
 package ch.epfl.swissteam.services;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
@@ -46,7 +44,7 @@ public class ChatRoom extends NavigationDrawer {
             @Override
             public void onCallBack(User mUser) {
                 if(mUser == null){
-                    toastUser(getResources().getString(R.string.general_could_not_find_you_in_db));
+                    toastUser(getResources().getString(R.string.database_could_not_find_you_in_db));
                     return;
                 }
                 mUser_ = mUser;
@@ -111,7 +109,7 @@ public class ChatRoom extends NavigationDrawer {
         TextInputEditText textInput = findViewById(R.id.message_input);
         String message = textInput.getText().toString();
         if(mUser_ == null){
-            toastUser(getResources().getString(R.string.general_could_not_find_you_in_db));
+            toastUser(getResources().getString(R.string.database_could_not_find_you_in_db));
             return;
         }
         if(message.isEmpty()){
@@ -119,7 +117,7 @@ public class ChatRoom extends NavigationDrawer {
         }
         //If nothing works to establish the chat
         if(currentRelationId_ == null) {
-            toastUser(getResources().getString(R.string.general_could_not_establish_relation));
+            toastUser(getResources().getString(R.string.database_could_not_establish_relation));
         }
         ChatMessage chatMessage = new ChatMessage(message, mUser_.getName_(), mUser_.getGoogleId_(), currentRelationId_);
         chatMessage.addToDB(dataBase_);
@@ -132,7 +130,7 @@ public class ChatRoom extends NavigationDrawer {
             @Override
             public void onCallBack(User cUser) {
                 if(cUser == null){
-                    toastUser(getResources().getString(R.string.general_could_not_find_this_user_in_db));
+                    toastUser(getResources().getString(R.string.database_could_not_find_this_user_in_db));
                     return;
                 }
 

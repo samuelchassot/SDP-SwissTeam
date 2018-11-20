@@ -1,16 +1,10 @@
 package ch.epfl.swissteam.services;
 
-import android.Manifest;
-import android.content.pm.PackageManager;
 import android.location.Location;
-import android.os.Build;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,9 +14,6 @@ import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.model.LatLng;
 
 import java.util.Date;
 
@@ -72,10 +63,10 @@ public class CreatePostFragment extends Fragment implements View.OnClickListener
 
             // Initialise the textView
         if (switchButton.isChecked()) {
-            switchTextInfo.setText(R.string.location_switch_on);
+            switchTextInfo.setText(R.string.createpostfragment_location_switch_on);
             isHomeLocation_ = true;
         } else {
-            switchTextInfo.setText(R.string.location_switch_off);
+            switchTextInfo.setText(R.string.createpostfragment_location_switch_off);
             isHomeLocation_ = false;
         }
 
@@ -84,10 +75,10 @@ public class CreatePostFragment extends Fragment implements View.OnClickListener
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
                 if (checked) {
-                    switchTextInfo.setText(R.string.location_switch_on);
+                    switchTextInfo.setText(R.string.createpostfragment_location_switch_on);
                     isHomeLocation_ = true;
                 } else {
-                    switchTextInfo.setText(R.string.location_switch_off);
+                    switchTextInfo.setText(R.string.createpostfragment_location_switch_off);
                     isHomeLocation_ = false;
                 }
             }

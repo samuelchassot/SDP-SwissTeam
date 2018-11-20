@@ -1,25 +1,19 @@
 package ch.epfl.swissteam.services;
 
-import android.Manifest;
 import android.support.test.espresso.action.ViewActions;
 import android.support.test.espresso.contrib.DrawerActions;
 import android.support.test.espresso.contrib.NavigationViewActions;
 import android.support.test.espresso.contrib.RecyclerViewActions;
 import android.support.test.rule.ActivityTestRule;
-import android.support.test.rule.GrantPermissionRule;
 import android.support.test.runner.AndroidJUnit4;
-import android.widget.Button;
 
-import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.RuleChain;
 import org.junit.runner.RunWith;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.replaceText;
-import static android.support.test.espresso.action.ViewActions.scrollTo;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.RootMatchers.withDecorView;
@@ -100,10 +94,10 @@ public class CreatePostFragmentTest extends FirebaseTest{
         sleep(500);
         onView(withId(R.id.floatingbutton_addpost)).perform(click());
 
-        onView(withId(R.id.textView_createpostfragment)).check(matches(withText(R.string.location_switch_on)));
+        onView(withId(R.id.textView_createpostfragment)).check(matches(withText(R.string.createpostfragment_location_switch_on)));
 
         onView(withId(R.id.switch_createpostfragment_location)).perform(click());
-        onView(withId(R.id.textView_createpostfragment)).check(matches(withText(R.string.location_switch_off)));
+        onView(withId(R.id.textView_createpostfragment)).check(matches(withText(R.string.createpostfragment_location_switch_off)));
     }
 
     @Test
