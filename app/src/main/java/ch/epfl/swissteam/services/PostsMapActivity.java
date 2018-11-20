@@ -1,19 +1,16 @@
 package ch.epfl.swissteam.services;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -30,7 +27,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Activity to show a map with markers corresponding to posts
+ * Activity to show a map with markers_ corresponding to posts
  *
  * @author Adrian Baudat
  */
@@ -40,8 +37,8 @@ public class PostsMapActivity extends NavigationDrawer implements OnMapReadyCall
 
     private GoogleMap googleMap_;
     private MapView mapView_;
-    private CustomInfoWindowAdapter infoWindow;
-    private List<Marker> markers = new ArrayList<>();
+    private CustomInfoWindowAdapter infoWindow_;
+    private List<Marker> markers_ = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +55,7 @@ public class PostsMapActivity extends NavigationDrawer implements OnMapReadyCall
         mapView_.onCreate(mapViewBundle);
         mapView_.getMapAsync(this);
 
-        infoWindow = new PostsMapActivity.CustomInfoWindowAdapter();
+        infoWindow_ = new PostsMapActivity.CustomInfoWindowAdapter();
 
         invalidateOptionsMenu();
     }
@@ -67,8 +64,12 @@ public class PostsMapActivity extends NavigationDrawer implements OnMapReadyCall
     @Override
     public boolean onPrepareOptionsMenu(Menu menu){
         boolean toReturn = super.onPrepareOptionsMenu(menu);
+
+        //Enable the button to switch to posts list
         menu.setGroupEnabled(R.id.group_switchtoposts, true);
         menu.setGroupVisible(R.id.group_switchtoposts, true);
+
+        //Enable the refresh button
         menu.setGroupEnabled(R.id.group_refresh, true);
         menu.setGroupVisible(R.id.group_refresh, true);
         return toReturn;
@@ -144,7 +145,7 @@ public class PostsMapActivity extends NavigationDrawer implements OnMapReadyCall
         googleMap_.moveCamera(CameraUpdateFactory.zoomTo(12));
         googleMap_.setMinZoomPreference(6);
         googleMap_.setMaxZoomPreference(20);
-        googleMap_.setInfoWindowAdapter(infoWindow);
+        googleMap_.setInfoWindowAdapter(infoWindow_);
         googleMap_.setOnMarkerClickListener(marker -> {
             marker.showInfoWindow();
             return false;
@@ -162,26 +163,29 @@ public class PostsMapActivity extends NavigationDrawer implements OnMapReadyCall
         Location currentLocation = LocationManager.get().getCurrentLocation_();
 
         if(currentLocation != null) {
+            //Move camera to the current location
             LatLng newLatLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
             googleMap_.moveCamera(CameraUpdateFactory.newLatLng(newLatLng));
 
-            for(Marker marker : markers) {
+            //Remove all markers
+            for(Marker marker : markers_) {
                 marker.remove();
             }
 
             DBUtility.get().getPostsFeed(new DBCallBack<ArrayList<Post>>() {
                 @Override
                 public void onCallBack(ArrayList<Post> value) {
+                    //For each post in the feed, load the username and the image asynchronously, then create a marker at the post location
                     for (Post post : value) {
                         MarkerOptions newMarkerOptions = new MarkerOptions().position(new LatLng(post.getLatitude_(), post.getLongitude_()));
                         DBUtility.get().getUser(post.getGoogleId_(), user -> {
                             Picasso.get().load(user.getImageUrl_()).into(new Target() {
                                 @Override
                                 public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                                    infoWindow.addUser(post.getGoogleId_(), user, bitmap);
+                                    infoWindow_.addUser(post.getGoogleId_(), user, bitmap);
                                     Marker newMarker = googleMap_.addMarker(newMarkerOptions);
                                     newMarker.setTag(post);
-                                    markers.add(newMarker);
+                                    markers_.add(newMarker);
                                 }
 
                                 @Override
