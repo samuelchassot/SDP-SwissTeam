@@ -36,7 +36,7 @@ public class CreatePostFragment extends Fragment implements View.OnClickListener
 
     private SettingsDbHelper dbHelper_;
     private String id_;
-    private boolean homeLocation;
+    private boolean isHomeLocation_;
 
     public CreatePostFragment() {
         // Required empty public constructor
@@ -73,10 +73,10 @@ public class CreatePostFragment extends Fragment implements View.OnClickListener
             // Initialise the textView
         if (switchButton.isChecked()) {
             switchTextInfo.setText(R.string.location_switch_on);
-            homeLocation = true;
+            isHomeLocation_ = true;
         } else {
             switchTextInfo.setText(R.string.location_switch_off);
-            homeLocation = false;
+            isHomeLocation_ = false;
         }
 
             // Make the textView change when we switch the slider
@@ -85,10 +85,10 @@ public class CreatePostFragment extends Fragment implements View.OnClickListener
             public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
                 if (checked) {
                     switchTextInfo.setText(R.string.location_switch_on);
-                    homeLocation = true;
+                    isHomeLocation_ = true;
                 } else {
                     switchTextInfo.setText(R.string.location_switch_off);
-                    homeLocation = false;
+                    isHomeLocation_ = false;
                 }
             }
         });
@@ -117,7 +117,7 @@ public class CreatePostFragment extends Fragment implements View.OnClickListener
 
             // choose location according to the Slider state
             double latitude, longitude;
-            if (homeLocation) {
+            if (isHomeLocation_) {
                 latitude = SettingsDBUtility.retrieveHome(dbHelper_, SettingsContract.SettingsEntry.COLUMN_SETTINGS_HOME_LATITUDE, id_);
                 longitude = SettingsDBUtility.retrieveHome(dbHelper_, SettingsContract.SettingsEntry.COLUMN_SETTINGS_HOME_LONGITUDE, id_);
             } else {
