@@ -29,7 +29,7 @@
         android:id="@+id/edittext_capabilitylayout_keywords"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/capabilitylayout_hintkeywords"
+        android:hint="@string/capability_layout_hintkeywords"
         android:layout_weight="100"
         android:ems="10"
         android:inputType="text" />

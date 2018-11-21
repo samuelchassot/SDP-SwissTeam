@@ -239,7 +239,7 @@ public class PostsMapActivity extends NavigationDrawer implements OnMapReadyCall
                 ((TextView) mContents_.findViewById(R.id.textview_mapinfo_name)).setText(user.getName_());
             }
             else{
-                ((TextView) mContents_.findViewById(R.id.textview_mapinfo_name)).setText(getResources().getString(R.string.mapinfo_unknownuser));
+                ((TextView) mContents_.findViewById(R.id.textview_mapinfo_name)).setText(getResources().getString(R.string.map_info_unknownuser));
             }
             if(pictures.containsKey(post.getGoogleId_())) {
                 Bitmap bitmap = pictures.get(post.getGoogleId_());
