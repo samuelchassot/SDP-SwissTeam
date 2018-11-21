@@ -52,24 +52,31 @@ public class CategoriesAdapterProfileSettings extends RecyclerView.Adapter<Categ
     public void onBindViewHolder(@NonNull CategoriesViewHolder categoriesViewHolder, int i) {
         categoriesViewHolder.nameView_.setText(capabilities_[i].toString());
         categoriesViewHolder.checkBox_.setChecked(userCapabilities_.contains(capabilities_[i]));
-        categoriesViewHolder.checkBox_.setOnClickListener(v -> {
+        categoriesViewHolder.checkBox_.setOnCheckedChangeListener((v, isChecked) -> {
             ((ProfileSettings) v.getContext()).updateUserCapabilities(capabilities_[i], ((CheckBox) v).isChecked());
+            if(!isChecked){
+                categoriesViewHolder.keyWords_.setText("");
+                v.setChecked(false);
+            }
         });
+
         StringBuilder builder = new StringBuilder();
         if(keyWords_.get(capabilities_[i].toString()) != null) {
             for (String kw : keyWords_.get(capabilities_[i].toString())) {
-                builder.append(kw).append(";");
+                if(!kw.equals("")) {
+                    builder.append(kw).append(";");
+                }
             }
             if (builder.length() > 2) {
                 builder.delete(builder.length() - 1, builder.length());
             }
             categoriesViewHolder.keyWords_.setText(builder.toString());
         }
-        addKeyWordsListener(categoriesViewHolder.keyWords_, capabilities_[i]);
+        addKeyWordsListener(categoriesViewHolder.keyWords_, capabilities_[i], categoriesViewHolder);
 
     }
 
-    private void addKeyWordsListener(EditText edittext, Categories capability){
+    private void addKeyWordsListener(EditText edittext, Categories capability, CategoriesViewHolder holder){
         edittext.addTextChangedListener(new TextWatcher() {
 
             @Override
@@ -87,6 +94,9 @@ public class CategoriesAdapterProfileSettings extends RecyclerView.Adapter<Categ
             public void afterTextChanged(Editable s) {
 
                 ((ProfileSettings) edittext.getContext()).addKeyWords(capability, s.toString());
+                if (!holder.checkBox_.isChecked()){
+                    holder.checkBox_.setChecked(true);
+                }
             }
         });
     }

@@ -126,7 +126,20 @@ public class User implements DBSavable {
         this.imageUrl_ = imageUrl_;
         this.rating_ = rating_;
         this.categories_ = categories_ == null ? new ArrayList<>() : (ArrayList<Categories>) categories_.clone();
-        this.keyWords_ = keyWords_ == null ? new HashMap<>() : (HashMap<String, ArrayList<String>>) keyWords_.clone();
+
+        //keywords are stored in lowercase to simplify the comparison when searching for services
+        HashMap<String, ArrayList<String>> lowercaseKeywords = new HashMap<>();
+        if(keyWords_ != null) {
+            ArrayList<String> kwList;
+            for (String key : keyWords_.keySet()) {
+                kwList = new ArrayList<>();
+                for (String k : keyWords_.get(key)) {
+                    kwList.add(k.toLowerCase());
+                }
+                lowercaseKeywords.put(key, kwList);
+            }
+        }
+        this.keyWords_ = lowercaseKeywords;
         this.chatRelations_ = chatRelations_ == null ? new ArrayList<>() : (ArrayList<ChatRelation>) chatRelations_.clone();
         this.upvotes_ = upvotes_ == null ? new ArrayList<String>() : (ArrayList<String>) upvotes_.clone();
         this.downvotes_ = downvotes_ == null ? new ArrayList<String>() : (ArrayList<String>) upvotes_.clone();

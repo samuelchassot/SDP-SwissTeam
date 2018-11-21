@@ -40,8 +40,8 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Ca
     @Override
     public void onBindViewHolder(@NonNull CategoriesViewHolder categoriesViewHolder, int i) {
         categoriesViewHolder.nameView_.setText(capabilities_[i].toString());
-        addAddListener(categoriesViewHolder.checkBox_, capabilities_[i]);
-        addKeyWordsListener(categoriesViewHolder.keywordsInput_, capabilities_[i]);
+        addAddListener(categoriesViewHolder.checkBox_, capabilities_[i], categoriesViewHolder);
+        addKeyWordsListener(categoriesViewHolder.keywordsInput_, capabilities_[i], categoriesViewHolder);
 
     }
 
@@ -50,7 +50,8 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Ca
         return capabilities_.length;
     }
 
-    private void addKeyWordsListener(EditText edittext, Categories capability){
+    private void addKeyWordsListener(EditText edittext, Categories capability, CategoriesViewHolder holder){
+
         edittext.addTextChangedListener(new TextWatcher() {
 
             @Override
@@ -66,24 +67,34 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Ca
 
             @Override
             public void afterTextChanged(Editable s) {
-
                 ((NewProfileCapabilities) edittext.getContext()).addKeyWords(capability, s.toString());
+                if (!holder.checkBox_.isChecked()){
+                    holder.checkBox_.setChecked(true);
+                }
             }
         });
     }
 
-    private void addAddListener(View view, Categories capability) {
-        view.setOnClickListener(v -> {
+    private void addAddListener(CheckBox view, Categories capability, CategoriesViewHolder holder) {
+        view.setOnCheckedChangeListener((v, isChecked) -> {
             ((NewProfileCapabilities) v.getContext()).addCapability(capability);
-            addRemoveListener(view, capability);
+            if(!isChecked) {
+                holder.keywordsInput_.setText("");
+                view.setChecked(false);
+            }
+            addRemoveListener(view, capability, holder);
         });
     }
 
-    private void addRemoveListener(View view, Categories capability) {
-        view.setOnClickListener(v -> {
+    private void addRemoveListener(CheckBox view, Categories capability, CategoriesViewHolder holder) {
+        view.setOnCheckedChangeListener((v, isChecked) -> {
             ((NewProfileCapabilities) v.getContext()).removeCapability(capability);
             ((NewProfileCapabilities) v.getContext()).removeKeyWords(capability);
-            addAddListener(view, capability);
+            if(!isChecked) {
+                holder.keywordsInput_.setText("");
+                view.setChecked(false);
+            }
+            addAddListener(view, capability, holder);
         });
     }
 

@@ -1,18 +1,34 @@
 package ch.epfl.swissteam.services;
 
+import android.util.Log;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.Iterator;
+
 public class ExtendedChatRelation {
     private String othersName_;
     private String othersImageUrl_;
+    private long timestamp_;
     private DBCallBack<ExtendedChatRelation> ready_;
     private ChatRelation chatRelation_;
 
     public ExtendedChatRelation(ChatRelation chatRelation, String currentUserId, DBCallBack<ExtendedChatRelation> ready){
         ready_ = ready;
         chatRelation_ = chatRelation;
+        //TODO check what needs to be done if user is null. I(Seb) will take care of that.
         DBUtility.get().getUser(chatRelation_.getOtherId(currentUserId),user ->{
-            othersName_ = user.getName_();
-            othersImageUrl_ = user.getImageUrl_();
-            ready_.onCallBack(this);
+            if(user != null) {
+                othersName_ = user.getName_();
+                othersImageUrl_ = user.getImageUrl_();
+                retrieveLastTimestamp(timestamp -> {
+                    timestamp_ = timestamp;
+                    ready_.onCallBack(this);
+                });
+            }
         });
     }
 
@@ -28,11 +44,34 @@ public class ExtendedChatRelation {
         return chatRelation_;
     }
 
+    public long getTimestamp_() { return timestamp_; }
+
     @Override
     public boolean equals(Object o){
         if(o == null || o.getClass() != ExtendedChatRelation.class) {return false;}
         else{
             return chatRelation_.equals(((ExtendedChatRelation)o).getChatRelation_());
         }
+    }
+
+    public void retrieveLastTimestamp(DBCallBack<Long> callBackTimestamp){
+        Query lastQuery = DBUtility.get().getDb_()
+                .child(DBUtility.CHATS).child(chatRelation_.getId_()).orderByKey().limitToLast(1);
+        lastQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Iterator<DataSnapshot> iter = dataSnapshot.getChildren().iterator();
+                ChatMessage cM = null;
+                if(iter.hasNext()) {
+                    cM = iter.next().getValue(ChatMessage.class);
+                }
+                callBackTimestamp.onCallBack(cM == null ? 0 : cM.getTime_());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                //Handle possible errors.
+            }
+        });
     }
 }
