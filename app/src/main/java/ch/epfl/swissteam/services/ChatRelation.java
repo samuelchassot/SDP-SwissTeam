@@ -19,7 +19,6 @@ public class ChatRelation implements DBSavable {
     private String firstUserId_;
     private String secondUserId_;
     private String id_;
-    private boolean isHalfDeleted_ = false;
 
     /**
      * Defines the id of the two users of the relation
@@ -63,10 +62,6 @@ public class ChatRelation implements DBSavable {
         return id_;
     }
 
-    public boolean isHalfDeleted_() {
-        return isHalfDeleted_;
-    }
-
     //Setters
 
     /**
@@ -104,10 +99,6 @@ public class ChatRelation implements DBSavable {
      */
     public void setId_(String id) {
         this.id_ = id;
-    }
-
-    public void setHalfDeleted_(boolean halfDeleted_) {
-        isHalfDeleted_ = halfDeleted_;
     }
 
     //public methods

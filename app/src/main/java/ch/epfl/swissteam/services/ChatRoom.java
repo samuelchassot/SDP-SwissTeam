@@ -140,29 +140,26 @@ public class ChatRoom extends NavigationDrawer {
     }
 
     private void newRelationWith(String contactId ){
-        DBUtility.get().getUser(contactId, new DBCallBack<User>(){
-            @Override
-            public void onCallBack(User cUser) {
-                if(cUser == null){
-                    toastUser(getResources().getString(R.string.database_could_not_find_this_user_in_db));
-                    return;
-                }
-
-                ChatRelation newRelation = new ChatRelation(mUser_, cUser);
-                newRelation.addToDB(DBUtility.get().getDb_());
-                mUser_.addChatRelation(newRelation,  DBUtility.get().getDb_());
-                cUser.addChatRelation(newRelation, DBUtility.get().getDb_());
-                setCurrentRelationId_(newRelation.getId_());
-                displayMessages();
+        DBUtility.get().getUser(contactId, cUser -> {
+            if(cUser == null){
+                toastUser(getResources().getString(R.string.database_could_not_find_this_user_in_db));
+                return;
             }
-        } );
+
+            ChatRelation newRelation = new ChatRelation(mUser_, cUser);
+            newRelation.addToDB(DBUtility.get().getDb_());
+            mUser_.addChatRelation(newRelation,  DBUtility.get().getDb_());
+            cUser.addChatRelation(newRelation, DBUtility.get().getDb_());
+            setCurrentRelationId_(newRelation.getId_());
+            displayMessages();
+        });
     }
 
     private void askToDeleteMessage(ChatMessage message, String key){
         Resources res = getResources();
         Utility.askToDeleteAlertDialog(this, res.getString(R.string.chat_delete_alert_title),
-                res.getString(R.string.chat_delete_alert_text), b -> {
-                    if(b) {
+                res.getString(R.string.chat_delete_alert_text), isDeletionSelected -> {
+                    if(isDeletionSelected) {
                         message.removeFromDB(get().getDb_(), key);
                     }
                 });
@@ -171,7 +168,8 @@ public class ChatRoom extends NavigationDrawer {
     private void checkAndSetIfDeletedByPartner(){
         if(currentRelationId_ != null)
             DBUtility.get().getChatRelation(currentRelationId_, chatRelation ->{
-                isDeletedRelation = chatRelation.isHalfDeleted_();
+                DBUtility.get().getUser(chatRelation.getOtherId(GoogleSignInSingleton.get().getClientUniqueID()),
+                        user-> isDeletedRelation = user == null || user.relationExists(GoogleSignInSingleton.get().getClientUniqueID()) == null);
             });
     }
 
