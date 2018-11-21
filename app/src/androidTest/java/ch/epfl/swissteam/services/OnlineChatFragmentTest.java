@@ -30,7 +30,7 @@ import static ch.epfl.swissteam.services.TestUtils.sleep;
  *
  * @author Sébastien Gachoud
  */
-public class OnlineChatFragmentTest extends FirebaseTest {
+public class OnlineChatFragmentTest extends SocializeTest<MainActivity> {
 
     private static final String mGoogleId = "1234";
     private static final String oGoogleId = "5678";
@@ -45,13 +45,12 @@ public class OnlineChatFragmentTest extends FirebaseTest {
     private static final ChatRelation chatRelation2 = new ChatRelation(mUser,tUser);
     private static final ChatRelation chatRelation3 = new ChatRelation(oUser,tUser);
 
-    @Rule
-    public final ActivityTestRule<MainActivity> mainActivityRule_ =
-            new ActivityTestRule<>(MainActivity.class);
+    public OnlineChatFragmentTest(){
+        setTestRule(MainActivity.class);
+    }
 
     @Override
     public void initialize(){
-        LocationManager.get().setMock();
         GoogleSignInSingleton.putUniqueID(mGoogleId);
         chatRelation.addToDB(DBUtility.get().getDb_());
         chatRelation2.addToDB(DBUtility.get().getDb_());
@@ -75,7 +74,6 @@ public class OnlineChatFragmentTest extends FirebaseTest {
     @Override
     public void terminate() {
         Intents.release();
-        LocationManager.get().unsetMock();
     }
 
     @Test
@@ -103,7 +101,7 @@ public class OnlineChatFragmentTest extends FirebaseTest {
     public void canChooseToDeleteRelation() {
         onView(withText(oUser.getName_())).perform(longClick());
         sleep(100);
-        onView(withText(mainActivityRule_.getActivity().getResources().getString(R.string.chat_relation_delete_alert_text)))
+        onView(withText(testRule_.getActivity().getResources().getString(R.string.chat_relation_delete_alert_text)))
                 .check(matches(isDisplayed()));
     }
 
@@ -111,7 +109,7 @@ public class OnlineChatFragmentTest extends FirebaseTest {
     public void canDeleteRelation() {
         onView(withText(oUser.getName_())).perform(longClick());
         sleep(100);
-        onView(withText(mainActivityRule_.getActivity().getResources().getString(R.string.general_delete))).perform(click());
+        onView(withText(testRule_.getActivity().getResources().getString(R.string.general_delete))).perform(click());
         onView(withText(oUser.getName_())).check(doesNotExist());
     }
 
@@ -119,9 +117,9 @@ public class OnlineChatFragmentTest extends FirebaseTest {
     public void canCancelDeleteRelation() {
         onView(withText(oUser.getName_())).perform(longClick());
         sleep(100);
-        onView(withText(mainActivityRule_.getActivity().getResources().getString(R.string.chat_relation_delete_alert_text)))
+        onView(withText(testRule_.getActivity().getResources().getString(R.string.chat_relation_delete_alert_text)))
                 .check(matches(isDisplayed()));
-        onView(withText(mainActivityRule_.getActivity().getResources().getString(R.string.general_cancel))).perform(click());
+        onView(withText(testRule_.getActivity().getResources().getString(R.string.general_cancel))).perform(click());
         onView(withText(oUser.getName_())).check(matches(isDisplayed()));
     }
 

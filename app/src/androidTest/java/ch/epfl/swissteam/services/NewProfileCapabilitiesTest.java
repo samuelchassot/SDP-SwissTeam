@@ -13,10 +13,11 @@ import org.junit.Test;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 
-public class NewProfileCapabilitiesTest extends FirebaseTest{
-    @Rule
-    public final IntentsTestRule<NewProfileCapabilities> mActivityRule =
-            new IntentsTestRule<>(NewProfileCapabilities.class);
+public class NewProfileCapabilitiesTest extends SocializeTest<NewProfileCapabilities>{
+
+    public NewProfileCapabilitiesTest(){
+        setTestRule(NewProfileCapabilities.class);
+    }
 
     @Test
     public void canCheckCapability() {

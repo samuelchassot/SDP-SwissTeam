@@ -32,14 +32,13 @@ import static ch.epfl.swissteam.services.TestUtils.sleep;
  * @author Ghali Chraibi
  */
 @RunWith(AndroidJUnit4.class)
-public class ProfileActivityTest extends FirebaseTest {
-
+public class ProfileActivityTest extends SocializeTest<ProfileActivity> {
     
     private static final int SLEEP_TIME = 500;
 
-    @Rule
-    public final ActivityTestRule<ProfileActivity> mActivityRule =
-            new ActivityTestRule<>(ProfileActivity.class, true, false);
+    public ProfileActivityTest(){
+        setTestRule(ProfileActivity.class);
+    }
 
     @Override
     public void initialize() {
@@ -86,7 +85,7 @@ public class ProfileActivityTest extends FirebaseTest {
     private void startIntentWith(String id){
         Intent intent = new Intent();
         intent.putExtra(GOOGLE_ID_TAG, id);
-        mActivityRule.launchActivity(intent);
+        testRule_.launchActivity(intent);
         sleep(SLEEP_TIME);
     }
 }

@@ -21,15 +21,10 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static ch.epfl.swissteam.services.TestUtils.sleep;
 
 @RunWith(AndroidJUnit4.class)
-public class ProfileDisplayFragmentTest extends FirebaseTest {
+public class ProfileDisplayFragmentTest extends SocializeTest<MainActivity> {
 
-    @Rule
-    public final ActivityTestRule<MainActivity> mainActivityRule_ =
-            new ActivityTestRule<>(MainActivity.class);
-
-    @Override
-    public void terminate() {
-        LocationManager.get().unsetMock();
+    public ProfileDisplayFragmentTest(){
+        setTestRule(MainActivity.class);
     }
 
     @Test
@@ -81,8 +76,6 @@ public class ProfileDisplayFragmentTest extends FirebaseTest {
 
     @Override
     public void initialize() {
-        super.initialize();
-        LocationManager.get().setMock();
         User testUser = TestUtils.getTestUser();
         testUser.addToDB(DBUtility.get().getDb_());
         GoogleSignInSingleton.putUniqueID(testUser.getGoogleId_());

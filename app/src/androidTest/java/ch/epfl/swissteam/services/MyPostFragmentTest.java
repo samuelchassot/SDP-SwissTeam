@@ -26,22 +26,16 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static ch.epfl.swissteam.services.TestUtils.sleep;
 
 @RunWith(AndroidJUnit4.class)
-public class MyPostFragmentTest extends FirebaseTest{
+public class MyPostFragmentTest extends SocializeTest<MainActivity>{
     private Post post;
     private String id;
 
-    @Rule
-    public final ActivityTestRule<MainActivity> mActivityRule =
-            new ActivityTestRule<>(MainActivity.class);
-
-    @Override
-    public void terminate() {
-        LocationManager.get().unsetMock();
+    public MyPostFragmentTest(){
+        setTestRule(MainActivity.class);
     }
 
     @Override
     public void initialize(){
-        LocationManager.get().setMock();
         TestUtils.getTestUser().addToDB(DBUtility.get().getDb_());
         id = "1234";
         GoogleSignInSingleton.putUniqueID(id);

@@ -21,14 +21,14 @@ import static ch.epfl.swissteam.services.PostAdapter.POST_TAG;
 import static ch.epfl.swissteam.services.TestUtils.sleep;
 import static org.junit.Assert.assertEquals;
 
-public class PostActivityTest extends FirebaseTest{
+public class PostActivityTest extends SocializeTest<PostActivity>{
 
     private Post post;
     private User user;
 
-    @Rule
-    public final ActivityTestRule<PostActivity> mActivityRule =
-            new ActivityTestRule<>(PostActivity.class, true, false);
+    public PostActivityTest(){
+        setTestRule(PostActivity.class);
+    }
 
     @Override
     public void initialize() {
@@ -60,8 +60,8 @@ public class PostActivityTest extends FirebaseTest{
     @Test
     public void theLocationOfThePostOnTheMapCorrespondToThePost(){
         sleep(10000);
-        Marker marker = mActivityRule.getActivity().getMarker();
-        mActivityRule.getActivity().runOnUiThread(new Runnable() {
+        Marker marker = testRule_.getActivity().getMarker();
+        testRule_.getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 if(marker != null){
@@ -77,7 +77,7 @@ public class PostActivityTest extends FirebaseTest{
     private void startIntent(){
         Intent intent = new Intent();
         intent.putExtra(POST_TAG, post);
-        mActivityRule.launchActivity(intent);
+        testRule_.launchActivity(intent);
         sleep(500);
     }
 
