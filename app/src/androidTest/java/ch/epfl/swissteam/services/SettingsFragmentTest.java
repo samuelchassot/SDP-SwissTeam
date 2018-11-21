@@ -38,13 +38,17 @@ public class SettingsFragmentTest extends SocializeTest<MainActivity>{
         setTestRule(MainActivity.class);
     }
 
-    @Before
+    @Override
     public void initialize() {
         LocationManager.get().setMock();
+        GoogleSignInSingleton.putUniqueID("1234");
+    }
+
+    @Override
+    public void initializeView(){
         SettingsDbHelper helper = new SettingsDbHelper(testRule_.getActivity().getApplicationContext());
         helper.getWritableDatabase().delete(SettingsContract.SettingsEntry.TABLE_NAME, null, null);
         SettingsDBUtility.addRowIfNeeded(helper, "1234");
-        GoogleSignInSingleton.putUniqueID("1234");
     }
 
     @After
