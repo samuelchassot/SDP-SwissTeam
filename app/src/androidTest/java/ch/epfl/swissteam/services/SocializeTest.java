@@ -34,6 +34,7 @@ public abstract class SocializeTest<C extends Activity> {
         LocationManager.get().setMock();
         initialize();
         testRule_.launchActivity(getActivityIntent());
+        initializeView();
     }
 
     @After
@@ -45,14 +46,21 @@ public abstract class SocializeTest<C extends Activity> {
     }
 
     /**
-     * Use this method to initialize the DB before your tests.
+     * Use this method to initialize the view (navigate to fragment, do modifications on views, ...)
+     */
+    public void initializeView(){
+
+    }
+
+    /**
+     * Use this method to initialize the DB/Location before your tests.
      */
     public void initialize() {
 
     }
 
     /**
-     * Use this method to terminate correctly your tests.
+     * Use this method to terminate your tests correctly.
      */
     public void terminate() {
 

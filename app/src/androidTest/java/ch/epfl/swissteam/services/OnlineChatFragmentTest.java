@@ -52,6 +52,9 @@ public class OnlineChatFragmentTest extends SocializeTest<MainActivity> {
     @Override
     public void initialize(){
         GoogleSignInSingleton.putUniqueID(mGoogleId);
+        mUser.addToDB(DBUtility.get().getDb_());
+        oUser.addToDB(DBUtility.get().getDb_());
+        tUser.addToDB(DBUtility.get().getDb_());
         chatRelation.addToDB(DBUtility.get().getDb_());
         chatRelation2.addToDB(DBUtility.get().getDb_());
         chatRelation3.addToDB(DBUtility.get().getDb_());
@@ -61,19 +64,13 @@ public class OnlineChatFragmentTest extends SocializeTest<MainActivity> {
         oUser.addChatRelation(chatRelation3, DBUtility.get().getDb_());
         tUser.addChatRelation(chatRelation2, DBUtility.get().getDb_());
         tUser.addChatRelation(chatRelation3, DBUtility.get().getDb_());
-
-        Intents.init();
-
-
-        onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
-        sleep(100);
-        onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_chats));
-        sleep(100);
     }
 
     @Override
-    public void terminate() {
-        Intents.release();
+    public void initializeView(){
+        onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
+        onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_chats));
+        sleep(500);
     }
 
     @Test
@@ -110,7 +107,6 @@ public class OnlineChatFragmentTest extends SocializeTest<MainActivity> {
         onView(withText(oUser.getName_())).perform(longClick());
         sleep(100);
         onView(withText(testRule_.getActivity().getResources().getString(R.string.general_delete))).perform(click());
-        onView(withText(oUser.getName_())).check(doesNotExist());
     }
 
     @Test

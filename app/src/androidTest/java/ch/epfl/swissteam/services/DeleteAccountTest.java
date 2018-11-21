@@ -30,21 +30,17 @@ public class DeleteAccountTest extends SocializeTest<MainActivity> {
 
     @Override
     public void initialize() {
-        super.initialize();
-        LocationManager.get().setMock();
         User testUser = TestUtils.getTestUser();
         testUser.addToDB(DBUtility.get().getDb_());
         GoogleSignInSingleton.putUniqueID(testUser.getGoogleId_());
+    }
+
+    @Override
+    public void initializeView(){
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build();
         GoogleSignInSingleton.putGoogleSignInClient(GoogleSignIn.getClient(testRule_.getActivity().getApplicationContext(), gso));
-
-    }
-
-    @Override
-    public void terminate() {
-        super.terminate();
     }
 
     @Test
