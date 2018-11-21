@@ -1,9 +1,8 @@
 package ch.epfl.swissteam.services;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,7 +13,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 
 import static ch.epfl.swissteam.services.DBUtility.get;
 
@@ -40,7 +42,9 @@ public class ChatRoom extends NavigationDrawer {
         setContentView(R.layout.activity_chat_room);
         super.onCreateDrawer(BACK);
         dataBase_ = DBUtility.get().getDb_();
+
         setCurrentRelationId_(getIntent().getExtras().getString(ChatRelation.RELATION_ID_TEXT, null));
+        checkAndSetIfDeletedByPartner();
         retrieveUserAndSetRelationId();
     }
 
@@ -123,6 +127,7 @@ public class ChatRoom extends NavigationDrawer {
         //If nothing works to establish the chat
         if(currentRelationId_ == null) {
             toastUser(getResources().getString(R.string.general_could_not_establish_relation));
+            return;
         }
         if(isDeletedRelation){
             toastUser(getResources().getString(R.string.chat_deleted_chat));
@@ -161,6 +166,13 @@ public class ChatRoom extends NavigationDrawer {
                         message.removeFromDB(get().getDb_(), key);
                     }
                 });
+    }
+
+    private void checkAndSetIfDeletedByPartner(){
+        if(currentRelationId_ != null)
+            DBUtility.get().getChatRelation(currentRelationId_, chatRelation ->{
+                isDeletedRelation = chatRelation.isHalfDeleted_();
+            });
     }
 
     private void toastUser(String text){

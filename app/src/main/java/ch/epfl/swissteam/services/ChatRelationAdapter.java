@@ -88,6 +88,7 @@ public class ChatRelationAdapter extends RecyclerView.Adapter<ChatRelationAdapte
                                     user.removeChatRelation(chatRelation.getChatRelation_(), DBUtility.get().getDb_()));
                             relations_.remove(chatRelation);
                         }
+                        checkAndFixChatRelationDeletion(cR.getId_()); //If both side delete at the same time, proper deletion can fail.
                         refresh();
                     }
 
@@ -106,6 +107,19 @@ public class ChatRelationAdapter extends RecyclerView.Adapter<ChatRelationAdapte
 
     public void setFilterName(String filterName){
         relations_.setFilterName_(filterName);
+    }
+
+    private void checkAndFixChatRelationDeletion(String relationId){
+        DBUtility.get().getChatRelation(relationId, chatRelation ->{
+            if(chatRelation == null) return;
+            else
+            DBUtility.get().getUser(chatRelation.getOtherId(GoogleSignInSingleton.get().getClientUniqueID()),
+                    user->{
+                        if(user.relationExists(GoogleSignInSingleton.get().getClientUniqueID()) == null){
+                            chatRelation.removeFromDB(DBUtility.get().getDb_());
+                        }
+                    });
+        });
     }
 
     /**
