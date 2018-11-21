@@ -22,6 +22,9 @@
     /* ----- SignIn string ----- */
 
     <string name="signin_welcomemessage">Welcome in Socialize!</string>
+    <string name="signin_channel_name" translatable="false">Notification Channel</string>
+    <string name="signin_channel_description" translatable="false">Notification Channel for Socialize</string>
+
 
     /* ----- Toolbar string ----- */
 
@@ -38,6 +41,7 @@
     <string name="title_activity_online_chat">OnlineChatActivity</string>
     <string name="title_activity_chat_room">ChatRoom</string>
     <string name="title_activity_services_search">ServicesSearch</string>
+    <string name="title_activity_maps">Map</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -147,22 +151,23 @@
         \n3. If you want to come back, you will have to configure everything once again.</string>
     <string name="settings_continue_confirmation_deleteaccount" translatable="false">CONTINUE</string>
 
+    /* ----- Map string ----- */
+
+    <string name="map_info_unknownuser">Unknown</string>
+
+    /* ----- User string ----- */
+
+    <string name="user_search_distanceunavailable">Unavailable</string>
+    <string name="user_search_distancedisplay">%1dkm away</string>
+
+    /* ----- Capability string ----- */
+
+    <string name="capability_layout_hintkeywords">Type some keywords separated by ;</string>
 
 
     <string-array name="language_arrays">
         <item>English</item>
         <item>French</item>
     </string-array>
-
-    <string name="usersearch_distanceunavailable">Unavailable</string>
-    <string name="usersearch_distancedisplay">%1dkm away</string>
-    <string name="channel_name" translatable="false">Notification Channel</string>
-    <string name="channel_description" translatable="false">Notification Channel for Socialize</string>
-    <string name="deleted_user_name">Deleted user</string>
-    <string name="title_activity_maps">Map</string>
-    <string name="capabilitylayout_hintkeywords">Type some keywords separated by ;</string>
-    <string name="mapinfo_unknownuser">Unknown</string>
-
-
 
 </resources>

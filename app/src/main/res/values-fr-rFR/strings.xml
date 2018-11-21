@@ -37,6 +37,7 @@
     <string name="title_activity_online_chat">OnlineChatActivity</string>
     <string name="title_activity_chat_room">ChatRoom</string>
     <string name="title_activity_services_search">Recherche de services</string>
+    <string name="title_activity_maps">Carte</string>
 
     <string name="navigation_drawer_open">Ouvrir le menu de navigation</string>
     <string name="navigation_drawer_close">Fermer le menu de navigation</string>
@@ -141,6 +142,18 @@
         \n2. Toutes vos conversations seront perdus.
         \n3. Si vous voulez revenir, vous devrez tout reconfigurer à nouveau.</string>
 
+    /* ----- Map string ----- */
+
+    <string name="map_info_unknownuser">Inconnu</string>
+
+    /* ----- User string ----- */
+
+    <string name="user_search_distanceunavailable">Non disponible</string>
+    <string name="user_search_distancedisplay">%1dkm de distance</string>
+
+    /* ----- Capability string ----- */
+
+    <string name="capability_layout_hintkeywords">Ecrivez des mots-clés séparés par des ;</string>
 
 
     <string-array name="language_arrays">
