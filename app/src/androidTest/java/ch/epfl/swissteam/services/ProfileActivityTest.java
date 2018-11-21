@@ -42,10 +42,9 @@ public class ProfileActivityTest extends SocializeTest<ProfileActivity> {
 
     @Override
     public void initialize() {
-        LocationManager.get().setMock();
         GoogleSignInSingleton.putUniqueID(TestUtils.M_GOOGLE_ID);
-        TestUtils.O_USER.addToDB(FirebaseDatabase.getInstance().getReference());
-        M_USER.addToDB(FirebaseDatabase.getInstance().getReference());
+        TestUtils.O_USER.addToDB(DBUtility.get().getDb_());
+        M_USER.addToDB(DBUtility.get().getDb_());
         sleep(SLEEP_TIME);
     }
 
@@ -76,15 +75,17 @@ public class ProfileActivityTest extends SocializeTest<ProfileActivity> {
         onView(withId(R.id.button_profile_downvote)).perform(click());
     }
 
-
     @Override
-    public void terminate(){
-        LocationManager.get().unsetMock();
+    public Intent getActivityIntent(){
+        Intent intent = new Intent();
+        intent.putExtra(GOOGLE_ID_TAG, O_USER.getGoogleId_());
+        return intent;
     }
 
     private void startIntentWith(String id){
         Intent intent = new Intent();
         intent.putExtra(GOOGLE_ID_TAG, id);
+        testRule_.finishActivity();
         testRule_.launchActivity(intent);
         sleep(SLEEP_TIME);
     }

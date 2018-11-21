@@ -67,7 +67,7 @@ public abstract class SocializeTest<C extends Activity> {
     }
 
     /**
-     * Use this method to set the intent used to start the activity.
+     * Override this method to set the intent used to start the activity.
      *
      * @return By default, returns an empty intent.
      */
