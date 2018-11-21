@@ -32,7 +32,6 @@ public class PostActivityTest extends SocializeTest<PostActivity>{
 
     @Override
     public void initialize() {
-        LocationManager.get().setMock();
         TestUtils.addTestPost();
         user = TestUtils.getTestUser();
         post = TestUtils.getTestPost();
@@ -40,12 +39,6 @@ public class PostActivityTest extends SocializeTest<PostActivity>{
         post.addToDB(DBUtility.get().getDb_());
         user.addToDB(DBUtility.get().getDb_());
         sleep(400);
-        startIntent();
-    }
-
-    @Override
-    public void terminate() {
-        LocationManager.get().unsetMock();
     }
 
     @Test
@@ -74,11 +67,11 @@ public class PostActivityTest extends SocializeTest<PostActivity>{
 
     }
 
-    private void startIntent(){
+    @Override
+    public Intent getActivityIntent(){
         Intent intent = new Intent();
         intent.putExtra(POST_TAG, post);
-        testRule_.launchActivity(intent);
-        sleep(500);
+        return intent;
     }
 
 }
