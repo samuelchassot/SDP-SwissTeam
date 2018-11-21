@@ -137,7 +137,7 @@
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
             android:onClick="nextScreen"
-            android:text="@string/general_next"
+            android:text="@string/all_next"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </android.support.constraint.ConstraintLayout>

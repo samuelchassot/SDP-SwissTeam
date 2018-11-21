@@ -2,65 +2,17 @@
 <resources>
 
     /* ----- GENERAL string ----- */
-
-    <string name="general_next">Suivant</string>
-    <string name="general_done">Terminer</string>
-    <string name="general_send">Envoyer</string>
+    <string name="all_next">Suivant</string>
+    <string name="done_text">Terminer</string>
+    <string name="all_send">Envoyer</string>
     <string name="general_error">Erreur</string>
     <string name="general_ok">OK</string>
-    <string name="general_cancel">Annuler</string>
-    <string name="general_delete">Supprimer</string>
-    <string name="general_warning_uppercase">ATTENTION</string>
 
     /* ----- Database string ----- */
 
-    <string name="database_could_not_find_you_in_db">Nous ne vous avons pas trouvé dans la database !</string>
-    <string name="database_could_not_find_this_user_in_db">Nous n\'avons pas trouvé cet utilisateur dans la database !</string>
-    <string name="database_could_not_establish_relation">Nous n\’avons pas réussi à établir une relation !</string>
-
-    /* ----- SignIn string ----- */
-
-    <string name="signin_welcomemessage">Bienvenue sur Socialize!</string>
-
-    /* ----- Toolbar string ----- */
-
-    <string name="toolbar_my_posts">Mes posts</string>
-    <string name="toolbar_home">Accueil</string>
-    <string name="toolbar_chats">Chats</string>
-    <string name="toolbar_settings">Paramètres</string>
-    <string name="toolbar_services">Services</string>
-    <string name="toolbar_profile">Profil</string>
-
-    /* ----- Navigation string ----- */
-
-    <string name="title_activity_main">Accueil</string>
-    <string name="title_activity_online_chat">OnlineChatActivity</string>
-    <string name="title_activity_chat_room">ChatRoom</string>
-    <string name="title_activity_services_search">Recherche de services</string>
-    <string name="title_activity_maps">Carte</string>
-
-    <string name="navigation_drawer_open">Ouvrir le menu de navigation</string>
-    <string name="navigation_drawer_close">Fermer le menu de navigation</string>
-
-    <string name="navigation_header_title">Inconnu</string>
-    <string name="navigation_header_subtitle">inconnu@gmail.com</string>
-    <string name="navigation_header_desc">Navigation header</string>
-
-    <string name="navigation_drawer_button_home">Accueil</string>
-    <string name="navigation_drawer_button_profile">Profil</string>
-    <string name="navigation_drawer_button_services">Services</string>
-    <string name="navigation_drawer_newpost">Nouveau post</string>
-    <string name="navigation_drawer_myposts">Mes posts</string>
-    <string name="navigation_drawer_button_chats">Chats</string>
-    <string name="navigation_drawer_section_settings">Paramètres</string>
-    <string name="navigation_drawer_button_logout">Déconnexion</string>
-
-    /* ----- Home string ----- */
-
-    <string name="homefragment_asktorefresh">Actualisez pour les derniers messages!</string>
-    <string name="homefragment_noposts">Pas de posts pour le moment …</string>
-    <string name="homefragment_hintrefreshbutton">Rafraîchir</string>
-    <string name="homefragment_postdistance">à %1.0fkm</string>
+    <string name="general_could_not_find_you_in_db">Nous ne vous avons pas trouvé dans la database !</string>
+    <string name="general_could_not_find_this_user_in_db">Nous n\'avons pas trouvé cet utilisateur dans la database !</string>
+    <string name="general_could_not_establish_relation">Nous n\’avons pas réussi à établir une relation !</string>
 
     /* ----- Profile string ----- */
 
@@ -82,26 +34,58 @@
 
     <string name="show_profile">Voir le profil</string>
 
+    /* ----- SignIn string ----- */
+
+    <string name="signin_welcomemessage">Bienvenue sur Socialize!</string>
+
+    /* ----- Navigation string ----- */
+
+    <string name="title_activity_main">Accueil</string>
+    <string name="title_activity_online_chat">OnlineChatActivity</string>
+    <string name="title_activity_chat_room">ChatRoom</string>
+    <string name="title_activity_services_search">Recherche de services</string>
+
+    <string name="navigation_drawer_open">Ouvrir le menu de navigation</string>
+    <string name="navigation_drawer_close">Fermer le menu de navigation</string>
+
+    <string name="nav_header_title">Inconnu</string>
+    <string name="nav_header_subtitle">inconnu@gmail.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+
+    <string name="navigation_drawer_button_home">Accueil</string>
+    <string name="navigation_drawer_button_profile">Profil</string>
+    <string name="navigation_drawer_button_services">Services</string>
+    <string name="navigation_drawer_newpost">Nouveau post</string>
+    <string name="navigation_drawer_myposts">Mes posts</string>
+    <string name="navigation_drawer_button_chats">Chats</string>
+    <string name="navigation_drawer_section_settings">Paramètres</string>
+    <string name="navigation_drawer_button_logout">Déconnexion</string>
+
+
+    /* ----- Home string ----- */
+
+    <string name="homefragment_asktorefresh">Actualisez pour les derniers messages!</string>
+    <string name="homefragment_noposts">Pas de posts pour le moment …</string>
+    <string name="homefragment_hintrefreshbutton">Rafraîchir</string>
+    <string name="homefragment_postdistance">à %1.0fkm</string>
+
+
     /* ----- Service string ----- */
 
-    <string name="servicesfragment_title">Utilisateurs qui peuvent vous aider</string>
-    <string name="servicesfragment_hintkeywords">Entrez des mot-clés séparés par un espace</string>
-    <string name="servicesfragment_search">Recherche</string>
-    <string name="servicesfragment_problem">Oups! Il semblerait que personne ne puisse vous aider!\nSélectionnez une autre catégorie, ou vérifiez votre connextion internet.</string>
+    <string name="fragment_services_title">Utilisateurs qui peuvent vous aider</string>
 
     /* ----- Post string ----- */
 
     <string name="post_hinteditbutton">Modifiez votre post</string>
-
     <string name="postadapter_hintdeletebutton">Supprimez votre post</string>
-
     <string name="createpostfragment_entertitle">Entrez un titre ici</string>
     <string name="createpostfragment_enterbody">Entrez le contenu ici</string>
     <string name="createpostfragment_titleempty">Vous devez entrer un titre!</string>
     <string name="createpostfragment_bodyempty">Vous devez entrez un contenu!</string>
-    <string name="createpostfragment_switch_button_location">Localisation du post   </string>
-    <string name="createpostfragment_location_switch_on">Position de la maison</string>
-    <string name="createpostfragment_location_switch_off">Position actuelle</string>
+    <string name="fragment_services_problem">Oups! Il semblerait que personne ne puisse vous aider!\nSélectionnez une autre catégorie, ou vérifiez votre connextion internet.</string>
+
+    <string name="new_service">Nouveau service</string>
+    <string name="enter_key_word">Entrez des mots-clés</string>
 
     /* ----- Category strings ----- */
 
@@ -116,7 +100,6 @@
     <string name="category_Transportation">Transport</string>
 
     /* ----- Chat string ----- */
-
     <string name="chat_room_message_hint">Entrez votre message ici</string>
     <string name="chat_delete_alert_title">Etes-vous sur ?</string>
     <string name="chat_delete_alert_text">Voulez-vous supprimer ce message ?</string>
@@ -133,27 +116,17 @@
     <string name="settings_seekbar_radius">Rayon pour voir les posts des autres utilisateurs</string>
     <string name="settings_seekbar_currentradius">Rayon actuel : </string>
     <string name="settings_seekbar_toast_end">Nouvelle valeur du rayon : </string>
-    <string name="settings_button_set_home">Définissez votre position actuelle comme maison</string>
+    <string name="settings_button_set_home">Définissez votre position actuelle comme étant celle de votre maison</string>
 
-    <string name="settings_deletemyaccount">Supprimer mon compte</string>
-    <string name="settings_deleteaccount_warningmessage">Vous êtes en train de supprimer votre compte de manière permanente !
-        \nCela aura les conséquences suivantes :
-        \n1. Il vous sera impossible de récupérer vos données.
-        \n2. Toutes vos conversations seront perdus.
-        \n3. Si vous voulez revenir, vous devrez tout reconfigurer à nouveau.</string>
 
-    /* ----- Map string ----- */
+    /* ----- Toolbar string ----- */
 
-    <string name="map_info_unknownuser">Inconnu</string>
-
-    /* ----- User string ----- */
-
-    <string name="user_search_distanceunavailable">Non disponible</string>
-    <string name="user_search_distancedisplay">%1dkm de distance</string>
-
-    /* ----- Capability string ----- */
-
-    <string name="capability_layout_hintkeywords">Ecrivez des mots-clés séparés par des ;</string>
+    <string name="toolbar_my_posts">Mes posts</string>
+    <string name="toolbar_home">Accueil</string>
+    <string name="toolbar_chats">Chats</string>
+    <string name="toolbar_settings">Paramètres</string>
+    <string name="toolbar_services">Services</string>
+    <string name="toolbar_profile">Profil</string>
 
 
     <string-array name="language_arrays">

@@ -64,7 +64,7 @@
             android:layout_marginBottom="32dp"
             android:layout_marginEnd="32dp"
             android:layout_marginRight="32dp"
-            android:text="@string/general_send"
+            android:text="@string/all_send"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
@@ -73,9 +73,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="true"
-            android:text="@string/createpostfragment_switch_button_location"
-            android:textOff="@string/createpostfragment_location_switch_off"
-            android:textOn="@string/createpostfragment_location_switch_on"
+            android:text="@string/switch_button_location"
+            android:textOff="@string/location_switch_off"
+            android:textOn="@string/location_switch_on"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/button_createpostfragment_send"
             app:layout_constraintHorizontal_bias="0.25"

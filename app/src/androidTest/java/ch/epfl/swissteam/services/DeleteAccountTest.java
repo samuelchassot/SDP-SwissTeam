@@ -22,11 +22,11 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static ch.epfl.swissteam.services.TestUtils.sleep;
 import static org.junit.Assert.assertEquals;
 
-public class DeleteAccountTest extends FirebaseTest {
+public class DeleteAccountTest extends SocializeTest<MainActivity> {
 
-    @Rule
-    public final ActivityTestRule<MainActivity> mainActivityRule_ =
-            new ActivityTestRule<>(MainActivity.class);
+    public DeleteAccountTest() {
+        setTestRule(MainActivity.class);
+    }
 
     @Override
     public void initialize() {
@@ -38,7 +38,7 @@ public class DeleteAccountTest extends FirebaseTest {
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build();
-        GoogleSignInSingleton.putGoogleSignInClient(GoogleSignIn.getClient(mainActivityRule_.getActivity().getApplicationContext(), gso));
+        GoogleSignInSingleton.putGoogleSignInClient(GoogleSignIn.getClient(testRule_.getActivity().getApplicationContext(), gso));
 
     }
 

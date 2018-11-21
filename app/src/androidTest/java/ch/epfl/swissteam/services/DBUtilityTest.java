@@ -10,25 +10,19 @@ import org.junit.runner.RunWith;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(AndroidJUnit4.class)
-public class DBUtilityTest extends FirebaseTest {
+public class DBUtilityTest extends SocializeTest<MainActivity> {
 
     User testUser;
 
+    public DBUtilityTest(){
+        setTestRule(MainActivity.class);
+    }
+
     @Override
     public void initialize() {
-        LocationManager.get().setMock();
         testUser = TestUtils.getTestUser();
         testUser.addToDB(DBUtility.get().getDb_());
     }
-
-    @Override
-    public void terminate() {
-        LocationManager.get().unsetMock();
-    }
-
-    @Rule
-    public final ActivityTestRule<MainActivity> mainActivityRule_ =
-            new ActivityTestRule<>(MainActivity.class);
 
     @Test
     public void testSingleton() {
@@ -54,6 +48,6 @@ public class DBUtilityTest extends FirebaseTest {
 
     @Test
     public void testNotifyNewMessages() {
-        DBUtility.get().notifyNewMessages(mainActivityRule_.getActivity(), testUser.getGoogleId_());
+        DBUtility.get().notifyNewMessages(testRule_.getActivity(), testUser.getGoogleId_());
     }
 }

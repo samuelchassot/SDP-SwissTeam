@@ -72,9 +72,9 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
             userLoc.setLongitude(users_.get(i).getLongitude_());
             distance = (int)userLoc.distanceTo(referenceLocation_)/LocationManager.M_IN_ONE_KM;
         }
-        String distanceText = context_.getString(R.string.user_search_distanceunavailable);
+        String distanceText = context_.getString(R.string.usersearch_distanceunavailable);
         if(distance != -1){
-            distanceText = context_.getString(R.string.user_search_distancedisplay, distance);
+            distanceText = context_.getString(R.string.usersearch_distancedisplay, distance);
         }
         holder.distanceView_.setText(distanceText);
         Picasso.get().load(users_.get(i).getImageUrl_()).into(holder.imageView_);
