@@ -12,6 +12,7 @@ import java.util.HashMap;
 
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 @RunWith(AndroidJUnit4.class)
 public class UserTest extends FirebaseTest {
@@ -41,7 +42,7 @@ public class UserTest extends FirebaseTest {
 
     @Test
     public void testUserWorks() {
-        User user = new User(googleID, name,email, description, categories, keyWords, null, imageUrl,rating, 0, 0,null,null);
+        User user = new User(googleID, name,email, description, categories, keyWords, null, imageUrl,rating, 0, 0,null,null, false);
         assertEquals(googleID, user.getGoogleId_());
         assertEquals(email, user.getEmail_());
         assertEquals(name, user.getName_());
@@ -51,6 +52,7 @@ public class UserTest extends FirebaseTest {
         assertEquals(imageUrl, user.getImageUrl_());
         assertEquals(rating, user.getRating_());
         assertEquals(true, user.equals(user));
+        assertFalse(user.getIsShownLocation_());
     }
 
     @Test
@@ -165,7 +167,7 @@ public class UserTest extends FirebaseTest {
     @Test
     public void getKeyWordsForParticularCat(){
         User user = new User(googleID, name,email, description, categories, keyWords, null,
-                imageUrl,rating, 0, 0,null,null);
+                imageUrl,rating, 0, 0,null,null, false);
         assertEquals(user.getKeyWords(Categories.COOKING), lowerCaseKeyWords.get(Categories.COOKING.toString()));
         assertEquals(user.getKeyWords(Categories.DAILYLIFE), new ArrayList<>());
     }

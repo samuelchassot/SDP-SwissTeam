@@ -50,7 +50,9 @@ public class User implements DBSavable {
      */
     public static User getDeletedUser() {
         User deletedUser = new User(getDeletedUserGoogleID(), "Deleted user",
-                "", "", new ArrayList<Categories>(), new ArrayList<ChatRelation>(), "https://cdn.pixabay.com/photo/2014/03/25/15/19/cross-296507_960_720.png", 0, 0.0, 0.0, new ArrayList<String>(), new ArrayList<String>());
+                "", "", new ArrayList<Categories>(), new HashMap<>(), new ArrayList<ChatRelation>(),
+                "https://cdn.pixabay.com/photo/2014/03/25/15/19/cross-296507_960_720.png",
+                0, 0.0, 0.0, new ArrayList<String>(), new ArrayList<String>(), false);
         return deletedUser;
     }
 
