@@ -93,7 +93,7 @@ public class ProfileDisplayFragmentTest extends FirebaseTest {
         sleep(200);
         onView(withId(R.id.button_profiledisplay_modify)).perform(scrollTo()).perform(click());
         sleep(1000);
-        onView(withId(R.id.recyclerview_profilesettings_categories)).perform(RecyclerViewActions.actionOnItemAtPosition(1, clickChildViewWithId(R.id.checkbox_capabilitylayout_check)));
+        onView(withId(R.id.recyclerview_profilesettings_categories)).perform(scrollTo()).perform(RecyclerViewActions.actionOnItemAtPosition(1, clickChildViewWithId(R.id.checkbox_capabilitylayout_check)));
         sleep(1000);
         onView(withId(R.id.action_save)).perform(click());
         sleep(300);
@@ -110,7 +110,7 @@ public class ProfileDisplayFragmentTest extends FirebaseTest {
         sleep(200);
         onView(withId(R.id.button_profiledisplay_modify)).perform(scrollTo()).perform(click());
         sleep(1000);
-        onView(withId(R.id.recyclerview_profilesettings_categories)).perform(RecyclerViewActions.actionOnItemAtPosition(0, clickChildViewWithId(R.id.checkbox_capabilitylayout_check)));
+        onView(withId(R.id.recyclerview_profilesettings_categories)).perform(scrollTo()).perform(RecyclerViewActions.actionOnItemAtPosition(0, clickChildViewWithId(R.id.checkbox_capabilitylayout_check)));
         sleep(1000);
         onView(withId(R.id.action_save)).perform(click());
         sleep(300);
