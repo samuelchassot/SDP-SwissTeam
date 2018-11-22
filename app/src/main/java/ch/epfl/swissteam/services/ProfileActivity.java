@@ -5,6 +5,8 @@ import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
@@ -14,6 +16,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static ch.epfl.swissteam.services.NewProfileDetails.GOOGLE_ID_TAG;
 import static ch.epfl.swissteam.services.User.Vote.DOWNVOTE;
@@ -26,6 +33,11 @@ import static ch.epfl.swissteam.services.User.Vote.UPVOTE;
  */
 public class ProfileActivity extends NavigationDrawer {
 
+    private RecyclerView mRecyclerView_;
+    private LinearLayoutManager mLayoutManager_;
+    private CapabilitiesAdapter mAdapter_;
+    private List<Categories> mCapabilities_ = new ArrayList<Categories>();
+    private Map<String, List<String>> mKeyWords_ = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +69,16 @@ public class ProfileActivity extends NavigationDrawer {
 
         downvoteButton.setOnClickListener(v -> voteStoreAndRefresh(DOWNVOTE, clientUID));
 
+        mRecyclerView_ = (RecyclerView) this.findViewById(R.id.recyclerview_profileactivity_capabilities);
+        if (mRecyclerView_ != null) {
+            mRecyclerView_.setHasFixedSize(true);
+
+            mLayoutManager_ = new LinearLayoutManager(this);
+            mRecyclerView_.setLayoutManager(mLayoutManager_);
+
+            mAdapter_ = new CapabilitiesAdapter(mCapabilities_, mKeyWords_);
+            mRecyclerView_.setAdapter(mAdapter_);
+        }
 
         loadAndShowUser(clientUID);
     }
@@ -97,6 +119,18 @@ public class ProfileActivity extends NavigationDrawer {
                 findViewById(R.id.button_profile_downvote).setBackgroundResource(R.drawable.thumbs_down_red);
             } else {
                 findViewById(R.id.button_profile_downvote).setBackgroundResource(ta.getResourceId(1,0));
+            }
+
+            mCapabilities_.clear();
+            mCapabilities_.addAll(user.getCategories_());
+            mKeyWords_.clear();
+            for(Categories c : user.getCategories_()){
+                mKeyWords_.put(c.toString(), user.getKeyWords(c));
+            }
+            if (mAdapter_ != null) {
+                mAdapter_.notifyDataSetChanged();
+                Log.i("PROFILEACTIVITY", "notify dataset changed");
+                Log.i("PROFILEACTIVITY", "n of categories = " + mCapabilities_.size());
             }
 
 
