@@ -70,6 +70,7 @@
     <string name="newprofile_descriptionhint">Ecrivez une courte description de vous-même…</string>
     <string name="newprofile_picture">Photo:</string>
     <string name="newprofile_changepicture">Modifier</string>
+    <string name="newprofile_showlocation">Montrer ma position aux autres utilisateurs</string>
 
     <string name="profiledisplay_nametag">Nom</string>
     <string name="profiledisplay_surnametag">Nom de famille</string>
