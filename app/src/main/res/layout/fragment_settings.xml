@@ -12,7 +12,6 @@
         android:layout_marginRight="@dimen/activity_horizontal_margin"
         android:orientation="vertical">
 
-
         <Space
             android:layout_width="match_parent"
             android:layout_height="@dimen/settings_space_height" />
@@ -101,46 +100,40 @@
                 android:layout_height="match_parent" />
         </LinearLayout>
 
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="20dp" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-            <Switch
-                android:id="@+id/switch_settings_darkmode"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/settings_switch_darkmode" />
-
-        </LinearLayout>
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="20dp"
-            android:layout_weight="1" />
+            android:layout_height="@dimen/settings_space_height" />
+
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/textview_settings_radius"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/settings_seekbar_radius" />
 
-            <TextView
-                android:id="@+id/textview_settings_currentradius"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <Space
+                    android:layout_width="@dimen/settings_space_indent"
+                    android:layout_height="match_parent" />
+
+                <TextView
+                    android:id="@+id/textview_settings_radius"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/settings_seekbar_radius"
+                    android:textSize="@dimen/settings_police_medium_title" />
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:layout_weight="1" />
 
             <SeekBar
                 android:id="@+id/seekbar_settings_radius"
@@ -148,12 +141,99 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:max= "300000"/>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <Space
+                    android:layout_width="@dimen/settings_space_indent"
+                    android:layout_height="match_parent" />
+
+                <TextView
+                    android:id="@+id/textview_settings_currentradius"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"/>
+            </LinearLayout>
+
         </LinearLayout>
+
+
+       <Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/settings_space_height" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/settings_title_screen"
+            android:textSize="@dimen/settings_police_big_title"
+            android:textStyle="bold" />
+
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_weight="1" />
+            android:layout_height="@dimen/settings_space_height" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <Space
+                android:layout_width="@dimen/settings_space_indent"
+                android:layout_height="match_parent" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_switch_darkmode"
+                android:textSize="@dimen/settings_police_medium_title"
+                android:layout_weight="1" />
+
+            <Switch
+                android:id="@+id/switch_settings_darkmode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <Space
+                android:layout_width="@dimen/settings_space_indent"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/settings_space_height_big" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/button_settings_invite_friend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/colorPrimary"
+                android:text="@string/settings_invite_friend"
+                android:textColor="@android:color/white" />
+
+        </LinearLayout>
+
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/settings_space_height" />
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -168,8 +248,12 @@
                 android:background="@android:color/holo_red_dark"
                 android:text="@string/settings_deletemyaccount"
                 android:textColor="@android:color/white" />
+
         </LinearLayout>
 
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/settings_space_height" />
 
     </LinearLayout>
 
