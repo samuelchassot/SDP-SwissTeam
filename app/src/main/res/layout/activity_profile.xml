@@ -79,6 +79,18 @@
           app:layout_constraintStart_toStartOf="parent"
           app:layout_constraintTop_toTopOf="parent" />
 
+        <com.google.android.gms.maps.MapView
+            android:id="@+id/mapview_profileactivity"
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="16dp"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="@+id/textView_profile_description"
+            app:layout_constraintTop_toBottomOf="@+id/textView_profile_description"/>
+
         <Button
             android:id="@+id/button_profile_downvote"
             android:layout_width="48dp"
