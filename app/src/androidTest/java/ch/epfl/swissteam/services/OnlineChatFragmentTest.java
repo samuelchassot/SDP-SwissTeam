@@ -99,6 +99,7 @@ public class OnlineChatFragmentTest extends FirebaseTest {
         intended(hasComponent(ChatRoom.class.getName()));
     }
 
+    /*-----Relation deletion tests-----*/
     @Test
     public void canChooseToDeleteRelation() {
         onView(withText(oUser.getName_())).perform(longClick());
@@ -123,6 +124,40 @@ public class OnlineChatFragmentTest extends FirebaseTest {
                 .check(matches(isDisplayed()));
         onView(withText(mainActivityRule_.getActivity().getResources().getString(R.string.general_cancel))).perform(click());
         onView(withText(oUser.getName_())).check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void relationIsStillVisibleForPartner(){
+        onView(withText(oUser.getName_())).perform(longClick());
+        sleep(100);
+        onView(withText(mainActivityRule_.getActivity().getResources().getString(R.string.general_delete))).perform(click());
+
+        GoogleSignInSingleton.putUniqueID(oGoogleId);
+
+        onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
+        sleep(100);
+        onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_chats));
+
+        onView(withText(mUser.getName_())).check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void bothSideDeletedRelation(){
+        onView(withText(oUser.getName_())).perform(longClick());
+        sleep(100);
+        onView(withText(mainActivityRule_.getActivity().getResources().getString(R.string.general_delete))).perform(click());
+
+        GoogleSignInSingleton.putUniqueID(oGoogleId);
+
+        onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
+        sleep(100);
+        onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_chats));
+        sleep(100);
+
+        onView(withText(mUser.getName_())).perform(longClick());
+        sleep(100);
+        onView(withText(mainActivityRule_.getActivity().getResources().getString(R.string.general_delete))).perform(click());
+        onView(withText(mUser.getName_())).check(doesNotExist());
     }
 
     /*-----Search bar tests-----*/
