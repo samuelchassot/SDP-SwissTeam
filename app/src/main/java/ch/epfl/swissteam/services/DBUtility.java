@@ -258,6 +258,27 @@ public class DBUtility {
     }
 
     /**
+     * Retrieve a chat relation from the db
+     * @param relationId the id of the relation to retrieve
+     * @param callBack the callBack containing the instance of the desired relation
+     */
+    public void getChatRelation(String relationId, final DBCallBack<ChatRelation> callBack){
+        if(relationId == null) callBack.onCallBack(null);
+        else
+        db_.child(DBUtility.CHATS_RELATIONS).child(relationId).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                callBack.onCallBack(dataSnapshot.getValue(ChatRelation.class));
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    /**
      * Delete a post of a given key
      *
      * @param key the key of the post

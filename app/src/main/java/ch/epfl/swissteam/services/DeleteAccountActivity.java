@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 
 public class DeleteAccountActivity extends NavigationDrawer {
@@ -23,6 +24,8 @@ public class DeleteAccountActivity extends NavigationDrawer {
             String continueConfirmation = continueEditText.getText().toString();
             if(continueConfirmation.equals(getString(R.string.continue_confirmation_deleteaccount))){
                 deleteAccount();
+            } else {
+                Toast.makeText(this, "Check spelling if you want to delete your account", Toast.LENGTH_LONG).show();
             }
         });
     }
