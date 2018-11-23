@@ -33,6 +33,9 @@ import static org.junit.Assert.*;
 
 @RunWith(AndroidJUnit4.class)
 public class SettingsFragmentTest {
+
+    private User user_;
+
     @Rule
     public final ActivityTestRule<MainActivity> mActivityRule =
             new ActivityTestRule<>(MainActivity.class);
@@ -42,8 +45,10 @@ public class SettingsFragmentTest {
         LocationManager.get().setMock();
         SettingsDbHelper helper = new SettingsDbHelper(mActivityRule.getActivity().getApplicationContext());
         helper.getWritableDatabase().delete(SettingsContract.SettingsEntry.TABLE_NAME, null, null);
-        SettingsDBUtility.addRowIfNeeded(helper, "1234");
-        GoogleSignInSingleton.putUniqueID("1234");
+        user_ = TestUtils.getTestUser();
+        user_.addToDB(DBUtility.get().getDb_());
+        SettingsDBUtility.addRowIfNeeded(helper, user_.getGoogleId_());
+        GoogleSignInSingleton.putUniqueID(user_.getGoogleId_());
     }
 
     @After
@@ -95,5 +100,25 @@ public class SettingsFragmentTest {
         //Click on dark mode and check if checked
         onView(withId(R.id.switch_settings_darkmode)).perform(scrollTo()).perform(click());
         onView(withId(R.id.switch_settings_darkmode)).perform(scrollTo()).check(matches(isChecked()));
+    }
+
+    @Test
+    public void canSwitchShowLocation() {
+        onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
+        onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_settings));
+
+        //Check if switch corresponds to attribute isShownLocation_ of user_
+        onView(withId(R.id.switch_settings_darkmode)).perform(scrollTo()).check(
+                matches(user_.getIsShownLocation_()? isChecked() : isNotChecked()));
+
+        //Click on switch
+        onView(withId(R.id.switch_settings_darkmode)).perform(scrollTo()).perform(click());
+        onView(withId(R.id.switch_settings_darkmode)).perform(scrollTo()).check(
+                matches(user_.getIsShownLocation_()? isNotChecked() : isChecked()));
+
+        //Check if it corresponds in the DB
+        DBUtility.get().getUser(user_.getGoogleId_(), u ->
+            assertEquals(!user_.getIsShownLocation_(), u.getIsShownLocation_())
+        );
     }
 }
