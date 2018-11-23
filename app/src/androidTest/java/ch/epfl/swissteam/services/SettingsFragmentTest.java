@@ -32,18 +32,23 @@ import static ch.epfl.swissteam.services.TestUtils.sleep;
 import static org.junit.Assert.*;
 
 @RunWith(AndroidJUnit4.class)
-public class SettingsFragmentTest {
-    @Rule
-    public final ActivityTestRule<MainActivity> mActivityRule =
-            new ActivityTestRule<>(MainActivity.class);
+public class SettingsFragmentTest extends SocializeTest<MainActivity>{
 
-    @Before
+    public SettingsFragmentTest(){
+        setTestRule(MainActivity.class);
+    }
+
+    @Override
     public void initialize() {
         LocationManager.get().setMock();
-        SettingsDbHelper helper = new SettingsDbHelper(mActivityRule.getActivity().getApplicationContext());
+        GoogleSignInSingleton.putUniqueID("1234");
+    }
+
+    @Override
+    public void initializeView(){
+        SettingsDbHelper helper = new SettingsDbHelper(testRule_.getActivity().getApplicationContext());
         helper.getWritableDatabase().delete(SettingsContract.SettingsEntry.TABLE_NAME, null, null);
         SettingsDBUtility.addRowIfNeeded(helper, "1234");
-        GoogleSignInSingleton.putUniqueID("1234");
     }
 
     @After
@@ -65,7 +70,7 @@ public class SettingsFragmentTest {
 
         //Default value for radius
         String s = String.format(Locale.ENGLISH,
-                mActivityRule.getActivity().getResources().getString(R.string.settings_seekbar_currentradius) + " %.2f km",
+                testRule_.getActivity().getResources().getString(R.string.settings_seekbar_currentradius) + " %.2f km",
                 LocationManager.MAX_POST_DISTANCE/1000.0);
         onView(withId(R.id.textview_settings_currentradius)).check(matches(withText(s)));
     }
@@ -90,10 +95,10 @@ public class SettingsFragmentTest {
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_settings));
 
         //Check if dark mode not checked
-        onView(withId(R.id.switch_settings_darkmode)).perform(scrollTo()).check(matches(isNotChecked()));
+        onView(withId(R.id.switch_settings_darkmode)).check(matches(isNotChecked()));
 
         //Click on dark mode and check if checked
-        onView(withId(R.id.switch_settings_darkmode)).perform(scrollTo()).perform(click());
-        onView(withId(R.id.switch_settings_darkmode)).perform(scrollTo()).check(matches(isChecked()));
+        onView(withId(R.id.switch_settings_darkmode)).perform(click());
+        onView(withId(R.id.switch_settings_darkmode)).check(matches(isChecked()));
     }
 }
