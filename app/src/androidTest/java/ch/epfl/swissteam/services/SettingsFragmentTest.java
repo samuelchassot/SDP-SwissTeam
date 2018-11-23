@@ -95,10 +95,10 @@ public class SettingsFragmentTest extends SocializeTest<MainActivity>{
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_settings));
 
         //Check if dark mode not checked
-        onView(withId(R.id.switch_settings_darkmode)).check(matches(isNotChecked()));
+        onView(withId(R.id.switch_settings_darkmode)).perform(scrollTo()).check(matches(isNotChecked()));
 
         //Click on dark mode and check if checked
-        onView(withId(R.id.switch_settings_darkmode)).perform(click());
-        onView(withId(R.id.switch_settings_darkmode)).check(matches(isChecked()));
+        onView(withId(R.id.switch_settings_darkmode)).perform(scrollTo()).perform(click());
+        onView(withId(R.id.switch_settings_darkmode)).perform(scrollTo()).check(matches(isChecked()));
     }
 }

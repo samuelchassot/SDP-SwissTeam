@@ -124,7 +124,8 @@
 
     /* ----- Settings string ----- */
 
-    <string name="settings_title_localisation">Localization</string>
+    <string name="settings_title_localisation">Location</string>
+    <string name="settings_title_screen">Screen</string>
     <string name="settings_subtitle_current_localisation">Current home position</string>
     <string name="settings_switch_darkmode">Dark mode</string>
     <string name="settings_seekbar_radius">Radius to see the other user\'s posts</string>
@@ -132,7 +133,21 @@
     <string name="settings_seekbar_toast_end">Radius changed to : </string>
     <string name="settings_button_set_home">Set your home to your current position</string>
 
-    /* ----- Toolbar string ----- */
+    <string name="settings_invite_friend">Invite a friend</string>
+
+
+    <string name="settings_continue_confirmation_deleteaccount" translatable="false">CONTINUE</string>
+
+    /* ----- Map string ----- */
+
+    <string name="map_info_unknownuser">Unknown</string>
+
+    /* ----- User string ----- */
+
+    <string name="user_search_distanceunavailable">Unavailable</string>
+    <string name="user_search_distancedisplay">%1dkm away</string>
+
+    /* ----- Capability string ----- */
 
     <string name="toolbar_my_posts">My posts</string>
     <string name="toolbar_profile">Profile</string>
@@ -151,9 +166,7 @@
     <string name="usersearch_distancedisplay">%1dkm away</string>
     <string name="channel_name" translatable="false">Notification Channel</string>
     <string name="channel_description" translatable="false">Notification Channel for Socialize</string>
-    <string name="settings_deletemyaccount">Delete my account</string>
     <string name="warning">WARNING</string>
-    <string name="settings_deleteaccount_warningmessage">You are about to permanently delete your account ! \nThis will have these consequences : \n1. You will not be able to recover your data. \n2. All conversations you have will be lost. \n3. If you want to come back, you will have to configure everything once again.</string>
     <string name="continue_confirmation_deleteaccount">CONTINUE</string>
     <string name="deleted_user_name">Deleted user</string>
     <string name="title_activity_maps">Map</string>
@@ -161,6 +174,11 @@
     <string name="mapinfo_unknownuser">Unknown</string>
     <string name="servicesfragment_hintkeywords">Enter some keywords separated by a space</string>
     <string name="servicesfragment_search">Search</string>
-
+    <string name="settings_deletemyaccount">Delete my account</string>
+    <string name="settings_deleteaccount_warningmessage">You are about to permanently delete your account !
+        \nThis will have these consequences :
+        \n1. You will not be able to recover your data.
+        \n2. All conversations you have will be lost.
+        \n3. If you want to come back, you will have to configure everything once again.</string>
 
 </resources>
