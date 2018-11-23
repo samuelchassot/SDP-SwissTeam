@@ -10,6 +10,24 @@
         app:showAsAction="never" />
     -->
 
+    <group android:id="@+id/group_switchtomap" >
+        <item
+            android:id="@+id/action_switchtomap"
+            android:enabled="false"
+            android:icon="@drawable/ic_maindrawer_language"
+            android:title="Item"
+            android:visible="false"
+            app:showAsAction="always" />
+    </group>
+    <group android:id="@+id/group_switchtoposts">
+        <item
+            android:id="@+id/action_switchtoposts"
+            android:enabled="false"
+            android:icon="@drawable/ic_maindrawer_home"
+            android:title="Item"
+            android:visible="false"
+            app:showAsAction="always" />
+    </group>
     <group
         android:id="@+id/group_cancel">
 

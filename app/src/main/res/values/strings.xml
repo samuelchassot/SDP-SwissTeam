@@ -3,20 +3,68 @@
 
     /* ----- GENERAL string ----- */
 
-    <string name="all_next">Next</string>
-    <string name="done_text">Done</string>
-    <string name="all_send">Send</string>
+    <string name="general_next">Next</string>
+    <string name="general_done">Done</string>
+    <string name="general_send">Send</string>
     <string name="LoremIpsum" translatable="false">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</string>
     <string name="general_error">Error</string>
     <string name="general_ok">OK</string>
     <string name="general_cancel">Cancel</string>
     <string name="general_delete">Delete</string>
+    <string name="general_warning_uppercase">WARNING</string>
 
     /* ----- Database string ----- */
 
-    <string name="general_could_not_find_you_in_db">Could not find you in the database !</string>
-    <string name="general_could_not_find_this_user_in_db">Could not find this user in the database !</string>
-    <string name="general_could_not_establish_relation">Could not establish relation !</string>
+    <string name="database_could_not_find_you_in_db">Could not find you in the database !</string>
+    <string name="database_could_not_find_this_user_in_db">Could not find this user in the database !</string>
+    <string name="database_could_not_establish_relation">Could not establish relation !</string>
+
+    /* ----- SignIn string ----- */
+
+    <string name="signin_welcomemessage">Welcome in Socialize!</string>
+    <string name="signin_channel_name" translatable="false">Notification Channel</string>
+    <string name="signin_channel_description" translatable="false">Notification Channel for Socialize</string>
+
+
+    /* ----- Toolbar string ----- */
+
+    <string name="toolbar_my_posts">My posts</string>
+    <string name="toolbar_profile">Profile</string>
+    <string name="toolbar_home">Home</string>
+    <string name="toolbar_chats">Chats</string>
+    <string name="toolbar_settings">Settings</string>
+    <string name="toolbar_services">Services</string>
+
+    /* ----- Navigation string ----- */
+
+    <string name="title_activity_main">Socialize!</string>
+    <string name="title_activity_online_chat">OnlineChatActivity</string>
+    <string name="title_activity_chat_room">ChatRoom</string>
+    <string name="title_activity_services_search">ServicesSearch</string>
+    <string name="title_activity_maps">Map</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="navigation_header_title">Unknown</string>
+    <string name="navigation_header_subtitle">unknown@gmail.com</string>
+    <string name="navigation_header_desc">Navigation header</string>
+
+    <string name="navigation_drawer_button_home">Home</string>
+    <string name="navigation_drawer_button_profile">Profile</string>
+    <string name="navigation_drawer_button_services">Services</string>
+    <string name="navigation_drawer_newpost">New post</string>
+    <string name="navigation_drawer_myposts">My posts</string>
+    <string name="navigation_drawer_button_chats">Chats</string>
+    <string name="navigation_drawer_section_settings">Settings</string>
+    <string name="navigation_drawer_button_logout">Logout</string>
+
+    /* ----- Home string ----- */
+
+    <string name="homefragment_asktorefresh">Refresh for the latest posts!</string>
+    <string name="homefragment_noposts">No posts for now …</string>
+    <string name="homefragment_hintrefreshbutton">Refresh</string>
+    <string name="homefragment_postdistance">%1.0fkm away</string>
 
     /* ----- Profile string ----- */
 
@@ -38,72 +86,27 @@
 
     <string name="show_profile">See the profile</string>
 
-    /* ----- SignIn string ----- */
-
-    <string name="signin_welcomemessage">Welcome in Socialize!</string>
-
-
-    /* ----- Navigation string ----- */
-
-    <string name="title_activity_main">Socialize!</string>
-    <string name="title_activity_online_chat">OnlineChatActivity</string>
-    <string name="title_activity_chat_room">ChatRoom</string>
-    <string name="title_activity_services_search">ServicesSearch</string>
-
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-
-    <string name="nav_header_title">Unknown</string>
-    <string name="nav_header_subtitle">unknown@gmail.com</string>
-    <string name="nav_header_desc">Navigation header</string>
-
-    <string name="navigation_drawer_button_home">Home</string>
-    <string name="navigation_drawer_button_profile">Profile</string>
-    <string name="navigation_drawer_button_services">Services</string>
-    <string name="navigation_drawer_newpost">New post</string>
-    <string name="navigation_drawer_myposts">My posts</string>
-    <string name="navigation_drawer_button_chats">Chats</string>
-    <string name="navigation_drawer_section_settings">Settings</string>
-    <string name="navigation_drawer_button_logout">Logout</string>
-
-    <string name="send_text">send</string>
-
-    <string name="title_section1">Section 1</string>
-    <string name="title_section2">Section 2</string>
-    <string name="title_section3">Section 3</string>
-
-    /* ----- Home string ----- */
-
-    <string name="homefragment_asktorefresh">Refresh for the latest posts!</string>
-    <string name="homefragment_noposts">No posts for now …</string>
-    <string name="homefragment_hintrefreshbutton">Refresh</string>
-    <string name="homefragment_postdistance">%1.0fkm away</string>
-
-    /* ----- Chat string ----- */
-    <string name="chat_room_message_hint">Write your message here</string>
-    <string name="chat_delete_alert_title">Are you sure?</string>
-    <string name="chat_delete_alert_text">Do you want to delete this message?</string>
-    <string name="chat_message_not_found">Chat message not found.</string>
-    <string name="chat_relation_delete_alert_title">Delete conversation with </string>
-    <string name="chat_relation_delete_alert_text">Do you want to delete this conversation?</string>
-    <string name="chat_online_search_hint">Type a name to find a chat!</string>
-
     /* ----- Service string ----- */
 
-    <string name="fragment_services_title">Users that can help you</string>
+    <string name="servicesfragment_title">Users that can help you</string>
+    <string name="servicesfragment_hintkeywords">Enter some keywords separated by a space</string>
+    <string name="servicesfragment_search">Search</string>
+    <string name="servicesfragment_problem">Oops! Look like no one can help you!\nSelect another category, or check your internet connection.</string>
+
 
     /* ----- Post string ----- */
 
     <string name="post_hinteditbutton">Edit your post</string>
+
     <string name="postadapter_hintdeletebutton">Delete your post</string>
+
     <string name="createpostfragment_entertitle">Enter a title here</string>
     <string name="createpostfragment_enterbody">Enter the body here</string>
     <string name="createpostfragment_titleempty">You need to enter a title!</string>
     <string name="createpostfragment_bodyempty">You need to enter a body!</string>
-    <string name="fragment_services_problem">Oops! Look like no one can help you!\nSelect another category, or check your internet connection.</string>
-
-    <string name="new_service">New Service</string>
-    <string name="enter_key_word">Enter key words</string>
+    <string name="createpostfragment_switch_button_location">Location of the Post   </string>
+    <string name="createpostfragment_location_switch_on">Home location</string>
+    <string name="createpostfragment_location_switch_off">Current location</string>
 
     /* ----- Category strings ----- */
 
@@ -117,44 +120,57 @@
     <string name="category_Dailylife">Daily Life</string>
     <string name="category_Transportation">Transportation</string>
 
+    /* ----- Chat string ----- */
+
+    <string name="chat_room_message_hint">Write your message here</string>
+    <string name="chat_delete_alert_title">Are you sure?</string>
+    <string name="chat_delete_alert_text">Do you want to delete this message?</string>
+    <string name="chat_message_not_found">Chat message not found.</string>
+    <string name="chat_relation_delete_alert_title">Delete conversation with </string>
+    <string name="chat_relation_delete_alert_text">Do you want to delete this conversation?</string>
+    <string name="chat_online_search_hint">Type a name to find a chat!</string>
+
     /* ----- Settings string ----- */
 
-    <string name="settings_title_localisation">Localization</string>
+    <string name="settings_title_localisation">Location</string>
+    <string name="settings_title_screen">Screen</string>
+
     <string name="settings_subtitle_current_localisation">Current home position</string>
-    <string name="settings_switch_darkmode">Dark mode</string>
-    <string name="settings_seekbar_radius">Radius to see the other user\'s posts</string>
-    <string name="settings_seekbar_currentradius">Current radius : </string>
-    <string name="settings_seekbar_toast_end">Radius changed to : </string>
     <string name="settings_button_set_home">Set your home to your current position</string>
 
-    /* ----- Toolbar string ----- */
+    <string name="settings_switch_darkmode">Dark mode</string>
 
-    <string name="toolbar_my_posts">My posts</string>
-    <string name="toolbar_profile">Profile</string>
-    <string name="toolbar_home">Home</string>
-    <string name="toolbar_chats">Chats</string>
-    <string name="toolbar_settings">Settings</string>
-    <string name="toolbar_services">Services</string>
+    <string name="settings_seekbar_radius">Visibility radius of other users\' posts</string>
+    <string name="settings_seekbar_currentradius">Current radius : </string>
+    <string name="settings_seekbar_toast_end">Radius changed to : </string>
+
+    <string name="settings_invite_friend">Invite a friend</string>
+
+    <string name="settings_deletemyaccount">Delete my account</string>
+    <string name="settings_deleteaccount_warningmessage">You are about to permanently delete your account !
+        \nThis will have these consequences :
+        \n1. You will not be able to recover your data.
+        \n2. All conversations you have will be lost.
+        \n3. If you want to come back, you will have to configure everything once again.</string>
+    <string name="settings_continue_confirmation_deleteaccount" translatable="false">CONTINUE</string>
+
+    /* ----- Map string ----- */
+
+    <string name="map_info_unknownuser">Unknown</string>
+
+    /* ----- User string ----- */
+
+    <string name="user_search_distanceunavailable">Unavailable</string>
+    <string name="user_search_distancedisplay">%1dkm away</string>
+
+    /* ----- Capability string ----- */
+
+    <string name="capability_layout_hintkeywords">Type some keywords separated by ;</string>
 
 
     <string-array name="language_arrays">
         <item>English</item>
         <item>French</item>
     </string-array>
-
-    <string name="usersearch_distanceunavailable">Unavailable</string>
-    <string name="usersearch_distancedisplay">%1dkm away</string>
-    <string name="channel_name" translatable="false">Notification Channel</string>
-    <string name="channel_description" translatable="false">Notification Channel for Socialize</string>
-    <string name="settings_deletemyaccount">Delete my account</string>
-    <string name="warning">WARNING</string>
-    <string name="settings_deleteaccount_warningmessage">You are about to permanently delete your account ! \nThis will have these consequences : \n1. You will not be able to recover your data. \n2. All conversations you have will be lost. \n3. If you want to come back, you will have to configure everything once again.</string>
-    <string name="continue_confirmation_deleteaccount">CONTINUE</string>
-    <string name="deleted_user_name">Deleted user</string>
-    <string name="title_activity_maps">Map</string>
-    <string name="capabilitylayout_hintkeywords">Type some keywords separated by ;</string>
-    <string name="servicesfragment_hintkeywords">Enter some keywords separated by a space</string>
-    <string name="servicesfragment_search">Search</string>
-
 
 </resources>

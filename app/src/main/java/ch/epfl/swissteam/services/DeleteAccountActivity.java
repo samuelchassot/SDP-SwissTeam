@@ -21,7 +21,7 @@ public class DeleteAccountActivity extends NavigationDrawer {
 
         deleteButton.setOnClickListener(v->{
             String continueConfirmation = continueEditText.getText().toString();
-            if(continueConfirmation.equals(getString(R.string.continue_confirmation_deleteaccount))){
+            if(continueConfirmation.equals(getString(R.string.settings_continue_confirmation_deleteaccount))){
                 deleteAccount();
             }
         });

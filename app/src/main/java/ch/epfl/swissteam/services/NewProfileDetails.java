@@ -29,7 +29,7 @@ public class NewProfileDetails extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_profile_details);
-        findViewById(R.id.imageview_newprofiledetails_picture).setTag(R.string.all_next);
+        findViewById(R.id.imageview_newprofiledetails_picture).setTag(R.string.general_next);
 
         setTitle(getResources().getString(R.string.newprofile_title));
 

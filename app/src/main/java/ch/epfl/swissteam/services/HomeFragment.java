@@ -1,5 +1,6 @@
 package ch.epfl.swissteam.services;
 
+import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -126,6 +127,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     public void onPrepareOptionsMenu(Menu menu){
         menu.setGroupEnabled(R.id.group_refresh, true);
         menu.setGroupVisible(R.id.group_refresh, true);
+        menu.setGroupEnabled(R.id.group_switchtomap, true);
+        menu.setGroupVisible(R.id.group_switchtomap, true);
     }
 
     @Override
@@ -135,6 +138,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         if(id == R.id.action_refresh){
             refresh();
             return true;
+        }
+        else if(id == R.id.action_switchtomap) {
+            startActivity(new Intent(getContext(), PostsMapActivity.class));
         }
 
         return super.onOptionsItemSelected(item);

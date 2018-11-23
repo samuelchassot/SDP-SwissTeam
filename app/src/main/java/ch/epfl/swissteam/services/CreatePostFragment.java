@@ -1,24 +1,19 @@
 package ch.epfl.swissteam.services;
 
-import android.Manifest;
-import android.content.pm.PackageManager;
 import android.location.Location;
-import android.os.Build;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
-
-import com.google.android.gms.location.LocationServices;
 
 import java.util.Date;
 
@@ -29,6 +24,10 @@ import java.util.Date;
  * @author Adrian Baudat
  */
 public class CreatePostFragment extends Fragment implements View.OnClickListener {
+
+    private SettingsDbHelper dbHelper_;
+    private String id_;
+    private boolean isHomeLocation_;
 
     public CreatePostFragment() {
         // Required empty public constructor
@@ -47,6 +46,9 @@ public class CreatePostFragment extends Fragment implements View.OnClickListener
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        dbHelper_ = new SettingsDbHelper(this.getContext());
+        id_ = GoogleSignInSingleton.get().getClientUniqueID();
     }
 
     @Override
@@ -54,6 +56,34 @@ public class CreatePostFragment extends Fragment implements View.OnClickListener
                              Bundle savedInstanceState) {
         View frag = inflater.inflate(R.layout.fragment_create_post, container, false);
         ((Button) frag.findViewById(R.id.button_createpostfragment_send)).setOnClickListener(this);
+
+        // Add a switchButton with a textView indicating which location to use
+        Switch switchButton = (Switch) frag.findViewById(R.id.switch_createpostfragment_location);
+        TextView switchTextInfo = (TextView) frag.findViewById(R.id.textView_createpostfragment);
+
+            // Initialise the textView
+        if (switchButton.isChecked()) {
+            switchTextInfo.setText(R.string.createpostfragment_location_switch_on);
+            isHomeLocation_ = true;
+        } else {
+            switchTextInfo.setText(R.string.createpostfragment_location_switch_off);
+            isHomeLocation_ = false;
+        }
+
+            // Make the textView change when we switch the slider
+        switchButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
+                if (checked) {
+                    switchTextInfo.setText(R.string.createpostfragment_location_switch_on);
+                    isHomeLocation_ = true;
+                } else {
+                    switchTextInfo.setText(R.string.createpostfragment_location_switch_off);
+                    isHomeLocation_ = false;
+                }
+            }
+        });
+
         return frag;
     }
 
@@ -62,7 +92,8 @@ public class CreatePostFragment extends Fragment implements View.OnClickListener
 
         EditText titleField = ((EditText) getView().findViewById(R.id.plaintext_createpostfragment_title));
         EditText bodyField = ((EditText) getView().findViewById(R.id.plaintext_createpostfragment_body));
-        
+
+
         if (TextUtils.isEmpty(titleField.getText())) {
             Toast.makeText(getActivity(), R.string.createpostfragment_titleempty, Toast.LENGTH_SHORT).show();
         } else if (TextUtils.isEmpty(bodyField.getText())) {
@@ -75,20 +106,27 @@ public class CreatePostFragment extends Fragment implements View.OnClickListener
             long timestamp = (new Date()).getTime();
             String key = googleID + "_" + timestamp;
 
-            Location location = LocationManager.get().getCurrentLocation_();
+            // choose location according to the Slider state
+            double latitude, longitude;
+            if (isHomeLocation_) {
+                latitude = SettingsDBUtility.retrieveHome(dbHelper_, SettingsContract.SettingsEntry.COLUMN_SETTINGS_HOME_LATITUDE, id_);
+                longitude = SettingsDBUtility.retrieveHome(dbHelper_, SettingsContract.SettingsEntry.COLUMN_SETTINGS_HOME_LONGITUDE, id_);
+            } else {
+                Location location = LocationManager.get().getCurrentLocation_();
+                if (location != null) {
+                    latitude = location.getLatitude();
+                    longitude = location.getLongitude();
+                } else {
+                    latitude = 0;
+                    longitude = 0;
+                }
+            }
 
-            if(location != null) {
-                DBUtility.get().getUser(googleID, user -> {
-                    Post post = new Post(key, title, googleID, body, timestamp, location.getLongitude(), location.getLatitude());
-                    post.addToDB(DBUtility.get().getDb_());
-                });
-            }
-            else{
-                DBUtility.get().getUser(googleID, user -> {
-                    Post post = new Post(key, title, googleID, body, timestamp, 0, 0);
-                    post.addToDB(DBUtility.get().getDb_());
-                });
-            }
+            DBUtility.get().getUser(googleID, user -> {
+                Post post = new Post(key, title, googleID, body, timestamp, longitude, latitude);
+                post.addToDB(DBUtility.get().getDb_());
+            });
+
             ((MainActivity) getActivity()).showHomeFragment();
         }
     }
