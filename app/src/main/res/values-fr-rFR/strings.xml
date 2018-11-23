@@ -125,10 +125,12 @@
     <string name="chat_relation_delete_alert_title">Supprimer la conversation avec </string>
     <string name="chat_relation_delete_alert_text">Voulez-vous supprimer cette conversation ?</string>
     <string name="chat_online_search_hint">Ecrivez un nom pour trouver une conversation !</string>
+    <string name="chat_deleted_chat">Cette conversation a été supprimée.</string>
 
     /* ----- Settings string ----- */
 
     <string name="settings_title_localisation">Localisation</string>
+    <string name="settings_unavailable_location">Localisation impossible</string>
     <string name="settings_title_screen">Ecran</string>
 
     <string name="settings_subtitle_current_localisation">Position actuelle de la maison</string>
@@ -167,5 +169,6 @@
         <item>Anglais</item>
         <item>Français</item>
     </string-array>
+    <string name="settings_deleteaccount_fail">Vérifier le texte si vous voulez supprimer votre compte</string>
 
 </resources>

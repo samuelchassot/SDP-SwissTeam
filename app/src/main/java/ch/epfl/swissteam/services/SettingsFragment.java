@@ -94,6 +94,8 @@ public class SettingsFragment extends Fragment implements OnMapReadyCallback {
             if(currentLocation != null) {
                 updateHomeLocation(currentLocation.getLatitude(), currentLocation.getLongitude());
                 updateMapView();
+            } else {
+                Toast.makeText(getActivity(), R.string.settings_unavailable_location, Toast.LENGTH_LONG).show();
             }
         });
 
