@@ -145,7 +145,6 @@ public class ProfileActivity extends NavigationDrawer implements OnMapReadyCallb
         });
     }
 
-    //TODO
     private void showMap(boolean isShownLocation){
         if(isShownLocation){
             findViewById(R.id.mapview_profileactivity).setVisibility(View.VISIBLE);
@@ -157,10 +156,10 @@ public class ProfileActivity extends NavigationDrawer implements OnMapReadyCallb
         googleMap_ = googleMap;
         googleMap_.setMinZoomPreference(12);
 
-        // Add a marker where the post is.
-        LatLng postLatLng = new LatLng(user_.getLatitude_(), user_.getLongitude_());
-        marker_ = googleMap_.addMarker(new MarkerOptions().position(postLatLng).title(user_.getName_()));
-        googleMap_.moveCamera(CameraUpdateFactory.newLatLng(postLatLng));
+        // Add a marker where the user is.
+        LatLng userLatLng = new LatLng(user_.getLatitude_(), user_.getLongitude_());
+        marker_ = googleMap_.addMarker(new MarkerOptions().position(userLatLng).title(user_.getName_()));
+        googleMap_.moveCamera(CameraUpdateFactory.newLatLng(userLatLng));
     }
 
     @Override
@@ -211,4 +210,15 @@ public class ProfileActivity extends NavigationDrawer implements OnMapReadyCallb
 
         mapView_.onSaveInstanceState(mapViewBundle);
     }
+
+    /**
+     * !Just for testing!
+     * Methods to get the marker corresponding to the location of the user
+     * in the Google Maps view.
+     * @return the marker of the user
+     */
+    protected Marker getMarker(){
+        return marker_;
+    }
 }
+
