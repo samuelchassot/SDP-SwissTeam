@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:background="?backgroundColor"
     android:layout_height="match_parent">
@@ -208,10 +209,37 @@
         </LinearLayout>
 
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <Space
+                android:layout_width="@dimen/settings_space_indent"
+                android:layout_height="match_parent" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/general_showlocation"
+                android:textSize="@dimen/settings_police_medium_title" />
+
+            <Switch
+                android:id="@+id/switch_settings_showmylocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <Space
+                android:layout_width="@dimen/settings_space_indent"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+
         <Space
             android:layout_width="match_parent"
-            android:layout_height="@dimen/settings_space_height_big" />
-
+            android:layout_height="@dimen/settings_space_height"
+            android:layout_weight="1" />
 
         <LinearLayout
             android:layout_width="match_parent"

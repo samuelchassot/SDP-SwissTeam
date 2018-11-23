@@ -12,6 +12,7 @@
     <string name="general_cancel">Cancel</string>
     <string name="general_delete">Delete</string>
     <string name="general_warning_uppercase">WARNING</string>
+    <string name="general_showlocation">Show my location to other users</string>
 
     /* ----- Database string ----- */
 
@@ -74,7 +75,6 @@
     <string name="newprofile_descriptionhint">Write a short description of yourself…</string>
     <string name="newprofile_picture">Picture:</string>
     <string name="newprofile_changepicture">Change</string>
-    <string name="newprofile_showlocation">Show my location to other users</string>
 
     <string name="profiledisplay_emailtag">EMail</string>
     <string name="profiledisplay_surnametag">Surname</string>
