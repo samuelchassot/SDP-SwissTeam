@@ -27,6 +27,7 @@ import static android.support.test.espresso.intent.Intents.intended;
 import static android.support.test.espresso.intent.Intents.intending;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasAction;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
+import static android.support.test.espresso.matcher.ViewMatchers.isChecked;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
@@ -75,6 +76,11 @@ public class NewProfileDetailsTest extends FirebaseTest{
     @Test
     public void testTypingName() {
         onView(withId(R.id.plaintext_newprofiledetails_name)).perform(typeText(username)).check(matches(withText(username)));
+    }
+
+    @Test
+    public void testCheckShowLocation() {
+        onView(withId(R.id.switch_newprofiledetails_showlocation)).perform(click()).check(matches(isChecked()));
     }
 
     @Test
