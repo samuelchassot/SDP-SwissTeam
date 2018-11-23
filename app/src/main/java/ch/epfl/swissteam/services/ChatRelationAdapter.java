@@ -74,12 +74,13 @@ public class ChatRelationAdapter extends RecyclerView.Adapter<ChatRelationAdapte
 
     private void askToDeleteRelation(Context context, ExtendedChatRelation chatRelation, String othersName){
         Resources res = context.getResources();
-        Utility.askToDeleteAlertDialog(context, chatRelation.getChatRelation_(), null,
-                res.getString(R.string.chat_relation_delete_alert_title) + " " + othersName,
-                res.getString(R.string.chat_relation_delete_alert_text),
-                (b) -> {
-                    if(b){
+        Utility.askToDeleteAlertDialog(context, res.getString(R.string.chat_relation_delete_alert_title) + " " + othersName,
+                res.getString(R.string.chat_relation_delete_alert_text), isDeletionSelected -> {
+                    if(isDeletionSelected){
+                        DBUtility.get().getUser(currentUserId_, user ->
+                                user.removeChatRelation(chatRelation.getChatRelation_(), DBUtility.get().getDb_()));
                         relations_.remove(chatRelation);
+                        checkChatRelationDeletion(chatRelation.getChatRelation_().getId_()); //If both side delete at the same time, proper deletion can fail.
                         refresh();
                     }
 
@@ -98,6 +99,18 @@ public class ChatRelationAdapter extends RecyclerView.Adapter<ChatRelationAdapte
 
     public void setFilterName(String filterName){
         relations_.setFilterName_(filterName);
+    }
+
+    private void checkChatRelationDeletion(String relationId){
+        DBUtility.get().getChatRelation(relationId, chatRelation ->{
+            if(chatRelation != null)
+            DBUtility.get().getUser(chatRelation.getOtherId(currentUserId_),
+                    user->{
+                        if(user == null || user.relationExists(currentUserId_) == null){
+                            chatRelation.removeFromDB(DBUtility.get().getDb_());
+                        }
+                    });
+        });
     }
 
     /**
