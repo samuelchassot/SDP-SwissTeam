@@ -107,16 +107,35 @@
     <string name="chat_relation_delete_alert_title">Supprimer la conversation avec </string>
     <string name="chat_relation_delete_alert_text">Voulez-vous supprimer cette conversation ?</string>
     <string name="chat_online_search_hint">Ecrivez un nom pour trouver une conversation !</string>
+    <string name="chat_deleted_chat">Cette conversation a été supprimée.</string>
 
     /* ----- Settings string ----- */
 
     <string name="settings_title_localisation">Localisation</string>
+    <string name="settings_unavailable_location">Localisation impossible</string>
+    <string name="settings_title_screen">Ecran</string>
+
     <string name="settings_subtitle_current_localisation">Position actuelle de la maison</string>
+    <string name="settings_button_set_home">Définissez votre position actuelle comme maison</string>
+
     <string name="settings_switch_darkmode">Mode de nuit</string>
-    <string name="settings_seekbar_radius">Rayon pour voir les posts des autres utilisateurs</string>
+
+    <string name="settings_seekbar_radius">Rayon de visibilité des posts des autres utilisateurs</string>
     <string name="settings_seekbar_currentradius">Rayon actuel : </string>
     <string name="settings_seekbar_toast_end">Nouvelle valeur du rayon : </string>
-    <string name="settings_button_set_home">Définissez votre position actuelle comme étant celle de votre maison</string>
+
+    <string name="settings_invite_friend">Invite un ami</string>
+
+    <string name="settings_deletemyaccount">Supprimer mon compte</string>
+    <string name="settings_deleteaccount_warningmessage">Vous êtes en train de supprimer votre compte de manière permanente !
+        \nCela aura les conséquences suivantes :
+        \n1. Il vous sera impossible de récupérer vos données.
+        \n2. Toutes vos conversations seront perdus.
+        \n3. Si vous voulez revenir, vous devrez tout reconfigurer à nouveau.</string>
+
+    /* ----- Map string ----- */
+
+    <string name="map_info_unknownuser">Inconnu</string>
 
 
     /* ----- Toolbar string ----- */
@@ -133,5 +152,6 @@
         <item>Anglais</item>
         <item>Français</item>
     </string-array>
+    <string name="settings_deleteaccount_fail">Vérifier le texte si vous voulez supprimer votre compte</string>
 
 </resources>

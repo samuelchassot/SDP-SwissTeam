@@ -1,10 +1,15 @@
 package ch.epfl.swissteam.services;
 
+import android.support.test.espresso.UiController;
+import android.support.test.espresso.ViewAction;
 import android.support.test.espresso.contrib.DrawerActions;
 import android.support.test.espresso.contrib.NavigationViewActions;
+import android.support.test.espresso.contrib.RecyclerViewActions;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
+import android.view.View;
 
+import org.hamcrest.Matcher;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -73,6 +78,59 @@ public class ProfileDisplayFragmentTest extends SocializeTest<MainActivity> {
         testUser.addToDB(DBUtility.get().getDb_());
     }
 
+    @Test
+    public void addCategoriesSave(){
+        TestUtils.getTestUser().addToDB(DBUtility.get().getDb_());
+        onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
+        onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_profile));
+        sleep(3000);
+        closeSoftKeyboard();
+        sleep(200);
+        onView(withId(R.id.button_profiledisplay_modify)).perform(scrollTo()).perform(click());
+        sleep(1000);
+        onView(withId(R.id.recyclerview_profilesettings_categories)).perform(scrollTo()).perform(RecyclerViewActions.actionOnItemAtPosition(1, clickChildViewWithId(R.id.checkbox_capabilitylayout_check)));
+        sleep(1000);
+        onView(withId(R.id.action_save)).perform(click());
+        sleep(300);
+        TestUtils.getTestUser().addToDB(DBUtility.get().getDb_());
+    }
+
+    @Test
+    public void removeCategoriesWithKWAndSave(){
+        TestUtils.getTestUser().addToDB(DBUtility.get().getDb_());
+        onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
+        onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_profile));
+        sleep(3000);
+        closeSoftKeyboard();
+        sleep(200);
+        onView(withId(R.id.button_profiledisplay_modify)).perform(scrollTo()).perform(click());
+        sleep(1000);
+        onView(withId(R.id.recyclerview_profilesettings_categories)).perform(scrollTo()).perform(RecyclerViewActions.actionOnItemAtPosition(0, clickChildViewWithId(R.id.checkbox_capabilitylayout_check)));
+        sleep(1000);
+        onView(withId(R.id.action_save)).perform(click());
+        sleep(300);
+        TestUtils.getTestUser().addToDB(DBUtility.get().getDb_());
+    }
+
+    public static ViewAction clickChildViewWithId(final int id) {
+        return new ViewAction() {
+            @Override
+            public Matcher<View> getConstraints() {
+                return null;
+            }
+
+            @Override
+            public String getDescription() {
+                return "Click child view with specified id.";
+            }
+
+            @Override
+            public void perform(UiController uiController, View view) {
+                View v = view.findViewById(id);
+                v.performClick();
+            }
+        };
+    }
 
     @Override
     public void initialize() {

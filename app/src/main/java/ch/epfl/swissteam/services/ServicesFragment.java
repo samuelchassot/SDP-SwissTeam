@@ -196,7 +196,7 @@ public class ServicesFragment extends Fragment {
             return true;
         }
         for (String k : kw){
-            if(listForCat.contains(k)){
+            if(listForCat.contains(k.toLowerCase())){
                 return true;
             }
         }

@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,7 +15,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
+
+import static ch.epfl.swissteam.services.DBUtility.get;
 
 
 /**
@@ -28,6 +34,7 @@ public class ChatRoom extends NavigationDrawer {
     private DatabaseReference dataBase_;
     private String currentRelationId_;
     private User mUser_;
+    private boolean isDeletedRelation = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +44,9 @@ public class ChatRoom extends NavigationDrawer {
         setContentView(R.layout.activity_chat_room);
         super.onCreateDrawer(BACK);
         dataBase_ = DBUtility.get().getDb_();
+
         setCurrentRelationId_(getIntent().getExtras().getString(ChatRelation.RELATION_ID_TEXT, null));
+        checkAndSetIfDeletedByPartner();
         retrieveUserAndSetRelationId();
     }
 
@@ -119,8 +128,13 @@ public class ChatRoom extends NavigationDrawer {
         }
         //If nothing works to establish the chat
         if(currentRelationId_ == null) {
-            toastUser(getResources().getString(R.string.general_could_not_establish_relation));
+            toastUser(getResources().getString(R.string.database_could_not_establish_relation));
+            return;
         }
+        if(isDeletedRelation){
+            toastUser(getResources().getString(R.string.chat_deleted_chat));
+        }
+
         ChatMessage chatMessage = new ChatMessage(message, mUser_.getName_(), mUser_.getGoogleId_(), currentRelationId_);
         chatMessage.addToDB(dataBase_);
 
@@ -128,29 +142,37 @@ public class ChatRoom extends NavigationDrawer {
     }
 
     private void newRelationWith(String contactId ){
-        DBUtility.get().getUser(contactId, new DBCallBack<User>(){
-            @Override
-            public void onCallBack(User cUser) {
-                if(cUser == null){
-                    toastUser(getResources().getString(R.string.general_could_not_find_this_user_in_db));
-                    return;
-                }
-
-                ChatRelation newRelation = new ChatRelation(mUser_, cUser);
-                newRelation.addToDB(DBUtility.get().getDb_());
-                mUser_.addChatRelation(newRelation,  DBUtility.get().getDb_());
-                cUser.addChatRelation(newRelation, DBUtility.get().getDb_());
-                setCurrentRelationId_(newRelation.getId_());
-                displayMessages();
+        DBUtility.get().getUser(contactId, cUser -> {
+            if(cUser == null){
+                toastUser(getResources().getString(R.string.database_could_not_find_this_user_in_db));
+                return;
             }
-        } );
+
+            ChatRelation newRelation = new ChatRelation(mUser_, cUser);
+            newRelation.addToDB(DBUtility.get().getDb_());
+            mUser_.addChatRelation(newRelation,  DBUtility.get().getDb_());
+            cUser.addChatRelation(newRelation, DBUtility.get().getDb_());
+            setCurrentRelationId_(newRelation.getId_());
+            displayMessages();
+        });
     }
 
     private void askToDeleteMessage(ChatMessage message, String key){
         Resources res = getResources();
-        Utility.askToDeleteAlertDialog(this, message, key,
-                res.getString(R.string.chat_delete_alert_title),
-                res.getString(R.string.chat_delete_alert_text));
+        Utility.askToDeleteAlertDialog(this, res.getString(R.string.chat_delete_alert_title),
+                res.getString(R.string.chat_delete_alert_text), isDeletionSelected -> {
+                    if(isDeletionSelected) {
+                        message.removeFromDB(get().getDb_(), key);
+                    }
+                });
+    }
+
+    private void checkAndSetIfDeletedByPartner(){
+        if(currentRelationId_ != null)
+            DBUtility.get().getChatRelation(currentRelationId_, chatRelation ->{
+                DBUtility.get().getUser(chatRelation.getOtherId(GoogleSignInSingleton.get().getClientUniqueID()),
+                        user-> isDeletedRelation = user == null || user.relationExists(GoogleSignInSingleton.get().getClientUniqueID()) == null);
+            });
     }
 
     private void toastUser(String text){

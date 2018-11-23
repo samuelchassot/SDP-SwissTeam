@@ -80,6 +80,7 @@
     <string name="homefragment_postdistance">%1.0fkm away</string>
 
     /* ----- Chat string ----- */
+
     <string name="chat_room_message_hint">Write your message here</string>
     <string name="chat_delete_alert_title">Are you sure?</string>
     <string name="chat_delete_alert_text">Do you want to delete this message?</string>
@@ -87,6 +88,7 @@
     <string name="chat_relation_delete_alert_title">Delete conversation with </string>
     <string name="chat_relation_delete_alert_text">Do you want to delete this conversation?</string>
     <string name="chat_online_search_hint">Type a name to find a chat!</string>
+    <string name="chat_deleted_chat">This chat has been deleted.</string>
 
     /* ----- Service string ----- */
 
@@ -124,15 +126,34 @@
 
     /* ----- Settings string ----- */
 
-    <string name="settings_title_localisation">Localization</string>
+    <string name="settings_unavailable_location">Location unavailable</string>
+    <string name="settings_title_localisation">Location</string>
+    <string name="settings_title_screen">Screen</string>
     <string name="settings_subtitle_current_localisation">Current home position</string>
     <string name="settings_switch_darkmode">Dark mode</string>
-    <string name="settings_seekbar_radius">Radius to see the other user\'s posts</string>
+    <string name="settings_seekbar_radius">Visibility radius of other users\' posts</string>
     <string name="settings_seekbar_currentradius">Current radius : </string>
     <string name="settings_seekbar_toast_end">Radius changed to : </string>
     <string name="settings_button_set_home">Set your home to your current position</string>
+    <string name="settings_invite_friend">Invite a friend</string>
+    <string name="settings_deletemyaccount">Delete my account</string>
+    <string name="settings_deleteaccount_warningmessage">You are about to permanently delete your account !
+        \nThis will have these consequences :
+        \n1. You will not be able to recover your data.
+        \n2. All conversations you have will be lost.
+        \n3. If you want to come back, you will have to configure everything once again.</string>
+    <string name="settings_continue_confirmation_deleteaccount" translatable="false">CONTINUE</string>
 
-    /* ----- Toolbar string ----- */
+    /* ----- Map string ----- */
+
+    <string name="map_info_unknownuser">Unknown</string>
+
+    /* ----- User string ----- */
+
+    <string name="user_search_distanceunavailable">Unavailable</string>
+    <string name="user_search_distancedisplay">%1dkm away</string>
+
+    /* ----- Capability string ----- */
 
     <string name="toolbar_my_posts">My posts</string>
     <string name="toolbar_profile">Profile</string>
@@ -146,14 +167,13 @@
         <item>English</item>
         <item>French</item>
     </string-array>
+    <string name="settings_deleteaccount_fail">Check spelling if you want to delete your account</string>
 
     <string name="usersearch_distanceunavailable">Unavailable</string>
     <string name="usersearch_distancedisplay">%1dkm away</string>
     <string name="channel_name" translatable="false">Notification Channel</string>
     <string name="channel_description" translatable="false">Notification Channel for Socialize</string>
-    <string name="settings_deletemyaccount">Delete my account</string>
     <string name="warning">WARNING</string>
-    <string name="settings_deleteaccount_warningmessage">You are about to permanently delete your account ! \nThis will have these consequences : \n1. You will not be able to recover your data. \n2. All conversations you have will be lost. \n3. If you want to come back, you will have to configure everything once again.</string>
     <string name="continue_confirmation_deleteaccount">CONTINUE</string>
     <string name="deleted_user_name">Deleted user</string>
     <string name="title_activity_maps">Map</string>
