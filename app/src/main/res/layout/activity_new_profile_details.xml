@@ -140,7 +140,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/newprofile_showlocation" />
+                android:text="@string/general_showlocation" />
 
             <Switch
                 android:id="@+id/switch_newprofiledetails_showlocation"
