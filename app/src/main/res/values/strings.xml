@@ -181,6 +181,8 @@
     <string name="mapinfo_unknownuser">Unknown</string>
     <string name="servicesfragment_hintkeywords">Enter some keywords separated by a space</string>
     <string name="servicesfragment_search">Search</string>
+    <string name="database_could_not_find_this_user_in_db">Could not find user</string>
+    <string name="database_could_not_establish_relation">Could not establish relation</string>
 
 
 </resources>
