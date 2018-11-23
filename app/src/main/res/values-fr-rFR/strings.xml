@@ -167,5 +167,6 @@
         <item>Anglais</item>
         <item>Français</item>
     </string-array>
+    <string name="settings_deleteaccount_fail">Vérifier le texte si vous voulez supprimer votre compte</string>
 
 </resources>

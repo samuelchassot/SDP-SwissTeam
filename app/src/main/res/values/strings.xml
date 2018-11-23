@@ -174,5 +174,6 @@
         <item>English</item>
         <item>French</item>
     </string-array>
+    <string name="settings_deleteaccount_fail">Check spelling if you want to delete your account</string>
 
 </resources>
