@@ -78,7 +78,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         setHasOptionsMenu(true);
         getActivity().invalidateOptionsMenu();
 
-        //refresh();
+        refresh();
         return frag;
     }
 

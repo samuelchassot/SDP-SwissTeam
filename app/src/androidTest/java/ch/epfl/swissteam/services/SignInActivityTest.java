@@ -24,30 +24,21 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
 
 
 @RunWith(AndroidJUnit4.class)
-public class SignInActivityTest {
-    @Rule
-    public final IntentsTestRule<SignInActivity> signInActivityRule_ =
-            new IntentsTestRule<>(SignInActivity.class);
+public class SignInActivityTest extends SocializeTest<SignInActivity> {
 
-    @Before
-    public void initialize() {
-        LocationManager.get().setMock();
-    }
-
-    @After
-    public void terminate() {
-        LocationManager.get().unsetMock();
+    public SignInActivityTest(){
+        setTestRule(SignInActivity.class);
     }
 
     @Test
     public void connectWithNonexistentAccount() {
-        if(GoogleSignIn.getLastSignedInAccount(signInActivityRule_.getActivity()) != null) {
+        if(GoogleSignIn.getLastSignedInAccount(testRule_.getActivity()) != null) {
             GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                     .requestEmail()
                     .build();
-            GoogleSignIn.getClient(signInActivityRule_.getActivity().getApplicationContext(), gso).signOut();
-            signInActivityRule_.finishActivity();
-            signInActivityRule_.launchActivity(new Intent());
+            GoogleSignIn.getClient(testRule_.getActivity().getApplicationContext(), gso).signOut();
+            testRule_.finishActivity();
+            testRule_.launchActivity(new Intent());
         }
         Intent intent = new Intent();
         Instrumentation.ActivityResult result = new Instrumentation.ActivityResult(Activity.RESULT_OK, intent);

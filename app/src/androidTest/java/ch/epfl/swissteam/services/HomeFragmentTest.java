@@ -23,29 +23,23 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static ch.epfl.swissteam.services.TestUtils.sleep;
 
 @RunWith(AndroidJUnit4.class)
-public class HomeFragmentTest extends FirebaseTest{
+public class HomeFragmentTest extends SocializeTest{
+
+    public HomeFragmentTest(){
+        setTestRule(MainActivity.class);
+    }
 
     private Post post;
     private User user;
 
-    @Rule
-    public final ActivityTestRule<MainActivity> mActivityRule =
-            new ActivityTestRule<>(MainActivity.class);
-
     @Override
     public void initialize() {
-        LocationManager.get().setMock();
         TestUtils.addTestPost();
         user = TestUtils.getTestUser();
         post = TestUtils.getTestPost();
         post.addToDB(DBUtility.get().getDb_());
         user.addToDB(DBUtility.get().getDb_());
         sleep(400);
-    }
-
-    @Override
-    public void terminate() {
-        LocationManager.get().unsetMock();
     }
         
     @Test
