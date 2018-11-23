@@ -134,15 +134,19 @@
 
     <string name="settings_title_localisation">Localization</string>
     <string name="settings_unavailable_location">Location unavailable</string>
+    <string name="settings_title_localisation">Location</string>
+    <string name="settings_title_screen">Screen</string>
 
     <string name="settings_subtitle_current_localisation">Current home position</string>
     <string name="settings_button_set_home">Set your home to your current position</string>
 
     <string name="settings_switch_darkmode">Dark mode</string>
 
-    <string name="settings_seekbar_radius">Radius to see the other user\'s posts</string>
+    <string name="settings_seekbar_radius">Visibility radius of other users\' posts</string>
     <string name="settings_seekbar_currentradius">Current radius : </string>
     <string name="settings_seekbar_toast_end">Radius changed to : </string>
+
+    <string name="settings_invite_friend">Invite a friend</string>
 
     <string name="settings_deletemyaccount">Delete my account</string>
     <string name="settings_deleteaccount_warningmessage">You are about to permanently delete your account !
