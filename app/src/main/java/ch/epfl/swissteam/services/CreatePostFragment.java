@@ -127,10 +127,10 @@ public class CreatePostFragment extends Fragment implements View.OnClickListener
             DBUtility.get().getUser(googleID, user -> {
                 Post post = new Post(key, title, googleID, body, timestamp, longitude, latitude);
                 post.addToDB(DBUtility.get().getDb_());
+            ((MainActivity) getActivity()).showMyPostsFragment();
             });
             InputMethodManager inputMethodManager = (InputMethodManager)  getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
             inputMethodManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), 0);
-            ((MainActivity) getActivity()).showMyPostsFragment();
         }
     }
 }
