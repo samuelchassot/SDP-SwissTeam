@@ -134,6 +134,7 @@
 
     /* ----- Settings string ----- */
 
+    <string name="settings_unavailable_location">Location unavailable</string>
     <string name="settings_title_localisation">Location</string>
     <string name="settings_title_screen">Screen</string>
 

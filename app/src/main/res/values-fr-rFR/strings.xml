@@ -129,6 +129,7 @@
     /* ----- Settings string ----- */
 
     <string name="settings_title_localisation">Localisation</string>
+    <string name="settings_unavailable_location">Localisation impossible</string>
     <string name="settings_title_screen">Ecran</string>
 
     <string name="settings_subtitle_current_localisation">Position actuelle de la maison</string>
