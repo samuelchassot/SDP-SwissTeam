@@ -262,7 +262,7 @@ public class SettingsFragment extends Fragment implements OnMapReadyCallback {
                 locationSwitch.setChecked(u.getIsShownLocation_());
 
                 locationSwitch.setOnCheckedChangeListener((buttonView, isChecked) ->{
-                    //DBUtility.get().setUserIsShownLocation(id_, isChecked);
+                    DBUtility.get().setUserIsShownLocation(id_, isChecked);
                 });
             }
 
