@@ -118,6 +118,7 @@ public class ServicesFragment extends Fragment {
         Button searchButton = (Button) view.findViewById(R.id.button_services_search);
         searchButton.setOnClickListener(v ->{
             Log.i("KEYWORDS", "list of keywords is empty ? " + keywords_.isEmpty());
+            ActivityManager.hideKeyboard(this.getActivity());
             initDataSet(currentCategory_, keywords_);
         });
 
