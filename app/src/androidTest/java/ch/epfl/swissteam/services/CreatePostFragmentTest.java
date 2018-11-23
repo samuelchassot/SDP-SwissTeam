@@ -94,10 +94,10 @@ public class CreatePostFragmentTest extends SocializeTest<MainActivity>{
         sleep(500);
         onView(withId(R.id.floatingbutton_addpost)).perform(click());
 
-        onView(withId(R.id.textView_createpostfragment)).check(matches(withText(R.string.location_switch_on)));
+        onView(withId(R.id.textView_createpostfragment)).check(matches(withText(R.string.createpostfragment_location_switch_on)));
 
         onView(withId(R.id.switch_createpostfragment_location)).perform(click());
-        onView(withId(R.id.textView_createpostfragment)).check(matches(withText(R.string.location_switch_off)));
+        onView(withId(R.id.textView_createpostfragment)).check(matches(withText(R.string.createpostfragment_location_switch_off)));
     }
 
     @Test
