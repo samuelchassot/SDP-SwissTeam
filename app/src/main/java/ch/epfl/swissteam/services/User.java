@@ -18,6 +18,9 @@ import java.util.Map;
  */
 public class User implements DBSavable {
 
+    public static String DELETED_USER_NAME = "Deleted user";
+    public static String DELETED_USER_IMG_URL = "https://cdn.pixabay.com/photo/2014/03/25/15/19/cross-296507_960_720.png";
+
     private String googleId_, email_, name_, description_, imageUrl_;
     private int rating_;
     private double latitude_, longitude_;
@@ -50,9 +53,10 @@ public class User implements DBSavable {
      * @return a deleted user
      */
     public static User getDeletedUser() {
-        User deletedUser = new User(getDeletedUserGoogleID(), "Deleted user",
-                "", "", new ArrayList<Categories>(), new ArrayList<ChatRelation>(), "https://cdn.pixabay.com/photo/2014/03/25/15/19/cross-296507_960_720.png", 0, 0.0, 0.0, new ArrayList<String>(), new ArrayList<String>());
-        return deletedUser;
+        return new User(getDeletedUserGoogleID(), DELETED_USER_NAME,
+                "", "", new ArrayList<Categories>(), new ArrayList<ChatRelation>(),
+                DELETED_USER_IMG_URL, 0, 0.0, 0.0, new ArrayList<String>(),
+                new ArrayList<String>());
     }
 
     /**
