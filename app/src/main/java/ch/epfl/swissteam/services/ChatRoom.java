@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateFormat;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -115,7 +116,7 @@ public class ChatRoom extends NavigationDrawer {
      * @param view
      */
     public void sendMessage(View view){
-        TextInputEditText textInput = findViewById(R.id.message_input);
+        EditText textInput = findViewById(R.id.message_input);
         String message = textInput.getText().toString();
         if(mUser_ == null){
             toastUser(getResources().getString(R.string.database_could_not_find_you_in_db));
