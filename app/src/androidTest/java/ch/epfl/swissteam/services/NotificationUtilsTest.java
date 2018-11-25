@@ -8,24 +8,14 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 @RunWith(AndroidJUnit4.class)
-public class NotificationUtilsTest extends FirebaseTest {
+public class NotificationUtilsTest extends SocializeTest<MainActivity> {
 
-    @Override
-    public void initialize() {
-        LocationManager.get().setMock();
+    public NotificationUtilsTest(){
+        setTestRule(MainActivity.class);
     }
-
-    @Override
-    public void terminate() {
-        LocationManager.get().unsetMock();
-    }
-
-    @Rule
-    public final ActivityTestRule<MainActivity> mainActivityRule_ =
-            new ActivityTestRule<>(MainActivity.class);
 
     @Test
     public void testSendCustomNotification() {
-        NotificationUtils.sendChatNotification(mainActivityRule_.getActivity(), "Hello", "World", "1234");
+        NotificationUtils.sendChatNotification(testRule_.getActivity(), "Hello", "World", "1234");
     }
 }

@@ -28,11 +28,11 @@ import static org.hamcrest.Matchers.instanceOf;
 
 
 @RunWith(AndroidJUnit4.class)
-public class ServicesFragmentTest {
+public class ServicesFragmentTest extends SocializeTest<MainActivity>{
 
-    @Rule
-    public final ActivityTestRule<MainActivity> mainActivityRule_ =
-            new ActivityTestRule<>(MainActivity.class);
+    public ServicesFragmentTest(){
+        setTestRule(MainActivity.class);
+    }
 
     @Before
     public void initialize() {
