@@ -94,8 +94,8 @@ public class ProfileActivityTest extends SocializeTest<ProfileActivity> {
     @Test
     public void mapDisplaysMarker(){
         startIntentWith(M_USER.getGoogleId_());
-        Marker marker = mActivityRule.getActivity().getMarker();
-        mActivityRule.getActivity().runOnUiThread(new Runnable() {
+        Marker marker = testRule_.getActivity().getMarker();
+        testRule_.getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 if(marker != null){

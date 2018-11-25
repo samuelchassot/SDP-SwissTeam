@@ -52,7 +52,7 @@ public class TestUtils {
         User testUser = new User("1234", "testuser", "test@gmail.com",
                 "I am a test user", cat, kW, null,
                 "https://lh5.googleusercontent.com/-SYTkc6TIZHI/AAAAAAAAAAI/AAAAAAAAABc/EBrA4sSVWQc/photo.jpg",
-                0,0, 0,null,null, true);
+                0,0, 0,null,null, false);
         return testUser;
     }
 

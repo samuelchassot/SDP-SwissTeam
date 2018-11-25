@@ -117,16 +117,12 @@ public class SettingsFragmentTest extends SocializeTest<MainActivity>{
 
         //Check if switch corresponds to attribute isShownLocation_ of user_
         onView(withId(R.id.switch_settings_darkmode)).perform(scrollTo()).check(
-                matches(user_.getIsShownLocation_()? isChecked() : isNotChecked()));
+                matches(isNotChecked()));
 
         //Click on switch
         onView(withId(R.id.switch_settings_darkmode)).perform(scrollTo()).perform(click());
         onView(withId(R.id.switch_settings_darkmode)).perform(scrollTo()).check(
-                matches(user_.getIsShownLocation_()? isNotChecked() : isChecked()));
+                matches(isChecked()));
 
-        //Check if it corresponds in the DB
-        DBUtility.get().getUser(user_.getGoogleId_(), u ->
-            assertEquals(!user_.getIsShownLocation_(), u.getIsShownLocation_())
-        );
     }
 }
