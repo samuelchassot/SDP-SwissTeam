@@ -37,9 +37,18 @@
         </android.support.constraint.ConstraintLayout>
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/textview_capabilitiesadapter_keywords"
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/textview_capabilitiesadapter_keywords"
+            android:layout_width="324dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+    </android.support.constraint.ConstraintLayout>
 
 </LinearLayout>
