@@ -28,11 +28,11 @@ import static org.hamcrest.Matchers.instanceOf;
 
 
 @RunWith(AndroidJUnit4.class)
-public class ServicesFragmentTest {
+public class ServicesFragmentTest extends SocializeTest<MainActivity>{
 
-    @Rule
-    public final ActivityTestRule<MainActivity> mainActivityRule_ =
-            new ActivityTestRule<>(MainActivity.class);
+    public ServicesFragmentTest(){
+        setTestRule(MainActivity.class);
+    }
 
     @Before
     public void initialize() {
@@ -71,16 +71,5 @@ public class ServicesFragmentTest {
         closeSoftKeyboard();
         sleep(1000);
         onView(withId(R.id.button_services_search)).perform(click());
-        sleep(1000);
-        onView(withId(R.id.edittext_services_keywordsinput)).perform(clearText()).perform(typeText("Java"));
-        closeSoftKeyboard();
-        sleep(1000);
-        onView(withId(R.id.button_services_search)).perform(click());
-        sleep(1000);
-        onView(withId(R.id.edittext_services_keywordsinput)).perform(clearText()).perform(typeText("NoUserWillHaveThisKeywords"));
-        closeSoftKeyboard();
-        sleep(1000);
-        onView(withId(R.id.button_services_search)).perform(click());
-
     }
 }

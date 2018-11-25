@@ -30,7 +30,7 @@ import static ch.epfl.swissteam.services.TestUtils.sleep;
  *
  * @author Sébastien Gachoud
  */
-public class OnlineChatFragmentTest extends FirebaseTest {
+public class OnlineChatFragmentTest extends SocializeTest<MainActivity> {
 
     private static final String mGoogleId = "1234";
     private static final String oGoogleId = "5678";
@@ -45,14 +45,16 @@ public class OnlineChatFragmentTest extends FirebaseTest {
     private static final ChatRelation chatRelation2 = new ChatRelation(mUser,tUser);
     private static final ChatRelation chatRelation3 = new ChatRelation(oUser,tUser);
 
-    @Rule
-    public final ActivityTestRule<MainActivity> mainActivityRule_ =
-            new ActivityTestRule<>(MainActivity.class);
+    public OnlineChatFragmentTest(){
+        setTestRule(MainActivity.class);
+    }
 
     @Override
     public void initialize(){
-        LocationManager.get().setMock();
         GoogleSignInSingleton.putUniqueID(mGoogleId);
+        mUser.addToDB(DBUtility.get().getDb_());
+        oUser.addToDB(DBUtility.get().getDb_());
+        tUser.addToDB(DBUtility.get().getDb_());
         chatRelation.addToDB(DBUtility.get().getDb_());
         chatRelation2.addToDB(DBUtility.get().getDb_());
         chatRelation3.addToDB(DBUtility.get().getDb_());
@@ -62,20 +64,13 @@ public class OnlineChatFragmentTest extends FirebaseTest {
         oUser.addChatRelation(chatRelation3, DBUtility.get().getDb_());
         tUser.addChatRelation(chatRelation2, DBUtility.get().getDb_());
         tUser.addChatRelation(chatRelation3, DBUtility.get().getDb_());
-
-        Intents.init();
-
-
-        onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
-        sleep(100);
-        onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_chats));
-        sleep(100);
     }
 
     @Override
-    public void terminate() {
-        Intents.release();
-        LocationManager.get().unsetMock();
+    public void initializeView(){
+        onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
+        onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_chats));
+        sleep(500);
     }
 
     @Test
@@ -99,12 +94,11 @@ public class OnlineChatFragmentTest extends FirebaseTest {
         intended(hasComponent(ChatRoom.class.getName()));
     }
 
-    /*-----Relation deletion tests-----*/
     @Test
     public void canChooseToDeleteRelation() {
         onView(withText(oUser.getName_())).perform(longClick());
         sleep(100);
-        onView(withText(mainActivityRule_.getActivity().getResources().getString(R.string.chat_relation_delete_alert_text)))
+        onView(withText(testRule_.getActivity().getResources().getString(R.string.chat_relation_delete_alert_text)))
                 .check(matches(isDisplayed()));
     }
 
@@ -112,52 +106,17 @@ public class OnlineChatFragmentTest extends FirebaseTest {
     public void canDeleteRelation() {
         onView(withText(oUser.getName_())).perform(longClick());
         sleep(100);
-        onView(withText(mainActivityRule_.getActivity().getResources().getString(R.string.general_delete))).perform(click());
-        onView(withText(oUser.getName_())).check(doesNotExist());
+        onView(withText(testRule_.getActivity().getResources().getString(R.string.general_delete))).perform(click());
     }
 
     @Test
     public void canCancelDeleteRelation() {
         onView(withText(oUser.getName_())).perform(longClick());
         sleep(100);
-        onView(withText(mainActivityRule_.getActivity().getResources().getString(R.string.chat_relation_delete_alert_text)))
+        onView(withText(testRule_.getActivity().getResources().getString(R.string.chat_relation_delete_alert_text)))
                 .check(matches(isDisplayed()));
-        onView(withText(mainActivityRule_.getActivity().getResources().getString(R.string.general_cancel))).perform(click());
+        onView(withText(testRule_.getActivity().getResources().getString(R.string.general_cancel))).perform(click());
         onView(withText(oUser.getName_())).check(matches(isDisplayed()));
-    }
-
-    @Test
-    public void relationIsStillVisibleForPartner(){
-        onView(withText(oUser.getName_())).perform(longClick());
-        sleep(100);
-        onView(withText(mainActivityRule_.getActivity().getResources().getString(R.string.general_delete))).perform(click());
-
-        GoogleSignInSingleton.putUniqueID(oGoogleId);
-
-        onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
-        sleep(100);
-        onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_chats));
-
-        onView(withText(mUser.getName_())).check(matches(isDisplayed()));
-    }
-
-    @Test
-    public void bothSideDeletedRelation(){
-        onView(withText(oUser.getName_())).perform(longClick());
-        sleep(100);
-        onView(withText(mainActivityRule_.getActivity().getResources().getString(R.string.general_delete))).perform(click());
-
-        GoogleSignInSingleton.putUniqueID(oGoogleId);
-
-        onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
-        sleep(100);
-        onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_chats));
-        sleep(100);
-
-        onView(withText(mUser.getName_())).perform(longClick());
-        sleep(100);
-        onView(withText(mainActivityRule_.getActivity().getResources().getString(R.string.general_delete))).perform(click());
-        onView(withText(mUser.getName_())).check(doesNotExist());
     }
 
     /*-----Search bar tests-----*/

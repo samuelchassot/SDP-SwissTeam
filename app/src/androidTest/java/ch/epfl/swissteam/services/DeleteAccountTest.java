@@ -22,29 +22,25 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static ch.epfl.swissteam.services.TestUtils.sleep;
 import static org.junit.Assert.assertEquals;
 
-public class DeleteAccountTest extends FirebaseTest {
+public class DeleteAccountTest extends SocializeTest<MainActivity> {
 
-    @Rule
-    public final ActivityTestRule<MainActivity> mainActivityRule_ =
-            new ActivityTestRule<>(MainActivity.class);
-
-    @Override
-    public void initialize() {
-        super.initialize();
-        LocationManager.get().setMock();
-        User testUser = TestUtils.getTestUser();
-        testUser.addToDB(DBUtility.get().getDb_());
-        GoogleSignInSingleton.putUniqueID(testUser.getGoogleId_());
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestEmail()
-                .build();
-        GoogleSignInSingleton.putGoogleSignInClient(GoogleSignIn.getClient(mainActivityRule_.getActivity().getApplicationContext(), gso));
-
+    public DeleteAccountTest() {
+        setTestRule(MainActivity.class);
     }
 
     @Override
-    public void terminate() {
-        super.terminate();
+    public void initialize() {
+        User testUser = TestUtils.getTestUser();
+        testUser.addToDB(DBUtility.get().getDb_());
+        GoogleSignInSingleton.putUniqueID(testUser.getGoogleId_());
+    }
+
+    @Override
+    public void initializeView(){
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+        GoogleSignInSingleton.putGoogleSignInClient(GoogleSignIn.getClient(testRule_.getActivity().getApplicationContext(), gso));
     }
 
     @Test

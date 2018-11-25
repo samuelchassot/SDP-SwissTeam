@@ -9,11 +9,11 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
 @RunWith(AndroidJUnit4.class)
-public class PostsMapActivityTest {
+public class PostsMapActivityTest extends SocializeTest<PostsMapActivity>{
 
-    @Rule
-    public final ActivityTestRule<PostsMapActivity> mainActivityRule_ =
-            new ActivityTestRule<>(PostsMapActivity.class);
+    public PostsMapActivityTest(){
+        setTestRule(PostsMapActivity.class);
+    }
 
     @Test
     public void canOpenActivity() {

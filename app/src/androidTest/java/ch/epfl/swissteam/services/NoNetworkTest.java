@@ -17,33 +17,17 @@ import org.junit.runner.RunWith;
 
 
 @RunWith(AndroidJUnit4.class)
-public class NoNetworkTest {
+public class NoNetworkTest extends SocializeTest<MainActivity> {
 
-    @Rule
-    public final ActivityTestRule<MainActivity> mainActivityRule_ =
-            new ActivityTestRule<>(MainActivity.class);
-
-    //@Rule
-    //public GrantPermissionRule gpr = GrantPermissionRule.grant("android.permission.MODIFY_PHONE_STATE");
-
-    //@Rule
-    //public GrantPermissionRule gpr2 = GrantPermissionRule.grant("android.permission.CHANGE_WIFI_STATE");
-
-    @Before
-    public void initialize() {
-        LocationManager.get().setMock();
-    }
-
-    @After
-    public void terminate() {
-        LocationManager.get().unsetMock();
+    public NoNetworkTest(){
+        setTestRule(MainActivity.class);
     }
 
     @Test
     public void cutNetwork() {
-        WifiManager wifi = (WifiManager) mainActivityRule_.getActivity().getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+        WifiManager wifi = (WifiManager) testRule_.getActivity().getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         //wifi.setWifiEnabled(false);
-        TelephonyManager tm = (TelephonyManager) mainActivityRule_.getActivity().getApplicationContext().getSystemService(Context.TELEPHONY_SERVICE);
+        TelephonyManager tm = (TelephonyManager) testRule_.getActivity().getApplicationContext().getSystemService(Context.TELEPHONY_SERVICE);
         //tm.setDataEnabled(false);
     }
 }

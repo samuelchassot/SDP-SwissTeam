@@ -1,5 +1,6 @@
 package ch.epfl.swissteam.services;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.test.espresso.Espresso;
 import android.support.test.espresso.contrib.DrawerActions;
@@ -40,11 +41,11 @@ import static org.hamcrest.CoreMatchers.allOf;
  * @author Sébastien Gachoud
  */
 @RunWith(AndroidJUnit4.class)
-public class ChatRoomTest extends FirebaseTest{
+public class ChatRoomTest extends SocializeTest<ChatRoom>{
 
-    @Rule
-    public final ActivityTestRule<ChatRoom> mActivityRule =
-            new ActivityTestRule<>(ChatRoom.class, true, false);
+    public ChatRoomTest(){
+        setTestRule(ChatRoom.class);
+    }
 
     @Override
     public void initialize(){
@@ -52,9 +53,13 @@ public class ChatRoomTest extends FirebaseTest{
         TestUtils.O_USER.addToDB(DBUtility.get().getDb_());
         TestUtils.M_USER.addToDB(DBUtility.get().getDb_());
         sleep(100);
+    }
+
+    @Override
+    public Intent getActivityIntent() {
         Intent intent = new Intent();
         intent.putExtra(GOOGLE_ID_TAG, O_USER.getGoogleId_());
-        mActivityRule.launchActivity(intent);
+        return intent;
     }
 
     @Test
@@ -70,7 +75,7 @@ public class ChatRoomTest extends FirebaseTest{
         sendMessage(text);
         onView(withText(text)).perform(longClick());
         sleep(100);
-        onView(withText(mActivityRule.getActivity().getResources().getString(R.string.chat_delete_alert_text)))
+        onView(withText(testRule_.getActivity().getResources().getString(R.string.chat_delete_alert_text)))
                 .check(matches(isDisplayed()));
 
     }
@@ -90,7 +95,7 @@ public class ChatRoomTest extends FirebaseTest{
         sendMessage(text);
         onView(withText(text)).perform(longClick());
         sleep(100);
-        onView(withText(mActivityRule.getActivity().getResources().getString(R.string.general_cancel))).perform(click());
+        onView(withText(testRule_.getActivity().getResources().getString(R.string.general_cancel))).perform(click());
         onView(withText(text)).check(matches(isDisplayed()));
     }
 
@@ -116,7 +121,7 @@ public class ChatRoomTest extends FirebaseTest{
     private void deleteMessageWithText(String text){
         onView(withText(text)).perform(longClick());
         sleep(100);
-        onView(withText(mActivityRule.getActivity().getResources().getString(R.string.general_delete))).perform(click());
+        onView(withText(testRule_.getActivity().getResources().getString(R.string.general_delete))).perform(click());
     }
 
     /* Examples

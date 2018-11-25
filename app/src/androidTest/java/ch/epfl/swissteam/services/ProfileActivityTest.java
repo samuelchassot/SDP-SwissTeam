@@ -35,21 +35,19 @@ import static org.junit.Assert.assertEquals;
  * @author Ghali Chraibi
  */
 @RunWith(AndroidJUnit4.class)
-public class ProfileActivityTest extends FirebaseTest {
-
+public class ProfileActivityTest extends SocializeTest<ProfileActivity> {
     
     private static final int SLEEP_TIME = 500;
 
-    @Rule
-    public final ActivityTestRule<ProfileActivity> mActivityRule =
-            new ActivityTestRule<>(ProfileActivity.class, true, false);
+    public ProfileActivityTest(){
+        setTestRule(ProfileActivity.class);
+    }
 
     @Override
     public void initialize() {
-        LocationManager.get().setMock();
         GoogleSignInSingleton.putUniqueID(TestUtils.M_GOOGLE_ID);
-        TestUtils.O_USER.addToDB(FirebaseDatabase.getInstance().getReference());
-        M_USER.addToDB(FirebaseDatabase.getInstance().getReference());
+        TestUtils.O_USER.addToDB(DBUtility.get().getDb_());
+        M_USER.addToDB(DBUtility.get().getDb_());
         sleep(SLEEP_TIME);
     }
 
@@ -80,6 +78,7 @@ public class ProfileActivityTest extends FirebaseTest {
         onView(withId(R.id.button_profile_downvote)).perform(click());
     }
 
+
     @Test
     public void mapIsVisibleIfUserWants(){
         startIntentWith(M_USER.getGoogleId_());
@@ -108,16 +107,18 @@ public class ProfileActivityTest extends FirebaseTest {
         });
     }
 
-
     @Override
-    public void terminate(){
-        LocationManager.get().unsetMock();
+    public Intent getActivityIntent(){
+        Intent intent = new Intent();
+        intent.putExtra(GOOGLE_ID_TAG, O_USER.getGoogleId_());
+        return intent;
     }
 
     private void startIntentWith(String id){
         Intent intent = new Intent();
         intent.putExtra(GOOGLE_ID_TAG, id);
-        mActivityRule.launchActivity(intent);
+        testRule_.finishActivity();
+        testRule_.launchActivity(intent);
         sleep(SLEEP_TIME);
     }
 }
