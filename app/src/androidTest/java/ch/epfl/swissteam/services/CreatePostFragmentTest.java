@@ -111,6 +111,7 @@ public class CreatePostFragmentTest extends FirebaseTest{
         onView(withId(R.id.plaintext_createpostfragment_title)).perform(replaceText(title));
         onView(withId(R.id.plaintext_createpostfragment_body)).perform(replaceText(body));
         onView(withId(R.id.button_createpostfragment_send)).perform(click());
+        onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_home));
         sleep(200);
         onView(withId(R.id.action_refresh)).perform(click());
         sleep(200);
