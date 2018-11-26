@@ -97,17 +97,18 @@ public class SettingsFragmentTest extends SocializeTest<MainActivity>{
 
     @Test
     public void canSwitchDarkMode() {
-        /*
+
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_settings));
 
         //Check if dark mode not checked
-        onView(withId(R.id.switch_settings_darkmode)).check(matches(isNotChecked()));
+        onView(withId(R.id.switch_settings_darkmode)).perform(scrollTo()).check(matches(isNotChecked()));
 
         //Click on dark mode and check if checked
-        onView(withId(R.id.switch_settings_darkmode)).perform(click());
-        onView(withId(R.id.switch_settings_darkmode)).check(matches(isChecked()));
-        */
+        //onView(withId(R.id.switch_settings_darkmode)).perform(click());
+        onView(withId(R.id.switch_settings_darkmode)).perform(scrollTo()).perform(personalClick());
+        onView(withId(R.id.switch_settings_darkmode)).perform(scrollTo()).check(matches(isChecked()));
+
     }
 
     @Test
@@ -115,14 +116,16 @@ public class SettingsFragmentTest extends SocializeTest<MainActivity>{
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_settings));
 
+        sleep(3000);
         //Check if switch corresponds to attribute isShownLocation_ of user_
-        onView(withId(R.id.switch_settings_darkmode)).perform(scrollTo()).check(
-                matches(isNotChecked()));
+        onView(withId(R.id.switch_settings_showmylocation)).perform(scrollTo()).check(
+                matches(user_.getIsShownLocation_() ? isChecked() : isNotChecked()));
 
         //Click on switch
-        onView(withId(R.id.switch_settings_darkmode)).perform(scrollTo()).perform(click());
-        onView(withId(R.id.switch_settings_darkmode)).perform(scrollTo()).check(
-                matches(isChecked()));
+        //onView(withId(R.id.switch_settings_darkmode)).perform(scrollTo()).perform(click());
+        onView(withId(R.id.switch_settings_showmylocation)).perform(scrollTo()).perform(click());
+        onView(withId(R.id.switch_settings_showmylocation)).perform(scrollTo()).check(
+                matches(!user_.getIsShownLocation_() ? isChecked() : isNotChecked()));
 
     }
 }
