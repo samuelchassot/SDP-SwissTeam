@@ -134,6 +134,16 @@
                 app:layout_constraintVertical_bias="1.0">
 
             </android.support.v7.widget.RecyclerView>
+          
+            <com.google.android.gms.maps.MapView
+                android:id="@+id/mapview_profileactivity"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:visibility="invisible"
+                app:layout_constraintEnd_toEndOf="@+id/recyclerview_profileactivity_capabilities"
+                app:layout_constraintTop_toBottomOf="@+id/recyclerview_profileactivity_capabilities"/>
 
             <android.support.constraint.ConstraintLayout
                 android:id="@+id/constraintLayout2"
@@ -147,7 +157,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/recyclerview_profileactivity_capabilities"
+                app:layout_constraintTop_toBottomOf="@+id/mapview_profileactivity"
                 app:layout_constraintVertical_bias="1.0">
 
                 <Button
