@@ -129,7 +129,7 @@ public class MainActivity extends NavigationDrawer {
     /**
      * Shows the my posts Fragment, where the user can edit and delete his posts
      */
-    private void showMyPostsFragment() {
+    public void showMyPostsFragment() {
         if (this.myPostsFragment_ == null) {
             this.myPostsFragment_ = MyPostsFragment.newInstance();
         }
