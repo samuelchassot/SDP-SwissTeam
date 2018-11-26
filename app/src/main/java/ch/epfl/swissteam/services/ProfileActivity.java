@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -186,7 +187,12 @@ public class ProfileActivity extends NavigationDrawer implements OnMapReadyCallb
 
     private void showMap(boolean isShownLocation){
         if(isShownLocation){
-            findViewById(R.id.mapview_profileactivity).setVisibility(View.VISIBLE);
+            MapView m = findViewById(R.id.mapview_profileactivity);
+            m.setVisibility(View.VISIBLE);
+            ViewGroup.LayoutParams p = m.getLayoutParams();
+            p.height = 500;
+            m.setLayoutParams(p);
+            //findViewById(R.id.mapview_profileactivity).setMinimumHeight(160);
         }
     }
 
