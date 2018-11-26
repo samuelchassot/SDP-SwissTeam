@@ -238,6 +238,10 @@ public class SettingsFragment extends Fragment implements OnMapReadyCallback {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progressValue, boolean fromUser) {
                 progress = progressValue;
+                String displayCurrentRadius = String.format(Locale.ENGLISH,
+                        getResources().getString(R.string.settings_seekbar_currentradius) + " %.2f km",
+                        progress/KILOMETER_TO_METER_FACTOR);
+                textview.setText(displayCurrentRadius);
             }
 
             @Override
