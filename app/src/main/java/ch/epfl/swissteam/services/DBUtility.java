@@ -310,6 +310,12 @@ public class DBUtility {
         db_.child(POSTS).child(post.getKey_()).setValue(post);
     }
 
+    /**
+     * Wire notifications to trigger when we get new messages.
+     *
+     * @param activity calling activity
+     * @param googleId googleId of user
+     */
     public void notifyNewMessages(Activity activity, String googleId) {
         if (!isNotificationsSetupDone && googleId != null) {
             db_.child(USERS).child(googleId).child("chatRelations_").addChildEventListener(new ChildEventListener() {
