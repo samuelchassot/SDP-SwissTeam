@@ -8,6 +8,7 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Switch;
 
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.squareup.picasso.Picasso;
@@ -20,10 +21,11 @@ import com.squareup.picasso.Picasso;
 public class NewProfileDetails extends AppCompatActivity {
 
     public static final String GOOGLE_ID_TAG = "GOOGLE_ID", USERNAME_TAG = "USERNAME",
-            EMAIL_TAG = "EMAIL", DESCRIPTION_TAG = "DESCRIPTION", IMAGE_TAG = "IMAGE";
+            EMAIL_TAG = "EMAIL", DESCRIPTION_TAG = "DESCRIPTION", IMAGE_TAG = "IMAGE", SHOW_LOCATION_TAG = "isShownLocation";
     public static final String DEFAULT_IMAGE_URL = "https://i.stack.imgur.com/34AD2.jpg";
 
     private String googleID_, username_, email_, description_, imageUrl_;
+    private boolean isShownLocation_;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +67,8 @@ public class NewProfileDetails extends AppCompatActivity {
                     description_ = editable.toString();
                 }
             });
+
+            setUpLocationSwitch();
         }
     }
 
@@ -105,6 +109,22 @@ public class NewProfileDetails extends AppCompatActivity {
         intent.putExtra(EMAIL_TAG, email_);
         intent.putExtra(DESCRIPTION_TAG, description_);
         intent.putExtra(IMAGE_TAG, imageUrl_);
+        intent.putExtra(SHOW_LOCATION_TAG, isShownLocation_);
         startActivity(intent);
+    }
+
+    /**
+     * Set up the switch for the attribute isShownLocation_
+     */
+    private void setUpLocationSwitch(){
+        ((Switch)findViewById(R.id.switch_newprofiledetails_showlocation)).setOnCheckedChangeListener(
+                (buttonView, isChecked) -> {
+                    if(isChecked){
+                        isShownLocation_ = true;
+                    }else{
+                        isShownLocation_ = false;
+                    }
+                }
+        );
     }
 }

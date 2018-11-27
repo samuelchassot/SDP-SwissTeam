@@ -108,6 +108,7 @@ public class SettingsFragment extends Fragment implements OnMapReadyCallback {
 
         constructDarkModeSettings(view);
         constructRadiusSettings(view);
+        constructShowMyLocationToOthers(view);
 
         return view;
     }
@@ -237,6 +238,10 @@ public class SettingsFragment extends Fragment implements OnMapReadyCallback {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progressValue, boolean fromUser) {
                 progress = progressValue;
+                String displayCurrentRadius = String.format(Locale.ENGLISH,
+                        getResources().getString(R.string.settings_seekbar_currentradius) + " %.2f km",
+                        progress/KILOMETER_TO_METER_FACTOR);
+                textview.setText(displayCurrentRadius);
             }
 
             @Override
@@ -252,6 +257,21 @@ public class SettingsFragment extends Fragment implements OnMapReadyCallback {
                         progress/KILOMETER_TO_METER_FACTOR);
                 textview.setText(displayCurrentRadius);
             }
+        });
+    }
+
+    private void constructShowMyLocationToOthers(View view){
+        DBUtility.get().getUser(id_, u -> {
+            if(u != null){
+                Switch locationSwitch = view.findViewById(R.id.switch_settings_showmylocation);
+
+                locationSwitch.setChecked(u.getIsShownLocation_());
+
+                locationSwitch.setOnCheckedChangeListener((buttonView, isChecked) ->{
+                    DBUtility.get().setUserIsShownLocation(id_, isChecked);
+                });
+            }
+
         });
     }
 }

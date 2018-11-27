@@ -1,6 +1,5 @@
 package ch.epfl.swissteam.services;
 
-import android.content.res.Resources;
 import android.util.Log;
 
 import com.google.firebase.database.DatabaseReference;
@@ -9,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Class representing a user in the database
@@ -27,6 +25,7 @@ public class User implements DBSavable {
     private ArrayList<String> downvotes_;
 
     private ArrayList<ChatRelation> chatRelations_;
+    private boolean isShownLocation_;
 
     public enum Vote{
         UPVOTE,
@@ -51,7 +50,9 @@ public class User implements DBSavable {
      */
     public static User getDeletedUser() {
         User deletedUser = new User(getDeletedUserGoogleID(), "Deleted user",
-                "", "", new ArrayList<Categories>(), new ArrayList<ChatRelation>(), "https://cdn.pixabay.com/photo/2014/03/25/15/19/cross-296507_960_720.png", 0, 0.0, 0.0, new ArrayList<String>(), new ArrayList<String>());
+                "", "", new ArrayList<Categories>(), new HashMap<>(), new ArrayList<ChatRelation>(),
+                "https://cdn.pixabay.com/photo/2014/03/25/15/19/cross-296507_960_720.png",
+                0, 0.0, 0.0, new ArrayList<String>(), new ArrayList<String>(), false);
         return deletedUser;
     }
 
@@ -113,6 +114,7 @@ public class User implements DBSavable {
      * @param longitude_     User's last longitude
      */
 
+    @Deprecated
     public User(String googleID_, String name_, String email_, String description_,
                 ArrayList<Categories> categories_,
                 HashMap<String, ArrayList<String>> keyWords_,
@@ -145,6 +147,58 @@ public class User implements DBSavable {
         this.downvotes_ = downvotes_ == null ? new ArrayList<String>() : (ArrayList<String>) upvotes_.clone();
         this.latitude_ = latitude_;
         this.longitude_ = longitude_;
+    }
+
+
+    /**
+     * Create a new user given its specificities
+     *
+     * @param googleID_      User's unique googleId
+     * @param name_          User's name
+     * @param email_         User's email
+     * @param description_   User's description
+     * @param categories_    User's categories of services
+     * @param keyWords_      User's keywords for each Categories
+     * @param chatRelations_ User's chat relations
+     * @param rating_        User's rating score
+     * @param latitude_      User's last latitude
+     * @param longitude_     User's last longitude
+     * @param isShownLocation_   User's choice to show his location
+     */
+
+    public User(String googleID_, String name_, String email_, String description_,
+                ArrayList<Categories> categories_,
+                HashMap<String, ArrayList<String>> keyWords_,
+                ArrayList<ChatRelation> chatRelations_,
+                String imageUrl_, int rating_, double latitude_, double longitude_,
+                ArrayList<String> upvotes_, ArrayList<String> downvotes_, boolean isShownLocation_) {
+        this.googleId_ = googleID_;
+        this.email_ = email_;
+        this.name_ = name_;
+        this.description_ = description_;
+        this.imageUrl_ = imageUrl_;
+        this.rating_ = rating_;
+        this.categories_ = categories_ == null ? new ArrayList<>() : (ArrayList<Categories>) categories_.clone();
+
+        //keywords are stored in lowercase to simplify the comparison when searching for services
+        HashMap<String, ArrayList<String>> lowercaseKeywords = new HashMap<>();
+        if(keyWords_ != null) {
+            ArrayList<String> kwList;
+            for (String key : keyWords_.keySet()) {
+                kwList = new ArrayList<>();
+                for (String k : keyWords_.get(key)) {
+                    kwList.add(k.toLowerCase());
+                }
+                lowercaseKeywords.put(key, kwList);
+            }
+        }
+        this.keyWords_ = lowercaseKeywords;
+        this.chatRelations_ = chatRelations_ == null ? new ArrayList<>() : (ArrayList<ChatRelation>) chatRelations_.clone();
+        this.upvotes_ = upvotes_ == null ? new ArrayList<String>() : (ArrayList<String>) upvotes_.clone();
+        this.downvotes_ = downvotes_ == null ? new ArrayList<String>() : (ArrayList<String>) upvotes_.clone();
+        this.latitude_ = latitude_;
+        this.longitude_ = longitude_;
+        this.isShownLocation_ = isShownLocation_;
     }
 
 
@@ -218,6 +272,15 @@ public class User implements DBSavable {
      */
     public double getLongitude_() {
         return longitude_;
+    }
+
+    /**
+     * Gives the choice of the user to show his location
+     *
+     * @return if the user wants to show his location
+     */
+    public boolean getIsShownLocation_() {
+        return isShownLocation_;
     }
 
     /**

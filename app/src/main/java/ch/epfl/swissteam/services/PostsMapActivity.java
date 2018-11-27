@@ -3,8 +3,11 @@ package ch.epfl.swissteam.services;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.hardware.display.DisplayManager;
 import android.location.Location;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -142,7 +145,8 @@ public class PostsMapActivity extends NavigationDrawer implements OnMapReadyCall
     public void onMapReady(GoogleMap googleMap) {
         googleMap_ = googleMap;
         googleMap_.setMinZoomPreference(12);
-        googleMap_.moveCamera(CameraUpdateFactory.zoomTo(12));
+        double zoomLevel = calculateZoomLevel();
+        googleMap_.moveCamera(CameraUpdateFactory.zoomTo((float)zoomLevel));
         googleMap_.setMinZoomPreference(6);
         googleMap_.setMaxZoomPreference(20);
         googleMap_.setInfoWindowAdapter(infoWindow_);
@@ -157,6 +161,18 @@ public class PostsMapActivity extends NavigationDrawer implements OnMapReadyCall
             startActivity(intent);
         });
         updateMapView();
+    }
+
+    private double calculateZoomLevel() {
+        DisplayMetrics metrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        int screenWidth = metrics.widthPixels;
+        int radius = SettingsDBUtility.retrieveRadius(new SettingsDbHelper(this), GoogleSignInSingleton.get().getClientUniqueID());
+        double equatorLength = 40075004; // in meters
+        double zoom256 = Math.log(equatorLength/radius)/Math.log(2);
+        int x = (int) (Math.log(screenWidth/256)/Math.log(2));
+        double zoom = zoom256 + x;
+        return zoom;
     }
 
     private void updateMapView() {
