@@ -8,6 +8,8 @@ import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.firebase.database.FirebaseDatabase;
 
 import org.junit.Rule;
@@ -16,6 +18,7 @@ import org.junit.runner.RunWith;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.scrollTo;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
@@ -25,6 +28,7 @@ import static ch.epfl.swissteam.services.TestUtils.M_USER;
 import static ch.epfl.swissteam.services.TestUtils.O_USER;
 import static ch.epfl.swissteam.services.TestUtils.recyclerScrollToItemWithTextAndPerformClickItem;
 import static ch.epfl.swissteam.services.TestUtils.sleep;
+import static org.junit.Assert.assertEquals;
 
 /**
  * A class to test elements of the ProfileActivity
@@ -59,7 +63,7 @@ public class ProfileActivityTest extends SocializeTest<ProfileActivity> {
     @Test
     public void canAccessToChatButtonIfOtherProfile() {
         startIntentWith(O_USER.getGoogleId_());
-        onView(withId(R.id.button_profile_toChat)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+        onView(withId(R.id.button_profile_toChat)).perform(scrollTo()).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
     }
 
     @Test
@@ -71,8 +75,37 @@ public class ProfileActivityTest extends SocializeTest<ProfileActivity> {
     @Test
     public void votesWorks(){
         startIntentWith(O_USER.getGoogleId_());
-        onView(withId(R.id.button_profile_upvote)).perform(click());
-        onView(withId(R.id.button_profile_downvote)).perform(click());
+        onView(withId(R.id.button_profile_upvote)).perform(scrollTo()).perform(click());
+        onView(withId(R.id.button_profile_downvote)).perform(scrollTo()).perform(click());
+    }
+
+
+    @Test
+    public void mapIsVisibleIfUserWants(){
+        startIntentWith(M_USER.getGoogleId_());
+        onView(withId(R.id.mapview_profileactivity)).perform(scrollTo()).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+    }
+
+    @Test
+    public void mapIsInvisibleIfUserWants(){
+        startIntentWith(O_USER.getGoogleId_());
+        onView(withId(R.id.mapview_profileactivity)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.INVISIBLE)));
+    }
+
+    @Test
+    public void mapDisplaysMarker(){
+        startIntentWith(M_USER.getGoogleId_());
+        Marker marker = testRule_.getActivity().getMarker();
+        testRule_.getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if(marker != null){
+                    LatLng markerPos = marker.getPosition();
+                    assertEquals(markerPos.latitude, M_USER.getLatitude_(), 0.01);
+                    assertEquals(markerPos.longitude, M_USER.getLongitude_(), 0.01);
+                    assertEquals(marker.getTitle(), M_USER.getName_());}
+            }
+        });
     }
 
     @Override

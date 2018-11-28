@@ -1,5 +1,6 @@
 package ch.epfl.swissteam.services;
 
+import android.app.Activity;
 import android.location.Location;
 import android.support.v4.app.Fragment;
 
@@ -8,6 +9,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -125,9 +127,10 @@ public class CreatePostFragment extends Fragment implements View.OnClickListener
             DBUtility.get().getUser(googleID, user -> {
                 Post post = new Post(key, title, googleID, body, timestamp, longitude, latitude);
                 post.addToDB(DBUtility.get().getDb_());
+            ((MainActivity) getActivity()).showMyPostsFragment();
             });
-
-            ((MainActivity) getActivity()).showHomeFragment();
+            InputMethodManager inputMethodManager = (InputMethodManager)  getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), 0);
         }
     }
 }

@@ -11,6 +11,7 @@
     <string name="general_cancel">Annuler</string>
     <string name="general_delete">Supprimer</string>
     <string name="general_warning_uppercase">ATTENTION</string>
+    <string name="general_showlocation">Montrer ma position aux autres utilisateurs</string>
 
     /* ----- Database string ----- */
 

@@ -91,30 +91,31 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
      * Refresh the feed of post shown on the main board
      */
     private void refresh(){
-        Location userLocation = LocationManager.get().getCurrentLocation_();
-        if(userLocation != null) {
-            DBUtility.get().getPostsFeed(new DBCallBack<ArrayList<Post>>() {
-                @Override
-                public void onCallBack(ArrayList<Post> value) {
-                    posts_.clear();
-                    posts_.addAll(value);
-                    adapter_.notifyDataSetChanged();
-                    swipeRefreshLayout_.setRefreshing(false);
-                }
-            }, userLocation, helper_);
-        }
-        else{
-            DBUtility.get().getPostsFeed(new DBCallBack<ArrayList<Post>>() {
-                @Override
-                public void onCallBack(ArrayList<Post> value) {
-                    posts_.clear();
-                    posts_.addAll(value);
-                    adapter_.notifyDataSetChanged();
-                    swipeRefreshLayout_.setRefreshing(false);
-                }
-            }, LocationManager.get().getZeroLocation(), helper_);
-        }
-        ((MainActivity) getActivity()).showHomeFragment();
+        LocationManager.get().getCurrentLocationAsync(getActivity(), userLocation -> {
+            if(userLocation != null) {
+                DBUtility.get().getPostsFeed(new DBCallBack<ArrayList<Post>>() {
+                    @Override
+                    public void onCallBack(ArrayList<Post> value) {
+                        posts_.clear();
+                        posts_.addAll(value);
+                        adapter_.notifyDataSetChanged();
+                        swipeRefreshLayout_.setRefreshing(false);
+                    }
+                }, userLocation, helper_);
+            }
+            else{
+                DBUtility.get().getPostsFeed(new DBCallBack<ArrayList<Post>>() {
+                    @Override
+                    public void onCallBack(ArrayList<Post> value) {
+                        posts_.clear();
+                        posts_.addAll(value);
+                        adapter_.notifyDataSetChanged();
+                        swipeRefreshLayout_.setRefreshing(false);
+                    }
+                }, LocationManager.get().getZeroLocation(), helper_);
+            }
+            ((MainActivity) getActivity()).showHomeFragment();
+        });
     }
 
     @Override

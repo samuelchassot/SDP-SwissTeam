@@ -12,6 +12,7 @@
     <string name="general_cancel">Cancel</string>
     <string name="general_delete">Delete</string>
     <string name="general_warning_uppercase">WARNING</string>
+    <string name="general_showlocation">Show my location to other users</string>
 
     /* ----- Database string ----- */
 
