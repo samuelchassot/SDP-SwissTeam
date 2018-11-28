@@ -115,11 +115,14 @@ public class SettingsFragment extends Fragment implements OnMapReadyCallback {
         // Invite friend button
         Button inviteFriendButton = (Button) view.findViewById(R.id.button_settings_invite_friend);
         inviteFriendButton.setOnClickListener(v -> {
-            Intent sendIntent = new Intent(Intent.ACTION_SEND);
-            // TODO : Add a sendee and an object (to prevent the case it is an e-mail)
-            sendIntent.putExtra(Intent.EXTRA_TEXT, "Come to Socialize");
-            sendIntent.setType("message/*");
-            startActivity(Intent.createChooser(sendIntent, "Choose a client : "));
+            Intent inviteIntent = new Intent(Intent.ACTION_SEND);
+
+            // Extra for email purpose
+            inviteIntent.putExtra(Intent.EXTRA_SUBJECT, R.string.settings_invite_friend_subject);
+            // Body of the message
+            inviteIntent.putExtra(Intent.EXTRA_TEXT, R.string.settings_invite_friend_body);
+            inviteIntent.setType("text/plain");
+            startActivity(Intent.createChooser(inviteIntent, getResources().getString(R.string.settings_invite_friend_client_chooser)));
         });
 
 
