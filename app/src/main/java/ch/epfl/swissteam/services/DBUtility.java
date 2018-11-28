@@ -129,6 +129,20 @@ public class DBUtility {
     }
 
     /**
+     * Set a user's wish to show its location
+     *
+     * @param googleId unique user'Id
+     * @param showLocation the choice of the user to show its location
+     */
+    public void setUserIsShownLocation(String googleId, boolean showLocation) {
+        if (googleId == null) {
+            return;
+        }
+        db_.child(USERS).child(googleId + "/isShownLocation_").setValue(showLocation);
+
+    }
+
+    /**
      * Get all users inside the database
      *
      * @param callBack the callBack to use
@@ -296,6 +310,12 @@ public class DBUtility {
         db_.child(POSTS).child(post.getKey_()).setValue(post);
     }
 
+    /**
+     * Wire notifications to trigger when we get new messages.
+     *
+     * @param activity calling activity
+     * @param googleId googleId of user
+     */
     public void notifyNewMessages(Activity activity, String googleId) {
         if (!isNotificationsSetupDone && googleId != null) {
             db_.child(USERS).child(googleId).child("chatRelations_").addChildEventListener(new ChildEventListener() {

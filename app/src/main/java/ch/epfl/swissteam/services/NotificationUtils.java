@@ -28,9 +28,8 @@ public class NotificationUtils {
     public static void sendChatNotification(Activity activity, String textTitle, String textContent, String relationId){
         // Create an explicit intent for an Activity in your app
         Intent intent = new Intent(activity, ChatRoom.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         intent.putExtra(ChatRelation.RELATION_ID_TEXT, relationId);
-        PendingIntent pendingIntent = PendingIntent.getActivity(activity, 0, intent, 0);
+        PendingIntent pendingIntent = PendingIntent.getActivity(activity, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(activity, CUSTOM_NOTIFICATION_CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_google) //TODO: Replace by our app icon

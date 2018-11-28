@@ -5,15 +5,30 @@ import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static ch.epfl.swissteam.services.NewProfileDetails.GOOGLE_ID_TAG;
 import static ch.epfl.swissteam.services.User.Vote.DOWNVOTE;
@@ -24,7 +39,21 @@ import static ch.epfl.swissteam.services.User.Vote.UPVOTE;
  *
  * @author Ghali Chraïbi
  */
-public class ProfileActivity extends NavigationDrawer {
+public class ProfileActivity extends NavigationDrawer implements OnMapReadyCallback {
+
+
+    private static final String MAPVIEW_BUNDLE_KEY = "MapViewBundleKey";
+
+    private GoogleMap googleMap_;
+    private MapView mapView_;
+    private Marker marker_;
+    private User user_;
+  
+    private RecyclerView mRecyclerView_;
+    private LinearLayoutManager mLayoutManager_;
+    private CapabilitiesAdapter mAdapter_;
+    private List<Categories> mCapabilities_ = new ArrayList<Categories>();
+    private Map<String, List<String>> mKeyWords_ = new HashMap<>();
 
 
     @Override
@@ -57,8 +86,28 @@ public class ProfileActivity extends NavigationDrawer {
 
         downvoteButton.setOnClickListener(v -> voteStoreAndRefresh(DOWNVOTE, clientUID));
 
+        mRecyclerView_ = (RecyclerView) this.findViewById(R.id.recyclerview_profileactivity_capabilities);
+        if (mRecyclerView_ != null) {
+            mRecyclerView_.setHasFixedSize(true);
+
+            mLayoutManager_ = new LinearLayoutManager(this);
+            mRecyclerView_.setLayoutManager(mLayoutManager_);
+
+            mAdapter_ = new CapabilitiesAdapter(mCapabilities_, mKeyWords_);
+            mRecyclerView_.setAdapter(mAdapter_);
+        }
+
 
         loadAndShowUser(clientUID);
+
+        Bundle mapViewBundle = null;
+        if (savedInstanceState != null) {
+            mapViewBundle = savedInstanceState.getBundle(MAPVIEW_BUNDLE_KEY);
+        }
+
+        mapView_ = findViewById(R.id.mapview_profileactivity);
+        mapView_.onCreate(mapViewBundle);
+        mapView_.getMapAsync(this);
     }
 
     private void voteStoreAndRefresh(User.Vote vote, String clientUID){
@@ -74,6 +123,8 @@ public class ProfileActivity extends NavigationDrawer {
     private void loadAndShowUser(String clientUniqueID) {
         //for now we use the username
         DBUtility.get().getUser(clientUniqueID, (user) -> {
+            user_ = user;
+
             TextView nameView = findViewById(R.id.textView_profile_nameTag);
             nameView.setText(user.getName_());
 
@@ -99,6 +150,18 @@ public class ProfileActivity extends NavigationDrawer {
                 findViewById(R.id.button_profile_downvote).setBackgroundResource(ta.getResourceId(1,0));
             }
 
+            mCapabilities_.clear();
+            mCapabilities_.addAll(user.getCategories_());
+            mKeyWords_.clear();
+            for(Categories c : user.getCategories_()){
+                mKeyWords_.put(c.toString(), user.getKeyWords(c));
+            }
+            if (mAdapter_ != null) {
+                mAdapter_.notifyDataSetChanged();
+                Log.i("PROFILEACTIVITY", "notify dataset changed");
+                Log.i("PROFILEACTIVITY", "n of categories = " + mCapabilities_.size());
+            }
+
 
             int rating = user.getRating_();
             ImageView starView[] = new ImageView[5];
@@ -117,11 +180,90 @@ public class ProfileActivity extends NavigationDrawer {
             }
             ta.recycle();
 
-
-
-
-
+            showMap(user.getIsShownLocation_());
 
         });
     }
+
+    private void showMap(boolean isShownLocation){
+        if(isShownLocation){
+            MapView m = findViewById(R.id.mapview_profileactivity);
+            m.setVisibility(View.VISIBLE);
+            ViewGroup.LayoutParams p = m.getLayoutParams();
+            p.height = 500;
+            m.setLayoutParams(p);
+            //findViewById(R.id.mapview_profileactivity).setMinimumHeight(160);
+        }
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        googleMap_ = googleMap;
+        googleMap_.setMinZoomPreference(12);
+
+        // Add a marker where the user is.
+        LatLng userLatLng = new LatLng(user_.getLatitude_(), user_.getLongitude_());
+        marker_ = googleMap_.addMarker(new MarkerOptions().position(userLatLng).title(user_.getName_()));
+        googleMap_.moveCamera(CameraUpdateFactory.newLatLng(userLatLng));
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mapView_.onStart();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mapView_.onResume();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        mapView_.onStop();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mapView_.onDestroy();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mapView_.onPause();
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        mapView_.onLowMemory();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        Bundle mapViewBundle = outState.getBundle(MAPVIEW_BUNDLE_KEY);
+        if (mapViewBundle == null) {
+            mapViewBundle = new Bundle();
+            outState.putBundle(MAPVIEW_BUNDLE_KEY, mapViewBundle);
+        }
+
+        mapView_.onSaveInstanceState(mapViewBundle);
+    }
+
+    /**
+     * !Just for testing!
+     * Methods to get the marker corresponding to the location of the user
+     * in the Google Maps view.
+     * @return the marker of the user
+     */
+    protected Marker getMarker(){
+        return marker_;
+    }
 }
+

@@ -23,6 +23,7 @@ public class NewProfileCapabilities extends AppCompatActivity {
     private ArrayList<Categories> capabilitiesList_ = new ArrayList<>();
     private HashMap<String, ArrayList<String>> keyWords_ = new HashMap<>();
     private String googleID_, username_, email_, description_, imageUrl_;
+    private boolean isShownLocation_;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +37,7 @@ public class NewProfileCapabilities extends AppCompatActivity {
         email_ = intent.getStringExtra(NewProfileDetails.EMAIL_TAG);
         description_ = intent.getStringExtra(NewProfileDetails.DESCRIPTION_TAG);
         imageUrl_ = intent.getStringExtra(NewProfileDetails.IMAGE_TAG);
+        isShownLocation_ = intent.getBooleanExtra(NewProfileDetails.SHOW_LOCATION_TAG, false);
 
         RecyclerView recycler = findViewById(R.id.recyclerview_newprofilecapabilities_list);
         recycler.setHasFixedSize(true);
@@ -61,7 +63,7 @@ public class NewProfileCapabilities extends AppCompatActivity {
     private void saveUserInDB() {
 
         User user = new User(googleID_, username_, email_, description_, capabilitiesList_, keyWords_,
-                null, imageUrl_, 0, 0, 0, null, null);
+                null, imageUrl_, 0, 0, 0, null, null, isShownLocation_);
         user.addToDB(DBUtility.get().getDb_());
 
     }

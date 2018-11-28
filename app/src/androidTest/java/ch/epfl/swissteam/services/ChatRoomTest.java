@@ -107,7 +107,8 @@ public class ChatRoomTest extends SocializeTest<ChatRoom>{
     private void sendMessage(String text){
         Espresso.closeSoftKeyboard();
         sleep(100);
-        onView(withId(R.id.message_input)).perform(typeText(text), closeSoftKeyboard()).check(matches(withText(text)));
+        onView(withId(R.id.message_input)).perform(typeText(text), closeSoftKeyboard());
+        onView(withId(R.id.message_input)).check(matches(withText(text)));
         sleep(100);
         onView(withId(R.id.message_send_button)).perform(click());
         sleep(100);
