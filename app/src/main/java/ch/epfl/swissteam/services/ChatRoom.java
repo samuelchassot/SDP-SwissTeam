@@ -1,5 +1,7 @@
 package ch.epfl.swissteam.services;
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -7,7 +9,11 @@ import android.support.design.widget.TextInputEditText;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateFormat;
+import android.util.Log;
+import android.view.DragEvent;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,6 +40,7 @@ public class ChatRoom extends NavigationDrawer {
     private User mUser_;
     private boolean isDeletedRelation = false;
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +53,18 @@ public class ChatRoom extends NavigationDrawer {
         setCurrentRelationId_(getIntent().getExtras().getString(ChatRelation.RELATION_ID_TEXT, null));
         checkAndSetIfDeletedByPartner();
         retrieveUserAndSetRelationId();
+
+        LinearLayoutManager llm = new LinearLayoutManager(this);
+        llm.setStackFromEnd(true);
+        RecyclerView recyclerView = findViewById(R.id.recycler_view_message);
+        recyclerView.setLayoutManager(llm);
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if(dy < 0) hideKeyboard();
+            }
+        });
     }
 
     private void retrieveUserAndSetRelationId(){
@@ -115,7 +134,7 @@ public class ChatRoom extends NavigationDrawer {
      * @param view
      */
     public void sendMessage(View view){
-        TextInputEditText textInput = findViewById(R.id.message_input);
+        EditText textInput = findViewById(R.id.message_input);
         String message = textInput.getText().toString();
         if(mUser_ == null){
             toastUser(getResources().getString(R.string.database_could_not_find_you_in_db));
@@ -163,6 +182,10 @@ public class ChatRoom extends NavigationDrawer {
                         message.removeFromDB(get().getDb_(), key);
                     }
                 });
+    }
+
+    private void hideKeyboard(){
+        ActivityManager.hideKeyboard(this);
     }
 
     private void checkAndSetIfDeletedByPartner(){
