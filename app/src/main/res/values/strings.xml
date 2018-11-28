@@ -180,5 +180,8 @@
         <item>French</item>
     </string-array>
     <string name="settings_deleteaccount_fail">Check spelling if you want to delete your account</string>
+    <string name="servicesfragment_proximityranking">Ranking: Proximity</string>
+    <string name="servicesfragment_rating">Rating</string>
+    <string name="servicesfragment_category">Category:</string>
 
 </resources>
