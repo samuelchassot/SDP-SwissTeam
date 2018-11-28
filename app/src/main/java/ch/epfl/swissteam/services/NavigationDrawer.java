@@ -116,7 +116,7 @@ public class NavigationDrawer extends AppCompatActivity implements NavigationVie
 
     @Override
     public void onBackPressed() {
-        if (drawer_.isDrawerOpen(GravityCompat.START)) {
+        if (isDrawerOpened()) {
             drawer_.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
@@ -177,6 +177,10 @@ public class NavigationDrawer extends AppCompatActivity implements NavigationVie
                 Picasso.get().load(user.getImageUrl_()).into((ImageView)findViewById(R.id.nav_header_profileimage));}
 
         });
+    }
+
+    protected boolean isDrawerOpened(){
+        return drawer_.isDrawerOpen(GravityCompat.START);
     }
 
 }

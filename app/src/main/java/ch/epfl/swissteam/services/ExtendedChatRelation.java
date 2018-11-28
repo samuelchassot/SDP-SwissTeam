@@ -1,7 +1,5 @@
 package ch.epfl.swissteam.services;
 
-import android.util.Log;
-
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.Query;
@@ -19,16 +17,19 @@ public class ExtendedChatRelation {
     public ExtendedChatRelation(ChatRelation chatRelation, String currentUserId, DBCallBack<ExtendedChatRelation> ready){
         ready_ = ready;
         chatRelation_ = chatRelation;
-        //TODO check what needs to be done if user is null. I(Seb) will take care of that.
         DBUtility.get().getUser(chatRelation_.getOtherId(currentUserId),user ->{
             if(user != null) {
                 othersName_ = user.getName_();
                 othersImageUrl_ = user.getImageUrl_();
-                retrieveLastTimestamp(timestamp -> {
-                    timestamp_ = timestamp;
-                    ready_.onCallBack(this);
-                });
             }
+            else{
+                othersName_ = User.DELETED_USER_NAME;
+                othersImageUrl_ = User.DELETED_USER_IMG_URL;
+            }
+            retrieveLastTimestamp(timestamp -> {
+                timestamp_ = timestamp;
+                ready_.onCallBack(this);
+            });
         });
     }
 

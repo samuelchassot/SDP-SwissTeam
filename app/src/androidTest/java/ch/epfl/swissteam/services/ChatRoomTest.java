@@ -1,17 +1,10 @@
 package ch.epfl.swissteam.services;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.support.test.espresso.Espresso;
-import android.support.test.espresso.contrib.DrawerActions;
-import android.support.test.espresso.contrib.NavigationViewActions;
-import android.support.test.rule.ActivityTestRule;
-
-import com.google.firebase.database.FirebaseDatabase;
 
 import android.support.test.runner.AndroidJUnit4;
 
-import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -23,17 +16,12 @@ import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.hasDescendant;
-import static android.support.test.espresso.matcher.ViewMatchers.isClickable;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static android.support.test.espresso.matcher.ViewMatchers.isEnabled;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static ch.epfl.swissteam.services.NewProfileDetails.GOOGLE_ID_TAG;
 import static ch.epfl.swissteam.services.TestUtils.O_USER;
-import static ch.epfl.swissteam.services.TestUtils.personalClick;
-import static ch.epfl.swissteam.services.TestUtils.recyclerScrollToItemWithTextAndPerformClickItem;
 import static ch.epfl.swissteam.services.TestUtils.sleep;
-import static org.hamcrest.CoreMatchers.allOf;
 
 /**
  * Tests for ChatRoom
@@ -107,6 +95,13 @@ public class ChatRoomTest extends SocializeTest<ChatRoom>{
         sendMessage(textToo);
         deleteMessageWithText(textToo);
         deleteMessageWithText(text);
+    }
+
+    @Test
+    public void backClickOpensOnlineChatFragment(){
+        Espresso.closeSoftKeyboard();
+        Espresso.pressBack();
+        onView(withId(R.id.fragment_online_chat_layout)).check(matches(isDisplayed()));
     }
 
     private void sendMessage(String text){

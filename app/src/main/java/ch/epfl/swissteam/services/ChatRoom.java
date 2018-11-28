@@ -1,11 +1,13 @@
 package ch.epfl.swissteam.services;
 
+import android.content.Intent;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputEditText;
+import android.support.v4.view.GravityCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateFormat;
@@ -67,32 +69,40 @@ public class ChatRoom extends NavigationDrawer {
         });
     }
 
-    private void retrieveUserAndSetRelationId(){
-        DBUtility.get().getUser(GoogleSignInSingleton.get().getClientUniqueID(), new DBCallBack<User>(){
-            @Override
-            public void onCallBack(User mUser) {
-                if(mUser == null){
-                    toastUser(getResources().getString(R.string.database_could_not_find_you_in_db));
-                    return;
-                }
-                mUser_ = mUser;
-                String contactId = getIntent().getExtras().getString(NewProfileDetails.GOOGLE_ID_TAG, null);
+    @Override
+    public void onBackPressed() {
+        if (isDrawerOpened()) {
+            super.onBackPressed();
+        } else {
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.putExtra(NAVIGATION_TAG, R.id.button_maindrawer_chats);
+            startActivity(intent);
+        }
+    }
 
-                if(currentRelationId_ == null){
-                    ChatRelation cR = mUser_.relationExists(contactId);
-                    if(cR == null) {
-                        newRelationWith(contactId);
-                    }
-                    else {
-                        setCurrentRelationId_(cR.getId_());
-                        displayMessages();
-                    }
+    private void retrieveUserAndSetRelationId(){
+        DBUtility.get().getUser(GoogleSignInSingleton.get().getClientUniqueID(), mUser -> {
+            if(mUser == null){
+                toastUser(getResources().getString(R.string.database_could_not_find_you_in_db));
+                return;
+            }
+            mUser_ = mUser;
+            String contactId = getIntent().getExtras().getString(NewProfileDetails.GOOGLE_ID_TAG, null);
+
+            if(currentRelationId_ == null){
+                ChatRelation cR = mUser_.relationExists(contactId);
+                if(cR == null) {
+                    newRelationWith(contactId);
                 }
                 else {
+                    setCurrentRelationId_(cR.getId_());
                     displayMessages();
                 }
             }
-        } );
+            else {
+                displayMessages();
+            }
+        });
     }
 
     private void setCurrentRelationId_(String relationId){
