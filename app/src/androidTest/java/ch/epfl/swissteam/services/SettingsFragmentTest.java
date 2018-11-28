@@ -1,5 +1,8 @@
 package ch.epfl.swissteam.services;
 
+import android.app.Activity;
+import android.app.Instrumentation;
+import android.content.Intent;
 import android.support.test.espresso.action.GeneralClickAction;
 import android.support.test.espresso.action.GeneralLocation;
 import android.support.test.espresso.action.Press;
@@ -22,6 +25,10 @@ import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static android.support.test.espresso.action.ViewActions.scrollTo;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.intent.Intents.intended;
+import static android.support.test.espresso.intent.Intents.intending;
+import static android.support.test.espresso.intent.matcher.IntentMatchers.hasAction;
+import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static android.support.test.espresso.matcher.ViewMatchers.isChecked;
 import static android.support.test.espresso.matcher.ViewMatchers.isNotChecked;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
@@ -97,7 +104,6 @@ public class SettingsFragmentTest extends SocializeTest<MainActivity>{
 
     @Test
     public void canSwitchDarkMode() {
-
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_settings));
 
@@ -128,4 +134,22 @@ public class SettingsFragmentTest extends SocializeTest<MainActivity>{
                 matches(!user_.getIsShownLocation_() ? isChecked() : isNotChecked()));
 
     }
+/*
+    @Test
+    public void canClickOnInviteFriendButton() {
+        onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
+        onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_settings));
+
+        onView(withId(R.id.button_settings_invite_friend)).perform(scrollTo()).perform(click());
+    }
+
+    @Test
+    public void canStartIntentInviteFriend() {
+        onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
+        onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_settings));
+
+        onView(withId(R.id.button_settings_invite_friend)).perform(scrollTo()).perform(click());
+        intending(hasAction(Intent.ACTION_SEND));
+    }
+*/
 }

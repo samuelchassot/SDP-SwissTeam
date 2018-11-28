@@ -257,7 +257,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@color/colorPrimary"
-                android:text="@string/settings_invite_friend"
+                android:text="@string/settings_invite_friend_button"
                 android:textColor="@android:color/white" />
 
         </LinearLayout>
