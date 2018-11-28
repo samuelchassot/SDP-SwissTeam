@@ -97,6 +97,13 @@ public class ChatRoomTest extends SocializeTest<ChatRoom>{
         deleteMessageWithText(text);
     }
 
+    @Test
+    public void backClickOpensOnlineChatFragment(){
+        Espresso.closeSoftKeyboard();
+        Espresso.pressBack();
+        onView(withId(R.id.fragment_online_chat_layout)).check(matches(isDisplayed()));
+    }
+
     private void sendMessage(String text){
         Espresso.closeSoftKeyboard();
         sleep(100);
