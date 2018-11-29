@@ -24,7 +24,7 @@ import com.squareup.picasso.Picasso;
 public class MainActivity extends NavigationDrawer {
     private Fragment profileShowerFragment_, homeFragment_,
             servicesFragment_, createPostFragment_, settingsFragment_,
-            onlineChatFragment_, myPostsFragment_;
+            onlineChatFragment_, myPostsFragment_, todoListFragment_;
 
     private NetworkStatusReceiver br_;
 
@@ -78,6 +78,9 @@ public class MainActivity extends NavigationDrawer {
                 break;
             case (R.id.button_maindrawer_myposts):
                 showMyPostsFragment();
+                break;
+            case (R.id.button_maindrawer_todoList):
+                showTodoListFragment();
                 break;
             case (R.id.button_maindrawer_settings):
                 showSettingsFragment();
@@ -134,6 +137,16 @@ public class MainActivity extends NavigationDrawer {
             this.myPostsFragment_ = MyPostsFragment.newInstance();
         }
         this.startTransactionFragment(this.myPostsFragment_);
+    }
+
+    /**
+     * Shows the TodoList Fragment, where the user can see a list of the post he is involved in
+     */
+    public void showTodoListFragment() {
+        if (this.todoListFragment_ == null) {
+            this.todoListFragment_ = TodoListFragment.newInstance();
+        }
+        this.startTransactionFragment(this.todoListFragment_);
     }
 
     /**
