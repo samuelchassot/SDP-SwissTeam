@@ -118,9 +118,9 @@ public class SettingsFragment extends Fragment implements OnMapReadyCallback {
             Intent inviteIntent = new Intent(Intent.ACTION_SEND);
 
             // Extra for email purpose
-            inviteIntent.putExtra(Intent.EXTRA_SUBJECT, R.string.settings_invite_friend_subject);
+            inviteIntent.putExtra(Intent.EXTRA_SUBJECT, getResources().getString(R.string.settings_invite_friend_subject));
             // Body of the message
-            inviteIntent.putExtra(Intent.EXTRA_TEXT, R.string.settings_invite_friend_body);
+            inviteIntent.putExtra(Intent.EXTRA_TEXT, getResources().getString(R.string.settings_invite_friend_body));
             inviteIntent.setType("text/plain");
             startActivity(Intent.createChooser(inviteIntent, getResources().getString(R.string.settings_invite_friend_client_chooser)));
         });
