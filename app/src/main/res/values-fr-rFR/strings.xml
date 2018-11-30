@@ -178,5 +178,6 @@
     <string name="creapost_timeout_onemonth">1 mois</string>
     <string name="creapost_timeout_sixmonths">6 mois</string>
     <string name="creapost_timeout_threemonths">3 mois</string>
+    <string name="createpost_postlifetime">Durée du poste</string>
 
 </resources>

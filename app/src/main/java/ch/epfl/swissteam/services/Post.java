@@ -85,6 +85,14 @@ public class Post implements DBSavable, Parcelable {
     }
 
     /**
+     * Delete this post in the Firebase database
+     * @param databaseReference
+     */
+    public void deleteFromDB(DatabaseReference databaseReference){
+        databaseReference.child(DBUtility.POSTS).child(key_).removeValue();
+    }
+
+    /**
      * Gives the title of the post
      *
      * @return the title of the post
