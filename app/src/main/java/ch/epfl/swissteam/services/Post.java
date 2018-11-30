@@ -87,22 +87,13 @@ public class Post implements DBSavable, Parcelable {
     }
 
     /**
-     * Delete this post in the Firebase database
-     * @param databaseReference
-     */
-    public void deleteFromDB(DatabaseReference databaseReference){
-        databaseReference.child(DBUtility.POSTS).child(key_).removeValue();
-    }
-
-    /**
      * Given the today's date, delete the post if it is too old
      * @param today today's Date object
-     * @param databaseReference the Firebase database reference
      * @return true if the post was deleted, false otherwise
      */
-    public boolean deleteIfTooOld(Date today, DatabaseReference databaseReference){
+    public boolean deleteIfTooOld(Date today){
         if(today != null && today.after(dateFromString(timeoutDateString_))){
-            deleteFromDB(databaseReference);
+            DBUtility.get().deletePost(key_);
             return true;
         }
         return false;

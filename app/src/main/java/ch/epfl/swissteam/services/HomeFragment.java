@@ -101,7 +101,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                         posts_.clear();
                         Date today = Calendar.getInstance().getTime();
                         for (Post p : value) {
-                            if(!p.deleteIfTooOld(today, DBUtility.get().getDb_())){
+                            if(!p.deleteIfTooOld(today)){
                                 posts_.add(p);
                             }
                         }
@@ -117,7 +117,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                         posts_.clear();
                         Date today = Calendar.getInstance().getTime();
                         for (Post p : value) {
-                            if(!p.deleteIfTooOld(today, DBUtility.get().getDb_())){
+                            if(!p.deleteIfTooOld(today)){
+                                Log.i("POST", "post added");
                                 posts_.add(p);
                             }
                         }

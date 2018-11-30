@@ -91,7 +91,7 @@ public class MyPostsFragment extends Fragment {
             mPosts_.clear();
             Date today = Calendar.getInstance().getTime();
             for (Post p : posts) {
-                if(!p.deleteIfTooOld(today, DBUtility.get().getDb_())){
+                if(!p.deleteIfTooOld(today)){
                     mPosts_.add(p);
                 }
             }
