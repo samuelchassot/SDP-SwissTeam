@@ -173,5 +173,10 @@
         <item>Français</item>
     </string-array>
     <string name="settings_deleteaccount_fail">Vérifier le texte si vous voulez supprimer votre compte</string>
+    <string name="createpost_timeout_oneday">1 day</string>
+    <string name="creapost_timeout_oneweek">1 week</string>
+    <string name="createpost_timeout_oneweek">1 week</string>
+    <string name="creapost_timeout_onemonth">1 month</string>
+    <string name="creapost_timeout_sixmonths">6 months</string>
 
 </resources>

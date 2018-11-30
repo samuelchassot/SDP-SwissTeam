@@ -1,6 +1,7 @@
 package ch.epfl.swissteam.services;
 
 import android.app.Activity;
+import android.content.Context;
 import android.location.Location;
 import android.support.v4.app.Fragment;
 
@@ -10,13 +11,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Calendar;
 import java.util.Date;
 
 
@@ -30,6 +35,70 @@ public class CreatePostFragment extends Fragment implements View.OnClickListener
     private SettingsDbHelper dbHelper_;
     private String id_;
     private boolean isHomeLocation_;
+    private Date timeoutDate_;
+
+    private enum TimeOut {
+        oneDay,
+        oneWeek,
+        oneMounth,
+        threeMounth,
+        sixMounth;
+
+        private static Context ctx;
+
+        public static void setContext(Context ctx_){
+            ctx = ctx_;
+        }
+
+        @Override
+        public String toString() {
+            String result = "";
+            if(ctx != null) {
+                switch (this) {
+                    case oneDay:
+                        result = ctx.getString(R.string.createpost_timeout_oneday);
+                        break;
+                    case oneWeek:
+                        result = ctx.getString(R.string.createpost_timeout_oneweek);
+                        break;
+                    case oneMounth:
+                        result = ctx.getString(R.string.creapost_timeout_onemonth);
+                        break;
+                    case threeMounth:
+                        result = ctx.getString(R.string.creapost_timeout_threemonths);
+                        break;
+                    case sixMounth:
+                        result = ctx.getString(R.string.creapost_timeout_sixmonths);
+                        break;
+                }
+            }
+            return result;
+        }
+
+        public Date getTimeoutDate(){
+            Calendar cal = Calendar.getInstance();
+            switch(this){
+                case oneDay:
+                    cal.add(Calendar.DAY_OF_YEAR, 1);
+                    break;
+                case oneWeek:
+                    cal.add(Calendar.WEEK_OF_YEAR, 1);
+                    break;
+                case oneMounth:
+                    cal.add(Calendar.MONTH, 1);
+                    break;
+                case threeMounth:
+                    cal.add(Calendar.MONTH, 3);
+                    break;
+                case sixMounth:
+                    cal.add(Calendar.MONTH, 6);
+                    break;
+            }
+
+            return cal.getTime();
+        }
+
+    }
 
     public CreatePostFragment() {
         // Required empty public constructor
@@ -86,6 +155,24 @@ public class CreatePostFragment extends Fragment implements View.OnClickListener
             }
         });
 
+        TimeOut.setContext(this.getContext());
+        Spinner timeoutSpinner = frag.findViewById(R.id.spinner_createpost_timeout);
+        ArrayAdapter<TimeOut> timeOutArrayAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, TimeOut.values());
+        timeOutArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        timeoutSpinner.setAdapter(timeOutArrayAdapter);
+
+        timeoutSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                timeoutDate_ = ((TimeOut)adapterView.getItemAtPosition(i)).getTimeoutDate();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
         return frag;
     }
 
@@ -94,6 +181,7 @@ public class CreatePostFragment extends Fragment implements View.OnClickListener
 
         EditText titleField = ((EditText) getView().findViewById(R.id.plaintext_createpostfragment_title));
         EditText bodyField = ((EditText) getView().findViewById(R.id.plaintext_createpostfragment_body));
+        Spinner timeoutSpinner = getView().findViewById(R.id.spinner_createpost_timeout);
 
 
         if (TextUtils.isEmpty(titleField.getText())) {
@@ -125,7 +213,7 @@ public class CreatePostFragment extends Fragment implements View.OnClickListener
             }
 
             DBUtility.get().getUser(googleID, user -> {
-                Post post = new Post(key, title, googleID, body, timestamp, longitude, latitude);
+                Post post = new Post(key, title, googleID, body, timestamp, longitude, latitude, Post.dateToString(timeoutDate_));
                 post.addToDB(DBUtility.get().getDb_());
             ((MainActivity) getActivity()).showMyPostsFragment();
             });
