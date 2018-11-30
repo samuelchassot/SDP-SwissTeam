@@ -64,6 +64,8 @@ public class HomeFragmentTest extends SocializeTest{
 
     @Test
     public void canSwipeDown() {
+        outDatedPost.addToDB(DBUtility.get().getDb_());
+        sleep(1000);
         onView(withId(R.id.swiperefresh_homefragment_refresh)).perform(swipeDown());
     }
 

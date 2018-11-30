@@ -31,6 +31,7 @@ import static ch.epfl.swissteam.services.TestUtils.sleep;
 @RunWith(AndroidJUnit4.class)
 public class MyPostFragmentTest extends SocializeTest<MainActivity>{
     private Post post;
+    private Post outDatedPost;
     private String id;
 
     public MyPostFragmentTest(){
@@ -45,6 +46,14 @@ public class MyPostFragmentTest extends SocializeTest<MainActivity>{
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.DAY_OF_YEAR, 1);
         Date tomorrow = cal.getTime();
+
+        cal  = Calendar.getInstance();
+        cal.add(Calendar.MONTH, -1);
+        long timestamp = (new Date()).getTime();
+        String key = "1234" + "_" + timestamp;
+        outDatedPost = new Post(key, "Hello there", "1234",
+                "General Kenobi", timestamp, 0, 0, Post.dateToString(cal.getTime()));
+        outDatedPost.addToDB(DBUtility.get().getDb_());
         post = new Post("1234_1539704399119", "Title", "1234", "Body",
                 1539704399119L,  10, 20, Post.dateToString(tomorrow));
         DBUtility.get().setPost(post);
