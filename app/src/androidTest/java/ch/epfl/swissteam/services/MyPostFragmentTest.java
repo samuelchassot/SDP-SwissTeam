@@ -88,6 +88,7 @@ public class MyPostFragmentTest extends SocializeTest<MainActivity>{
         onView(withId(R.id.edittext_mypostedit_body)).check(matches(withText("Body")));
         onView(withId(R.id.edittext_mypostedit_title)).perform(typeText(" from unit test")).perform(closeSoftKeyboard());
         onView(withId(R.id.edittext_mypostedit_body)).perform(typeText(" from unit test")).perform(closeSoftKeyboard());
+        sleep(200);
         onView(withId(R.id.action_save)).perform(click());
 
         onView(withId(R.id.recyclerview_mypostsfragment)).perform(RecyclerViewActions.actionOnItemAtPosition(0,swipeLeft()));

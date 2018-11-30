@@ -63,7 +63,7 @@ public class Post implements DBSavable, Parcelable {
 
     //Implements Parcelable
     public Post(Parcel in){
-        String[] data= new String[7];
+        String[] data= new String[8];
 
         in.readStringArray(data);
         this.key_= data[0];
@@ -73,6 +73,8 @@ public class Post implements DBSavable, Parcelable {
         this.timestamp_= Long.parseLong(data[4]);
         this.longitude_ = Double.parseDouble(data[5]);
         this.latitude_ = Double.parseDouble(data[6]);
+        this.timeoutDateString_ = data[7];
+
     }
 
     /**
