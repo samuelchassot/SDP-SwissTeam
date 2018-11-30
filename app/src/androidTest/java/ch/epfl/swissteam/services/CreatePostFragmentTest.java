@@ -115,29 +115,29 @@ public class CreatePostFragmentTest extends SocializeTest<MainActivity>{
         onView(withId(R.id.textView_createpostfragment)).check(matches(withText(R.string.createpostfragment_location_switch_off)));
     }
 
-//    @Test
-//    public void isPostAtCurrentLocationWhenSliderOff() {
-//        onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
-//        onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_myposts));
-//        sleep(500);
-//        onView(withId(R.id.floatingbutton_addpost)).perform(click());
-//
-//        onView(withId(R.id.switch_createpostfragment_location)).perform(click());
-//        onView(withId(R.id.plaintext_createpostfragment_title)).perform(replaceText(title));
-//        onView(withId(R.id.plaintext_createpostfragment_body)).perform(replaceText(body));
-//        closeSoftKeyboard();
-//        sleep(300);
-//        onView(withId(R.id.button_createpostfragment_send)).perform(personalClick());
-//        sleep(900);
-//        onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
-//        onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_home));
-//        sleep(1000);
-//        onView(withId(R.id.action_refresh)).perform(click());
-//        sleep(1000);
-//        onView(withId(R.id.recyclerview_homefragment_posts)).perform(RecyclerViewActions.actionOnItemAtPosition(0,click()));
-//        sleep(1000);
-//        onView(withId(R.id.textview_postactivity_distance)).check(matches(withText("0km away")));
-//
-//    }
+    @Test
+    public void isPostAtCurrentLocationWhenSliderOff() {
+        onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
+        onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_myposts));
+        sleep(500);
+        onView(withId(R.id.floatingbutton_addpost)).perform(click());
+
+        onView(withId(R.id.switch_createpostfragment_location)).perform(click());
+        onView(withId(R.id.plaintext_createpostfragment_title)).perform(replaceText(title));
+        onView(withId(R.id.plaintext_createpostfragment_body)).perform(replaceText(body));
+        closeSoftKeyboard();
+        sleep(300);
+        onView(withId(R.id.button_createpostfragment_send)).perform(personalClick());
+        sleep(900);
+        onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
+        onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_home));
+        sleep(1000);
+        onView(withId(R.id.action_refresh)).perform(click());
+        sleep(1000);
+        onView(withId(R.id.recyclerview_homefragment_posts)).perform(RecyclerViewActions.actionOnItemAtPosition(0,click()));
+        sleep(1000);
+        onView(withId(R.id.textview_postactivity_distance)).check(matches(withText("0km away")));
+
+    }
 
 }
