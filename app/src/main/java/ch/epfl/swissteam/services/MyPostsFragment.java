@@ -13,6 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -87,7 +89,12 @@ public class MyPostsFragment extends Fragment {
     private void loadAndShowPostsFromUser() {
         DBUtility.get().getUsersPosts(clientUniqueID_, (posts) -> {
             mPosts_.clear();
-            mPosts_.addAll(posts);
+            Date today = Calendar.getInstance().getTime();
+            for (Post p : posts) {
+                if(!p.deleteIfTooOld(today, DBUtility.get().getDb_())){
+                    mPosts_.add(p);
+                }
+            }
             mAdapter_.notifyDataSetChanged();
         });
     }

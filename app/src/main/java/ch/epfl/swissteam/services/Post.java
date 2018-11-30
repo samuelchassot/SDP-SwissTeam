@@ -93,6 +93,20 @@ public class Post implements DBSavable, Parcelable {
     }
 
     /**
+     * Given the today's date, delete the post if it is too old
+     * @param today today's Date object
+     * @param databaseReference the Firebase database reference
+     * @return true if the post was deleted, false otherwise
+     */
+    public boolean deleteIfTooOld(Date today, DatabaseReference databaseReference){
+        if(today != null && today.after(dateFromString(timeoutDateString_))){
+            deleteFromDB(databaseReference);
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * Gives the title of the post
      *
      * @return the title of the post
