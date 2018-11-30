@@ -212,7 +212,7 @@ public class Post implements DBSavable, Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeStringArray(new String[]{
                 this.key_,this.title_, this.googleId_, this.body_,
-                String.valueOf(this.timestamp_), ((Double)this.longitude_).toString(), ((Double)this.latitude_).toString()});
+                String.valueOf(this.timestamp_), ((Double)this.longitude_).toString(), ((Double)this.latitude_).toString(), this.timeoutDateString_});
     }
 
     /**
