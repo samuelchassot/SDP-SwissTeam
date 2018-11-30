@@ -3,6 +3,7 @@ package ch.epfl.swissteam.services;
 import android.support.test.espresso.contrib.DrawerActions;
 import android.support.test.espresso.contrib.NavigationViewActions;
 import android.support.test.rule.ActivityTestRule;
+import android.telephony.CellIdentity;
 import android.util.Log;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -11,6 +12,9 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 
 import org.junit.Rule;
 import org.junit.Test;
+
+import java.util.Calendar;
+import java.util.Date;
 
 import static android.support.test.espresso.Espresso.closeSoftKeyboard;
 import static android.support.test.espresso.Espresso.onView;
@@ -66,7 +70,9 @@ public class DeleteAccountTest extends SocializeTest<MainActivity> {
     public void addPostThenDeleteUser(){
         initialize();
         User testUser = TestUtils.getTestUser();
-        Post post = new Post("1234_1539704399119", "Title", testUser.getGoogleId_(), "Body", 1539704399119L,  10, 20);
+        Date today = Calendar.getInstance().getTime();
+        Post post = new Post("1234_1539704399119", "Title", testUser.getGoogleId_(), "Body",
+                1539704399119L,  10, 20, Post.dateToString(today));
         DBUtility.get().setPost(post);
         sleep(1000);
 

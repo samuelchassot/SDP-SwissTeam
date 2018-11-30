@@ -14,6 +14,9 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.Calendar;
+import java.util.Date;
+
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.clearText;
 import static android.support.test.espresso.action.ViewActions.click;
@@ -39,7 +42,11 @@ public class MyPostFragmentTest extends SocializeTest<MainActivity>{
         TestUtils.getTestUser().addToDB(DBUtility.get().getDb_());
         id = "1234";
         GoogleSignInSingleton.putUniqueID(id);
-        post = new Post("1234_1539704399119", "Title", "1234", "Body", 1539704399119L,  10, 20);
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DAY_OF_YEAR, 1);
+        Date tomorrow = cal.getTime();
+        post = new Post("1234_1539704399119", "Title", "1234", "Body",
+                1539704399119L,  10, 20, Post.dateToString(tomorrow));
         DBUtility.get().setPost(post);
         sleep(400);
     }
