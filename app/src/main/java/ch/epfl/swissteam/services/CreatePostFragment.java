@@ -37,12 +37,12 @@ public class CreatePostFragment extends Fragment implements View.OnClickListener
     private boolean isHomeLocation_;
     private Date timeoutDate_;
 
-    private enum TimeOut {
+    protected enum TimeOut {
         oneDay,
         oneWeek,
-        oneMounth,
-        threeMounth,
-        sixMounth;
+        oneMonth,
+        threeMonths,
+        sixMonths;
 
         private static Context ctx;
 
@@ -61,13 +61,13 @@ public class CreatePostFragment extends Fragment implements View.OnClickListener
                     case oneWeek:
                         result = ctx.getString(R.string.createpost_timeout_oneweek);
                         break;
-                    case oneMounth:
+                    case oneMonth:
                         result = ctx.getString(R.string.creapost_timeout_onemonth);
                         break;
-                    case threeMounth:
+                    case threeMonths:
                         result = ctx.getString(R.string.creapost_timeout_threemonths);
                         break;
-                    case sixMounth:
+                    case sixMonths:
                         result = ctx.getString(R.string.creapost_timeout_sixmonths);
                         break;
                 }
@@ -84,13 +84,13 @@ public class CreatePostFragment extends Fragment implements View.OnClickListener
                 case oneWeek:
                     cal.add(Calendar.WEEK_OF_YEAR, 1);
                     break;
-                case oneMounth:
+                case oneMonth:
                     cal.add(Calendar.MONTH, 1);
                     break;
-                case threeMounth:
+                case threeMonths:
                     cal.add(Calendar.MONTH, 3);
                     break;
-                case sixMounth:
+                case sixMonths:
                     cal.add(Calendar.MONTH, 6);
                     break;
             }
