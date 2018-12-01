@@ -180,6 +180,9 @@
         <item>French</item>
     </string-array>
     <string name="settings_deleteaccount_fail">Check spelling if you want to delete your account</string>
+    <string name="servicesfragment_proximityranking">Ranking: Proximity</string>
+    <string name="servicesfragment_rating">Rating</string>
+    <string name="servicesfragment_category">Category:</string>
     <string name="createpost_timeout_oneday">1 day</string>
     <string name="createpost_timeout_oneweek">1 week</string>
     <string name="creapost_timeout_onemonth">1 month</string>
