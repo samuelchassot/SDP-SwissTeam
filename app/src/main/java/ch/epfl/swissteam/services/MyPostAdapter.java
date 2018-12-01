@@ -57,6 +57,7 @@ public class MyPostAdapter extends RecyclerView.Adapter<MyPostAdapter.PostViewHo
                 intent.putExtra(MYPOST_TAG, posts_.get(holder.getAdapterPosition()));
                 holder.itemView.getContext().startActivity(intent);
                 ((RecyclerView) v.getParent().getParent().getParent().getParent()).getAdapter().notifyDataSetChanged();
+                ((SwipeRevealLayout) v.getParent().getParent().getParent()).close(false);
             }
         });
 
