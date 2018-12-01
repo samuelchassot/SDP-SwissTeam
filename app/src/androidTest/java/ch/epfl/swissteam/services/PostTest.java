@@ -45,4 +45,17 @@ public class PostTest {
         p.setBody_(test);
         assertEquals(p.getBody_(), test);
     }
+
+    @Test
+    public void notValidDateFormatShouldGive6Month(){
+        Post p = new Post(key, title, id, body, timestamp, 10, 20, "18-2-5");
+        cal.add(Calendar.MONTH, 6);
+        assertEquals(p.getTimeoutDateString_(), Post.dateToString(cal.getTime()));
+    }
+
+    @Test
+    public void utilitaryMethodsDate(){
+        assertEquals(null, Post.dateToString(null));
+        assertEquals(null, Post.dateFromString(null));
+    }
 }
