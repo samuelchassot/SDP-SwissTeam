@@ -51,7 +51,7 @@ public class Post implements DBSavable, Parcelable {
         this.timestamp_ = timestamp_;
         this.longitude_ = longitude_;
         this.latitude_ = latitude_;
-        if(timeoutDateString_.matches("\\d{4}-\\d{2}-\\d{2}")){
+        if(timeoutDateString_ != null && timeoutDateString_.matches("\\d{4}-\\d{2}-\\d{2}")){
             this.timeoutDateString_ = new String(timeoutDateString_);
         }else{
             Calendar cal = Calendar.getInstance();
