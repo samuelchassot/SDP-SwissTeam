@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
@@ -11,6 +12,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
+
+import vendor.SwipeRevealLayout;
 
 
 /**
@@ -64,6 +67,7 @@ public class MyPostAdapter extends RecyclerView.Adapter<MyPostAdapter.PostViewHo
                 DBUtility.get().deletePost(posts_.get(holder.getAdapterPosition()).getKey_());
                 posts_.remove(holder.getAdapterPosition());
                 ((RecyclerView) v.getParent().getParent().getParent().getParent()).getAdapter().notifyDataSetChanged();
+                ((SwipeRevealLayout) v.getParent().getParent().getParent()).close(false);
             }
         });
     }
