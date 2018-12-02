@@ -55,7 +55,7 @@ public class Post implements DBSavable, Parcelable {
             this.timeoutDateString_ = new String(timeoutDateString_);
         }else{
             Calendar cal = Calendar.getInstance();
-            cal.add(Calendar.MONTH, 6);
+            cal.add(Calendar.WEEK_OF_YEAR, 2);
             this.timeoutDateString_ = dateToString(cal.getTime());
         }
 

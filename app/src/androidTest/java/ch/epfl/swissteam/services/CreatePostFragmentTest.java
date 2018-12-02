@@ -154,7 +154,7 @@ public class CreatePostFragmentTest extends SocializeTest<MainActivity>{
         sleep(100);
         onView(withId(R.id.spinner_createpost_timeout)).perform(click());
         sleep(100);
-        onData(allOf(is(instanceOf(CreatePostFragment.TimeOut.class)), is(CreatePostFragment.TimeOut.oneMonth))).perform(click());
+        onData(allOf(is(instanceOf(CreatePostFragment.TimeOut.class)), is(CreatePostFragment.TimeOut.threeDays))).perform(click());
         sleep(100);
         onView(withId(R.id.button_createpostfragment_send)).perform(personalClick());
     }
@@ -174,31 +174,12 @@ public class CreatePostFragmentTest extends SocializeTest<MainActivity>{
         sleep(100);
         onView(withId(R.id.spinner_createpost_timeout)).perform(click());
         sleep(100);
-        onData(allOf(is(instanceOf(CreatePostFragment.TimeOut.class)), is(CreatePostFragment.TimeOut.threeMonths))).perform(click());
+        onData(allOf(is(instanceOf(CreatePostFragment.TimeOut.class)), is(CreatePostFragment.TimeOut.twoWeeks))).perform(click());
         sleep(100);
         onView(withId(R.id.button_createpostfragment_send)).perform(personalClick());
     }
 
-    @Test
-    public void createsPost6Months(){
-        onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
-        onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_myposts));
-        sleep(500);
-        onView(withId(R.id.floatingbutton_addpost)).perform(click());
-        onView(withId(R.id.plaintext_createpostfragment_title)).perform(typeText(title));
-        closeSoftKeyboard();
-        sleep(100);
-        onView(withId(R.id.plaintext_createpostfragment_title)).check(matches(withText(title)));
-        onView(withId(R.id.plaintext_createpostfragment_body)).perform(typeText(body));
-        closeSoftKeyboard();
-        sleep(100);
-        onView(withId(R.id.spinner_createpost_timeout)).perform(click());
-        sleep(100);
-        onData(allOf(is(instanceOf(CreatePostFragment.TimeOut.class)), is(CreatePostFragment.TimeOut.sixMonths))).perform(click());
-        sleep(100);
-        onView(withId(R.id.button_createpostfragment_send)).perform(personalClick());
 
-    }
     @Test
     public void isPostAtCurrentLocationWhenSliderOff() {
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());

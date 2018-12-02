@@ -49,7 +49,7 @@ public class PostTest {
     @Test
     public void notValidDateFormatShouldGive6Month(){
         Post p = new Post(key, title, id, body, timestamp, 10, 20, "18-2-5");
-        cal.add(Calendar.MONTH, 6);
+        cal.add(Calendar.WEEK_OF_YEAR, 2);
         assertEquals(p.getTimeoutDateString_(), Post.dateToString(cal.getTime()));
     }
 

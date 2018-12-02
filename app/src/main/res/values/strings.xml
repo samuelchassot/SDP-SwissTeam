@@ -185,9 +185,8 @@
     <string name="servicesfragment_category">Category:</string>
     <string name="createpost_timeout_oneday">1 day</string>
     <string name="createpost_timeout_oneweek">1 week</string>
-    <string name="creapost_timeout_onemonth">1 month</string>
-    <string name="creapost_timeout_threemonths">3 months</string>
-    <string name="creapost_timeout_sixmonths">6 months</string>
     <string name="createpost_postlifetime">Post lifetime</string>
+    <string name="createpost_timeout_threedays">3 days</string>
+    <string name="createpost_timeout_twoweeks">2 weeks</string>
 
 </resources>

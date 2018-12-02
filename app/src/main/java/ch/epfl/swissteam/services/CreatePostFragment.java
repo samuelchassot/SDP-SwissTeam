@@ -1,6 +1,5 @@
 package ch.epfl.swissteam.services;
 
-import android.app.Activity;
 import android.content.Context;
 import android.location.Location;
 import android.support.v4.app.Fragment;
@@ -10,7 +9,6 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -39,10 +37,9 @@ public class CreatePostFragment extends Fragment implements View.OnClickListener
 
     protected enum TimeOut {
         oneDay,
+        threeDays,
         oneWeek,
-        oneMonth,
-        threeMonths,
-        sixMonths;
+        twoWeeks;
 
         private static Context ctx;
 
@@ -58,18 +55,16 @@ public class CreatePostFragment extends Fragment implements View.OnClickListener
                     case oneDay:
                         result = ctx.getString(R.string.createpost_timeout_oneday);
                         break;
+                    case threeDays:
+                        result = ctx.getString(R.string.createpost_timeout_threedays);
+                        break;
                     case oneWeek:
                         result = ctx.getString(R.string.createpost_timeout_oneweek);
                         break;
-                    case oneMonth:
-                        result = ctx.getString(R.string.creapost_timeout_onemonth);
+                    case twoWeeks:
+                        result = ctx.getString(R.string.createpost_timeout_twoweeks);
                         break;
-                    case threeMonths:
-                        result = ctx.getString(R.string.creapost_timeout_threemonths);
-                        break;
-                    case sixMonths:
-                        result = ctx.getString(R.string.creapost_timeout_sixmonths);
-                        break;
+
                 }
             }
             return result;
@@ -81,17 +76,14 @@ public class CreatePostFragment extends Fragment implements View.OnClickListener
                 case oneDay:
                     cal.add(Calendar.DAY_OF_YEAR, 1);
                     break;
+                case threeDays:
+                    cal.add(Calendar.DAY_OF_YEAR, 3);
+                    break;
                 case oneWeek:
                     cal.add(Calendar.WEEK_OF_YEAR, 1);
                     break;
-                case oneMonth:
-                    cal.add(Calendar.MONTH, 1);
-                    break;
-                case threeMonths:
-                    cal.add(Calendar.MONTH, 3);
-                    break;
-                case sixMonths:
-                    cal.add(Calendar.MONTH, 6);
+                case twoWeeks:
+                    cal.add(Calendar.WEEK_OF_YEAR, 2);
                     break;
             }
 
