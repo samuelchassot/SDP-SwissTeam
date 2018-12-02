@@ -175,10 +175,8 @@
     <string name="settings_deleteaccount_fail">Vérifier le texte si vous voulez supprimer votre compte</string>
     <string name="createpost_timeout_oneday">1 jour</string>
     <string name="createpost_timeout_oneweek">1 semaine</string>
-    <string name="creapost_timeout_onemonth">1 mois</string>
-    <string name="creapost_timeout_sixmonths">6 mois</string>
-    <string name="creapost_timeout_threemonths">3 mois</string>
     <string name="createpost_postlifetime">Durée du poste</string>
-    <string name="createpost_timeout_threedays">3 days</string>
+    <string name="createpost_timeout_threedays">3 jours</string>
+    <string name="createpost_timeout_twoweeks">2 semaines</string>
 
 </resources>
