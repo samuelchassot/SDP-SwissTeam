@@ -14,6 +14,9 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.Calendar;
+import java.util.Date;
+
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.clearText;
 import static android.support.test.espresso.action.ViewActions.click;
@@ -28,6 +31,7 @@ import static ch.epfl.swissteam.services.TestUtils.sleep;
 @RunWith(AndroidJUnit4.class)
 public class MyPostFragmentTest extends SocializeTest<MainActivity>{
     private Post post;
+    private Post outDatedPost;
     private String id;
 
     public MyPostFragmentTest(){
@@ -39,7 +43,19 @@ public class MyPostFragmentTest extends SocializeTest<MainActivity>{
         TestUtils.getTestUser().addToDB(DBUtility.get().getDb_());
         id = "1234";
         GoogleSignInSingleton.putUniqueID(id);
-        post = new Post("1234_1539704399119", "Title", "1234", "Body", 1539704399119L,  10, 20);
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DAY_OF_YEAR, 1);
+        Date tomorrow = cal.getTime();
+
+        cal  = Calendar.getInstance();
+        cal.add(Calendar.MONTH, -1);
+        long timestamp = (new Date()).getTime();
+        String key = "1234" + "_" + timestamp;
+        outDatedPost = new Post(key, "Hello there", "1234",
+                "General Kenobi", timestamp, 0, 0, Post.dateToString(cal.getTime()));
+        outDatedPost.addToDB(DBUtility.get().getDb_());
+        post = new Post("1234_1539704399119", "Title", "1234", "Body",
+                1539704399119L,  10, 20, Post.dateToString(tomorrow));
         DBUtility.get().setPost(post);
         sleep(400);
     }
@@ -81,6 +97,7 @@ public class MyPostFragmentTest extends SocializeTest<MainActivity>{
         onView(withId(R.id.edittext_mypostedit_body)).check(matches(withText("Body")));
         onView(withId(R.id.edittext_mypostedit_title)).perform(typeText(" from unit test")).perform(closeSoftKeyboard());
         onView(withId(R.id.edittext_mypostedit_body)).perform(typeText(" from unit test")).perform(closeSoftKeyboard());
+        sleep(200);
         onView(withId(R.id.action_save)).perform(click());
 
         onView(withId(R.id.recyclerview_mypostsfragment)).perform(RecyclerViewActions.actionOnItemAtPosition(0,swipeLeft()));

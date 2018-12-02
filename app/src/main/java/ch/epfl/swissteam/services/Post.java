@@ -5,6 +5,11 @@ import android.os.Parcelable;
 
 import com.google.firebase.database.DatabaseReference;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 /**
  * Class representing a search for service post.
  *
@@ -17,6 +22,7 @@ public class Post implements DBSavable, Parcelable {
     private long timestamp_;
     private String key_;
     private double longitude_, latitude_;
+    private String timeoutDateString_;
 
     /**
      * Default constructor required for database.
@@ -34,8 +40,10 @@ public class Post implements DBSavable, Parcelable {
      * @param timestamp_ the timestamp at which the post was submitted
      * @param longitude_ longitude of the location of the post
      * @param latitude_ latitude of the location of the post
+     * @param timeoutDateString_ date after which the post is no more available (format "yyy-MM-dd")
+     *                           if the format doesn't match, default value is today date + 6 mounths
      */
-    public Post(String key_, String title_, String googleId_, String body_, long timestamp_, double longitude_, double latitude_) {
+    public Post(String key_, String title_, String googleId_, String body_, long timestamp_, double longitude_, double latitude_, String timeoutDateString_) {
         this.key_ = key_;
         this.title_ = title_;
         this.googleId_ = googleId_;
@@ -43,11 +51,19 @@ public class Post implements DBSavable, Parcelable {
         this.timestamp_ = timestamp_;
         this.longitude_ = longitude_;
         this.latitude_ = latitude_;
+        if(timeoutDateString_ != null && timeoutDateString_.matches("\\d{4}-\\d{2}-\\d{2}")){
+            this.timeoutDateString_ = new String(timeoutDateString_);
+        }else{
+            Calendar cal = Calendar.getInstance();
+            cal.add(Calendar.WEEK_OF_YEAR, 2);
+            this.timeoutDateString_ = dateToString(cal.getTime());
+        }
+
     }
 
     //Implements Parcelable
     public Post(Parcel in){
-        String[] data= new String[7];
+        String[] data= new String[8];
 
         in.readStringArray(data);
         this.key_= data[0];
@@ -57,6 +73,8 @@ public class Post implements DBSavable, Parcelable {
         this.timestamp_= Long.parseLong(data[4]);
         this.longitude_ = Double.parseDouble(data[5]);
         this.latitude_ = Double.parseDouble(data[6]);
+        this.timeoutDateString_ = data[7];
+
     }
 
     /**
@@ -66,6 +84,19 @@ public class Post implements DBSavable, Parcelable {
      */
     public void addToDB(DatabaseReference databaseReference) {
         databaseReference.child(DBUtility.POSTS).child(key_).setValue(this);
+    }
+
+    /**
+     * Given the today's date, delete the post if it is too old
+     * @param today today's Date object
+     * @return true if the post was deleted, false otherwise
+     */
+    public boolean deleteIfTooOld(Date today){
+        if(today != null && today.after(dateFromString(timeoutDateString_))){
+            DBUtility.get().deletePost(key_);
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -157,6 +188,14 @@ public class Post implements DBSavable, Parcelable {
       return longitude_; 
     }
 
+    public String getTimeoutDateString_() {
+        return timeoutDateString_;
+    }
+
+    public void setTimeoutDateString_(String timeoutDateString_) {
+        this.timeoutDateString_ = timeoutDateString_;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -166,7 +205,39 @@ public class Post implements DBSavable, Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeStringArray(new String[]{
                 this.key_,this.title_, this.googleId_, this.body_,
-                String.valueOf(this.timestamp_), ((Double)this.longitude_).toString(), ((Double)this.latitude_).toString()});
+                String.valueOf(this.timestamp_), ((Double)this.longitude_).toString(), ((Double)this.latitude_).toString(), this.timeoutDateString_});
+    }
+
+    /**
+     * Transform a string into a date. String must have the format "yyyy-MM-dd"
+     * @param dateString
+     * @return a Date object (null if string's format is not the required)
+     */
+    public static Date dateFromString(String dateString){
+        if(dateString == null) {
+            return null;
+        }
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            Date date = formatter.parse(dateString);
+            return date;
+        } catch (ParseException e) {
+            return null;
+        }
+    }
+
+    /**
+     * Transform a Date object into a String with format "yyyy-MM-dd"
+     * @param date the Date object to transform
+     * @return the String in the required format (null if date == null)
+     */
+    public static String dateToString(Date date){
+        if(date == null){
+            return null;
+        }
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        String format = formatter.format(date);
+        return format;
     }
 
     /**
