@@ -15,8 +15,10 @@ import android.util.Log;
 import android.view.DragEvent;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Space;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -123,9 +125,19 @@ public class ChatRoom extends NavigationDrawer {
         {
             @Override
             protected void populateViewHolder(MessageHolder viewHolder, ChatMessage message, int position){
+                if(message.getUserId_().equals(GoogleSignInSingleton.get().getClientUniqueID())){
+                    ViewGroup.LayoutParams params = viewHolder.rightSpace_.getLayoutParams();
+                    params.width = 3;
+                    viewHolder.rightSpace_.setLayoutParams(params);
+                }
+                else{
+                    ViewGroup.LayoutParams params = viewHolder.leftSpace_.getLayoutParams();
+                    params.width = 3;
+                    viewHolder.leftSpace_.setLayoutParams(params);
+                }
                 viewHolder.messageText_.setText(message.getText_());
-                viewHolder.timeUserText_.setText(DateFormat.format("dd-mm-yyyy (hh:mm:ss)", message.getTime_()) +
-                        message.getUser_());
+                viewHolder.timeUserText_.setText(DateFormat.format("dd-MM-yyyy (HH:mm)", message.getTime_()) +
+                        " " + message.getUser_());
                 viewHolder.parentLayout_.setOnLongClickListener(new View.OnLongClickListener(){
                     private String ref_ = getRef(position).getKey();
                     @Override
@@ -217,7 +229,8 @@ public class ChatRoom extends NavigationDrawer {
       
         protected TextView messageText_;
         protected TextView timeUserText_;
-        protected LinearLayout parentLayout_;
+        protected View parentLayout_;
+        protected Space leftSpace_, rightSpace_;
 
         /**
          * Create a MessageViewHolder
@@ -229,6 +242,8 @@ public class ChatRoom extends NavigationDrawer {
             messageText_ = view.findViewById(R.id.message_message);
             timeUserText_ = view.findViewById(R.id.message_time_stamp_user);
             parentLayout_ = view.findViewById(R.id.chat_message_parent_layout);
+            leftSpace_ = view.findViewById(R.id.message_leftspace);
+            rightSpace_ = view.findViewById(R.id.message_rightspace);
         }
 
     }

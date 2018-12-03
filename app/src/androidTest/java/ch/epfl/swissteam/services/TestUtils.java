@@ -18,6 +18,7 @@ import org.hamcrest.TypeSafeMatcher;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -59,7 +60,12 @@ public class TestUtils {
     protected static void addTestPost() {
         long timestamp = (new Date()).getTime();
         String key = "1234" + "_" + timestamp;
-        DBUtility.get().setPost(new Post(key, "Hello there", "1234", "General Kenobi", timestamp, 0, 0));
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DAY_OF_YEAR, 1);
+        Date tomorrow = cal.getTime();
+
+        DBUtility.get().setPost(new Post(key, "Hello there", "1234",
+                "General Kenobi", timestamp, 0, 0, Post.dateToString(tomorrow)));
 
 
     }
@@ -67,7 +73,11 @@ public class TestUtils {
     protected static Post getTestPost() {
         long timestamp = (new Date()).getTime();
         String key = "1234" + "_" + timestamp;
-        return new Post(key, "Hello there", "1234", "General Kenobi", timestamp, 0, 0);
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DAY_OF_YEAR, 1);
+        Date tomorrow = cal.getTime();
+        return new Post(key, "Hello there", "1234",
+                "General Kenobi", timestamp, 0, 0, Post.dateToString(tomorrow));
     }
 
     protected static void sleep(int ms){

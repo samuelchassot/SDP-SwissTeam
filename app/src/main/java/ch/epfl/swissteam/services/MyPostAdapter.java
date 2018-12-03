@@ -49,7 +49,6 @@ public class MyPostAdapter extends RecyclerView.Adapter<MyPostAdapter.PostViewHo
         holder.editButton_.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(v.getContext(), "EDIT CLICKED", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(holder.itemView.getContext(), MyPostEdit.class);
                 intent.putExtra(MYPOST_TAG, posts_.get(holder.getAdapterPosition()));
                 holder.itemView.getContext().startActivity(intent);
@@ -60,7 +59,6 @@ public class MyPostAdapter extends RecyclerView.Adapter<MyPostAdapter.PostViewHo
         holder.deleteButton_.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(v.getContext(), "DELETE CLICKED", Toast.LENGTH_SHORT).show();
                 DBUtility.get().deletePost(posts_.get(holder.getAdapterPosition()).getKey_());
                 posts_.remove(holder.getAdapterPosition());
                 ((RecyclerView) v.getParent().getParent().getParent().getParent()).getAdapter().notifyDataSetChanged();
