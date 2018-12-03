@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -43,6 +44,41 @@ public class TodolistDBUtility {
         db.close();
 
         return deletedRows;
+    }
+
+    static List<Post> getPosts(TodolistDbHelper helper, String userID){
+        SQLiteDatabase db = helper.getReadableDatabase();
+        List<Post> posts = new ArrayList<>();
+
+        //TODO query
+        String[] projection = {TodolistContract.TodolistEntry.COLUMN_POSTS};
+
+        String selection = TodolistContract.TodolistEntry.COLUMN_ID + " = ?";
+        String[] selectionArgs = { userID };
+
+        try{
+            Cursor cursor = db.query(
+                    TodolistContract.TodolistEntry.TABLE_NAME,
+                    projection, selection, selectionArgs,
+                    null, null, null
+            );
+
+            while(cursor.moveToNext()){
+                String postID = cursor.getString(
+                        cursor.getColumnIndexOrThrow(TodolistContract.TodolistEntry.COLUMN_POSTS));
+                //TODO Search in Firebase and add to posts
+                //posts.add(postsID);
+            }
+
+            cursor.close();
+        }catch(IllegalArgumentException e){
+            Log.e("TODOLISTDBUTILITY", "Column does not exist when retrieving posts");
+        }catch(Exception e){
+            Log.e("TODOLISTDBUTILITY", "Could not query the DB");
+        }
+
+        db.close();
+        return posts;
     }
 
 }
