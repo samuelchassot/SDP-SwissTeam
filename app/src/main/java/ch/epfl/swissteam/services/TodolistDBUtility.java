@@ -3,10 +3,12 @@ package ch.epfl.swissteam.services;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.v7.util.SortedList;
 import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
+
 
 /**
  * Interface that provides some static methods to interact with the local DB for the posts in the TODOList.
@@ -15,6 +17,15 @@ import java.util.List;
  */
 public class TodolistDBUtility {
 
+    /**
+     * Add a row in the local TodolistDB which has userID and postID as values.
+     *
+     * @param helper a TodolistDBHelper created with the context of the caller,
+     * @param userID the id of the currently logged in user,
+     * @param postID the key of the post to add to the local DB.
+     *
+     * @return the key of the new row added to the local DB.
+     */
     static long addPost(TodolistDbHelper helper, String userID, String postID){
         SQLiteDatabase db = helper.getWritableDatabase();
 
@@ -31,6 +42,15 @@ public class TodolistDBUtility {
         return rowKey;
     }
 
+    /**
+     * Deletes rows in the local TodolistDB which have userID and postID as values.
+     *
+     * @param helper a TodolistDBHelper created with the context of the caller,
+     * @param userID the id of the currently logged in user,
+     * @param postID the key of the post to add to the local DB.
+     *
+     * @return the number of rows deleted.
+     */
     static int deletePost(TodolistDbHelper helper, String userID, String postID){
         SQLiteDatabase db = helper.getWritableDatabase();
 
@@ -46,11 +66,16 @@ public class TodolistDBUtility {
         return deletedRows;
     }
 
-    static List<Post> getPosts(TodolistDbHelper helper, String userID){
+    /**
+     * Retrieve the posts that the user has stocked in his todolist.
+     *
+     * @param helper a TodolistDBHelper created with the context of the caller,
+     * @param userID the id of the currently logged in user,
+     * @param callback a callback function to use whenever we retrieve a post.
+     */
+    static void getPosts(TodolistDbHelper helper, String userID, DBCallBack<Post> callback){
         SQLiteDatabase db = helper.getReadableDatabase();
-        List<Post> posts = new ArrayList<>();
 
-        //TODO query
         String[] projection = {TodolistContract.TodolistEntry.COLUMN_POSTS};
 
         String selection = TodolistContract.TodolistEntry.COLUMN_ID + " = ?";
@@ -66,8 +91,7 @@ public class TodolistDBUtility {
             while(cursor.moveToNext()){
                 String postID = cursor.getString(
                         cursor.getColumnIndexOrThrow(TodolistContract.TodolistEntry.COLUMN_POSTS));
-                //TODO Search in Firebase and add to posts
-                //posts.add(postsID);
+                DBUtility.get().getPost(postID, p -> callback.onCallBack(p));
             }
 
             cursor.close();
@@ -78,7 +102,6 @@ public class TodolistDBUtility {
         }
 
         db.close();
-        return posts;
     }
 
 }
