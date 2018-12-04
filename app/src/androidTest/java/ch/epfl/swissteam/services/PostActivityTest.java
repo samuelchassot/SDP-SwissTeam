@@ -15,10 +15,13 @@ import java.util.Locale;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.ViewMatchers.isClickable;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static ch.epfl.swissteam.services.PostAdapter.POST_TAG;
+import static ch.epfl.swissteam.services.TestUtils.personalClick;
 import static ch.epfl.swissteam.services.TestUtils.sleep;
+import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertEquals;
 
 public class PostActivityTest extends SocializeTest<PostActivity>{
@@ -52,7 +55,6 @@ public class PostActivityTest extends SocializeTest<PostActivity>{
 
     @Test
     public void theLocationOfThePostOnTheMapCorrespondToThePost(){
-        sleep(10000);
         Marker marker = testRule_.getActivity().getMarker();
         testRule_.getActivity().runOnUiThread(new Runnable() {
             @Override
@@ -65,6 +67,12 @@ public class PostActivityTest extends SocializeTest<PostActivity>{
             }
         });
 
+    }
+
+    @Test
+    public void canClickOnlyOnceOnToDoButton(){
+        onView(withId(R.id.button_postactivity_todo)).perform(personalClick());
+        onView(withId(R.id.button_postactivity_todo)).check(matches(not(isClickable())));
     }
 
     @Override
