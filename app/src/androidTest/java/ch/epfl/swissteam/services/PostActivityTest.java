@@ -1,6 +1,8 @@
 package ch.epfl.swissteam.services;
 
 import android.content.Intent;
+import android.support.test.espresso.contrib.DrawerActions;
+import android.support.test.espresso.contrib.NavigationViewActions;
 import android.support.test.rule.ActivityTestRule;
 
 import com.google.android.gms.maps.model.LatLng;
@@ -15,6 +17,7 @@ import java.util.Locale;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.ViewMatchers.hasDescendant;
 import static android.support.test.espresso.matcher.ViewMatchers.isClickable;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
@@ -73,6 +76,17 @@ public class PostActivityTest extends SocializeTest<PostActivity>{
     public void canClickOnlyOnceOnToDoButton(){
         onView(withId(R.id.button_postactivity_todo)).perform(personalClick());
         onView(withId(R.id.button_postactivity_todo)).check(matches(not(isClickable())));
+    }
+
+    @Test
+    public void canClickOnlToDoButtonAndItAppearsInTodoListFragment(){
+        onView(withId(R.id.button_postactivity_todo)).perform(personalClick());
+
+        onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
+        onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_todoList));
+
+        onView(withId(R.id.recyclerview_todofragment)).check(matches((hasDescendant(withText(post.getTitle_())))));
+        onView(withId(R.id.recyclerview_todofragment)).check(matches((hasDescendant(withText(post.getBody_())))));
     }
 
     @Override
