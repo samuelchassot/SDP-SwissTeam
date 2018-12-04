@@ -1,18 +1,17 @@
 package ch.epfl.swissteam.services;
 
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import java.util.List;
 
 public class TodoListAdapter extends RecyclerView.Adapter<TodoListAdapter.TodoViewHolder> {
-    
+
     private List<Post> todoPosts_;
 
     /**
@@ -62,6 +61,7 @@ public class TodoListAdapter extends RecyclerView.Adapter<TodoListAdapter.TodoVi
 
         protected TextView titleView_;
         protected TextView bodyView_;
+        public CheckBox doneCheckBox_;
 
         /**
          * Create a TodoViewHolder
@@ -70,10 +70,9 @@ public class TodoListAdapter extends RecyclerView.Adapter<TodoListAdapter.TodoVi
          */
         protected TodoViewHolder(View v) {
             super(v);
-            // TODO : Add a checkbutton
             titleView_ = v.findViewById(R.id.textview_todolistadapter_title);
             bodyView_ = v.findViewById(R.id.textview_todolistadapter_body);
-
+            doneCheckBox_ = v.findViewById(R.id.checkbox_todolist_layout);
         }
     }
 }
