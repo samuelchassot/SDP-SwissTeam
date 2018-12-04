@@ -61,7 +61,7 @@ public class TodolistDBUtility {
 
         // Define 'where' part of query.
         String selection = TodolistContract.TodolistEntry.COLUMN_ID + " LIKE ? AND "
-                + TodolistContract.TodolistEntry.COLUMN_POSTS + "LIKE ? ";
+                + TodolistContract.TodolistEntry.COLUMN_POSTS + " LIKE ? ";
         // Specify arguments in placeholder order.
         String[] selectionArgs = { userID, postID };
 

@@ -18,6 +18,8 @@ import java.util.List;
 public class TodoListAdapter extends RecyclerView.Adapter<TodoListAdapter.TodoViewHolder> {
 
     private List<Post> todoPosts_;
+    private String id_;
+    private TodolistDbHelper todolistDbHelper_;
 
     /**
      * Adapter for a list of Posts to do
@@ -26,6 +28,7 @@ public class TodoListAdapter extends RecyclerView.Adapter<TodoListAdapter.TodoVi
      */
     public TodoListAdapter(List<Post> posts) {
         this.todoPosts_ = posts;
+        id_ = GoogleSignInSingleton.get().getClientUniqueID();
     }
 
     @NonNull
@@ -41,6 +44,14 @@ public class TodoListAdapter extends RecyclerView.Adapter<TodoListAdapter.TodoVi
         holder.titleView_.setText(todoPosts_.get(holder.getAdapterPosition()).getTitle_());
         holder.bodyView_.setText(todoPosts_.get(holder.getAdapterPosition()).getBody_());
 
+        holder.doneCheckBox_.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                TodolistDbHelper todolistDbHelper = new TodolistDbHelper(buttonView.getContext());
+                TodolistDBUtility.deletePost(todolistDbHelper, id_,todoPosts_.get(holder.getAdapterPosition()).getKey_());
+                todoPosts_.remove(holder.getAdapterPosition());
+                ((RecyclerView) buttonView.getParent().getParent().getParent().getParent().getParent().getParent()).getAdapter().notifyDataSetChanged();
+            }
+        });
 /*
         holder.deleteButton_.setOnClickListener(new View.OnClickListener() {
             @Override
