@@ -48,18 +48,33 @@ public class TodoListFragment extends Fragment {
         Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.toolbar_TodoList);
 
-
         // Setup recyclerview for posts to do
+        loadPosts();
         RecyclerView recyclerView = frag.findViewById(R.id.recyclerview_todofragment);
 
         if (recyclerView != null) {
             LinearLayoutManager layoutManager = new LinearLayoutManager(this.getContext());
             recyclerView.setLayoutManager(layoutManager);
 
-            adapter_ = new MyPostAdapter(posts_);
+            adapter_ = new TodoListAdapter(posts_);
             recyclerView.setAdapter(adapter_);
         }
 
         return frag;
+    }
+
+    /**
+     * Load the posts to do and display them in the recycler view
+     */
+    private void loadPosts(){
+        TodolistDBUtility.getPosts(
+                new TodolistDbHelper(this.getContext()),
+                GoogleSignInSingleton.get().getClientUniqueID(),
+                p -> {
+                    if(!posts_.contains(p)){
+                        posts_.add(p);
+                        adapter_.notifyDataSetChanged();
+                    }
+                });
     }
 }
