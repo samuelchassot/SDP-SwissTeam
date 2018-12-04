@@ -2,10 +2,15 @@ package ch.epfl.swissteam.services;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A fragment that display for the user a list of the post he is involved in.
@@ -14,6 +19,8 @@ import android.view.ViewGroup;
  */
 public class TodoListFragment extends Fragment {
 
+    private RecyclerView.Adapter adapter_;
+    private List<Post> posts_ = new ArrayList<>();
 
     public TodoListFragment() {
         // Required empty public constructor
@@ -40,6 +47,18 @@ public class TodoListFragment extends Fragment {
         // Toolbar
         Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.toolbar_TodoList);
+
+
+        // Setup recyclerview for posts to do
+        RecyclerView recyclerView = frag.findViewById(R.id.recyclerview_todofragment);
+
+        if (recyclerView != null) {
+            LinearLayoutManager layoutManager = new LinearLayoutManager(this.getContext());
+            recyclerView.setLayoutManager(layoutManager);
+
+            adapter_ = new MyPostAdapter(posts_);
+            recyclerView.setAdapter(adapter_);
+        }
 
         return frag;
     }
