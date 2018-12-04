@@ -109,6 +109,12 @@ public class PostActivity extends NavigationDrawer implements OnMapReadyCallback
             ((TextView)findViewById(R.id.textview_postactivity_distance)).setText(this.getResources().getString(R.string.homefragment_postdistance, LocationManager.MAX_POST_DISTANCE / LocationManager.M_IN_ONE_KM));
         }
 
+        //TODOLIST button
+        findViewById(R.id.button_postactivity_todo).setOnClickListener(view -> {
+            TodolistDBUtility.addPost(new TodolistDbHelper(this),GoogleSignInSingleton.get().getClientUniqueID() ,post_.getKey_());
+            findViewById(R.id.button_postactivity_todo).setClickable(false);
+        });
+
     }
 
     @Override
