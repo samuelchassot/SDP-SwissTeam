@@ -10,14 +10,19 @@ import android.widget.TextView;
 
 import java.util.List;
 
+/**
+ * Adapter for TodoList
+ *
+ * @author Ghali Chraïbi
+ */
 public class TodoListAdapter extends RecyclerView.Adapter<TodoListAdapter.TodoViewHolder> {
 
     private List<Post> todoPosts_;
 
     /**
-     * Adapter for a list of Posts
+     * Adapter for a list of Posts to do
      *
-     * @param posts the list of Posts to be managed by the adapter
+     * @param posts the list of Posts to do, to be managed by the adapter
      */
     public TodoListAdapter(List<Post> posts) {
         this.todoPosts_ = posts;
