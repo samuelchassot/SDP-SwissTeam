@@ -3,6 +3,7 @@ package ch.epfl.swissteam.services;
 import android.app.Activity;
 import android.app.Instrumentation;
 import android.content.Intent;
+import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.action.GeneralClickAction;
 import android.support.test.espresso.action.GeneralLocation;
 import android.support.test.espresso.action.Press;
@@ -11,6 +12,7 @@ import android.support.test.espresso.contrib.DrawerActions;
 import android.support.test.espresso.contrib.NavigationViewActions;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
+import android.support.test.uiautomator.UiDevice;
 
 import org.junit.After;
 import org.junit.Before;
@@ -134,14 +136,6 @@ public class SettingsFragmentTest extends SocializeTest<MainActivity>{
                 matches(!user_.getIsShownLocation_() ? isChecked() : isNotChecked()));
 
     }
-/*
-    @Test
-    public void canClickOnInviteFriendButton() {
-        onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
-        onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_settings));
-
-        onView(withId(R.id.button_settings_invite_friend)).perform(scrollTo()).perform(click());
-    }
 
     @Test
     public void canStartIntentInviteFriend() {
@@ -149,7 +143,8 @@ public class SettingsFragmentTest extends SocializeTest<MainActivity>{
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_settings));
 
         onView(withId(R.id.button_settings_invite_friend)).perform(scrollTo()).perform(click());
-        intending(hasAction(Intent.ACTION_SEND));
+        intending(hasAction(Intent.ACTION_CHOOSER));
+        UiDevice device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
+        device.pressBack();
     }
-*/
 }

@@ -18,6 +18,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Switch;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -35,7 +36,7 @@ public class ServicesFragment extends Fragment {
     private Location currentUserLocation_;
     private ArrayList<String> keywords_;
     private Categories currentCategory_;
-
+    private boolean sortByRating = true;
 
     public ServicesFragment() {
         // Required empty public constructor
@@ -122,6 +123,10 @@ public class ServicesFragment extends Fragment {
             initDataSet(currentCategory_, keywords_);
         });
 
+        ((Switch)view.findViewById(R.id.switch_servicesfragment_sorttype)).setOnCheckedChangeListener((b, c) -> {
+            sortByRating = c;
+            sortUserList();
+        });
 
         return view;
     }
@@ -153,14 +158,23 @@ public class ServicesFragment extends Fragment {
                         if (user != null && !users.contains(user) && !user.getGoogleId_().equals(GoogleSignInSingleton.get().getClientUniqueID()) &&
                                 userContainsKeywords(user, keywords, category)) {
                             users.add(user);
-                            Collections.sort(users, this::compareUsersUsingDistanceWithRef);
-                            mAdapter_.notifyDataSetChanged();
+                            sortUserList();
                         }
                     });
                 }
             });
         }
 
+    }
+
+    private void sortUserList() {
+        if(sortByRating){
+            Collections.sort(users, (a, b) -> b.getRating_() - a.getRating_());
+        }
+        else {
+            Collections.sort(users, this::compareUsersUsingDistanceWithRef);
+        }
+        mAdapter_.notifyDataSetChanged();
     }
 
     private void services_problem_text_udpate(View view, boolean empty) {
@@ -223,5 +237,4 @@ public class ServicesFragment extends Fragment {
         }
         return result;
     }
-
 }

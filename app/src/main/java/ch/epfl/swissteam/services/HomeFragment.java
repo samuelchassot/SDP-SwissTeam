@@ -17,6 +17,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -97,7 +99,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                     @Override
                     public void onCallBack(ArrayList<Post> value) {
                         posts_.clear();
-                        posts_.addAll(value);
+                        Date today = Calendar.getInstance().getTime();
+                        for (Post p : value) {
+                            if(!p.deleteIfTooOld(today)){
+                                posts_.add(p);
+                            }
+                        }
                         adapter_.notifyDataSetChanged();
                         swipeRefreshLayout_.setRefreshing(false);
                     }
@@ -108,7 +115,13 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                     @Override
                     public void onCallBack(ArrayList<Post> value) {
                         posts_.clear();
-                        posts_.addAll(value);
+                        Date today = Calendar.getInstance().getTime();
+                        for (Post p : value) {
+                            if(!p.deleteIfTooOld(today)){
+                                Log.i("POST", "post added");
+                                posts_.add(p);
+                            }
+                        }
                         adapter_.notifyDataSetChanged();
                         swipeRefreshLayout_.setRefreshing(false);
                     }

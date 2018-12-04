@@ -11,6 +11,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -31,12 +32,20 @@ public class HomeFragmentTest extends SocializeTest{
 
     private Post post;
     private User user;
+    private Post outDatedPost;
 
     @Override
     public void initialize() {
         TestUtils.addTestPost();
         user = TestUtils.getTestUser();
         post = TestUtils.getTestPost();
+        Calendar cal  = Calendar.getInstance();
+        cal.add(Calendar.MONTH, -1);
+        long timestamp = (new Date()).getTime();
+        String key = "1234" + "_" + timestamp;
+        outDatedPost = new Post(key, "Hello there", "1234",
+                "General Kenobi", timestamp, 0, 0, Post.dateToString(cal.getTime()));
+        outDatedPost.addToDB(DBUtility.get().getDb_());
         post.addToDB(DBUtility.get().getDb_());
         user.addToDB(DBUtility.get().getDb_());
         sleep(400);
@@ -55,6 +64,8 @@ public class HomeFragmentTest extends SocializeTest{
 
     @Test
     public void canSwipeDown() {
+        outDatedPost.addToDB(DBUtility.get().getDb_());
+        sleep(1000);
         onView(withId(R.id.swiperefresh_homefragment_refresh)).perform(swipeDown());
     }
 
