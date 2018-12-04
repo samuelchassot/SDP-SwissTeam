@@ -19,26 +19,31 @@ public class TodolistDBUtility {
 
     /**
      * Add a row in the local TodolistDB which has userID and postID as values.
+     * It adds the row only if there is not a row with these values yet
      *
      * @param helper a TodolistDBHelper created with the context of the caller,
      * @param userID the id of the currently logged in user,
      * @param postID the key of the post to add to the local DB.
      *
-     * @return the key of the new row added to the local DB.
+     * @return the key of the new row added to the local DB,
+     * 0 if it was already in the DB, -1 if there was a problem adding the row.
      */
     static long addPost(TodolistDbHelper helper, String userID, String postID){
-        SQLiteDatabase db = helper.getWritableDatabase();
+        long rowKey = 0;
+        if(!isPostInDB(helper, userID, postID)){
+            SQLiteDatabase db = helper.getWritableDatabase();
 
-        //Value which will be stored as a row in the local DB
-        ContentValues values = new ContentValues();
-        values.put(TodolistContract.TodolistEntry.COLUMN_ID, userID);
-        values.put(TodolistContract.TodolistEntry.COLUMN_POSTS, postID);
+            //Value which will be stored as a row in the local DB
+            ContentValues values = new ContentValues();
+            values.put(TodolistContract.TodolistEntry.COLUMN_ID, userID);
+            values.put(TodolistContract.TodolistEntry.COLUMN_POSTS, postID);
 
-        //Store the new row in the DB
-        long rowKey = db.insert(TodolistContract.TodolistEntry.TABLE_NAME,
-                null,
-                values);
-        db.close();
+            //Store the new row in the DB
+            rowKey = db.insert(TodolistContract.TodolistEntry.TABLE_NAME,
+                    null,
+                    values);
+            db.close();
+        }
         return rowKey;
     }
 
@@ -102,6 +107,41 @@ public class TodolistDBUtility {
         }
 
         db.close();
+    }
+
+    static boolean isPostInDB(TodolistDbHelper helper, String userID, String postID){
+        SQLiteDatabase db = helper.getReadableDatabase();
+
+        String[] projection = {
+                TodolistContract.TodolistEntry.COLUMN_POSTS
+        };
+
+        // Define 'where' part of query.
+        String selection = TodolistContract.TodolistEntry.COLUMN_ID + " = ? AND "
+                + TodolistContract.TodolistEntry.COLUMN_POSTS + " = ? ";
+        // Specify arguments in placeholder order.
+        String[] selectionArgs = { userID, postID };
+
+
+        Cursor cursor = db.query(
+                TodolistContract.TodolistEntry.TABLE_NAME,   // The table to query
+                projection,             // The array of columns to return (pass null to get all)
+                selection,              // The columns for the WHERE clause (selection)
+                selectionArgs,          // The values for the WHERE clause (selectionArgs)
+                null,                   // don't group the rows
+                null,                   // don't filter by row groups
+                null              // The sort order (sortOrder)
+        );
+
+        boolean exists = false;
+
+        if(cursor.moveToFirst()){
+            exists = true;
+        }
+        cursor.close();
+        db.close();
+
+        return exists;
     }
 
 }
