@@ -50,18 +50,11 @@ public class TodoListAdapter extends RecyclerView.Adapter<TodoListAdapter.TodoVi
                 TodolistDBUtility.deletePost(todolistDbHelper, id_,todoPosts_.get(holder.getAdapterPosition()).getKey_());
                 todoPosts_.remove(holder.getAdapterPosition());
                 ((RecyclerView) buttonView.getParent().getParent().getParent().getParent().getParent().getParent()).getAdapter().notifyDataSetChanged();
+
+                // when this box is deleted, doesn't check the next one
+                buttonView.setChecked(false);
             }
         });
-/*
-        holder.deleteButton_.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DBUtility.get().deletePost(posts_.get(holder.getAdapterPosition()).getKey_());
-                posts_.remove(holder.getAdapterPosition());
-                ((RecyclerView) v.getParent().getParent().getParent().getParent()).getAdapter().notifyDataSetChanged();
-            }
-        });
-*/
     }
 
 
