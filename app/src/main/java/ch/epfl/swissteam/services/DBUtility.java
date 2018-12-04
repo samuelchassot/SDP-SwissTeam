@@ -326,7 +326,9 @@ public class DBUtility {
 
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                callBack.onCallBack(dataSnapshot.getValue(Post.class));
+                if(dataSnapshot.getValue(Post.class) != null){
+                    callBack.onCallBack(dataSnapshot.getValue(Post.class));
+                }
             }
 
             @Override
