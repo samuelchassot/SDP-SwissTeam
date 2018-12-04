@@ -1,32 +1,22 @@
 package ch.epfl.swissteam.services;
 
-import android.content.Intent;
 import android.annotation.SuppressLint;
-import android.app.Activity;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.TextInputEditText;
-import android.support.v4.view.GravityCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateFormat;
-import android.util.Log;
-import android.view.DragEvent;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.Space;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.ValueEventListener;
 
 import static ch.epfl.swissteam.services.DBUtility.get;
 
@@ -58,10 +48,7 @@ public class ChatRoom extends NavigationDrawer {
         checkAndSetIfDeletedByPartner();
         retrieveUserAndSetRelationId();
 
-        LinearLayoutManager llm = new LinearLayoutManager(this);
-        llm.setStackFromEnd(true);
         RecyclerView recyclerView = findViewById(R.id.recycler_view_message);
-        recyclerView.setLayoutManager(llm);
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
@@ -148,6 +135,13 @@ public class ChatRoom extends NavigationDrawer {
                 });
             }
         };
+        adapter_.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onItemRangeInserted(int positionStart, int itemCount) {
+                super.onItemRangeInserted(positionStart, itemCount);
+                chatRoom.smoothScrollToPosition(adapter_.getItemCount());
+            }
+        });
         chatRoom.setAdapter(adapter_);
     }
 
