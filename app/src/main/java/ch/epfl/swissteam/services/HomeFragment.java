@@ -22,7 +22,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * A fragment to display spontaneous posts on the main page
+ * A fragment to display spontaneous posts on the main page, also known as Nearby page for the user
  *
  * @author Julie Giunta
  */
@@ -63,7 +63,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
         // Toolbar
         Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
-        toolbar.setTitle(R.string.toolbar_home);
+        toolbar.setTitle(R.string.toolbar_nearby);
 
         swipeRefreshLayout_ = frag.findViewById(R.id.swiperefresh_homefragment_refresh);
         swipeRefreshLayout_.setOnRefreshListener(this::refresh);
