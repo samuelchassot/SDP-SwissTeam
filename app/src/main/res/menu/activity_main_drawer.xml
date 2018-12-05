@@ -54,15 +54,17 @@
         android:icon="@drawable/ic_maindrawer_myposts"
         android:title="@string/navigation_drawer_myposts" />
     <item
-        android:id="@+id/button_maindrawer_settings"
-        android:icon="@drawable/ic_maindrawer_settings"
-        android:title="@string/navigation_drawer_section_settings" />
-
+        android:id="@+id/button_maindrawer_todoList"
+        android:icon="@drawable/ic_assignment_black_24dp"
+        android:title="@string/navigation_drawer_button_TODO_list" />
     <item
         android:id="@+id/button_maindrawer_chats"
         android:icon="@drawable/ic_maindrawer_chat"
         android:title="@string/navigation_drawer_button_chats" />
-
+    <item
+        android:id="@+id/button_maindrawer_settings"
+        android:icon="@drawable/ic_maindrawer_settings"
+        android:title="@string/navigation_drawer_section_settings" />
     <item
         android:id="@+id/button_maindrawer_logout"
         android:icon="@drawable/ic_maindrawer_logout"

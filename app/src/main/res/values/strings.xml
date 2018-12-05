@@ -35,6 +35,7 @@
     <string name="toolbar_chats">Chats</string>
     <string name="toolbar_settings">Settings</string>
     <string name="toolbar_services">Services</string>
+    <string name="toolbar_TodoList" translatable="false">TODO</string>
 
     /* ----- Navigation string ----- */
 
@@ -56,6 +57,7 @@
     <string name="navigation_drawer_button_services">Services</string>
     <string name="navigation_drawer_newpost">New post</string>
     <string name="navigation_drawer_myposts">My posts</string>
+    <string name="navigation_drawer_button_TODO_list">TODO</string>
     <string name="navigation_drawer_button_chats">Chats</string>
     <string name="navigation_drawer_section_settings">Settings</string>
     <string name="navigation_drawer_button_logout">Logout</string>

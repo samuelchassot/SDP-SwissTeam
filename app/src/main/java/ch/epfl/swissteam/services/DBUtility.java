@@ -311,6 +311,35 @@ public class DBUtility {
     }
 
     /**
+     * Get a post whose key correspond to postID
+     *
+     * @param postID unique post's Id
+     * @param callBack the CallBack to use
+     */
+    public void getPost(String postID, final DBCallBack<Post> callBack) {
+
+        if (postID == null) {
+            return;
+        }
+
+        db_.child(POSTS).child(postID).addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.getValue(Post.class) != null){
+                    callBack.onCallBack(dataSnapshot.getValue(Post.class));
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.e("DBUTILITY", "Cannot retrieve post from Firebase DB");
+            }
+        });
+
+    }
+
+    /**
      * Wire notifications to trigger when we get new messages.
      *
      * @param activity calling activity

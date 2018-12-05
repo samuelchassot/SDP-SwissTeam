@@ -50,10 +50,7 @@ public class ChatRoom extends NavigationDrawer {
         checkAndSetIfDeletedByPartner();
         retrieveUserAndSetRelationId();
 
-        LinearLayoutManager llm = new LinearLayoutManager(this);
-        llm.setStackFromEnd(true);
         RecyclerView recyclerView = findViewById(R.id.recycler_view_message);
-        recyclerView.setLayoutManager(llm);
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
