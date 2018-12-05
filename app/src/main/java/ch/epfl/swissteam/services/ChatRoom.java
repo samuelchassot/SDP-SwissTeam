@@ -1,32 +1,23 @@
 package ch.epfl.swissteam.services;
 
-import android.content.Intent;
 import android.annotation.SuppressLint;
-import android.app.Activity;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.TextInputEditText;
-import android.support.v4.view.GravityCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateFormat;
-import android.util.Log;
-import android.view.DragEvent;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.Space;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.database.Query;
 
 import static ch.epfl.swissteam.services.DBUtility.get;
 
@@ -120,34 +111,8 @@ public class ChatRoom extends NavigationDrawer {
         chatRoom.setHasFixedSize(true);
         chatRoom.setLayoutManager(llm);
 
-        adapter_ = new FirebaseRecyclerAdapter<ChatMessage, MessageHolder>
-                (ChatMessage.class, R.layout.chat_message_layout, MessageHolder.class, dataBase_.child(DBUtility.CHATS).child(currentRelationId_))
-        {
-            @Override
-            protected void populateViewHolder(MessageHolder viewHolder, ChatMessage message, int position){
-                if(message.getUserId_().equals(GoogleSignInSingleton.get().getClientUniqueID())){
-                    ViewGroup.LayoutParams params = viewHolder.rightSpace_.getLayoutParams();
-                    params.width = 3;
-                    viewHolder.rightSpace_.setLayoutParams(params);
-                }
-                else{
-                    ViewGroup.LayoutParams params = viewHolder.leftSpace_.getLayoutParams();
-                    params.width = 3;
-                    viewHolder.leftSpace_.setLayoutParams(params);
-                }
-                viewHolder.messageText_.setText(message.getText_());
-                viewHolder.timeUserText_.setText(DateFormat.format("dd-MM-yyyy (HH:mm)", message.getTime_()) +
-                        " " + message.getUser_());
-                viewHolder.parentLayout_.setOnLongClickListener(new View.OnLongClickListener(){
-                    private String ref_ = getRef(position).getKey();
-                    @Override
-                    public boolean onLongClick(View view) {
-                        askToDeleteMessage(message, ref_);
-                        return true;
-                    }
-                });
-            }
-        };
+        adapter_ = new ChatRoomAdapter(ChatMessage.class, R.layout.chat_message_layout,
+                MessageHolder.class, dataBase_.child(DBUtility.CHATS).child(currentRelationId_));
         chatRoom.setAdapter(adapter_);
     }
 
@@ -222,6 +187,40 @@ public class ChatRoom extends NavigationDrawer {
         Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
     }
 
+    /**
+     *
+     */
+    private class ChatRoomAdapter extends FirebaseRecyclerAdapter<ChatMessage, MessageHolder>
+    {
+        private ChatRoomAdapter(Class<ChatMessage> modelClass, int modelLayout, Class<MessageHolder> viewHolderClass, Query ref) {
+            super(modelClass, modelLayout, viewHolderClass, ref);
+        }
+
+        @Override
+        protected void populateViewHolder(MessageHolder viewHolder, ChatMessage message, int position){
+        if(message.getUserId_().equals(GoogleSignInSingleton.get().getClientUniqueID())){
+            ViewGroup.LayoutParams params = viewHolder.rightSpace_.getLayoutParams();
+            params.width = 3;
+            viewHolder.rightSpace_.setLayoutParams(params);
+        }
+        else{
+            ViewGroup.LayoutParams params = viewHolder.leftSpace_.getLayoutParams();
+            params.width = 3;
+            viewHolder.leftSpace_.setLayoutParams(params);
+        }
+        viewHolder.messageText_.setText(message.getText_());
+        viewHolder.timeUserText_.setText(DateFormat.format("dd-MM-yyyy (HH:mm)", message.getTime_()) +
+                " " + message.getUser_());
+        viewHolder.parentLayout_.setOnLongClickListener(new View.OnLongClickListener(){
+            private String ref_ = getRef(position).getKey();
+            @Override
+            public boolean onLongClick(View view) {
+                askToDeleteMessage(message, ref_);
+                return true;
+            }
+        });
+    }
+    }
     /**
      * ViewHolder class to handle the RecyclerView
      */

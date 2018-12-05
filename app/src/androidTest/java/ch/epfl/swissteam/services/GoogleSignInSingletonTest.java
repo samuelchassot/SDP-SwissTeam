@@ -1,8 +1,5 @@
 package ch.epfl.swissteam.services;
 
-import android.support.test.rule.ActivityTestRule;
-
-import org.junit.Rule;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
