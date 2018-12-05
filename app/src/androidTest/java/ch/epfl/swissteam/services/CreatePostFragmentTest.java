@@ -60,9 +60,7 @@ public class CreatePostFragmentTest extends SocializeTest<MainActivity>{
 
     @Test
     public void canOpenCreatePostFragment() {
-        onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
-        onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_myposts));
-        sleep(500);
+        openMyPostFragment();
         onView(withId(R.id.floatingbutton_addpost)).perform(click());
         onView(withId(R.id.plaintext_createpostfragment_title)).perform(typeText(title));
         closeSoftKeyboard();
@@ -76,9 +74,7 @@ public class CreatePostFragmentTest extends SocializeTest<MainActivity>{
 
     @Test
     public void cantSendWithoutBody() {
-        onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
-        onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_myposts));
-        sleep(500);
+        openMyPostFragment();
         onView(withId(R.id.floatingbutton_addpost)).perform(click());
         onView(withId(R.id.plaintext_createpostfragment_title)).perform(typeText(title), ViewActions.closeSoftKeyboard()).check(matches(withText(title)));
         onView(withId(R.id.button_createpostfragment_send)).perform(click());
@@ -87,9 +83,7 @@ public class CreatePostFragmentTest extends SocializeTest<MainActivity>{
 
     @Test
     public void canClickButtonWithLongBody() {
-        onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
-        onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_myposts));
-        sleep(500);
+        openMyPostFragment();
         onView(withId(R.id.floatingbutton_addpost)).perform(click());
         onView(withId(R.id.plaintext_createpostfragment_title)).perform(replaceText(longBody)).check(matches(withText(longBody)));
         onView(withId(R.id.plaintext_createpostfragment_body)).perform(replaceText(longBody), ViewActions.closeSoftKeyboard()).check(matches(withText(longBody)));
@@ -98,9 +92,7 @@ public class CreatePostFragmentTest extends SocializeTest<MainActivity>{
 
     @Test
     public void canClickOnSliderSeveralTimes() {
-        onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
-        onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_myposts));
-        sleep(500);
+        openMyPostFragment();
         onView(withId(R.id.floatingbutton_addpost)).perform(click());
         onView(withId(R.id.switch_createpostfragment_location)).perform(click());
         onView(withId(R.id.switch_createpostfragment_location)).perform(click());
@@ -108,9 +100,7 @@ public class CreatePostFragmentTest extends SocializeTest<MainActivity>{
 
     @Test
     public void isSliderTextCoherentWithSlider() {
-        onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
-        onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_myposts));
-        sleep(500);
+        openMyPostFragment();
         onView(withId(R.id.floatingbutton_addpost)).perform(click());
 
         onView(withId(R.id.textView_createpostfragment)).check(matches(withText(R.string.createpostfragment_location_switch_on)));
@@ -120,9 +110,7 @@ public class CreatePostFragmentTest extends SocializeTest<MainActivity>{
     }
     @Test
     public void createsPost1Week(){
-        onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
-        onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_myposts));
-        sleep(500);
+        openMyPostFragment();
         onView(withId(R.id.floatingbutton_addpost)).perform(click());
         onView(withId(R.id.plaintext_createpostfragment_title)).perform(typeText(title));
         closeSoftKeyboard();
@@ -141,9 +129,7 @@ public class CreatePostFragmentTest extends SocializeTest<MainActivity>{
 
     @Test
     public void createsPost1Month(){
-        onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
-        onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_myposts));
-        sleep(500);
+        openMyPostFragment();
         onView(withId(R.id.floatingbutton_addpost)).perform(click());
         onView(withId(R.id.plaintext_createpostfragment_title)).perform(typeText(title));
         closeSoftKeyboard();
@@ -161,9 +147,7 @@ public class CreatePostFragmentTest extends SocializeTest<MainActivity>{
 
     @Test
     public void createsPost3Months(){
-        onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
-        onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_myposts));
-        sleep(500);
+        openMyPostFragment();
         onView(withId(R.id.floatingbutton_addpost)).perform(click());
         onView(withId(R.id.plaintext_createpostfragment_title)).perform(typeText(title));
         closeSoftKeyboard();
@@ -182,9 +166,7 @@ public class CreatePostFragmentTest extends SocializeTest<MainActivity>{
 
     @Test
     public void isPostAtCurrentLocationWhenSliderOff() {
-        onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
-        onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_myposts));
-        sleep(500);
+        openMyPostFragment();
         onView(withId(R.id.floatingbutton_addpost)).perform(click());
 
         onView(withId(R.id.switch_createpostfragment_location)).perform(click());
@@ -203,6 +185,12 @@ public class CreatePostFragmentTest extends SocializeTest<MainActivity>{
         sleep(1000);
         onView(withId(R.id.textview_postactivity_distance)).check(matches(withText("0km away")));
 
+    }
+
+    private void openMyPostFragment(){
+        onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
+        onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_myposts));
+        sleep(500);
     }
 
 }
