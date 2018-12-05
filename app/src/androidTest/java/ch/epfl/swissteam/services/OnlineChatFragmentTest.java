@@ -119,6 +119,35 @@ public class OnlineChatFragmentTest extends SocializeTest<MainActivity> {
         onView(withText(oUser.getName_())).check(matches(isDisplayed()));
     }
 
+    @Test
+    public void relationIsStillVisibleForPartner(){
+        sleep(500);
+        onView(withText(oUser.getName_())).perform(longClick());
+        sleep(100);
+        onView(withText(testRule_.getActivity().getResources().getString(R.string.general_delete))).perform(click());
+        GoogleSignInSingleton.putUniqueID(oGoogleId);
+        onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
+        sleep(100);
+        onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_chats));
+        sleep(1000);
+        onView(withText(mUser.getName_())).check(matches(isDisplayed()));
+    }
+    @Test
+    public void bothSideDeletedRelation(){
+        onView(withText(oUser.getName_())).perform(longClick());
+        sleep(800);
+        onView(withText(testRule_.getActivity().getResources().getString(R.string.general_delete))).perform(click());
+        GoogleSignInSingleton.putUniqueID(oGoogleId);
+        onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
+        sleep(1000);
+        onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_chats));
+        sleep(1000);
+        onView(withText(mUser.getName_())).perform(longClick());
+        sleep(1000);
+        onView(withText(testRule_.getActivity().getResources().getString(R.string.general_delete))).perform(click());
+        onView(withText(mUser.getName_())).check(doesNotExist());
+    }
+
     /*-----Search bar tests-----*/
 
     @Test

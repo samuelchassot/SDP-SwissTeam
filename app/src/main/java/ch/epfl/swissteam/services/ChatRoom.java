@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -75,7 +76,9 @@ public class ChatRoom extends NavigationDrawer {
 
     private void retrieveUserAndSetRelationId(){
         DBUtility.get().getUser(GoogleSignInSingleton.get().getClientUniqueID(), mUser -> {
+            Log.e("COULDNOT32", ""+mUser);
             if(mUser == null){
+                Log.e("COULDNOT32", "where is this toast");
                 toastUser(getResources().getString(R.string.database_could_not_find_you_in_db));
                 return;
             }

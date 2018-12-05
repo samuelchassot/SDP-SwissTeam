@@ -103,8 +103,8 @@ public class DBUtility {
      */
     public void getUser(String googleId, final DBCallBack<User> callBack) {
 
-        if (googleId == null) {
-            User nullUser = null;//new User(null, null, null, null, null, null);
+        if (googleId == null || googleId.isEmpty()) {
+            User nullUser = null;
             callBack.onCallBack(nullUser);
             return;
         }
