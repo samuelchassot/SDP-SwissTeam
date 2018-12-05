@@ -70,7 +70,7 @@ public class OnlineChatFragmentTest extends SocializeTest<MainActivity> {
     public void initializeView(){
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_chats));
-        sleep(500);
+        sleep(1000);
     }
 
     @Test
