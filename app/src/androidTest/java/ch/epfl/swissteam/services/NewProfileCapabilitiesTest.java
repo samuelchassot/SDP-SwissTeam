@@ -21,7 +21,7 @@ public class NewProfileCapabilitiesTest extends SocializeTest<NewProfileCapabili
 
     @Test
     public void canCheckCapability() {
-        //onView(withId(R.id.recyclerview_newprofilecapabilities_list)).perform(RecyclerViewActions.actionOnItemAtPosition(1, clickChildViewWithId(R.id.checkbox_capabilitylayout_check)));
+        onView(withId(R.id.recyclerview_newprofilecapabilities_list)).perform(RecyclerViewActions.actionOnItemAtPosition(1, clickChildViewWithId(R.id.checkbox_capabilitylayout_check)));
     }
 
     public static ViewAction clickChildViewWithId(final int id) {

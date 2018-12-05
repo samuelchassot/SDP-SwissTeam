@@ -13,6 +13,7 @@ import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.ViewDragHelper;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
@@ -338,7 +339,7 @@ public class SwipeRevealLayout extends ViewGroup {
     /**
      * Open the panel to show the secondary view
      */
-    private void open(boolean animation) {
+    public void open(boolean animation) {
         mIsOpenBeforeInit = true;
 
         if (animation) {
@@ -367,7 +368,7 @@ public class SwipeRevealLayout extends ViewGroup {
     /**
      * Close the panel to hide the secondary view
      */
-    private void close(boolean animation) {
+    public void close(boolean animation) {
         mIsOpenBeforeInit = false;
 
         if (animation) {
