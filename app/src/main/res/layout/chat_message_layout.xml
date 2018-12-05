@@ -8,7 +8,7 @@
 
     <Space
         android:id="@+id/message_leftspace"
-        android:layout_width="100dp"
+        android:layout_width="@dimen/message_longspace"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
