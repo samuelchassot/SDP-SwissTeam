@@ -52,6 +52,7 @@
     <string name="navigation_drawer_button_services">Services</string>
     <string name="navigation_drawer_newpost">Nouveau post</string>
     <string name="navigation_drawer_myposts">Mes posts</string>
+    <string name="navigation_drawer_button_TODO_list">TODO</string>
     <string name="navigation_drawer_button_chats">Chats</string>
     <string name="navigation_drawer_section_settings">Paramètres</string>
     <string name="navigation_drawer_button_logout">Déconnexion</string>
