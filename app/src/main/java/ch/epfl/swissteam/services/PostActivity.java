@@ -119,6 +119,7 @@ public class PostActivity extends NavigationDrawer implements OnMapReadyCallback
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        super.onMapReady(googleMap);
         googleMap_ = googleMap;
         googleMap_.setMinZoomPreference(12);
 
