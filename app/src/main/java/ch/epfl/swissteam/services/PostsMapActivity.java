@@ -242,12 +242,12 @@ public class PostsMapActivity extends NavigationDrawer implements OnMapReadyCall
         }
 
         @Override
-        public View getInfoWindow(Marker marker) {
+        public View getInfoContents(Marker marker) {
             return null;
         }
 
         @Override
-        public View getInfoContents(Marker marker) {
+        public View getInfoWindow(Marker marker) {
             Post post = (Post)marker.getTag();
             ((TextView)mContents_.findViewById(R.id.textview_mapinfo_post)).setText(post.getTitle_());
             if(users.containsKey(post.getGoogleId_())) {
