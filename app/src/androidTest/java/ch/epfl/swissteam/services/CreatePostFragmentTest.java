@@ -98,56 +98,19 @@ public class CreatePostFragmentTest extends SocializeTest<MainActivity>{
     @Test
     public void createsPost1Week(){
         openMyPostFragment();
-        onView(withId(R.id.floatingbutton_addpost)).perform(click());
-        onView(withId(R.id.plaintext_createpostfragment_title)).perform(typeText(title));
-        closeSoftKeyboard();
-        sleep(100);
-        onView(withId(R.id.plaintext_createpostfragment_title)).check(matches(withText(title)));
-        onView(withId(R.id.plaintext_createpostfragment_body)).perform(typeText(body));
-        closeSoftKeyboard();
-        sleep(100);
-        onView(withId(R.id.spinner_createpost_timeout)).perform(click());
-        sleep(100);
-        onData(allOf(is(instanceOf(CreatePostFragment.TimeOut.class)), is(CreatePostFragment.TimeOut.oneWeek))).perform(click());
-        sleep(100);
-        onView(withId(R.id.button_createpostfragment_send)).perform(personalClick());
-
+        createPostNMonths(CreatePostFragment.TimeOut.oneWeek);
     }
 
     @Test
     public void createsPost1Month(){
         openMyPostFragment();
-        onView(withId(R.id.floatingbutton_addpost)).perform(click());
-        onView(withId(R.id.plaintext_createpostfragment_title)).perform(typeText(title));
-        closeSoftKeyboard();
-        sleep(100);
-        onView(withId(R.id.plaintext_createpostfragment_title)).check(matches(withText(title)));
-        onView(withId(R.id.plaintext_createpostfragment_body)).perform(typeText(body));
-        closeSoftKeyboard();
-        sleep(100);
-        onView(withId(R.id.spinner_createpost_timeout)).perform(click());
-        sleep(100);
-        onData(allOf(is(instanceOf(CreatePostFragment.TimeOut.class)), is(CreatePostFragment.TimeOut.threeDays))).perform(click());
-        sleep(100);
-        onView(withId(R.id.button_createpostfragment_send)).perform(personalClick());
+        createPostNMonths(CreatePostFragment.TimeOut.threeDays);
     }
 
     @Test
     public void createsPost3Months(){
         openMyPostFragment();
-        onView(withId(R.id.floatingbutton_addpost)).perform(click());
-        onView(withId(R.id.plaintext_createpostfragment_title)).perform(typeText(title));
-        closeSoftKeyboard();
-        sleep(100);
-        onView(withId(R.id.plaintext_createpostfragment_title)).check(matches(withText(title)));
-        onView(withId(R.id.plaintext_createpostfragment_body)).perform(typeText(body));
-        closeSoftKeyboard();
-        sleep(100);
-        onView(withId(R.id.spinner_createpost_timeout)).perform(click());
-        sleep(100);
-        onData(allOf(is(instanceOf(CreatePostFragment.TimeOut.class)), is(CreatePostFragment.TimeOut.twoWeeks))).perform(click());
-        sleep(100);
-        onView(withId(R.id.button_createpostfragment_send)).perform(personalClick());
+        createPostNMonths(CreatePostFragment.TimeOut.twoWeeks);
     }
 
 
@@ -180,4 +143,19 @@ public class CreatePostFragmentTest extends SocializeTest<MainActivity>{
         sleep(500);
     }
 
+    private void createPostNMonths(CreatePostFragment.TimeOut timeOut){
+        onView(withId(R.id.floatingbutton_addpost)).perform(click());
+        onView(withId(R.id.plaintext_createpostfragment_title)).perform(typeText(title));
+        closeSoftKeyboard();
+        sleep(100);
+        onView(withId(R.id.plaintext_createpostfragment_title)).check(matches(withText(title)));
+        onView(withId(R.id.plaintext_createpostfragment_body)).perform(typeText(body));
+        closeSoftKeyboard();
+        sleep(100);
+        onView(withId(R.id.spinner_createpost_timeout)).perform(click());
+        sleep(100);
+        onData(allOf(is(instanceOf(CreatePostFragment.TimeOut.class)), is(timeOut))).perform(click());
+        sleep(100);
+        onView(withId(R.id.button_createpostfragment_send)).perform(personalClick());
+    }
 }

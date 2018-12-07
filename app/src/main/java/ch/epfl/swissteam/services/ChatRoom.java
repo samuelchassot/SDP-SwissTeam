@@ -73,9 +73,7 @@ public class ChatRoom extends NavigationDrawer {
 
     private void retrieveUserAndSetRelationId(){
         DBUtility.get().getUser(GoogleSignInSingleton.get().getClientUniqueID(), mUser -> {
-            Log.e("COULDNOT32", ""+mUser);
             if(mUser == null){
-                Log.e("COULDNOT32", "where is this toast");
                 toastUser(getResources().getString(R.string.database_could_not_find_you_in_db));
                 return;
             }
@@ -220,8 +218,7 @@ public class ChatRoom extends NavigationDrawer {
             viewHolder.leftSpace_.setLayoutParams(leftParams);
 
             viewHolder.messageText_.setText(message.getText_());
-            viewHolder.timeUserText_.setText(DateFormat.format("dd-MM-yyyy (HH:mm)", message.getTime_()) +
-                    " " + message.getUser_());
+            viewHolder.timeUserText_.setText(DateFormat.format("dd-MM-yyyy (HH:mm)", message.getTime_()));
             viewHolder.parentLayout_.setOnLongClickListener(new View.OnLongClickListener(){
                 private String ref_ = getRef(position).getKey();
                 @Override
