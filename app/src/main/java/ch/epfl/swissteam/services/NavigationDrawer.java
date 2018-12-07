@@ -1,10 +1,10 @@
 package ch.epfl.swissteam.services;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Canvas;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -92,8 +92,14 @@ public class NavigationDrawer extends AppCompatActivity implements NavigationVie
      * Set up the action bar
      */
     private void setUpToggle(){
+        Activity thisActivity = this;
         toggle_ = new ActionBarDrawerToggle(
-                this, drawer_, toolbar_, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+                thisActivity, drawer_, toolbar_, R.string.navigation_drawer_open, R.string.navigation_drawer_close){
+            @Override
+            public void onDrawerSlide(View drawerView, float slideOffset){
+                ActivityManager.hideKeyboard(thisActivity);
+            }
+        };
         drawer_.addDrawerListener(toggle_);
         toggle_.syncState();
 
@@ -116,7 +122,7 @@ public class NavigationDrawer extends AppCompatActivity implements NavigationVie
 
     @Override
     public void onBackPressed() {
-        if (isDrawerOpened()) {
+        if (isDrawerOpen()) {
             drawer_.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
@@ -178,8 +184,7 @@ public class NavigationDrawer extends AppCompatActivity implements NavigationVie
 
         });
     }
-
-    protected boolean isDrawerOpened(){
+    protected boolean isDrawerOpen(){
         return drawer_.isDrawerOpen(GravityCompat.START);
     }
 

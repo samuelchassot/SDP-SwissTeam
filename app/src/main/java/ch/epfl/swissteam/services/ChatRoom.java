@@ -8,7 +8,6 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateFormat;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -62,7 +61,7 @@ public class ChatRoom extends NavigationDrawer {
 
     @Override
     public void onBackPressed() {
-        if (isDrawerOpened()) {
+        if (isDrawerOpen()) {
             super.onBackPressed();
         } else {
             Intent intent = new Intent(this, MainActivity.class);
