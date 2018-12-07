@@ -113,6 +113,14 @@ public class ChatRoom extends NavigationDrawer {
 
         adapter_ = new ChatRoomAdapter(ChatMessage.class, R.layout.chat_message_layout,
                 MessageHolder.class, dataBase_.child(DBUtility.CHATS).child(currentRelationId_));
+
+        adapter_.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onItemRangeInserted(int positionStart, int itemCount) {
+                super.onItemRangeInserted(positionStart, itemCount);
+                chatRoom.smoothScrollToPosition(adapter_.getItemCount());
+            }
+        });
         chatRoom.setAdapter(adapter_);
     }
 
@@ -198,28 +206,34 @@ public class ChatRoom extends NavigationDrawer {
 
         @Override
         protected void populateViewHolder(MessageHolder viewHolder, ChatMessage message, int position){
-        if(message.getUserId_().equals(GoogleSignInSingleton.get().getClientUniqueID())){
-            ViewGroup.LayoutParams params = viewHolder.rightSpace_.getLayoutParams();
-            params.width = 3;
-            viewHolder.rightSpace_.setLayoutParams(params);
-        }
-        else{
-            ViewGroup.LayoutParams params = viewHolder.leftSpace_.getLayoutParams();
-            params.width = 3;
-            viewHolder.leftSpace_.setLayoutParams(params);
-        }
-        viewHolder.messageText_.setText(message.getText_());
-        viewHolder.timeUserText_.setText(DateFormat.format("dd-MM-yyyy (HH:mm)", message.getTime_()) +
-                " " + message.getUser_());
-        viewHolder.parentLayout_.setOnLongClickListener(new View.OnLongClickListener(){
-            private String ref_ = getRef(position).getKey();
-            @Override
-            public boolean onLongClick(View view) {
-                askToDeleteMessage(message, ref_);
-                return true;
+            if(message.getUserId_().equals(GoogleSignInSingleton.get().getClientUniqueID())){
+                ViewGroup.LayoutParams rightParams = viewHolder.rightSpace_.getLayoutParams();
+                rightParams.width = (int)getResources().getDimension(R.dimen.message_shortspace);
+                viewHolder.rightSpace_.setLayoutParams(rightParams);
+                ViewGroup.LayoutParams leftParams = viewHolder.leftSpace_.getLayoutParams();
+                leftParams.width = (int)getResources().getDimension(R.dimen.message_longspace);
+                viewHolder.leftSpace_.setLayoutParams(leftParams);
             }
-        });
-    }
+            else{
+                ViewGroup.LayoutParams rightParams = viewHolder.rightSpace_.getLayoutParams();
+                rightParams.width = (int)getResources().getDimension(R.dimen.message_longspace);
+                viewHolder.rightSpace_.setLayoutParams(rightParams);
+                ViewGroup.LayoutParams leftParams = viewHolder.leftSpace_.getLayoutParams();
+                leftParams.width = (int)getResources().getDimension(R.dimen.message_shortspace);
+                viewHolder.leftSpace_.setLayoutParams(leftParams);
+            }
+            viewHolder.messageText_.setText(message.getText_());
+            viewHolder.timeUserText_.setText(DateFormat.format("dd-MM-yyyy (HH:mm)", message.getTime_()) +
+                    " " + message.getUser_());
+            viewHolder.parentLayout_.setOnLongClickListener(new View.OnLongClickListener(){
+                private String ref_ = getRef(position).getKey();
+                @Override
+                public boolean onLongClick(View view) {
+                    askToDeleteMessage(message, ref_);
+                    return true;
+                }
+            });
+        }
     }
     /**
      * ViewHolder class to handle the RecyclerView

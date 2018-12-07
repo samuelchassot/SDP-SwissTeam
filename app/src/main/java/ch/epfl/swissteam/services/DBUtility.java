@@ -27,7 +27,7 @@ public class DBUtility {
     public final static String ERROR_TAG = "DBUtility";
     public final static String CHATS = "Chats";
     public final static String CHATS_RELATIONS = "ChatRelations";
-    private final int POSTS_DISPLAY_NUMBER = 100;
+    private final int POSTS_DISPLAY_NUMBER = 9999;
 
     private DatabaseReference db_;
     private static DBUtility instance;
@@ -201,7 +201,9 @@ public class DBUtility {
                 posts.clear();
 
                 for (DataSnapshot data : dataSnapshot.getChildren()) {
+
                     Post post = data.getValue(Post.class);
+
                     Location postLocation = new Location("");
                     postLocation.setLongitude(post.getLongitude_());
                     postLocation.setLatitude(post.getLatitude_());
@@ -210,6 +212,7 @@ public class DBUtility {
                         posts.add(0, post);
                     }
                 }
+
                 callBack.onCallBack(posts);
             }
 

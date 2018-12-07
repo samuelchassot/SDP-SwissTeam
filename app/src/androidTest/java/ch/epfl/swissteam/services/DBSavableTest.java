@@ -23,7 +23,7 @@ public class DBSavableTest {
 
     @Test(expected = Utility.IllegalCallException.class)
     public void removeFromDbWithChildNonNullThrowsWhenRemoveFromDbNotImpl() throws Utility.IllegalCallException {
-        (new TestSavable()).removeFromDB(null, "");
+        (new TestSavable()).removeFromDB(DBUtility.get().getDb_(), "");
     }
 
     @Test(expected = Utility.IllegalCallException.class)

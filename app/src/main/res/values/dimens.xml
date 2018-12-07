@@ -39,6 +39,8 @@
     <dimen name="settings_police_medium_title">18dp</dimen>
 
     <dimen name="ranking_star_size">10dp</dimen>
+    <dimen name="message_longspace">100dp</dimen>
+    <dimen name="message_shortspace">1dp</dimen>
 
 </resources>
 

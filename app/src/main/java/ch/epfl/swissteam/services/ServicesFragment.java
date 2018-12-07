@@ -119,7 +119,6 @@ public class ServicesFragment extends Fragment {
         Button searchButton = (Button) view.findViewById(R.id.button_services_search);
         searchButton.setOnClickListener(v ->{
             Log.i("KEYWORDS", "list of keywords is empty ? " + keywords_.isEmpty());
-            ActivityManager.hideKeyboard(this.getActivity());
             initDataSet(currentCategory_, keywords_);
         });
 
@@ -128,10 +127,13 @@ public class ServicesFragment extends Fragment {
             sortUserList();
         });
 
+        initDataSet(Categories.ALL, keywords_);
+
         return view;
     }
 
     private void initDataSet(Categories category, ArrayList<String> keywords) {
+        ActivityManager.hideKeyboard(this.getActivity());
         View view = getView();
         if (category == Categories.ALL) {
             DBUtility.get().getAllUsers((usersdb -> {
@@ -164,7 +166,6 @@ public class ServicesFragment extends Fragment {
                 }
             });
         }
-
     }
 
     private void sortUserList() {

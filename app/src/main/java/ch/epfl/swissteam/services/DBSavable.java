@@ -23,7 +23,7 @@ public interface DBSavable {
      * @throws Utility.IllegalCallException
      */
     default void removeFromDB(DatabaseReference databaseReference, String child) throws Utility.IllegalCallException {
-        if(child != null)
+        if(databaseReference != null && child != null)
             removeFromDB(databaseReference.child(child));
         else
             removeFromDB(databaseReference);
