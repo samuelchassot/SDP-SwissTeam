@@ -182,7 +182,7 @@
         <item>French</item>
     </string-array>
     <string name="settings_deleteaccount_fail">Check spelling if you want to delete your account</string>
-    <string name="servicesfragment_proximityranking">Ranking: Proximity</string>
+    <string name="servicesfragment_proximityranking">Ranking:</string>
     <string name="servicesfragment_rating">Rating</string>
     <string name="servicesfragment_category">Category:</string>
     <string name="createpost_timeout_oneday">1 day</string>
@@ -190,5 +190,6 @@
     <string name="createpost_postlifetime">Post lifetime</string>
     <string name="createpost_timeout_threedays">3 days</string>
     <string name="createpost_timeout_twoweeks">2 weeks</string>
+    <string name="servicesfragment_proximity">Proximity</string>
 
 </resources>

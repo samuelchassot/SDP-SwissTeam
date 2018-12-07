@@ -123,9 +123,20 @@ public class ServicesFragment extends Fragment {
             initDataSet(currentCategory_, keywords_);
         });
 
-        ((Switch)view.findViewById(R.id.switch_servicesfragment_sorttype)).setOnCheckedChangeListener((b, c) -> {
-            sortByRating = c;
-            sortUserList();
+        String[] sortType = {getResources().getString(R.string.servicesfragment_proximity), getResources().getString(R.string.servicesfragment_rating)};
+        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, sortType);
+        spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); // The drop down view
+        ((Spinner)view.findViewById(R.id.spinner_services_sorttype)).setAdapter(spinnerArrayAdapter);
+        ((Spinner)view.findViewById(R.id.spinner_services_sorttype)).setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                    sortByRating = i != 0;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
         });
 
         return view;
@@ -136,6 +147,7 @@ public class ServicesFragment extends Fragment {
         if (category == Categories.ALL) {
             DBUtility.get().getAllUsers((usersdb -> {
                 users.clear();
+                mAdapter_.notifyDataSetChanged();
                 for (User u : usersdb) {
                     if (userContainsKeywords(u, keywords, category)) {
                         if (!u.getGoogleId_().equals(GoogleSignInSingleton.get().getClientUniqueID())) {
@@ -144,15 +156,14 @@ public class ServicesFragment extends Fragment {
                         }
                     }
                 }
-                Collections.sort(users, this::compareUsersUsingDistanceWithRef);
-                mAdapter_.notifyDataSetChanged();
                 services_problem_text_udpate(view, users.isEmpty());
+                sortUserList();
             }));
         } else {
             DBUtility.get().getUsersFromCategory(category, (googleIds) -> {
                 users.clear();
-                services_problem_text_udpate(view, googleIds.isEmpty());
                 mAdapter_.notifyDataSetChanged();
+                services_problem_text_udpate(view, googleIds.isEmpty());
                 for (String googleId : googleIds) {
                     DBUtility.get().getUser(googleId, user -> {
                         if (user != null && !users.contains(user) && !user.getGoogleId_().equals(GoogleSignInSingleton.get().getClientUniqueID()) &&
