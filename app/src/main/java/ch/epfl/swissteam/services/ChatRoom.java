@@ -206,22 +206,19 @@ public class ChatRoom extends NavigationDrawer {
 
         @Override
         protected void populateViewHolder(MessageHolder viewHolder, ChatMessage message, int position){
+            ViewGroup.LayoutParams rightParams = viewHolder.rightSpace_.getLayoutParams();
+            ViewGroup.LayoutParams leftParams = viewHolder.leftSpace_.getLayoutParams();
             if(message.getUserId_().equals(GoogleSignInSingleton.get().getClientUniqueID())){
-                ViewGroup.LayoutParams rightParams = viewHolder.rightSpace_.getLayoutParams();
                 rightParams.width = (int)getResources().getDimension(R.dimen.message_shortspace);
-                viewHolder.rightSpace_.setLayoutParams(rightParams);
-                ViewGroup.LayoutParams leftParams = viewHolder.leftSpace_.getLayoutParams();
                 leftParams.width = (int)getResources().getDimension(R.dimen.message_longspace);
-                viewHolder.leftSpace_.setLayoutParams(leftParams);
             }
             else{
-                ViewGroup.LayoutParams rightParams = viewHolder.rightSpace_.getLayoutParams();
                 rightParams.width = (int)getResources().getDimension(R.dimen.message_longspace);
-                viewHolder.rightSpace_.setLayoutParams(rightParams);
-                ViewGroup.LayoutParams leftParams = viewHolder.leftSpace_.getLayoutParams();
                 leftParams.width = (int)getResources().getDimension(R.dimen.message_shortspace);
-                viewHolder.leftSpace_.setLayoutParams(leftParams);
             }
+            viewHolder.rightSpace_.setLayoutParams(rightParams);
+            viewHolder.leftSpace_.setLayoutParams(leftParams);
+
             viewHolder.messageText_.setText(message.getText_());
             viewHolder.timeUserText_.setText(DateFormat.format("dd-MM-yyyy (HH:mm)", message.getTime_()) +
                     " " + message.getUser_());
