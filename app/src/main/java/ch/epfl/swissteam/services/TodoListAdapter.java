@@ -1,14 +1,19 @@
 package ch.epfl.swissteam.services;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.List;
+
+import static ch.epfl.swissteam.services.PostAdapter.POST_TAG;
 
 /**
  * Adapter for TodoList
@@ -19,7 +24,6 @@ public class TodoListAdapter extends RecyclerView.Adapter<TodoListAdapter.TodoVi
 
     private List<Post> todoPosts_;
     private String id_;
-    private TodolistDbHelper todolistDbHelper_;
 
     /**
      * Adapter for a list of Posts to do
@@ -55,6 +59,12 @@ public class TodoListAdapter extends RecyclerView.Adapter<TodoListAdapter.TodoVi
                 buttonView.setChecked(false);
             }
         });
+
+        holder.parentLayout_.setOnClickListener((view) -> {
+            Intent intent = new Intent(holder.itemView.getContext(), PostActivity.class);
+            intent.putExtra(POST_TAG, todoPosts_.get(holder.getAdapterPosition()));
+            holder.itemView.getContext().startActivity(intent);
+        });
     }
 
 
@@ -70,6 +80,7 @@ public class TodoListAdapter extends RecyclerView.Adapter<TodoListAdapter.TodoVi
 
         protected TextView titleView_;
         protected TextView bodyView_;
+        protected LinearLayout parentLayout_;
         public CheckBox doneCheckBox_;
 
         /**
@@ -82,6 +93,7 @@ public class TodoListAdapter extends RecyclerView.Adapter<TodoListAdapter.TodoVi
             titleView_ = v.findViewById(R.id.textview_todolistadapter_title);
             bodyView_ = v.findViewById(R.id.textview_todolistadapter_body);
             doneCheckBox_ = v.findViewById(R.id.checkbox_todolist_layout);
+            parentLayout_ = v.findViewById(R.id.linearLayout_todopost);
         }
     }
 }
