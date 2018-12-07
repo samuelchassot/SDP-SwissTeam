@@ -25,6 +25,8 @@ public class TodoListAdapter extends RecyclerView.Adapter<TodoListAdapter.TodoVi
     private List<Post> todoPosts_;
     private String id_;
 
+    public static final String TODOPOST_TAG = "ch.epfl.swissteam.services.todopost";
+
     /**
      * Adapter for a list of Posts to do
      *
@@ -62,7 +64,7 @@ public class TodoListAdapter extends RecyclerView.Adapter<TodoListAdapter.TodoVi
 
         holder.parentLayout_.setOnClickListener((view) -> {
             Intent intent = new Intent(holder.itemView.getContext(), PostActivity.class);
-            intent.putExtra(POST_TAG, todoPosts_.get(holder.getAdapterPosition()));
+            intent.putExtra(TODOPOST_TAG, todoPosts_.get(holder.getAdapterPosition()));
             holder.itemView.getContext().startActivity(intent);
         });
     }
