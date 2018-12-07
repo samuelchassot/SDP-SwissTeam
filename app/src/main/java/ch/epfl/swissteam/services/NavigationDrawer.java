@@ -1,7 +1,9 @@
 package ch.epfl.swissteam.services;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -84,7 +86,6 @@ public class NavigationDrawer extends AppCompatActivity implements NavigationVie
 
         //}
 
-
         TextView navHeaderName = (TextView) findViewById(R.id.nav_header_name);
     }
 
@@ -94,7 +95,30 @@ public class NavigationDrawer extends AppCompatActivity implements NavigationVie
     private void setUpToggle(){
         toggle_ = new ActionBarDrawerToggle(
                 this, drawer_, toolbar_, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        Activity thisActivity = this;
+        DrawerLayout.DrawerListener closeKeyboard = new DrawerLayout.DrawerListener() {
+            @Override
+            public void onDrawerSlide(@NonNull View view, float v) {
+                ActivityManager.hideKeyboard(thisActivity);
+            }
+
+            @Override
+            public void onDrawerOpened(@NonNull View view) {
+
+            }
+
+            @Override
+            public void onDrawerClosed(@NonNull View view) {
+
+            }
+
+            @Override
+            public void onDrawerStateChanged(int i) {
+
+            }
+        };
         drawer_.addDrawerListener(toggle_);
+        drawer_.addDrawerListener(closeKeyboard);
         toggle_.syncState();
 
         if(!toggleButton_.equals(MAIN)){
