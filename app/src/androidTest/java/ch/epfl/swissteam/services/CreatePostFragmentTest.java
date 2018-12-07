@@ -64,7 +64,7 @@ public class CreatePostFragmentTest extends SocializeTest<MainActivity>{
         openMyPostFragment();
         onView(withId(R.id.floatingbutton_addpost)).perform(click());
         onView(withId(R.id.plaintext_createpostfragment_title)).perform(typeText(title), ViewActions.closeSoftKeyboard()).check(matches(withText(title)));
-        onView(withId(R.id.button_createpostfragment_send)).perform(click());
+        onView(withId(R.id.button_createpostfragment_send)).perform(personalClick());
         onView(withText(R.string.createpostfragment_bodyempty)).inRoot(withDecorView(not(testRule_.getActivity().getWindow().getDecorView()))) .check(matches(isDisplayed()));
     }
 
@@ -74,7 +74,7 @@ public class CreatePostFragmentTest extends SocializeTest<MainActivity>{
         onView(withId(R.id.floatingbutton_addpost)).perform(click());
         onView(withId(R.id.plaintext_createpostfragment_title)).perform(replaceText(longBody)).check(matches(withText(longBody)));
         onView(withId(R.id.plaintext_createpostfragment_body)).perform(replaceText(longBody), ViewActions.closeSoftKeyboard()).check(matches(withText(longBody)));
-        onView(withId(R.id.button_createpostfragment_send)).perform(click());
+        onView(withId(R.id.button_createpostfragment_send)).perform(personalClick());
     }
 
     @Test
