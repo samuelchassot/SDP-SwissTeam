@@ -55,15 +55,13 @@ public class ChatRoomTest extends SocializeTest<ChatRoom>{
     }
 
     @Test
-    public void UserGetToastedIfCouldNotBeFound() {
+    public void activityCanLaunchWithAnInexistentUser() {
         testRule_.getActivity().finish();
         Intents.release();
         Intent intent = new Intent();
         GoogleSignInSingleton.putUniqueID("aou");
         intent.putExtra(GOOGLE_ID_TAG, "bububl");
         testRule_.launchActivity(intent);
-        onView(withText(R.string.database_could_not_find_you_in_db))
-                .inRoot(withDecorView(not(testRule_.getActivity().getWindow().getDecorView()))).check(matches(isDisplayed()));
     }
 
     @Test
