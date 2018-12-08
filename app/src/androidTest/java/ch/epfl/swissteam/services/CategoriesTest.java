@@ -5,31 +5,32 @@ import android.support.test.runner.AndroidJUnit4;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.util.Arrays;
+import java.util.Collections;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 @RunWith(AndroidJUnit4.class)
 public class CategoriesTest {
-    String googleId = "1234";
-    User user1 = new User(googleId,"Jean-Marc Michel", "jmm@google.ch", "",
+    private String googleId = "1234";
+    private User user1 = new User(googleId,"Jean-Marc Michel", "jmm@google.ch", "",
             null,null,"",0, 0,0,null,null);
 
 
     @Test
     public void operationWithUserWorks(){
         Categories.HOUSE.addUser(user1);
-        assertEquals(Arrays.asList(googleId), Categories.HOUSE.getUsers_());
+        assertEquals(Collections.singletonList(googleId), Categories.HOUSE.getUsers_());
         Categories.HOUSE.removeUser(user1);
-        assertEquals(Arrays.asList(), Categories.HOUSE.getUsers_());
+        assertEquals(Collections.emptyList(), Categories.HOUSE.getUsers_());
     }
 
     @Test
-    public void operationUserWithIDworks(){
+    public void operationUserWithIDWorks(){
         Categories.HOUSE.addUser(googleId);
-        assertEquals(Arrays.asList(googleId), Categories.HOUSE.getUsers_());
+        assertEquals(Collections.singletonList(googleId), Categories.HOUSE.getUsers_());
         Categories.HOUSE.removeUser(googleId);
-        assertEquals(Arrays.asList(), Categories.HOUSE.getUsers_());
+        assertEquals(Collections.emptyList(), Categories.HOUSE.getUsers_());
     }
     
 
@@ -45,7 +46,7 @@ public class CategoriesTest {
         assertEquals(Categories.DAILYLIFE, Categories.fromString("Daily Life"));
         assertEquals(Categories.TRANSPORTATION, Categories.fromString("Transportation"));
         assertEquals(Categories.ALL, Categories.fromString("All"));
-        assertEquals(null, Categories.fromString("Foo"));
+        assertNull(Categories.fromString("Foo"));
     }
 
 }
