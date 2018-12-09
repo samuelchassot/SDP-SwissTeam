@@ -96,6 +96,7 @@ public class ServicesFragmentTest extends SocializeTest<MainActivity>{
         closeSoftKeyboard();
         sleep(1000);
         onView(withId(R.id.spinner_services_sorttype)).perform(scrollTo()).perform(click());
+        onView(withId(R.id.spinner_services_sorttype)).perform(scrollTo()).perform(click());
         sleep(1000);
         onView(withId(R.id.button_services_search)).perform(scrollTo()).perform(click());
         sleep(1000);
