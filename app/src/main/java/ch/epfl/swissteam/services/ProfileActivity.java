@@ -198,6 +198,7 @@ public class ProfileActivity extends NavigationDrawer implements OnMapReadyCallb
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        super.onMapReady(googleMap);
         googleMap_ = googleMap;
         googleMap_.setMinZoomPreference(12);
 

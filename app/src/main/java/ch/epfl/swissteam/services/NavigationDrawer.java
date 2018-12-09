@@ -14,9 +14,13 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.model.MapStyleOptions;
 import com.squareup.picasso.Picasso;
 
 /**
@@ -25,7 +29,7 @@ import com.squareup.picasso.Picasso;
  *
  * @author Julie Giunta
  */
-public class NavigationDrawer extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class NavigationDrawer extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback {
 
     public static final String NAVIGATION_TAG = "NAV_DRAWER_CLICKED";
     public static final String CANCEL = "Cancel";
@@ -170,6 +174,14 @@ public class NavigationDrawer extends AppCompatActivity implements NavigationVie
         finish();
 
         return true;
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap){
+        int dark = SettingsDBUtility.retrieveDarkMode(this);
+        if (dark == 1){
+            googleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.map_night));
+        }
     }
 
     /**
