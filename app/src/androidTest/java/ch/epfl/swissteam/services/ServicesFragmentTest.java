@@ -96,9 +96,6 @@ public class ServicesFragmentTest extends SocializeTest<MainActivity>{
         onView(withId(R.id.edittext_services_keywordsinput)).perform(clearText()).perform(typeText("Java"));
         closeSoftKeyboard();
         sleep(1000);
-        onView(withId(R.id.spinner_services_sorttype)).perform(scrollTo()).perform(click());
-        onView(allOf(withId(R.id.spinner_services_sorttype), withText("Rating"))).perform(click());
-        sleep(1000);
         onView(withId(R.id.button_services_search)).perform(scrollTo()).perform(click());
         sleep(1000);
     }
