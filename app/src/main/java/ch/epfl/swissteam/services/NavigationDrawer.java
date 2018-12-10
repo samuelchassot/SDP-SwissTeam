@@ -2,7 +2,6 @@ package ch.epfl.swissteam.services;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Canvas;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -10,7 +9,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -64,14 +62,14 @@ public class NavigationDrawer extends AppCompatActivity implements NavigationVie
      */
     protected void onCreateDrawer(String toggleButton) {
         this.toggleButton_ = toggleButton;
-        toolbar_ = (Toolbar) findViewById(R.id.toolbar);
+        toolbar_ = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar_);
 
-        drawer_ = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer_ = findViewById(R.id.drawer_layout);
 
         setUpToggle();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         //if(toggleButton.equals(CANCEL)){
@@ -89,7 +87,7 @@ public class NavigationDrawer extends AppCompatActivity implements NavigationVie
         //}
 
 
-        TextView navHeaderName = (TextView) findViewById(R.id.nav_header_name);
+        TextView navHeaderName = findViewById(R.id.nav_header_name);
     }
 
     /**

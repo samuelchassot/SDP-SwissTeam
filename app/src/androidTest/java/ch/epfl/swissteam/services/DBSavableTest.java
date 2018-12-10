@@ -18,12 +18,12 @@ public class DBSavableTest {
 
     @Test(expected = Utility.IllegalCallException.class)
     public void removeFromDbThrowsIfNotImplemented() throws Utility.IllegalCallException {
-        (new TestSavable()).removeFromDB(null);
+        (new TestSavable()).removeFromDB(null, null);
     }
 
     @Test(expected = Utility.IllegalCallException.class)
     public void removeFromDbWithChildNonNullThrowsWhenRemoveFromDbNotImpl() throws Utility.IllegalCallException {
-        (new TestSavable()).removeFromDB(DBUtility.get().getDb_(), "");
+        (new TestSavable()).removeFromDB(DBUtility.get().getDb_(), "test");
     }
 
     @Test(expected = Utility.IllegalCallException.class)

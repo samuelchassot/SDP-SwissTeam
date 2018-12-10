@@ -6,6 +6,7 @@ import android.support.test.espresso.Espresso;
 import android.support.test.espresso.contrib.DrawerActions;
 import android.support.test.espresso.intent.Intents;
 import android.support.test.runner.AndroidJUnit4;
+import android.support.v7.widget.RecyclerView;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -62,6 +63,11 @@ public class ChatRoomTest extends SocializeTest<ChatRoom>{
         GoogleSignInSingleton.putUniqueID("aou");
         intent.putExtra(GOOGLE_ID_TAG, "bububl");
         testRule_.launchActivity(intent);
+
+        String text = "Boom!";
+        sendMessage(text);
+        RecyclerView view = testRule_.getActivity().findViewById(R.id.recycler_view_message);
+        assert(view.getAdapter().getItemCount() == 0);
     }
 
     @Test
@@ -69,6 +75,14 @@ public class ChatRoomTest extends SocializeTest<ChatRoom>{
         String text = "Le roi est mort ! Vive le roi !";
         sendMessage(text);
         onView(withId(R.id.recycler_view_message)).check(matches(hasDescendant(withText(text))));
+    }
+
+    @Test
+    public void sendEmptyMessageDoesNotWork() {
+        String text = "";
+        sendMessage(text);
+        RecyclerView view = testRule_.getActivity().findViewById(R.id.recycler_view_message);
+        assert(view.getAdapter().getItemCount() == 0);
     }
 
     @Test
