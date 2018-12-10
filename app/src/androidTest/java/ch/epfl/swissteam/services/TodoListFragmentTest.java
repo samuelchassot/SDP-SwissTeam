@@ -2,6 +2,7 @@ package ch.epfl.swissteam.services;
 
 import android.support.test.espresso.contrib.DrawerActions;
 import android.support.test.espresso.contrib.NavigationViewActions;
+import android.support.test.espresso.contrib.RecyclerViewActions;
 
 import org.junit.Test;
 
@@ -15,6 +16,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.hasDescendant;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static ch.epfl.swissteam.services.TestUtils.sleep;
+import static ch.epfl.swissteam.services.UtilityTest.clickChildViewWithId;
 import static org.hamcrest.Matchers.not;
 
 public class TodoListFragmentTest extends SocializeTest<MainActivity> {
@@ -77,5 +79,13 @@ public class TodoListFragmentTest extends SocializeTest<MainActivity> {
 
         onView(withId(R.id.recyclerview_todofragment)).check(matches(not(hasDescendant(withText(postOnlyInLocalDB_.getTitle_())))));
         onView(withId(R.id.recyclerview_todofragment)).check(matches(not(hasDescendant(withText(postOnlyInLocalDB_.getBody_())))));
+    }
+
+    @Test
+    public void canCheckTodoDeletion() {
+        onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
+        onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_todoList));
+
+        onView(withId(R.id.recyclerview_todofragment)).perform(RecyclerViewActions.actionOnItemAtPosition(0, clickChildViewWithId(R.id.checkbox_todolist_layout)));
     }
 }
