@@ -38,7 +38,6 @@ public class TodoListAdapter extends RecyclerView.Adapter<TodoListAdapter.TodoVi
     @NonNull
     @Override
     public TodoListAdapter.TodoViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.todolist_layout, viewGroup, false);
         return new TodoViewHolder(v);
     }
