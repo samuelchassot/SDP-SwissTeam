@@ -1,5 +1,6 @@
 package ch.epfl.swissteam.services;
 
+import android.content.Intent;
 import android.support.test.espresso.contrib.DrawerActions;
 import android.support.test.espresso.contrib.NavigationViewActions;
 import android.support.test.espresso.contrib.RecyclerViewActions;
@@ -11,6 +12,10 @@ import java.util.Date;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.intent.Intents.intended;
+import static android.support.test.espresso.intent.matcher.ComponentNameMatchers.hasClassName;
+import static android.support.test.espresso.intent.matcher.IntentMatchers.hasAction;
+import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static android.support.test.espresso.matcher.ViewMatchers.hasChildCount;
 import static android.support.test.espresso.matcher.ViewMatchers.hasDescendant;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
@@ -54,19 +59,14 @@ public class TodoListFragmentTest extends SocializeTest<MainActivity> {
 
         TodolistDBUtility.addPost(helper, user_.getGoogleId_(), postInBoth_.getKey_());
         TodolistDBUtility.addPost(helper, user_.getGoogleId_(), postOnlyInLocalDB_.getKey_());
-    }
 
-    @Test
-    public void canOpenTodoListFragment(){
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_todoList));
     }
+
 
     @Test
     public void postInLocalDBAndFirebaseDBIsDisplayed(){
-        onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
-        onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_todoList));
-
         onView(withId(R.id.recyclerview_todofragment)).check(matches(hasChildCount(1)));
         onView(withId(R.id.recyclerview_todofragment)).check(matches((hasDescendant(withText(postInBoth_.getTitle_())))));
         onView(withId(R.id.recyclerview_todofragment)).check(matches((hasDescendant(withText(postInBoth_.getBody_())))));
@@ -74,18 +74,19 @@ public class TodoListFragmentTest extends SocializeTest<MainActivity> {
 
     @Test
     public void postNotInFirebaseDBIsNotDisplayed(){
-        onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
-        onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_todoList));
-
         onView(withId(R.id.recyclerview_todofragment)).check(matches(not(hasDescendant(withText(postOnlyInLocalDB_.getTitle_())))));
         onView(withId(R.id.recyclerview_todofragment)).check(matches(not(hasDescendant(withText(postOnlyInLocalDB_.getBody_())))));
     }
 
     @Test
     public void canCheckTodoDeletion() {
-        onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
-        onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_todoList));
-
         onView(withId(R.id.recyclerview_todofragment)).perform(RecyclerViewActions.actionOnItemAtPosition(0, clickChildViewWithId(R.id.checkbox_todolist_layout)));
+    }
+
+    @Test
+    public void clickOnTodoPostArriveAtPostActivity() {
+        onView(withId(R.id.recyclerview_todofragment)).perform(RecyclerViewActions.actionOnItemAtPosition(0, clickChildViewWithId(R.id.textview_todolistadapter_body)));
+        sleep(500);
+        onView(withId(R.id.framelayout_postactivity_header));
     }
 }
