@@ -1,6 +1,7 @@
 package ch.epfl.swissteam.services;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.hardware.display.DisplayManager;
@@ -18,7 +19,9 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.internal.IGoogleMapDelegate;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.squareup.picasso.Picasso;
@@ -143,6 +146,7 @@ public class PostsMapActivity extends NavigationDrawer implements OnMapReadyCall
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        super.onMapReady(googleMap);
         googleMap_ = googleMap;
         googleMap_.setMinZoomPreference(12);
         double zoomLevel = calculateZoomLevel();
@@ -150,6 +154,7 @@ public class PostsMapActivity extends NavigationDrawer implements OnMapReadyCall
         googleMap_.setMinZoomPreference(6);
         googleMap_.setMaxZoomPreference(20);
         googleMap_.setInfoWindowAdapter(infoWindow_);
+
         googleMap_.setOnMarkerClickListener(marker -> {
             marker.showInfoWindow();
             return false;
@@ -160,6 +165,8 @@ public class PostsMapActivity extends NavigationDrawer implements OnMapReadyCall
             intent.putExtra(PostAdapter.POST_TAG, post);
             startActivity(intent);
         });
+
+
         updateMapView();
     }
 
@@ -242,12 +249,12 @@ public class PostsMapActivity extends NavigationDrawer implements OnMapReadyCall
         }
 
         @Override
-        public View getInfoWindow(Marker marker) {
+        public View getInfoContents(Marker marker) {
             return null;
         }
 
         @Override
-        public View getInfoContents(Marker marker) {
+        public View getInfoWindow(Marker marker) {
             Post post = (Post)marker.getTag();
             ((TextView)mContents_.findViewById(R.id.textview_mapinfo_post)).setText(post.getTitle_());
             if(users.containsKey(post.getGoogleId_())) {

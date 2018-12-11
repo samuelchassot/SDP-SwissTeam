@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -49,6 +50,8 @@ public class MyPostAdapter extends RecyclerView.Adapter<MyPostAdapter.PostViewHo
         holder.titleView_.setText(posts_.get(holder.getAdapterPosition()).getTitle_());
         holder.bodyView_.setText(posts_.get(holder.getAdapterPosition()).getBody_());
 
+        holder.frameLayout_.setOnClickListener(v -> ((SwipeRevealLayout) v.getParent()).open(true));
+
         holder.editButton_.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -80,6 +83,7 @@ public class MyPostAdapter extends RecyclerView.Adapter<MyPostAdapter.PostViewHo
      * ViewHolder for Posts, with hidden buttons
      */
     static class PostViewHolder extends RecyclerView.ViewHolder {
+        protected FrameLayout frameLayout_;
         protected TextView titleView_;
         protected TextView bodyView_;
         protected ImageButton editButton_;
@@ -92,6 +96,7 @@ public class MyPostAdapter extends RecyclerView.Adapter<MyPostAdapter.PostViewHo
          */
         protected PostViewHolder(View v) {
             super(v);
+            frameLayout_ = v.findViewById(R.id.framelayout_mypostadapter);
             titleView_ = v.findViewById(R.id.textview_mypostadapter_title);
             bodyView_ = v.findViewById(R.id.textview_mypostadapter_body);
             editButton_ = v.findViewById(R.id.button_mypostadapter_edit);

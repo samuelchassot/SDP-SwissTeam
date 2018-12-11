@@ -1,5 +1,6 @@
 package ch.epfl.swissteam.services;
 
+import android.content.res.Resources;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -23,6 +24,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -181,6 +183,10 @@ public class SettingsFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public void onMapReady(GoogleMap googleMap) {
         googleMap_ = googleMap;
+        int dark = SettingsDBUtility.retrieveDarkMode(dbHelper_, id_);
+        if (dark == 1){
+            googleMap_.setMapStyle(MapStyleOptions.loadRawResourceStyle(getActivity(), R.raw.map_night));
+        }
         googleMap_.setMinZoomPreference(12);
         updateMapView();
     }

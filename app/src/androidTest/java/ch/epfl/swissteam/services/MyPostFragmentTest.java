@@ -76,6 +76,15 @@ public class MyPostFragmentTest extends SocializeTest<MainActivity>{
     }
 
     @Test
+    public void canSwipeLeftByClicking(){
+        onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
+        onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_myposts));
+        sleep(200);
+        onView(withId(R.id.recyclerview_mypostsfragment)).perform(RecyclerViewActions.actionOnItemAtPosition(0,click()));
+
+    }
+
+    @Test
     public void canDelete(){
 
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());

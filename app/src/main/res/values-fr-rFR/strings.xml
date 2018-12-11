@@ -26,7 +26,7 @@
     /* ----- Toolbar string ----- */
 
     <string name="toolbar_my_posts">Mes posts</string>
-    <string name="toolbar_home">Accueil</string>
+    <string name="toolbar_nearby">À proximité</string>
     <string name="toolbar_chats">Chats</string>
     <string name="toolbar_settings">Paramètres</string>
     <string name="toolbar_services">Services</string>
@@ -47,7 +47,7 @@
     <string name="navigation_header_subtitle">inconnu@gmail.com</string>
     <string name="navigation_header_desc">Navigation header</string>
 
-    <string name="navigation_drawer_button_home">Accueil</string>
+    <string name="navigation_drawer_button_nearby">À proximité</string>
     <string name="navigation_drawer_button_profile">Profil</string>
     <string name="navigation_drawer_button_services">Services</string>
     <string name="navigation_drawer_newpost">Nouveau post</string>

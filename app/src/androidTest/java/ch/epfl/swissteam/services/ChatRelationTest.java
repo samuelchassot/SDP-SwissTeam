@@ -19,7 +19,8 @@ public class ChatRelationTest {
             null, "www.com",0,0,0,null,null);
     User user3 = new User(userId3, name3, email3, "bla", null,
             null, "www.com",0,0,0,null,null);
-
+    User nullUser = new User(null,null,null,null,null,null,
+            null,null,0,0.0,0.0,null,null,false);
     String CRId = "abu723ddl92ndk";
 
     //object Creation
@@ -69,6 +70,18 @@ public class ChatRelationTest {
     public void setUsersYieldExceptionOnNullValuesForSecondUser() {
         ChatRelation relation = new ChatRelation();
         relation.assignUsers(user1, null);
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void assignUserWithNullIdForFirstUserThrows() {
+        ChatRelation relation = new ChatRelation();
+        relation.assignUsers(nullUser, user2);
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void assignUserWithNullIdForSecondUserThrows() {
+        ChatRelation relation = new ChatRelation();
+        relation.assignUsers(user1, nullUser);
     }
 
     //setFirstUserId

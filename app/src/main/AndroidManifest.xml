@@ -50,6 +50,7 @@
 
         <activity android:name=".DeleteAccountActivity" />
         <activity android:name=".PostsMapActivity"></activity>
+        <activity android:name=".NavigationDrawer" />
     </application>
 
 </manifest>

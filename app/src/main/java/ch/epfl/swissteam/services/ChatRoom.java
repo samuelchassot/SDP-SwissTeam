@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.Query;
 
 import static ch.epfl.swissteam.services.DBUtility.get;
 
@@ -60,7 +61,7 @@ public class ChatRoom extends NavigationDrawer {
 
     @Override
     public void onBackPressed() {
-        if (isDrawerOpened()) {
+        if (isDrawerOpen()) {
             super.onBackPressed();
         } else {
             Intent intent = new Intent(this, MainActivity.class);
@@ -107,40 +108,9 @@ public class ChatRoom extends NavigationDrawer {
         chatRoom.setHasFixedSize(true);
         chatRoom.setLayoutManager(llm);
 
-        adapter_ = new FirebaseRecyclerAdapter<ChatMessage, MessageHolder>
-                (ChatMessage.class, R.layout.chat_message_layout, MessageHolder.class, dataBase_.child(DBUtility.CHATS).child(currentRelationId_))
-        {
-            @Override
-            protected void populateViewHolder(MessageHolder viewHolder, ChatMessage message, int position){
-                if(message.getUserId_().equals(GoogleSignInSingleton.get().getClientUniqueID())){
-                    ViewGroup.LayoutParams rightParams = viewHolder.rightSpace_.getLayoutParams();
-                    rightParams.width = (int)getResources().getDimension(R.dimen.message_shortspace);
-                    viewHolder.rightSpace_.setLayoutParams(rightParams);
-                    ViewGroup.LayoutParams leftParams = viewHolder.leftSpace_.getLayoutParams();
-                    leftParams.width = (int)getResources().getDimension(R.dimen.message_longspace);
-                    viewHolder.leftSpace_.setLayoutParams(leftParams);
-                }
-                else{
-                    ViewGroup.LayoutParams rightParams = viewHolder.rightSpace_.getLayoutParams();
-                    rightParams.width = (int)getResources().getDimension(R.dimen.message_longspace);
-                    viewHolder.rightSpace_.setLayoutParams(rightParams);
-                    ViewGroup.LayoutParams leftParams = viewHolder.leftSpace_.getLayoutParams();
-                    leftParams.width = (int)getResources().getDimension(R.dimen.message_shortspace);
-                    viewHolder.leftSpace_.setLayoutParams(leftParams);
-                }
-                viewHolder.messageText_.setText(message.getText_());
-                viewHolder.timeUserText_.setText(DateFormat.format("dd-MM-yyyy (HH:mm)", message.getTime_()) +
-                        " " + message.getUser_());
-                viewHolder.parentLayout_.setOnLongClickListener(new View.OnLongClickListener(){
-                    private String ref_ = getRef(position).getKey();
-                    @Override
-                    public boolean onLongClick(View view) {
-                        askToDeleteMessage(message, ref_);
-                        return true;
-                    }
-                });
-            }
-        };
+        adapter_ = new ChatRoomAdapter(ChatMessage.class, R.layout.chat_message_layout,
+                MessageHolder.class, dataBase_.child(DBUtility.CHATS).child(currentRelationId_));
+
         adapter_.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
             @Override
             public void onItemRangeInserted(int positionStart, int itemCount) {
@@ -222,6 +192,42 @@ public class ChatRoom extends NavigationDrawer {
         Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
     }
 
+    /**
+     *
+     */
+    private class ChatRoomAdapter extends FirebaseRecyclerAdapter<ChatMessage, MessageHolder>
+    {
+        private ChatRoomAdapter(Class<ChatMessage> modelClass, int modelLayout, Class<MessageHolder> viewHolderClass, Query ref) {
+            super(modelClass, modelLayout, viewHolderClass, ref);
+        }
+
+        @Override
+        protected void populateViewHolder(MessageHolder viewHolder, ChatMessage message, int position){
+            ViewGroup.LayoutParams rightParams = viewHolder.rightSpace_.getLayoutParams();
+            ViewGroup.LayoutParams leftParams = viewHolder.leftSpace_.getLayoutParams();
+            if(message.getUserId_().equals(GoogleSignInSingleton.get().getClientUniqueID())){
+                rightParams.width = (int)getResources().getDimension(R.dimen.message_shortspace);
+                leftParams.width = (int)getResources().getDimension(R.dimen.message_longspace);
+            }
+            else{
+                rightParams.width = (int)getResources().getDimension(R.dimen.message_longspace);
+                leftParams.width = (int)getResources().getDimension(R.dimen.message_shortspace);
+            }
+            viewHolder.rightSpace_.setLayoutParams(rightParams);
+            viewHolder.leftSpace_.setLayoutParams(leftParams);
+
+            viewHolder.messageText_.setText(message.getText_());
+            viewHolder.timeUserText_.setText(DateFormat.format("dd-MM-yyyy (HH:mm)", message.getTime_()));
+            viewHolder.parentLayout_.setOnLongClickListener(new View.OnLongClickListener(){
+                private String ref_ = getRef(position).getKey();
+                @Override
+                public boolean onLongClick(View view) {
+                    askToDeleteMessage(message, ref_);
+                    return true;
+                }
+            });
+        }
+    }
     /**
      * ViewHolder class to handle the RecyclerView
      */

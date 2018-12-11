@@ -1,22 +1,24 @@
 package ch.epfl.swissteam.services;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.model.MapStyleOptions;
 import com.squareup.picasso.Picasso;
 
 /**
@@ -25,7 +27,7 @@ import com.squareup.picasso.Picasso;
  *
  * @author Julie Giunta
  */
-public class NavigationDrawer extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class NavigationDrawer extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback {
 
     public static final String NAVIGATION_TAG = "NAV_DRAWER_CLICKED";
     public static final String CANCEL = "Cancel";
@@ -60,14 +62,17 @@ public class NavigationDrawer extends AppCompatActivity implements NavigationVie
      */
     protected void onCreateDrawer(String toggleButton) {
         this.toggleButton_ = toggleButton;
-        toolbar_ = (Toolbar) findViewById(R.id.toolbar);
+        toolbar_ = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar_);
+        toolbar_.setOnClickListener(v -> {
+            ActivityManager.hideKeyboard(this);
+        });
 
-        drawer_ = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer_ = findViewById(R.id.drawer_layout);
 
         setUpToggle();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         //if(toggleButton.equals(CANCEL)){
@@ -85,15 +90,21 @@ public class NavigationDrawer extends AppCompatActivity implements NavigationVie
         //}
 
 
-        TextView navHeaderName = (TextView) findViewById(R.id.nav_header_name);
+        TextView navHeaderName = findViewById(R.id.nav_header_name);
     }
 
     /**
      * Set up the action bar
      */
     private void setUpToggle(){
+        Activity thisActivity = this;
         toggle_ = new ActionBarDrawerToggle(
-                this, drawer_, toolbar_, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+                thisActivity, drawer_, toolbar_, R.string.navigation_drawer_open, R.string.navigation_drawer_close){
+            @Override
+            public void onDrawerSlide(View drawerView, float slideOffset){
+                ActivityManager.hideKeyboard(thisActivity);
+            }
+        };
         drawer_.addDrawerListener(toggle_);
         toggle_.syncState();
 
@@ -116,7 +127,7 @@ public class NavigationDrawer extends AppCompatActivity implements NavigationVie
 
     @Override
     public void onBackPressed() {
-        if (isDrawerOpened()) {
+        if (isDrawerOpen()) {
             drawer_.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
@@ -166,6 +177,14 @@ public class NavigationDrawer extends AppCompatActivity implements NavigationVie
         return true;
     }
 
+    @Override
+    public void onMapReady(GoogleMap googleMap){
+        int dark = SettingsDBUtility.retrieveDarkMode(this);
+        if (dark == 1){
+            googleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.map_night));
+        }
+    }
+
     /**
      * Set the user name and email in the nav
      */
@@ -178,8 +197,7 @@ public class NavigationDrawer extends AppCompatActivity implements NavigationVie
 
         });
     }
-
-    protected boolean isDrawerOpened(){
+    protected boolean isDrawerOpen(){
         return drawer_.isDrawerOpen(GravityCompat.START);
     }
 

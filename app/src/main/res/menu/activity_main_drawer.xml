@@ -39,8 +39,8 @@
     -->
     <item
         android:id="@+id/button_maindrawer_home"
-        android:icon="@drawable/ic_maindrawer_home"
-        android:title="@string/navigation_drawer_button_home" />
+        android:icon="@drawable/ic_maindrawer_nearby"
+        android:title="@string/navigation_drawer_button_nearby" />
     <item
         android:id="@+id/button_maindrawer_profile"
         android:icon="@drawable/ic_maindrawer_profile"

@@ -21,6 +21,7 @@ import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 
 
+import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static ch.epfl.swissteam.services.TestUtils.sleep;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.allOf;
@@ -94,8 +95,6 @@ public class ServicesFragmentTest extends SocializeTest<MainActivity>{
         sleep(1000);
         onView(withId(R.id.edittext_services_keywordsinput)).perform(clearText()).perform(typeText("Java"));
         closeSoftKeyboard();
-        sleep(1000);
-        onView(withId(R.id.switch_servicesfragment_sorttype)).perform(scrollTo()).perform(click());
         sleep(1000);
         onView(withId(R.id.button_services_search)).perform(scrollTo()).perform(click());
         sleep(1000);
