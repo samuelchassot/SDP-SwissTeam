@@ -1,14 +1,11 @@
 package ch.epfl.swissteam.services;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -24,7 +21,7 @@ import java.util.HashMap;
  *
  * @Author Samuel Chassot
  */
-public class ProfileSettings extends NavigationDrawer {
+public class ProfileSettings extends NavigationDrawerActivity {
 
     private String imageUrl_; //TODO: Allow user to change picture in his profile.
     private ArrayList<Categories> userCapabilities_ = new ArrayList<>();

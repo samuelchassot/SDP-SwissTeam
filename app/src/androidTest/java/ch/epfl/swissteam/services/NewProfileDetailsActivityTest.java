@@ -1,18 +1,12 @@
 package ch.epfl.swissteam.services;
 
-import android.app.Activity;
-import android.app.Instrumentation;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.Environment;
 import android.os.Parcel;
-import android.support.test.espresso.intent.rule.IntentsTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 
-import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -20,11 +14,9 @@ import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static android.support.test.espresso.action.ViewActions.replaceText;
-import static android.support.test.espresso.action.ViewActions.scrollTo;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.intent.Intents.intended;
-import static android.support.test.espresso.intent.Intents.intending;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasAction;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static android.support.test.espresso.matcher.ViewMatchers.isChecked;
@@ -83,7 +75,7 @@ public class NewProfileDetailsTest extends SocializeTest<NewProfileDetails>{
         onView(withId(R.id.plaintext_newprofiledetails_description)).perform(replaceText(longDescription));
         onView(withId(R.id.plaintext_newprofiledetails_description)).perform(typeText(description), closeSoftKeyboard());
         onView(withId(R.id.button_newprofiledetails_next)).check(matches(isDisplayed())).perform(click());
-        intended(hasComponent(NewProfileCapabilities.class.getName()));
+        intended(hasComponent(NewProfileCapabilitiesActivity.class.getName()));
     }
 
     @Test
@@ -109,7 +101,7 @@ public class NewProfileDetailsTest extends SocializeTest<NewProfileDetails>{
         testRule_.launchActivity(i);
         onView(withId(R.id.plaintext_newprofiledetails_name)).check(matches(withText(username)));
         onView(withId(R.id.button_newprofiledetails_next)).perform(click());
-        intended(hasComponent(NewProfileCapabilities.class.getName()));
+        intended(hasComponent(NewProfileCapabilitiesActivity.class.getName()));
         closeSoftKeyboard();
         sleep(1000);
         onView(withId(R.id.button_newprofilecapabilites_done)).perform(click());

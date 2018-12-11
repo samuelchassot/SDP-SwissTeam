@@ -177,7 +177,7 @@ public class ChatRoom extends NavigationDrawer {
     }
 
     private void hideKeyboard(){
-        ActivityManager.hideKeyboard(this);
+        ActivityUtils.hideKeyboard(this);
     }
 
     private void checkAndSetIfDeletedByPartner(){

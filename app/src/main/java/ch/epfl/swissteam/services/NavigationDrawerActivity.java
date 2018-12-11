@@ -99,7 +99,7 @@ public class NavigationDrawer extends AppCompatActivity implements NavigationVie
                 thisActivity, drawer_, toolbar_, R.string.navigation_drawer_open, R.string.navigation_drawer_close){
             @Override
             public void onDrawerSlide(View drawerView, float slideOffset){
-                ActivityManager.hideKeyboard(thisActivity);
+                ActivityUtils.hideKeyboard(thisActivity);
             }
         };
         drawer_.addDrawerListener(toggle_);

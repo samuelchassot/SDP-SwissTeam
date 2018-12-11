@@ -42,7 +42,7 @@ public class NewProfileCapabilities extends AppCompatActivity {
         RecyclerView recycler = findViewById(R.id.recyclerview_newprofilecapabilities_list);
         recycler.setHasFixedSize(true);
         recycler.setLayoutManager(new LinearLayoutManager(this));
-        recycler.setAdapter(new CategoriesAdapter(Categories.values()));
+        recycler.setAdapter(new CategoriesAdapterNewProfileCapabilities(Categories.values()));
     }
 
     /**

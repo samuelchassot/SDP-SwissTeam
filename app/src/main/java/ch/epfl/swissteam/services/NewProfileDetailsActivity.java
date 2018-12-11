@@ -103,7 +103,7 @@ public class NewProfileDetails extends AppCompatActivity {
      * @param view view
      */
     public void nextScreen(View view) {
-        Intent intent = new Intent(this, NewProfileCapabilities.class);
+        Intent intent = new Intent(this, NewProfileCapabilitiesActivity.class);
         intent.putExtra(GOOGLE_ID_TAG, googleID_);
         intent.putExtra(USERNAME_TAG, username_);
         intent.putExtra(EMAIL_TAG, email_);
