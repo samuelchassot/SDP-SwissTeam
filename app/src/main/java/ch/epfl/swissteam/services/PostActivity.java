@@ -49,7 +49,7 @@ public class PostActivity extends NavigationDrawer implements OnMapReadyCallback
         setContentView(R.layout.activity_post);
         super.onCreateDrawer(BACK);
 
-        //Retrieve the post from the intent which started this activity
+        // Retrieve the post from the intent which started this activity
         Intent callingIntent = getIntent();
         post_ = callingIntent.getParcelableExtra(PostAdapter.POST_TAG);
 
