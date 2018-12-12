@@ -34,7 +34,7 @@ public class NotificationUtils {
         PendingIntent pendingIntent = PendingIntent.getActivity(activity, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(activity, CUSTOM_NOTIFICATION_CHANNEL_ID)
-                .setSmallIcon(R.drawable.ic_google) //TODO: Replace by our app icon
+                .setSmallIcon(R.mipmap.ic_launcher_foreground)
                 .setContentTitle(textTitle)
                 .setContentText(textContent)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)

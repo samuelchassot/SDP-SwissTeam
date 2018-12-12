@@ -39,11 +39,11 @@ public class OnlineChatFragmentTest extends SocializeTest<MainActivity> {
     private static final String oGoogleId = "5678";
     private static final String url = TestUtils.getTestUser().getImageUrl_();
     private static final User mUser = new User(mGoogleId,"Bear", "polar@north.nth","",
-            null, null, url,0,0,0,null,null);
+            null, null,null, url,0,0,0,null,null, false);
     private static final User oUser = new User(oGoogleId, "Raeb", "hairy@north.nth", "",
-            null, null, url,0,0,0,null,null);
+            null, null,null, url,0,0,0,null,null,false);
     private static final User tUser = new User("9101", "Petra", "petra@gmail.com","",
-            null, null, url, 0, 0, 0, null, null);
+            null, null,null, url, 0, 0, 0, null, null,false);
     private static final ChatRelation chatRelation = new ChatRelation(mUser,oUser);
     private static final ChatRelation chatRelation2 = new ChatRelation(mUser,tUser);
     private static final ChatRelation chatRelation3 = new ChatRelation(oUser,tUser);
