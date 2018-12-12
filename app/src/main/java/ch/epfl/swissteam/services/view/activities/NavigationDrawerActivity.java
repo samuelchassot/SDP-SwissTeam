@@ -71,7 +71,7 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
         toolbar_ = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar_);
         toolbar_.setOnClickListener(v -> {
-            ActivityManager.hideKeyboard(this);
+            ActivityUtils.hideKeyboard(this);
         });
 
         drawer_ = findViewById(R.id.drawer_layout);
