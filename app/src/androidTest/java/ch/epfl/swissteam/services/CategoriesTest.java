@@ -14,7 +14,7 @@ import static org.junit.Assert.assertNull;
 public class CategoriesTest {
     private String googleId = "1234";
     private User user1 = new User(googleId,"Jean-Marc Michel", "jmm@google.ch", "",
-            null,null,"",0, 0,0,null,null);
+            null,null,null,"",0, 0,0,null,null, false);
 
 
     @Test

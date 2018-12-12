@@ -70,7 +70,7 @@ public class ProfileSettings extends NavigationDrawer {
         }
 
         User updatedUser = new User(uniqueID, name, email, descr, userCapabilities_, keyWords_, oldUser_.getChatRelations_(),
-                imageUrl_, oldUser_.getRating_(), oldUser_.getLatitude_(), oldUser_.getLongitude_(), oldUser_.getUpvotes_(), oldUser_.getDownvotes_());
+                imageUrl_, oldUser_.getRating_(), oldUser_.getLatitude_(), oldUser_.getLongitude_(), oldUser_.getUpvotes_(), oldUser_.getDownvotes_(), oldUser_.getIsShownLocation_());
 
 
         for (Categories c : categoriesThatHaveBeenRemoved){

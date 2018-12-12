@@ -14,11 +14,11 @@ public class ChatRelationTest {
     String userId1 = "123dfv"; String userId2 = "456dsf"; String userId3 = "789dsf";
     String email1 = "MLK@gmail.com"; String email2 = "RC@gmail.com"; String email3 = "BR@gmail.com";
     User user1 = new User(userId1, name1, email1, "bla", null,
-            null, "www.com",0,0,0,null,null);
+            null,null,  "www.com",0,0,0,null,null, false);
     User user2 = new User(userId2, name2, email2, "bla", null,
-            null, "www.com",0,0,0,null,null);
+            null,null,  "www.com",0,0,0,null,null,false);
     User user3 = new User(userId3, name3, email3, "bla", null,
-            null, "www.com",0,0,0,null,null);
+            null,null,  "www.com",0,0,0,null,null,false);
     User nullUser = new User(null,null,null,null,null,null,
             null,null,0,0.0,0.0,null,null,false);
     String CRId = "abu723ddl92ndk";

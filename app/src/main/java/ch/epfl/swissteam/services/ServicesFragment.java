@@ -18,7 +18,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Switch;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -33,7 +32,6 @@ public class ServicesFragment extends Fragment {
 
     private RecyclerView.Adapter mAdapter_;
     private ArrayList<User> users = new ArrayList<>();
-    private Location currentUserLocation_;
     private ArrayList<String> keywords_;
     private Categories currentCategory_;
     private boolean sortByRating = true;
@@ -158,14 +156,14 @@ public class ServicesFragment extends Fragment {
                         }
                     }
                 }
-                services_problem_text_udpate(view, users.isEmpty());
+                serviceProblemTextUpdate(view, users.isEmpty());
                 sortUserList();
             }));
         } else {
             DBUtility.get().getUsersFromCategory(category, (googleIds) -> {
                 users.clear();
                 mAdapter_.notifyDataSetChanged();
-                services_problem_text_udpate(view, googleIds.isEmpty());
+                serviceProblemTextUpdate(view, googleIds.isEmpty());
                 for (String googleId : googleIds) {
                     DBUtility.get().getUser(googleId, user -> {
                         if (user != null && !users.contains(user) && !user.getGoogleId_().equals(GoogleSignInSingleton.get().getClientUniqueID()) &&
@@ -189,7 +187,7 @@ public class ServicesFragment extends Fragment {
         mAdapter_.notifyDataSetChanged();
     }
 
-    private void services_problem_text_udpate(View view, boolean empty) {
+    private void serviceProblemTextUpdate(View view, boolean empty) {
         if (view != null) {
             if (empty) {
                 view.findViewById(R.id.services_problem_text).setVisibility(View.VISIBLE);
