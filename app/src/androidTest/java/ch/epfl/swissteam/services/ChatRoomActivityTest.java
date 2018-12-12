@@ -2,7 +2,6 @@ package ch.epfl.swissteam.services;
 
 import android.content.Intent;
 import android.support.test.espresso.Espresso;
-
 import android.support.test.espresso.contrib.DrawerActions;
 import android.support.test.espresso.intent.Intents;
 import android.support.test.runner.AndroidJUnit4;
@@ -18,7 +17,6 @@ import static android.support.test.espresso.action.ViewActions.longClick;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
-import static android.support.test.espresso.matcher.RootMatchers.withDecorView;
 import static android.support.test.espresso.matcher.ViewMatchers.hasDescendant;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
@@ -26,7 +24,6 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static ch.epfl.swissteam.services.NewProfileDetails.GOOGLE_ID_TAG;
 import static ch.epfl.swissteam.services.TestUtils.O_USER;
 import static ch.epfl.swissteam.services.TestUtils.sleep;
-import static org.hamcrest.CoreMatchers.not;
 
 /**
  * Tests for ChatRoom
