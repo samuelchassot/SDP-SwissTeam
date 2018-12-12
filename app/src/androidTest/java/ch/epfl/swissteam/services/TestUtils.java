@@ -25,6 +25,7 @@ import ch.epfl.swissteam.services.models.Categories;
 import ch.epfl.swissteam.services.models.Post;
 import ch.epfl.swissteam.services.models.User;
 import ch.epfl.swissteam.services.providers.DBUtility;
+import ch.epfl.swissteam.services.utils.Utils;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
@@ -67,7 +68,7 @@ public class TestUtils {
         Date tomorrow = cal.getTime();
 
         DBUtility.get().setPost(new Post(key, "Hello there", "1234",
-                "General Kenobi", timestamp, 0, 0, Post.dateToString(tomorrow)));
+                "General Kenobi", timestamp, 0, 0, Utils.dateToString(tomorrow)));
 
 
     }
@@ -79,7 +80,7 @@ public class TestUtils {
         cal.add(Calendar.DAY_OF_YEAR, 1);
         Date tomorrow = cal.getTime();
         return new Post(key, "Hello there", "1234",
-                "General Kenobi", timestamp, 0, 0, Post.dateToString(tomorrow));
+                "General Kenobi", timestamp, 0, 0, Utils.dateToString(tomorrow));
     }
 
     protected static void sleep(int ms){

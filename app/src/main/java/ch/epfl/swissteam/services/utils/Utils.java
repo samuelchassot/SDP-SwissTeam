@@ -4,10 +4,47 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.res.Resources;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import ch.epfl.swissteam.services.providers.DBCallBack;
 import ch.epfl.swissteam.services.R;
 
 public class Utils {
+
+    /**
+     * Transform a string into a date. String must have the format "yyyy-MM-dd"
+     * @param dateString
+     * @return a Date object (null if string's format is not the required)
+     */
+    public static Date dateFromString(String dateString){
+        if(dateString == null) {
+            return null;
+        }
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            Date date = formatter.parse(dateString);
+            return date;
+        } catch (ParseException e) {
+            return null;
+        }
+    }
+
+    /**
+     * Transform a Date object into a String with format "yyyy-MM-dd"
+     * @param date the Date object to transform
+     * @return the String in the required format (null if date == null)
+     */
+    public static String dateToString(Date date){
+        if(date == null){
+            return null;
+        }
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        String format = formatter.format(date);
+        return format;
+    }
+
     /**
      * exception to prevent invalid calls
      */

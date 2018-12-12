@@ -31,6 +31,7 @@ import ch.epfl.swissteam.services.providers.DBUtility;
 import ch.epfl.swissteam.services.providers.GoogleSignInSingleton;
 import ch.epfl.swissteam.services.providers.LocationManager;
 import ch.epfl.swissteam.services.utils.ActivityUtils;
+import ch.epfl.swissteam.services.utils.Utils;
 import ch.epfl.swissteam.services.view.activities.MainActivity;
 
 
@@ -216,7 +217,7 @@ public class CreatePostFragment extends Fragment implements View.OnClickListener
             }
 
             DBUtility.get().getUser(googleID, user -> {
-                Post post = new Post(key, title, googleID, body, timestamp, longitude, latitude, Post.dateToString(timeoutDate_));
+                Post post = new Post(key, title, googleID, body, timestamp, longitude, latitude, Utils.dateToString(timeoutDate_));
                 post.addToDB(DBUtility.get().getDb_());
             ((MainActivity) getActivity()).showMyPostsFragment();
             });
