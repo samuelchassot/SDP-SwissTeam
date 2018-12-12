@@ -5,6 +5,9 @@ import android.support.test.runner.AndroidJUnit4;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import ch.epfl.swissteam.services.models.ChatRelation;
+import ch.epfl.swissteam.services.models.User;
+
 import static org.junit.Assert.assertEquals;
 
 @RunWith(AndroidJUnit4.class)

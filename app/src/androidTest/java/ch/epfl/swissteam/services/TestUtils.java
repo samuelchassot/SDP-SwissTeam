@@ -1,6 +1,5 @@
 package ch.epfl.swissteam.services;
 
-import android.content.Context;
 import android.support.test.espresso.UiController;
 import android.support.test.espresso.ViewAction;
 import android.support.test.espresso.contrib.RecyclerViewActions;
@@ -23,10 +22,13 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 
-import static android.support.test.espresso.Espresso.onData;
+import ch.epfl.swissteam.services.models.Categories;
+import ch.epfl.swissteam.services.models.Post;
+import ch.epfl.swissteam.services.models.User;
+import ch.epfl.swissteam.services.providers.DBUtility;
+
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.action.ViewActions.scrollTo;
 import static android.support.test.espresso.matcher.ViewMatchers.hasDescendant;
 import static android.support.test.espresso.matcher.ViewMatchers.withClassName;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;

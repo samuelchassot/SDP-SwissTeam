@@ -10,6 +10,9 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import ch.epfl.swissteam.services.providers.LocationManager;
+import ch.epfl.swissteam.services.view.activities.MainActivity;
+
 
 @RunWith(AndroidJUnit4.class)
 public class MainActivityTest {
