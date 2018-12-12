@@ -16,7 +16,7 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 /**
- * Adapter for Posts in {@link HomeFragment}
+ * Adapter for Posts in {@link NearbyFragment}
  *
  * @author Julie Giunta
  */

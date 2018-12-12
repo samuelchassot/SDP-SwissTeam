@@ -18,7 +18,7 @@ import com.squareup.picasso.Picasso;
  *
  * @author Adrian Baudat
  */
-public class NewProfileDetails extends AppCompatActivity {
+public class NewProfileDetailsActivity extends AppCompatActivity {
 
     public static final String GOOGLE_ID_TAG = "GOOGLE_ID", USERNAME_TAG = "USERNAME",
             EMAIL_TAG = "EMAIL", DESCRIPTION_TAG = "DESCRIPTION", IMAGE_TAG = "IMAGE", SHOW_LOCATION_TAG = "isShownLocation";

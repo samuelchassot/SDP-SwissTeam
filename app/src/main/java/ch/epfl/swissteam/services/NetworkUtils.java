@@ -7,7 +7,7 @@ import android.net.NetworkInfo;
 /**
  * Class containing utilities related to the network.
  */
-public class NetworkUtility {
+public class NetworkUtils {
 
     public static final int CONNECTED = 0;
     public static final int NOT_CONNECTED = 1;

@@ -24,13 +24,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".NewProfileDetails" />
-        <activity android:name=".NewProfileCapabilities" />
+        <activity android:name=".NewProfileDetailsActivity" />
+        <activity android:name=".NewProfileCapabilitiesActivity" />
         <activity
-            android:name=".ChatRoom"
+            android:name=".ChatRoomActivity"
             android:label="@string/title_activity_chat_room" />
-        <activity android:name=".MyPostEdit" />
-        <activity android:name=".ProfileSettings" />
+        <activity android:name=".MyPostEditActivity" />
+        <activity android:name=".ProfileSettingsActivity" />
         <activity android:name=".ProfileActivity" />
         <activity android:name=".PostActivity" />
         <!--
@@ -50,7 +50,7 @@
 
         <activity android:name=".DeleteAccountActivity" />
         <activity android:name=".PostsMapActivity"></activity>
-        <activity android:name=".NavigationDrawer" />
+        <activity android:name=".NavigationDrawerActivity" />
     </application>
 
 </manifest>

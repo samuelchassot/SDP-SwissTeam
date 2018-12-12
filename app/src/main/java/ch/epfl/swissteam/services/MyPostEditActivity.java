@@ -10,7 +10,7 @@ import android.widget.EditText;
  *
  * @author Julie Giunta
  */
-public class MyPostEdit extends NavigationDrawer{
+public class MyPostEditActivity extends NavigationDrawerActivity {
 
     private Post post_;
     private EditText title_, body_;

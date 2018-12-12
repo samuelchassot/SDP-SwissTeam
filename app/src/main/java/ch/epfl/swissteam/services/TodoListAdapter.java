@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -49,8 +48,8 @@ public class TodoListAdapter extends RecyclerView.Adapter<TodoListAdapter.TodoVi
 
         holder.doneCheckBox_.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
-                TodolistDbHelper todolistDbHelper = new TodolistDbHelper(buttonView.getContext());
-                TodolistDBUtility.deletePost(todolistDbHelper, id_,todoPosts_.get(holder.getAdapterPosition()).getKey_());
+                TodoListDbHelper todoListDbHelper = new TodoListDbHelper(buttonView.getContext());
+                TodoListDBUtility.deletePost(todoListDbHelper, id_,todoPosts_.get(holder.getAdapterPosition()).getKey_());
                 todoPosts_.remove(holder.getAdapterPosition());
                 ((RecyclerView) buttonView.getParent().getParent().getParent().getParent().getParent().getParent()).getAdapter().notifyDataSetChanged();
 

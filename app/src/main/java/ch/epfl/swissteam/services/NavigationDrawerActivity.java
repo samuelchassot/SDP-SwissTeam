@@ -27,7 +27,7 @@ import com.squareup.picasso.Picasso;
  *
  * @author Julie Giunta
  */
-public class NavigationDrawer extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback {
+public class NavigationDrawerActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback {
 
     public static final String NAVIGATION_TAG = "NAV_DRAWER_CLICKED";
     public static final String CANCEL = "Cancel";
@@ -53,7 +53,7 @@ public class NavigationDrawer extends AppCompatActivity implements NavigationVie
     }
 
     /**
-     * Create a NavigationDrawer
+     * Create a NavigationDrawerActivity
      * @param toggleButton a string that tells which toggle button you want for
      *                     the menu (MAIN : normal hamburger menu,
      *                     CANCEL : cross image and disables button to draw the menu,

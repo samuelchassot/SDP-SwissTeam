@@ -122,7 +122,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                 else{
                     // Signed in successfully, show authenticated UI
                     GoogleSignInSingleton.putUniqueID(account.getId());
-                    Intent newProfileIntent = new Intent(this, NewProfileDetails.class);
+                    Intent newProfileIntent = new Intent(this, NewProfileDetailsActivity.class);
                     newProfileIntent.putExtra(ACCOUNT_TAG , account);
                     startActivity(newProfileIntent);
                 }

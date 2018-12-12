@@ -20,13 +20,13 @@ public class NetworkStatusReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        int status = NetworkUtility.getConnectivityStatus(context);
+        int status = NetworkUtils.getConnectivityStatus(context);
         int darkmode = SettingsDBUtility.retrieveDarkMode(new SettingsDbHelper(activity_.getApplicationContext()),GoogleSignInSingleton.get().getClientUniqueID());
         if ("android.net.conn.CONNECTIVITY_CHANGE".equals(intent.getAction())) {
             Log.i("NetworkChange", "onReceive triggered");
             int[] attrs = new int[] {R.attr.noNetwork, R.attr.statusBarColor};
             TypedArray ta = activity_.obtainStyledAttributes(attrs);
-            if (status == NetworkUtility.NOT_CONNECTED) {
+            if (status == NetworkUtils.NOT_CONNECTED) {
                 Toast.makeText(context, "No Internet connection!", Toast.LENGTH_SHORT).show();
                 setStatusBarColor(ta.getResourceId(0,0));
             } else {

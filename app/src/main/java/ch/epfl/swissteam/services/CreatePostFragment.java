@@ -209,7 +209,7 @@ public class CreatePostFragment extends Fragment implements View.OnClickListener
                 post.addToDB(DBUtility.get().getDb_());
             ((MainActivity) getActivity()).showMyPostsFragment();
             });
-            ActivityManager.hideKeyboard(this.getActivity());
+            ActivityUtils.hideKeyboard(this.getActivity());
         }
     }
 }

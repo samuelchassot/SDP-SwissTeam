@@ -67,8 +67,8 @@ public class TodoListFragment extends Fragment {
      * Load the posts to do and display them in the recycler view
      */
     private void loadPosts(){
-        TodolistDBUtility.getPosts(
-                new TodolistDbHelper(this.getContext()),
+        TodoListDBUtility.getPosts(
+                new TodoListDbHelper(this.getContext()),
                 GoogleSignInSingleton.get().getClientUniqueID(),
                 p -> {
                     if(!posts_.contains(p)){

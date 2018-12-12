@@ -9,29 +9,29 @@ import android.database.sqlite.SQLiteOpenHelper;
  *
  * @author Julie Giunta
  */
-public class TodolistDbHelper extends SQLiteOpenHelper{
+public class TodoListDbHelper extends SQLiteOpenHelper{
 
     /**
      * Creates a SettingsDbHelper
      * @param context, the context of the creator.
      */
-    public TodolistDbHelper(Context context){
-        super(context, TodolistContract.LOCAL_DB_NAME, null, TodolistContract.DB_VERSION);
+    public TodoListDbHelper(Context context){
+        super(context, TodoListContract.LOCAL_DB_NAME, null, TodoListContract.DB_VERSION);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String createTable = "CREATE TABLE " + TodolistContract.TodolistEntry.TABLE_NAME + " (" +
-                TodolistContract.TodolistEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-                TodolistContract.TodolistEntry.COLUMN_ID + " VARCHAR(30) NOT NULL," +
-                TodolistContract.TodolistEntry.COLUMN_POSTS + " VARCHAR(50) NOT NULL)";
+        String createTable = "CREATE TABLE " + TodoListContract.TodolistEntry.TABLE_NAME + " (" +
+                TodoListContract.TodolistEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                TodoListContract.TodolistEntry.COLUMN_ID + " VARCHAR(30) NOT NULL," +
+                TodoListContract.TodolistEntry.COLUMN_POSTS + " VARCHAR(50) NOT NULL)";
 
         db.execSQL(createTable);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS " + TodolistContract.TodolistEntry.TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + TodoListContract.TodolistEntry.TABLE_NAME);
         onCreate(db);
     }
 }

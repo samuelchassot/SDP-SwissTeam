@@ -14,9 +14,9 @@ import java.util.Map;
 /**
  * An adapter for capabilities
  */
-public class CapabilitiesAdapter extends RecyclerView.Adapter<CapabilitiesAdapter.CapabilitiesViewHolder> {
+public class CategoriesAdapterProfileActivity extends RecyclerView.Adapter<CategoriesAdapterProfileActivity.CategoriesViewHolder> {
 
-    private List<Categories> capabilities_;
+    private List<Categories> categories_;
     private Map<String, List<String>> keyWords_;
 
     /**
@@ -24,34 +24,34 @@ public class CapabilitiesAdapter extends RecyclerView.Adapter<CapabilitiesAdapte
      *
      * @param capabilities a list of capabilities
      */
-    public CapabilitiesAdapter(List<Categories> capabilities, Map<String, List<String>> keyWords) {
+    public CategoriesAdapterProfileActivity(List<Categories> capabilities, Map<String, List<String>> keyWords) {
         if(keyWords==null){
             keyWords_ = new HashMap<>();
         }else{
             keyWords_ = keyWords;
         }
         if(capabilities == null) {
-            capabilities_ = new ArrayList<>();
+            categories_ = new ArrayList<>();
         }else{
-            capabilities_ = capabilities;
+            categories_ = capabilities;
         }
 
     }
 
     @Override
-    public CapabilitiesViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public CategoriesViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = (View) LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.capabilities_display_adapter, parent, false);
 
-        CapabilitiesViewHolder vh = new CapabilitiesViewHolder(v);
+        CategoriesViewHolder vh = new CategoriesViewHolder(v);
         return vh;
     }
 
     @Override
-    public void onBindViewHolder(CapabilitiesViewHolder mViewHolder, int position) {
-        mViewHolder.mCapabilityName_.setText(capabilities_.get(position).toString());
+    public void onBindViewHolder(CategoriesViewHolder mViewHolder, int position) {
+        mViewHolder.mCategoriesName_.setText(categories_.get(position).toString());
         StringBuilder builder = new StringBuilder();
-        for (String kw : keyWords_.get(capabilities_.get(position).toString())){
+        for (String kw : keyWords_.get(categories_.get(position).toString())){
             builder.append("#").append(kw).append(" ");
         }
         mViewHolder.mKeywordsEditText_.setText(builder.toString());
@@ -60,25 +60,25 @@ public class CapabilitiesAdapter extends RecyclerView.Adapter<CapabilitiesAdapte
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return capabilities_ == null ? 0 : capabilities_.size();
+        return categories_ == null ? 0 : categories_.size();
     }
 
     /**
-     * ViewHolder for Capabilities
+     * ViewHolder for CategoriesAdapterProfileActivity
      */
-    public static class CapabilitiesViewHolder extends RecyclerView.ViewHolder {
+    public static class CategoriesViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView mCapabilityName_;
+        public TextView mCategoriesName_;
         public TextView mKeywordsEditText_;
 
         /**
-         * Create a CapabilitiesViewHolder
+         * Create a CategoriesAdapterProfileActivity
          *
          * @param v the current View
          */
-        public CapabilitiesViewHolder(View v) {
+        public CategoriesViewHolder(View v) {
             super(v);
-            mCapabilityName_ = (TextView) v.findViewById(R.id.textview_capabilitiesadapter_capabilityname);
+            mCategoriesName_ = (TextView) v.findViewById(R.id.textview_capabilitiesadapter_capabilityname);
             mKeywordsEditText_ = (TextView) v.findViewById(R.id.textview_capabilitiesadapter_keywords);
 
         }

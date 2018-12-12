@@ -1,8 +1,6 @@
 package ch.epfl.swissteam.services;
 
 import android.app.Activity;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
@@ -27,7 +25,7 @@ public class NotificationUtils {
      */
     public static void sendChatNotification(Activity activity, String textTitle, String textContent, String relationId){
         // Create an explicit intent for an Activity in your app
-        Intent intent = new Intent(activity, ChatRoom.class);
+        Intent intent = new Intent(activity, ChatRoomActivity.class);
         intent.putExtra(ChatRelation.RELATION_ID_TEXT, relationId);
         PendingIntent pendingIntent = PendingIntent.getActivity(activity, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 

@@ -27,7 +27,7 @@ import static ch.epfl.swissteam.services.DBUtility.get;
  *
  * @author Sébastien Gachoud
  */
-public class ChatRoom extends NavigationDrawer {
+public class ChatRoomActivity extends NavigationDrawerActivity {
 
     private FirebaseRecyclerAdapter<ChatMessage, MessageHolder> adapter_;
     private DatabaseReference dataBase_;
@@ -77,7 +77,7 @@ public class ChatRoom extends NavigationDrawer {
                 return;
             }
             mUser_ = mUser;
-            String contactId = getIntent().getExtras().getString(NewProfileDetails.GOOGLE_ID_TAG, null);
+            String contactId = getIntent().getExtras().getString(NewProfileDetailsActivity.GOOGLE_ID_TAG, null);
 
             if(currentRelationId_ == null){
                 ChatRelation cR = mUser_.relationExists(contactId);

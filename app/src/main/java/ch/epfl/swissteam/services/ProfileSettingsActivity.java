@@ -21,7 +21,7 @@ import java.util.HashMap;
  *
  * @Author Samuel Chassot
  */
-public class ProfileSettings extends NavigationDrawerActivity {
+public class ProfileSettingsActivity extends NavigationDrawerActivity {
 
     private String imageUrl_; //TODO: Allow user to change picture in his profile.
     private ArrayList<Categories> userCapabilities_ = new ArrayList<>();

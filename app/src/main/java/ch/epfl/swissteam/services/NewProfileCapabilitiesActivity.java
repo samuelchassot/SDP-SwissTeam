@@ -18,7 +18,7 @@ import java.util.HashMap;
  * @author Sébastien Gachoud
  * @author Adrian Baudat
  */
-public class NewProfileCapabilities extends AppCompatActivity {
+public class NewProfileCapabilitiesActivity extends AppCompatActivity {
 
     private ArrayList<Categories> capabilitiesList_ = new ArrayList<>();
     private HashMap<String, ArrayList<String>> keyWords_ = new HashMap<>();
@@ -32,12 +32,12 @@ public class NewProfileCapabilities extends AppCompatActivity {
 
         Intent intent = getIntent();
 
-        googleID_ = intent.getStringExtra(NewProfileDetails.GOOGLE_ID_TAG);
-        username_ = intent.getStringExtra(NewProfileDetails.USERNAME_TAG);
-        email_ = intent.getStringExtra(NewProfileDetails.EMAIL_TAG);
-        description_ = intent.getStringExtra(NewProfileDetails.DESCRIPTION_TAG);
-        imageUrl_ = intent.getStringExtra(NewProfileDetails.IMAGE_TAG);
-        isShownLocation_ = intent.getBooleanExtra(NewProfileDetails.SHOW_LOCATION_TAG, false);
+        googleID_ = intent.getStringExtra(NewProfileDetailsActivity.GOOGLE_ID_TAG);
+        username_ = intent.getStringExtra(NewProfileDetailsActivity.USERNAME_TAG);
+        email_ = intent.getStringExtra(NewProfileDetailsActivity.EMAIL_TAG);
+        description_ = intent.getStringExtra(NewProfileDetailsActivity.DESCRIPTION_TAG);
+        imageUrl_ = intent.getStringExtra(NewProfileDetailsActivity.IMAGE_TAG);
+        isShownLocation_ = intent.getBooleanExtra(NewProfileDetailsActivity.SHOW_LOCATION_TAG, false);
 
         RecyclerView recycler = findViewById(R.id.recyclerview_newprofilecapabilities_list);
         recycler.setHasFixedSize(true);

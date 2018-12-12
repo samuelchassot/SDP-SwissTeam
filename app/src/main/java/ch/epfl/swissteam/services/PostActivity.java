@@ -20,14 +20,14 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import static ch.epfl.swissteam.services.NewProfileDetails.GOOGLE_ID_TAG;
+import static ch.epfl.swissteam.services.NewProfileDetailsActivity.GOOGLE_ID_TAG;
 
 /**
  * Activity which displays a {@link Post} and various informations about it
  *
  * @author Julie Giunta
  */
-public class PostActivity extends NavigationDrawer implements OnMapReadyCallback {
+public class PostActivity extends NavigationDrawerActivity implements OnMapReadyCallback {
 
     private static final String POST_MAPVIEW_BUNDLE_KEY = "PostMapViewBundleKey";
 
@@ -111,7 +111,7 @@ public class PostActivity extends NavigationDrawer implements OnMapReadyCallback
 
         //TODOLIST button
         findViewById(R.id.button_postactivity_todo).setOnClickListener(view -> {
-            TodolistDBUtility.addPost(new TodolistDbHelper(this),GoogleSignInSingleton.get().getClientUniqueID() ,post_.getKey_());
+            TodoListDBUtility.addPost(new TodoListDbHelper(this),GoogleSignInSingleton.get().getClientUniqueID() ,post_.getKey_());
             findViewById(R.id.button_postactivity_todo).setClickable(false);
         });
 

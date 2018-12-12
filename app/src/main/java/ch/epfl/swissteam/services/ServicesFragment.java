@@ -18,7 +18,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Switch;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -144,7 +143,7 @@ public class ServicesFragment extends Fragment {
     }
 
     private void initDataSet(Categories category, ArrayList<String> keywords) {
-        ActivityManager.hideKeyboard(this.getActivity());
+        ActivityUtils.hideKeyboard(this.getActivity());
         View view = getView();
         if (category == Categories.ALL) {
             DBUtility.get().getAllUsers((usersdb -> {

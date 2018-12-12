@@ -8,11 +8,11 @@ import android.provider.BaseColumns;
  *
  * @author Julie Giunta
  */
-public class TodolistContract {
+public class TodoListContract {
     public static final String LOCAL_DB_NAME = "ch.epfl.swissteam.services.todolistlocalDB";
     public static final int DB_VERSION = 1;
 
-    private TodolistContract(){}
+    private TodoListContract(){}
 
     public static class TodolistEntry implements BaseColumns{
         public static final String TABLE_NAME = "entry";

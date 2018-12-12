@@ -1,6 +1,5 @@
 package ch.epfl.swissteam.services;
 
-import android.content.Intent;
 import android.support.test.espresso.contrib.DrawerActions;
 import android.support.test.espresso.contrib.NavigationViewActions;
 import android.support.test.espresso.contrib.RecyclerViewActions;
@@ -54,11 +53,11 @@ public class TodoListFragmentTest extends SocializeTest<MainActivity> {
 
     @Override
     public void initializeView(){
-        TodolistDbHelper helper = new TodolistDbHelper(testRule_.getActivity().getApplicationContext());
-        helper.getWritableDatabase().delete(TodolistContract.TodolistEntry.TABLE_NAME, null, null);
+        TodoListDbHelper helper = new TodoListDbHelper(testRule_.getActivity().getApplicationContext());
+        helper.getWritableDatabase().delete(TodoListContract.TodolistEntry.TABLE_NAME, null, null);
 
-        TodolistDBUtility.addPost(helper, user_.getGoogleId_(), postInBoth_.getKey_());
-        TodolistDBUtility.addPost(helper, user_.getGoogleId_(), postOnlyInLocalDB_.getKey_());
+        TodoListDBUtility.addPost(helper, user_.getGoogleId_(), postInBoth_.getKey_());
+        TodoListDBUtility.addPost(helper, user_.getGoogleId_(), postOnlyInLocalDB_.getKey_());
 
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_todoList));

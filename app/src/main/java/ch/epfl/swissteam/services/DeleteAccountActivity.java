@@ -8,7 +8,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 
-public class DeleteAccountActivity extends NavigationDrawer {
+public class DeleteAccountActivity extends NavigationDrawerActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

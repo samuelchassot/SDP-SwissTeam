@@ -2,19 +2,15 @@ package ch.epfl.swissteam.services;
 
 import android.content.Intent;
 import android.content.res.TypedArray;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -30,7 +26,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static ch.epfl.swissteam.services.NewProfileDetails.GOOGLE_ID_TAG;
+import static ch.epfl.swissteam.services.NewProfileDetailsActivity.GOOGLE_ID_TAG;
 import static ch.epfl.swissteam.services.User.Vote.DOWNVOTE;
 import static ch.epfl.swissteam.services.User.Vote.UPVOTE;
 
@@ -39,7 +35,7 @@ import static ch.epfl.swissteam.services.User.Vote.UPVOTE;
  *
  * @author Ghali Chraïbi
  */
-public class ProfileActivity extends NavigationDrawer implements OnMapReadyCallback {
+public class ProfileActivity extends NavigationDrawerActivity implements OnMapReadyCallback {
 
 
     private static final String MAPVIEW_BUNDLE_KEY = "MapViewBundleKey";
@@ -51,7 +47,7 @@ public class ProfileActivity extends NavigationDrawer implements OnMapReadyCallb
   
     private RecyclerView mRecyclerView_;
     private LinearLayoutManager mLayoutManager_;
-    private CapabilitiesAdapter mAdapter_;
+    private CategoriesAdapterProfileActivity mAdapter_;
     private List<Categories> mCapabilities_ = new ArrayList<Categories>();
     private Map<String, List<String>> mKeyWords_ = new HashMap<>();
 
@@ -77,7 +73,7 @@ public class ProfileActivity extends NavigationDrawer implements OnMapReadyCallb
         }
 
         chatButton.setOnClickListener(v -> {
-            Intent intent = new Intent(this, ChatRoom.class);
+            Intent intent = new Intent(this, ChatRoomActivity.class);
             intent.putExtra(GOOGLE_ID_TAG, clientUID);
             this.startActivity(intent);
         });
@@ -93,7 +89,7 @@ public class ProfileActivity extends NavigationDrawer implements OnMapReadyCallb
             mLayoutManager_ = new LinearLayoutManager(this);
             mRecyclerView_.setLayoutManager(mLayoutManager_);
 
-            mAdapter_ = new CapabilitiesAdapter(mCapabilities_, mKeyWords_);
+            mAdapter_ = new CategoriesAdapterProfileActivity(mCapabilities_, mKeyWords_);
             mRecyclerView_.setAdapter(mAdapter_);
         }
 

@@ -21,20 +21,20 @@ import static android.support.test.espresso.matcher.ViewMatchers.hasDescendant;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
-import static ch.epfl.swissteam.services.NewProfileDetails.GOOGLE_ID_TAG;
+import static ch.epfl.swissteam.services.NewProfileDetailsActivity.GOOGLE_ID_TAG;
 import static ch.epfl.swissteam.services.TestUtils.O_USER;
 import static ch.epfl.swissteam.services.TestUtils.sleep;
 
 /**
- * Tests for ChatRoom
+ * Tests for ChatRoomActivity
  *
  * @author Sébastien Gachoud
  */
 @RunWith(AndroidJUnit4.class)
-public class ChatRoomTest extends SocializeTest<ChatRoom>{
+public class ChatRoomActivityTest extends SocializeTest<ChatRoomActivity>{
 
-    public ChatRoomTest(){
-        setTestRule(ChatRoom.class);
+    public ChatRoomActivityTest(){
+        setTestRule(ChatRoomActivity.class);
     }
 
     @Override

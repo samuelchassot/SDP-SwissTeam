@@ -24,9 +24,9 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static ch.epfl.swissteam.services.TestUtils.sleep;
 
 @RunWith(AndroidJUnit4.class)
-public class HomeFragmentTest extends SocializeTest{
+public class NearbyFragmentTest extends SocializeTest{
 
-    public HomeFragmentTest(){
+    public NearbyFragmentTest(){
         setTestRule(MainActivity.class);
     }
 

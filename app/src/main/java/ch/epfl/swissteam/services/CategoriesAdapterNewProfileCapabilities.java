@@ -16,16 +16,16 @@ import android.widget.TextView;
  *
  * @author Adrian Baudat
  */
-public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.CategoriesViewHolder> {
+public class CategoriesAdapterNewProfileCapabilities extends RecyclerView.Adapter<CategoriesAdapterNewProfileCapabilities.CategoriesViewHolder> {
 
     private Categories[] capabilities_;
 
     /**
-     * Creates a new CategoriesAdapter from an array of Categories.
+     * Creates a new CategoriesAdapterNewProfileCapabilities from an array of Categories.
      *
      * @param capabilities Array of categories to create from
      */
-    public CategoriesAdapter(Categories[] capabilities) {
+    public CategoriesAdapterNewProfileCapabilities(Categories[] capabilities) {
         this.capabilities_ = capabilities;
     }
 
@@ -63,7 +63,7 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Ca
 
             @Override
             public void afterTextChanged(Editable s) {
-                ((NewProfileCapabilities) edittext.getContext()).addKeyWords(capability, s.toString());
+                ((NewProfileCapabilitiesActivity) edittext.getContext()).addKeyWords(capability, s.toString());
                 if (!holder.checkBox_.isChecked()){
                     holder.checkBox_.setChecked(true);
                 }
@@ -73,7 +73,7 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Ca
 
     private void addAddListener(CheckBox view, Categories capability, CategoriesViewHolder holder) {
         view.setOnCheckedChangeListener((v, isChecked) -> {
-            ((NewProfileCapabilities) v.getContext()).addCapability(capability);
+            ((NewProfileCapabilitiesActivity) v.getContext()).addCapability(capability);
             if(!isChecked) {
                 holder.keywordsInput_.setText("");
                 view.setChecked(false);
@@ -84,8 +84,8 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Ca
 
     private void addRemoveListener(CheckBox view, Categories capability, CategoriesViewHolder holder) {
         view.setOnCheckedChangeListener((v, isChecked) -> {
-            ((NewProfileCapabilities) v.getContext()).removeCapability(capability);
-            ((NewProfileCapabilities) v.getContext()).removeKeyWords(capability);
+            ((NewProfileCapabilitiesActivity) v.getContext()).removeCapability(capability);
+            ((NewProfileCapabilitiesActivity) v.getContext()).removeKeyWords(capability);
             if(!isChecked) {
                 holder.keywordsInput_.setText("");
                 view.setChecked(false);
@@ -95,7 +95,7 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Ca
     }
 
     /**
-     * View Holder for the CategoriesAdapter.
+     * View Holder for the CategoriesAdapter
      */
     public static class CategoriesViewHolder extends RecyclerView.ViewHolder {
 

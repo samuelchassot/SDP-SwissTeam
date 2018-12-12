@@ -4,16 +4,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
-
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.LatLng;
-import com.squareup.picasso.Picasso;
 
 /**
  * This class is the MainActivity of the application, this is
@@ -21,7 +11,7 @@ import com.squareup.picasso.Picasso;
  *
  * @author Samuel Chassot
  */
-public class MainActivity extends NavigationDrawer {
+public class MainActivity extends NavigationDrawerActivity {
     private Fragment profileShowerFragment_, homeFragment_,
             servicesFragment_, createPostFragment_, settingsFragment_,
             onlineChatFragment_, myPostsFragment_, todoListFragment_;
@@ -174,7 +164,7 @@ public class MainActivity extends NavigationDrawer {
      */
     public void showHomeFragment() {
         if (this.homeFragment_ == null) {
-            this.homeFragment_ = HomeFragment.newInstance();
+            this.homeFragment_ = NearbyFragment.newInstance();
         }
         this.startTransactionFragment(this.homeFragment_);
     }

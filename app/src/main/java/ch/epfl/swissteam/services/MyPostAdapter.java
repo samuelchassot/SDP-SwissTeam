@@ -4,13 +4,11 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.List;
 
@@ -55,7 +53,7 @@ public class MyPostAdapter extends RecyclerView.Adapter<MyPostAdapter.PostViewHo
         holder.editButton_.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(holder.itemView.getContext(), MyPostEdit.class);
+                Intent intent = new Intent(holder.itemView.getContext(), MyPostEditActivity.class);
                 intent.putExtra(MYPOST_TAG, posts_.get(holder.getAdapterPosition()));
                 holder.itemView.getContext().startActivity(intent);
                 ((RecyclerView) v.getParent().getParent().getParent().getParent()).getAdapter().notifyDataSetChanged();

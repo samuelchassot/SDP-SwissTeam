@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.Map;
 
 /**
- * Adapter for categories used in the {@link RecyclerView} on the ProfileSettings page.
+ * Adapter for categories used in the {@link RecyclerView} on the ProfileSettingsActivity page.
  *
  * @author Samuel Chassot
  */
@@ -26,7 +26,7 @@ public class CategoriesAdapterProfileSettings extends RecyclerView.Adapter<Categ
     private Map<String, ArrayList<String>> keyWords_;
 
     /**
-     * Creates an adapter for categories to be used in ProfileSettings
+     * Creates an adapter for categories to be used in ProfileSettingsActivity
      *
      * @param capabilities the array of categories to be adapted
      * @param userCapabilities a list of capabilities (of the user) to be checked
@@ -53,7 +53,7 @@ public class CategoriesAdapterProfileSettings extends RecyclerView.Adapter<Categ
         categoriesViewHolder.nameView_.setText(capabilities_[i].toString());
         categoriesViewHolder.checkBox_.setChecked(userCapabilities_.contains(capabilities_[i]));
         categoriesViewHolder.checkBox_.setOnCheckedChangeListener((v, isChecked) -> {
-            ((ProfileSettings) v.getContext()).updateUserCapabilities(capabilities_[i], ((CheckBox) v).isChecked());
+            ((ProfileSettingsActivity) v.getContext()).updateUserCapabilities(capabilities_[i], ((CheckBox) v).isChecked());
             if(!isChecked){
                 categoriesViewHolder.keyWords_.setText("");
                 v.setChecked(false);
@@ -93,7 +93,7 @@ public class CategoriesAdapterProfileSettings extends RecyclerView.Adapter<Categ
             @Override
             public void afterTextChanged(Editable s) {
 
-                ((ProfileSettings) edittext.getContext()).addKeyWords(capability, s.toString());
+                ((ProfileSettingsActivity) edittext.getContext()).addKeyWords(capability, s.toString());
                 if (!holder.checkBox_.isChecked()){
                     holder.checkBox_.setChecked(true);
                 }
@@ -107,7 +107,7 @@ public class CategoriesAdapterProfileSettings extends RecyclerView.Adapter<Categ
     }
 
     /**
-     * View Holder for the CategoriesAdapter.
+     * View Holder for the CategoriesAdapterNewProfileCapabilities.
      */
     public static class CategoriesViewHolder extends RecyclerView.ViewHolder {
 

@@ -56,7 +56,7 @@ public class ChatRelationAdapter extends RecyclerView.Adapter<ChatRelationAdapte
         Picasso.get().load(relation.getOthersImageUrl_()).into(holder.contactImage_);
 
         holder.parentLayout_.setOnClickListener((view) -> {
-            Intent intent = new Intent(holder.itemView.getContext(), ChatRoom.class);
+            Intent intent = new Intent(holder.itemView.getContext(), ChatRoomActivity.class);
             intent.putExtra(ChatRelation.RELATION_ID_TEXT, relation.getChatRelation_().getId_());
             holder.itemView.getContext().startActivity(intent);
         });

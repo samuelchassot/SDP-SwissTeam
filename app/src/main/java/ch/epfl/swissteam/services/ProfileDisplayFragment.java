@@ -36,7 +36,7 @@ public class ProfileDisplayFragment extends Fragment {
     private String clientUniqueID_;
     private RecyclerView mRecyclerView_;
     private LinearLayoutManager mLayoutManager_;
-    private CapabilitiesAdapter mAdapter_;
+    private CategoriesAdapterProfileActivity mAdapter_;
     private List<Categories> mCapabilities_ = new ArrayList<Categories>();
     private Map<String, List<String>> mKeyWords_ = new HashMap<>();
 
@@ -72,7 +72,7 @@ public class ProfileDisplayFragment extends Fragment {
 
         Button button = (Button) thisView.findViewById(R.id.button_profiledisplay_modify);
         button.setOnClickListener(new View.OnClickListener() {
-            Intent intent = new Intent(getActivity(), ProfileSettings.class);
+            Intent intent = new Intent(getActivity(), ProfileSettingsActivity.class);
 
             @Override
             public void onClick(View v) {
@@ -95,7 +95,7 @@ public class ProfileDisplayFragment extends Fragment {
                 mLayoutManager_ = new LinearLayoutManager(this.getContext());
                 mRecyclerView_.setLayoutManager(mLayoutManager_);
 
-                mAdapter_ = new CapabilitiesAdapter(mCapabilities_, mKeyWords_);
+                mAdapter_ = new CategoriesAdapterProfileActivity(mCapabilities_, mKeyWords_);
                 mRecyclerView_.setAdapter(mAdapter_);
             }
         }

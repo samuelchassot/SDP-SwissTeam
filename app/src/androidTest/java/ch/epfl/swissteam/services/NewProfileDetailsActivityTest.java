@@ -31,7 +31,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @RunWith(AndroidJUnit4.class)
-public class NewProfileDetailsTest extends SocializeTest<NewProfileDetails>{
+public class NewProfileDetailsActivityTest extends SocializeTest<NewProfileDetailsActivity>{
 
     private static final String username = "Jean-Claude",
             firstName = "Jean",
@@ -51,8 +51,8 @@ public class NewProfileDetailsTest extends SocializeTest<NewProfileDetails>{
             "\n" +
             "Phasellus sit amet commodo orci. Ut id nulla quis metus sodales dapibus. Suspendisse et dui ac risus rhoncus mollis ut vehicula risus. Donec at sem bibendum, molestie mi quis, gravida orci. Quisque eu vehicula purus. Suspendisse aliquam turpis et magna malesuada posuere. Interdum et malesuada fames ac ante ipsum primis in faucibus. Duis accumsan vulputate sem, et tincidunt arcu mollis at. Donec quis libero posuere, mattis justo ac, lacinia nulla. Duis vel diam vel sapien ultrices sollicitudin eu id velit. Quisque interdum leo sed massa venenatis sagittis. Fusce eget consequat tortor. Vivamus in convallis elit, sit amet placerat ex. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. ";
 
-    public NewProfileDetailsTest(){
-        setTestRule(NewProfileDetails.class);
+    public NewProfileDetailsActivityTest(){
+        setTestRule(NewProfileDetailsActivity.class);
     }
 
     @Test

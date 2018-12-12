@@ -16,7 +16,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-import static ch.epfl.swissteam.services.NewProfileDetails.GOOGLE_ID_TAG;
+import static ch.epfl.swissteam.services.NewProfileDetailsActivity.GOOGLE_ID_TAG;
 
 /**
  * An adapter for User

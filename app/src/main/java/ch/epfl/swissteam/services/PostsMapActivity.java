@@ -1,14 +1,11 @@
 package ch.epfl.swissteam.services;
 
 import android.content.Intent;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
-import android.hardware.display.DisplayManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,9 +16,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.internal.IGoogleMapDelegate;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.squareup.picasso.Picasso;
@@ -37,7 +32,7 @@ import java.util.Map;
  *
  * @author Adrian Baudat
  */
-public class PostsMapActivity extends NavigationDrawer implements OnMapReadyCallback {
+public class PostsMapActivity extends NavigationDrawerActivity implements OnMapReadyCallback {
 
     private static final String MAPVIEW_BUNDLE_KEY = "MapViewBundleKeyPosts";
 
@@ -50,7 +45,7 @@ public class PostsMapActivity extends NavigationDrawer implements OnMapReadyCall
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_postsmap);
-        super.onCreateDrawer(NavigationDrawer.MAIN);
+        super.onCreateDrawer(NavigationDrawerActivity.MAIN);
 
         Bundle mapViewBundle = null;
         if (savedInstanceState != null) {

@@ -8,10 +8,10 @@ import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static ch.epfl.swissteam.services.UtilityTest.clickChildViewWithId;
 
-public class NewProfileCapabilitiesTest extends SocializeTest<NewProfileCapabilities>{
+public class NewProfileCapabilitiesActivityTest extends SocializeTest<NewProfileCapabilitiesActivity>{
 
-    public NewProfileCapabilitiesTest(){
-        setTestRule(NewProfileCapabilities.class);
+    public NewProfileCapabilitiesActivityTest(){
+        setTestRule(NewProfileCapabilitiesActivity.class);
     }
 
     @Test

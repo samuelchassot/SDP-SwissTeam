@@ -1,7 +1,6 @@
 package ch.epfl.swissteam.services;
 
 import android.content.Intent;
-import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -15,7 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -26,23 +25,23 @@ import java.util.List;
  *
  * @author Julie Giunta
  */
-public class HomeFragment extends Fragment implements View.OnClickListener {
+public class NearbyFragment extends Fragment implements View.OnClickListener {
 
     private SwipeRefreshLayout swipeRefreshLayout_;
     private RecyclerView.Adapter adapter_;
     private List<Post> posts_ = new ArrayList<>();
 
-    public HomeFragment() {
+    public NearbyFragment() {
         // Required empty public constructor
     }
 
     /**
-     * Creates a new <code>HomeFragment</code>.
+     * Creates a new <code>NearbyFragment</code>.
      *
-     * @return new instance of <code>HomeFragment</code>
+     * @return new instance of <code>NearbyFragment</code>
      */
-    public static HomeFragment newInstance() {
-        return new HomeFragment();
+    public static NearbyFragment newInstance() {
+        return new NearbyFragment();
     }
 
     private String currentUserId_;
