@@ -76,7 +76,7 @@ public abstract class NavigationDrawerActivity extends AppCompatActivity impleme
 
     /**
      * Create a NavigationDrawerActivity
-     * @param toggleButton a string that tells which toggle button you want for
+     * @param toggleButton a ToogleState that tells which toggle button you want for
      *                     the menu (MAIN : normal hamburger menu,
      *                     CANCEL : cross image and disables button to draw the menu,
      *                     BACK : arrow image and disables button tu draw the menu)
