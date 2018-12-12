@@ -17,6 +17,7 @@ import ch.epfl.swissteam.services.models.Post;
 import ch.epfl.swissteam.services.models.User;
 import ch.epfl.swissteam.services.providers.DBUtility;
 import ch.epfl.swissteam.services.providers.GoogleSignInSingleton;
+import ch.epfl.swissteam.services.utils.Utils;
 import ch.epfl.swissteam.services.view.activities.MainActivity;
 
 import static android.support.test.espresso.Espresso.closeSoftKeyboard;
@@ -75,7 +76,7 @@ public class DeleteAccountTest extends SocializeTest<MainActivity> {
         User testUser = TestUtils.getTestUser();
         Date today = Calendar.getInstance().getTime();
         Post post = new Post("1234_1539704399119", "Title", testUser.getGoogleId_(), "Body",
-                1539704399119L,  10, 20, Post.dateToString(today));
+                1539704399119L,  10, 20, Utils.dateToString(today));
         DBUtility.get().setPost(post);
         sleep(1000);
 

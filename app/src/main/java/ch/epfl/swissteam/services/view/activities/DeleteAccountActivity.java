@@ -12,7 +12,12 @@ import ch.epfl.swissteam.services.providers.DBUtility;
 import ch.epfl.swissteam.services.providers.GoogleSignInSingleton;
 import ch.epfl.swissteam.services.utils.Utils;
 
-
+/**
+ * Activity shown when the user want to delete his/her account. Shows some warning and ask
+ * for confirmation. User needs to enter the word "CONTINUE" to be able to delete.
+ *
+ * @author Samuel Chassot
+ */
 public class DeleteAccountActivity extends NavigationDrawerActivity {
 
     @Override

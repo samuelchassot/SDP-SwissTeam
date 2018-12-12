@@ -16,6 +16,7 @@ import ch.epfl.swissteam.services.providers.GoogleSignInSingleton;
 import ch.epfl.swissteam.services.providers.TodoListDBUtility;
 import ch.epfl.swissteam.services.utils.TodoListContract;
 import ch.epfl.swissteam.services.utils.TodoListDbHelper;
+import ch.epfl.swissteam.services.utils.Utils;
 import ch.epfl.swissteam.services.view.activities.MainActivity;
 
 import static android.support.test.espresso.Espresso.onView;
@@ -52,7 +53,7 @@ public class TodoListFragmentTest extends SocializeTest<MainActivity> {
         cal.add(Calendar.DAY_OF_YEAR, 1);
         Date tomorrow = cal.getTime();
         postOnlyInLocalDB_ = new Post(key, "I'm not in Firebase", "5678",
-                "But I'm in local DB", timestamp, 0, 0, Post.dateToString(tomorrow));
+                "But I'm in local DB", timestamp, 0, 0, Utils.dateToString(tomorrow));
 
         GoogleSignInSingleton.putUniqueID(user_.getGoogleId_());
         postInBoth_.addToDB(DBUtility.get().getDb_());

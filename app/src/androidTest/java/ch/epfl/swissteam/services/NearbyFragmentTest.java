@@ -14,6 +14,7 @@ import java.util.Date;
 import ch.epfl.swissteam.services.models.Post;
 import ch.epfl.swissteam.services.models.User;
 import ch.epfl.swissteam.services.providers.DBUtility;
+import ch.epfl.swissteam.services.utils.Utils;
 import ch.epfl.swissteam.services.view.activities.MainActivity;
 
 import static android.support.test.espresso.Espresso.onView;
@@ -44,7 +45,7 @@ public class NearbyFragmentTest extends SocializeTest{
         long timestamp = (new Date()).getTime();
         String key = "1234" + "_" + timestamp;
         outDatedPost = new Post(key, "Hello there", "1234",
-                "General Kenobi", timestamp, 0, 0, Post.dateToString(cal.getTime()));
+                "General Kenobi", timestamp, 0, 0, Utils.dateToString(cal.getTime()));
         outDatedPost.addToDB(DBUtility.get().getDb_());
         post.addToDB(DBUtility.get().getDb_());
         user.addToDB(DBUtility.get().getDb_());

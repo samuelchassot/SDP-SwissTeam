@@ -29,7 +29,6 @@ import ch.epfl.swissteam.services.view.builders.ChatRelationAdapter;
  */
 public class OnlineChatFragment extends Fragment {
 
-    private ProfileDisplayFragment.OnFragmentInteractionListener mListener;
     private ChatRelationAdapter adapter_;
     private View fragmentView_;
 
