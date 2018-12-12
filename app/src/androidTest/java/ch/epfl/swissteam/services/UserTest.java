@@ -10,6 +10,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
+import ch.epfl.swissteam.services.models.Categories;
+import ch.epfl.swissteam.services.models.ChatRelation;
+import ch.epfl.swissteam.services.models.User;
+
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;

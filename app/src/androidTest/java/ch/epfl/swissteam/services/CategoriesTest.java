@@ -7,6 +7,9 @@ import org.junit.runner.RunWith;
 
 import java.util.Collections;
 
+import ch.epfl.swissteam.services.models.Categories;
+import ch.epfl.swissteam.services.models.User;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 

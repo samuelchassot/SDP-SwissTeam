@@ -1,6 +1,5 @@
 package ch.epfl.swissteam.services;
 
-import android.content.Intent;
 import android.support.test.espresso.contrib.DrawerActions;
 import android.support.test.espresso.contrib.NavigationViewActions;
 import android.support.test.espresso.contrib.RecyclerViewActions;
@@ -9,6 +8,15 @@ import org.junit.Test;
 
 import java.util.Calendar;
 import java.util.Date;
+
+import ch.epfl.swissteam.services.models.Post;
+import ch.epfl.swissteam.services.models.User;
+import ch.epfl.swissteam.services.providers.DBUtility;
+import ch.epfl.swissteam.services.providers.GoogleSignInSingleton;
+import ch.epfl.swissteam.services.providers.TodoListDBUtility;
+import ch.epfl.swissteam.services.utils.TodoListContract;
+import ch.epfl.swissteam.services.utils.TodoListDbHelper;
+import ch.epfl.swissteam.services.view.activities.MainActivity;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
@@ -21,7 +29,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.hasDescendant;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static ch.epfl.swissteam.services.TestUtils.sleep;
-import static ch.epfl.swissteam.services.UtilityTest.clickChildViewWithId;
+import static ch.epfl.swissteam.services.UtilsTest.clickChildViewWithId;
 import static org.hamcrest.Matchers.not;
 
 public class TodoListFragmentTest extends SocializeTest<MainActivity> {
@@ -54,11 +62,11 @@ public class TodoListFragmentTest extends SocializeTest<MainActivity> {
 
     @Override
     public void initializeView(){
-        TodolistDbHelper helper = new TodolistDbHelper(testRule_.getActivity().getApplicationContext());
-        helper.getWritableDatabase().delete(TodolistContract.TodolistEntry.TABLE_NAME, null, null);
+        TodoListDbHelper helper = new TodoListDbHelper(testRule_.getActivity().getApplicationContext());
+        helper.getWritableDatabase().delete(TodoListContract.TodolistEntry.TABLE_NAME, null, null);
 
-        TodolistDBUtility.addPost(helper, user_.getGoogleId_(), postInBoth_.getKey_());
-        TodolistDBUtility.addPost(helper, user_.getGoogleId_(), postOnlyInLocalDB_.getKey_());
+        TodoListDBUtility.addPost(helper, user_.getGoogleId_(), postInBoth_.getKey_());
+        TodoListDBUtility.addPost(helper, user_.getGoogleId_(), postOnlyInLocalDB_.getKey_());
 
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_todoList));
