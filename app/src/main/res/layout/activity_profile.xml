@@ -9,14 +9,15 @@
     android:fitsSystemWindows="true"
     tools:openDrawer="">
 
-    <ScrollView
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/scrollview_profileactivity_mainscrollview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
@@ -63,7 +64,7 @@
 
                 <TextView
                     android:id="@+id/textView_profile_description"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
@@ -116,34 +117,32 @@
                     app:layout_constraintStart_toEndOf="@+id/imageview_usersearchlayout_star3"
                     app:layout_constraintTop_toBottomOf="@+id/textView_profile_email" />
 
+                <Button
+                    android:id="@+id/button_profile_upvote"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="148dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/thumbs_up"
+                    app:layout_constraintEnd_toStartOf="@+id/button_profile_downvote"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:layout_conversion_absoluteHeight="48dp"
+                    tools:layout_conversion_absoluteWidth="48dp" />
+
+                <Button
+                    android:id="@+id/button_profile_downvote"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="148dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@drawable/thumbs_down"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:layout_conversion_absoluteHeight="48dp"
+                    tools:layout_conversion_absoluteWidth="48dp" />
+
 
             </android.support.constraint.ConstraintLayout>
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recyclerview_profileactivity_capabilities"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="32dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="8dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView_profile_description"
-                app:layout_constraintVertical_bias="1.0">
-
-            </android.support.v7.widget.RecyclerView>
-          
-            <com.google.android.gms.maps.MapView
-                android:id="@+id/mapview_profileactivity"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:visibility="invisible"
-                app:layout_constraintEnd_toEndOf="@+id/recyclerview_profileactivity_capabilities"
-                app:layout_constraintTop_toBottomOf="@+id/recyclerview_profileactivity_capabilities"/>
 
             <android.support.constraint.ConstraintLayout
                 android:id="@+id/constraintLayout2"
@@ -161,33 +160,6 @@
                 app:layout_constraintVertical_bias="1.0">
 
                 <Button
-                    android:id="@+id/button_profile_upvote"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:layout_marginStart="36dp"
-                    android:layout_marginTop="8dp"
-                    android:background="@drawable/thumbs_up"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.0"
-                    tools:layout_conversion_absoluteHeight="48dp"
-                    tools:layout_conversion_absoluteWidth="48dp" />
-
-                <Button
-                    android:id="@+id/button_profile_downvote"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:layout_marginStart="8dp"
-                    android:background="@drawable/thumbs_down"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/button_profile_toChat"
-                    app:layout_constraintHorizontal_bias="0.077"
-                    app:layout_constraintStart_toEndOf="@+id/button_profile_upvote"                    app:layout_constraintVertical_bias="0.933"
-                    tools:layout_conversion_absoluteHeight="48dp"
-                    tools:layout_conversion_absoluteWidth="48dp" />
-
-                <Button
                     android:id="@+id/button_profile_toChat"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -202,8 +174,37 @@
                     tools:layout_conversion_absoluteWidth="88dp" />
             </android.support.constraint.ConstraintLayout>
 
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="15dp" />
+
+            <com.google.android.gms.maps.MapView
+                android:id="@+id/mapview_profileactivity"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:visibility="invisible"
+                app:layout_constraintEnd_toEndOf="@+id/recyclerview_profileactivity_capabilities"
+                app:layout_constraintTop_toBottomOf="@+id/recyclerview_profileactivity_capabilities" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerview_profileactivity_capabilities"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView_profile_description"
+                app:layout_constraintVertical_bias="1.0">
+
+            </android.support.v7.widget.RecyclerView>
+
         </LinearLayout>
-    </ScrollView>
+    </android.support.v4.widget.NestedScrollView>
 
     <include
         layout="@layout/app_bar_main"

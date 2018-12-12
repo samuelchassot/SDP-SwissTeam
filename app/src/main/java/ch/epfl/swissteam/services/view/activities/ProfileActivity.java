@@ -111,6 +111,9 @@ public class ProfileActivity extends NavigationDrawerActivity implements OnMapRe
         mapView_ = findViewById(R.id.mapview_profileactivity);
         mapView_.onCreate(mapViewBundle);
         mapView_.getMapAsync(this);
+
+        findViewById(R.id.scrollview_profileactivity_mainscrollview).scrollTo(0,0);
+
     }
 
     private void voteStoreAndRefresh(User.Vote vote, String clientUID){
@@ -209,18 +212,22 @@ public class ProfileActivity extends NavigationDrawerActivity implements OnMapRe
         LatLng userLatLng = new LatLng(user_.getLatitude_(), user_.getLongitude_());
         marker_ = googleMap_.addMarker(new MarkerOptions().position(userLatLng).title(user_.getName_()));
         googleMap_.moveCamera(CameraUpdateFactory.newLatLng(userLatLng));
+        
+        findViewById(R.id.scrollview_profileactivity_mainscrollview).scrollTo(0,0);
     }
 
     @Override
     public void onStart() {
         super.onStart();
         mapView_.onStart();
+        findViewById(R.id.scrollview_profileactivity_mainscrollview).scrollTo(0,0);
     }
 
     @Override
     public void onResume() {
         super.onResume();
         mapView_.onResume();
+        findViewById(R.id.scrollview_profileactivity_mainscrollview).scrollTo(0,0);
     }
 
     @Override
