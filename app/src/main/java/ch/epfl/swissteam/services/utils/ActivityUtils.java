@@ -7,7 +7,10 @@ import android.view.inputmethod.InputMethodManager;
 /**
  * This class contains static method that are useful when working with activities
  */
-public class ActivityUtils {
+public final class ActivityUtils {
+
+    private ActivityUtils(){
+    }
 
     public static void hideKeyboard(Activity activity) {
         InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
@@ -15,6 +18,11 @@ public class ActivityUtils {
         if (v == null) {
             v = new View(activity);
         }
-        imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+
+        try {
+            imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+        } catch (Exception e) {
+            //do nothing, just ensure app does not crash
+        }
     }
 }

@@ -51,7 +51,7 @@ public class ChatRoomActivity extends NavigationDrawerActivity {
 
 
         setContentView(R.layout.activity_chat_room);
-        super.onCreateDrawer(BACK);
+        super.onCreateDrawer(ToogleState.BACK);
         dataBase_ = DBUtility.get().getDb_();
 
         setCurrentRelationId_(getIntent().getExtras().getString(ChatRelation.RELATION_ID_TEXT, null));
@@ -74,7 +74,7 @@ public class ChatRoomActivity extends NavigationDrawerActivity {
             super.onBackPressed();
         } else {
             Intent intent = new Intent(this, MainActivity.class);
-            intent.putExtra(NAVIGATION_TAG, R.id.button_maindrawer_chats);
+            intent.putExtra(ToogleState.NAVIGATION_TAG.toString(), R.id.button_maindrawer_chats);
             startActivity(intent);
         }
     }

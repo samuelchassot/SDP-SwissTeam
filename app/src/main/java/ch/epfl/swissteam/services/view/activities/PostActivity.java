@@ -57,7 +57,7 @@ public class PostActivity extends NavigationDrawerActivity implements OnMapReady
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_post);
-        super.onCreateDrawer(BACK);
+        super.onCreateDrawer(ToogleState.BACK);
 
         // Retrieve the post from the intent which started this activity
         Intent callingIntent = getIntent();

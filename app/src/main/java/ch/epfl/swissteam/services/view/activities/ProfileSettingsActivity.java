@@ -26,7 +26,7 @@ import ch.epfl.swissteam.services.providers.GoogleSignInSingleton;
  * Activity to modify the profile in the database
  * It shows the user infos and they can be edited
  *
- * @Author Samuel Chassot
+ * @author Samuel Chassot
  */
 public class ProfileSettingsActivity extends NavigationDrawerActivity {
 
@@ -41,7 +41,7 @@ public class ProfileSettingsActivity extends NavigationDrawerActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_profile_settings);
-        super.onCreateDrawer(CANCEL);
+        super.onCreateDrawer(ToogleState.CANCEL);
 
         String uniqueID = GoogleSignInSingleton.get().getClientUniqueID();
         loadAndShowUser(uniqueID);
@@ -67,8 +67,8 @@ public class ProfileSettingsActivity extends NavigationDrawerActivity {
 
         ArrayList<Categories> categoriesThatHaveBeenRemoved = oldUser_.getCategories_();
         categoriesThatHaveBeenRemoved.removeAll(userCapabilities_);
-        for(String cat : keyWords_.keySet()){
-            if(!userCapabilities_.contains(Categories.fromString(cat))){
+        for (String cat : keyWords_.keySet()) {
+            if (!userCapabilities_.contains(Categories.fromString(cat))) {
                 keyWords_.remove(cat);
             }
         }
@@ -77,8 +77,8 @@ public class ProfileSettingsActivity extends NavigationDrawerActivity {
                 imageUrl_, oldUser_.getRating_(), oldUser_.getLatitude_(), oldUser_.getLongitude_(), oldUser_.getUpvotes_(), oldUser_.getDownvotes_(), oldUser_.getIsShownLocation_());
 
 
-        for (Categories c : categoriesThatHaveBeenRemoved){
-            DBUtility.get().getCategory(c, (cat)->{
+        for (Categories c : categoriesThatHaveBeenRemoved) {
+            DBUtility.get().getCategory(c, (cat) -> {
                 cat.removeUser(uniqueID);
                 cat.addToDB(DBUtility.get().getDb_());
             });
@@ -92,56 +92,53 @@ public class ProfileSettingsActivity extends NavigationDrawerActivity {
     /**
      * Updates the status of a capability for a user.
      *
-     * @param cat capability to update
+     * @param cat     capability to update
      * @param checked whether to add or remove the capability
      */
-    public void updateUserCapabilities(Categories cat, boolean checked){
-        if(checked){
+    public void updateUserCapabilities(Categories cat, boolean checked) {
+        if (checked) {
             //add category to the user's list
-            if (!userCapabilities_.contains(cat)) {
-                userCapabilities_.add(cat);
-            }
+            userCapabilities_.add(cat);
         } else {
             //remove it from user's list
-            if (userCapabilities_.contains(cat)) {
-                userCapabilities_.remove(cat);
-            }
+            userCapabilities_.remove(cat);
         }
     }
 
     /**
      * add keywords in the map for the given category
-     * @param cat the category for which add the keywords
+     *
+     * @param cat      the category for which add the keywords
      * @param keyWords the String containing the keywords separated by a ;
      */
-    public void addKeyWords(Categories cat, String keyWords){
+    public void addKeyWords(Categories cat, String keyWords) {
         ArrayList<String> kW = new ArrayList<>(Arrays.asList(keyWords.split(";")));
         if (keyWords_.containsKey(cat.toString())) {
             keyWords_.remove(cat.toString());
         }
-        Log.i("PROFILESETTINGS","keywords added for " + cat.toString());
+        Log.i("PROFILESETTINGS", "keywords added for " + cat.toString());
         keyWords_.put(cat.toString(), kW);
     }
 
     private void loadAndShowUser(String clientUniqueID) {
         DBUtility.get().getUser(clientUniqueID, (user) -> {
-            TextView nameView = (TextView) findViewById(R.id.edittext_profilesettings_name);
+            TextView nameView = findViewById(R.id.edittext_profilesettings_name);
             nameView.setText(user.getName_());
 
-            TextView emailView = (TextView) findViewById(R.id.textview_profilesettings_email);
+            TextView emailView = findViewById(R.id.textview_profilesettings_email);
             emailView.setText(user.getEmail_());
 
-            TextView descrView = (TextView) findViewById(R.id.edittext_profilesettings_description);
+            TextView descrView = findViewById(R.id.edittext_profilesettings_description);
             descrView.setText(user.getDescription_());
 
             oldUser_ = user;
 
-            Picasso.get().load(user.getImageUrl_()).into((ImageView)findViewById(R.id.imageview_profilesettings_picture));
+            Picasso.get().load(user.getImageUrl_()).into((ImageView) findViewById(R.id.imageview_profilesettings_picture));
             imageUrl_ = user.getImageUrl_();
             userCapabilities_.clear();
             userCapabilities_.addAll(user.getCategories_());
             keyWords_ = user.getKeyWords_();
-            
+
             recycler.setAdapter(new CategoriesAdapterProfileSettings(Categories.realCategories(), userCapabilities_, keyWords_));
 
         });
@@ -154,17 +151,10 @@ public class ProfileSettingsActivity extends NavigationDrawerActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        if(id == R.id.action_save){
+        if (id == R.id.action_save) {
             save();
             return true;
         }
-
-        /*
-         //noinspection SimplifiableIfStatement
-         if (id == R.id.action_settings) {
-         return true;
-         }
-         */
 
         return super.onOptionsItemSelected(item);
     }

@@ -8,6 +8,7 @@ import org.junit.runner.RunWith;
 import java.util.Calendar;
 
 import ch.epfl.swissteam.services.models.Post;
+import ch.epfl.swissteam.services.utils.Utils;
 
 import static org.junit.Assert.assertEquals;
 
@@ -18,7 +19,7 @@ public class PostTest {
     static long timestamp = 42;
     static String key = id + "_" + timestamp;
     private static Calendar cal = Calendar.getInstance();
-    static String today = Post.dateToString(cal.getTime());
+    static String today = Utils.dateToString(cal.getTime());
 
     @Test
     public void creationWorks() {
@@ -51,12 +52,12 @@ public class PostTest {
     public void notValidDateFormatShouldGive6Month(){
         Post p = new Post(key, title, id, body, timestamp, 10, 20, "18-2-5");
         cal.add(Calendar.WEEK_OF_YEAR, 2);
-        assertEquals(p.getTimeoutDateString_(), Post.dateToString(cal.getTime()));
+        assertEquals(p.getTimeoutDateString_(), Utils.dateToString(cal.getTime()));
     }
 
     @Test
     public void utilitaryMethodsDate(){
-        assertEquals(null, Post.dateToString(null));
-        assertEquals(null, Post.dateFromString(null));
+        assertEquals(null, Utils.dateToString(null));
+        assertEquals(null, Utils.dateFromString(null));
     }
 }

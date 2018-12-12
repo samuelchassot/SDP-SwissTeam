@@ -56,7 +56,7 @@ public class PostsMapActivity extends NavigationDrawerActivity implements OnMapR
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_postsmap);
-        super.onCreateDrawer(NavigationDrawerActivity.MAIN);
+        super.onCreateDrawer(ToogleState.MAIN);
 
         Bundle mapViewBundle = null;
         if (savedInstanceState != null) {

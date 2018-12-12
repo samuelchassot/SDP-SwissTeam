@@ -18,6 +18,7 @@ import java.util.Date;
 import ch.epfl.swissteam.services.models.Post;
 import ch.epfl.swissteam.services.providers.DBUtility;
 import ch.epfl.swissteam.services.providers.GoogleSignInSingleton;
+import ch.epfl.swissteam.services.utils.Utils;
 import ch.epfl.swissteam.services.view.activities.MainActivity;
 
 import static android.support.test.espresso.Espresso.onView;
@@ -55,10 +56,10 @@ public class MyPostFragmentTest extends SocializeTest<MainActivity>{
         long timestamp = (new Date()).getTime();
         String key = "1234" + "_" + timestamp;
         outDatedPost = new Post(key, "Hello there", "1234",
-                "General Kenobi", timestamp, 0, 0, Post.dateToString(cal.getTime()));
+                "General Kenobi", timestamp, 0, 0, Utils.dateToString(cal.getTime()));
         outDatedPost.addToDB(DBUtility.get().getDb_());
         post = new Post("1234_1539704399119", "Title", "1234", "Body",
-                1539704399119L,  10, 20, Post.dateToString(tomorrow));
+                1539704399119L,  10, 20, Utils.dateToString(tomorrow));
         DBUtility.get().setPost(post);
         sleep(400);
     }

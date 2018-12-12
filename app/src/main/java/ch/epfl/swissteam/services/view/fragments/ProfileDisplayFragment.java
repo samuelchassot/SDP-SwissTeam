@@ -32,17 +32,12 @@ import ch.epfl.swissteam.services.view.builders.CategoriesAdapterProfileActivity
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link ProfileDisplayFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
  * Use the {@link ProfileDisplayFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
 public class ProfileDisplayFragment extends Fragment {
 
-    private OnFragmentInteractionListener mListener;
     private String clientUniqueID_;
-    private RecyclerView mRecyclerView_;
-    private LinearLayoutManager mLayoutManager_;
     private CategoriesAdapterProfileActivity mAdapter_;
     private List<Categories> mCapabilities_ = new ArrayList<Categories>();
     private Map<String, List<String>> mKeyWords_ = new HashMap<>();
@@ -59,8 +54,7 @@ public class ProfileDisplayFragment extends Fragment {
      * @return A new instance of fragment ProfileDisplayFragment.
      */
     public static ProfileDisplayFragment newInstance() {
-        ProfileDisplayFragment fragment = new ProfileDisplayFragment();
-        return fragment;
+        return new ProfileDisplayFragment();
     }
 
     @Override
@@ -94,12 +88,12 @@ public class ProfileDisplayFragment extends Fragment {
             loadAndShowUser(clientUniqueID_);
 
             //setup recyclerview for capabilities
-            mRecyclerView_ = (RecyclerView) thisView.findViewById(R.id.recyclerview_profiledisplay_categories);
+            RecyclerView mRecyclerView_ = (RecyclerView) thisView.findViewById(R.id.recyclerview_profiledisplay_categories);
 
             if (mRecyclerView_ != null) {
                 mRecyclerView_.setHasFixedSize(true);
 
-                mLayoutManager_ = new LinearLayoutManager(this.getContext());
+                LinearLayoutManager mLayoutManager_ = new LinearLayoutManager(this.getContext());
                 mRecyclerView_.setLayoutManager(mLayoutManager_);
 
                 mAdapter_ = new CategoriesAdapterProfileActivity(mCapabilities_, mKeyWords_);
@@ -116,16 +110,16 @@ public class ProfileDisplayFragment extends Fragment {
         View view = getView();
         DBUtility.get().getUser(clientUniqueID, (user) -> {
             if (view != null) {
-                TextView nameView = (TextView) view.findViewById(R.id.textview_profiledisplay_name);
+                TextView nameView =  view.findViewById(R.id.textview_profiledisplay_name);
                 nameView.setText(user.getName_());
 
-                TextView emailView = (TextView) view.findViewById(R.id.textview_profiledisplay_email);
+                TextView emailView = view.findViewById(R.id.textview_profiledisplay_email);
                 emailView.setText(user.getEmail_());
 
-                TextView descrView = (TextView) view.findViewById(R.id.textview_profiledisplay_description);
+                TextView descrView = view.findViewById(R.id.textview_profiledisplay_description);
                 descrView.setText(user.getDescription_());
 
-                TextView ratingView = (TextView) view.findViewById(R.id.textview_profiledisplay_rating);
+                TextView ratingView = view.findViewById(R.id.textview_profiledisplay_rating);
                 ratingView.setText(Integer.toString(user.getRating_()));
                 Picasso.get().load(user.getImageUrl_()).into((ImageView) view.findViewById(R.id.imageview_profiledisplay_picture));
             }
@@ -150,21 +144,6 @@ public class ProfileDisplayFragment extends Fragment {
         super.onResume();
         loadAndShowUser(clientUniqueID_);
 
-    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
     }
 
 

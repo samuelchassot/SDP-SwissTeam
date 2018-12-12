@@ -25,7 +25,7 @@ public class MyPostEditActivity extends NavigationDrawerActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_my_post_edit);
-        super.onCreateDrawer(CANCEL);
+        super.onCreateDrawer(ToogleState.CANCEL);
 
         Intent intent = getIntent();
         post_ = intent.getParcelableExtra(MyPostAdapter.MYPOST_TAG);
