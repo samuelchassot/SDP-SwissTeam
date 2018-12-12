@@ -14,7 +14,7 @@ import ch.epfl.swissteam.services.utils.TodoListContract;
 public class TodoListDbHelper extends SQLiteOpenHelper{
 
     /**
-     * Creates a SettingsDbHelper
+     * Creates a TodoListDbHelper
      * @param context, the context of the creator.
      */
     public TodoListDbHelper(Context context){
