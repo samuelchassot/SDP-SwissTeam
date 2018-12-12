@@ -80,23 +80,6 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-        //if(toggleButton.equals(CANCEL)){
-            /*
-            FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-            fab.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
-                }
-            });
-            */
-
-        //}
-
-
-        TextView navHeaderName = findViewById(R.id.nav_header_name);
     }
 
     /**
@@ -158,16 +141,6 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-
-        /*
-         //noinspection SimplifiableIfStatement
-         if (id == R.id.action_settings) {
-         return true;
-         }
-         */
-
         return super.onOptionsItemSelected(item);
     }
 
