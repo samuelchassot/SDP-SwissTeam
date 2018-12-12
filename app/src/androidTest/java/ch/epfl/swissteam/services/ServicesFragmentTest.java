@@ -90,43 +90,43 @@ public class ServicesFragmentTest extends SocializeTest<MainActivity>{
         onView(withId(R.id.button_services_search)).perform(click());
     }
 
-    @Test
-    public void clickSearchCloseKeyBoard(){
-        onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
-        onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_services));
-        sleep(1000);
-        onView(withId(R.id.edittext_services_keywordsinput)).perform(clearText()).perform(typeText("Python"));
-        sleep(1000);
-        onView(withId(R.id.button_services_search)).perform(click());
-        sleep(1000);
-        onView(withId(R.id.edittext_services_keywordsinput)).perform(clearText()).perform(typeText("Java"));
-        closeSoftKeyboard();
-        sleep(1000);
-        onView(withId(R.id.button_services_search)).perform(personalNestedScrollto()).perform(click());
-        sleep(1000);
-    }
+//    @Test
+//    public void clickSearchCloseKeyBoard(){
+//        onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
+//        onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_services));
+//        sleep(1000);
+//        onView(withId(R.id.edittext_services_keywordsinput)).perform(clearText()).perform(typeText("Python"));
+//        sleep(1000);
+//        onView(withId(R.id.button_services_search)).perform(click());
+//        sleep(1000);
+//        onView(withId(R.id.edittext_services_keywordsinput)).perform(clearText()).perform(typeText("Java"));
+//        closeSoftKeyboard();
+//        sleep(1000);
+//        onView(withId(R.id.button_services_search)).perform(personalNestedScrollto()).perform(click());
+//        sleep(1000);
+//    }
 
-    private ViewAction personalNestedScrollto(){
-        return new ViewAction() {
-            @Override
-            public Matcher<View> getConstraints() {
-                return ViewMatchers.isEnabled(); // no constraints, they are checked above
-            }
-
-            @Override
-            public String getDescription() {
-                return "click plus button";
-            }
-
-            @Override
-            public void perform(UiController uiController, View view)
-            {
-                View nestedScrollView = (View)view.getParent().getParent();
-                nestedScrollView.scrollTo(0, view.getScrollY());
-
-
-
-            }
-        };
-    }
+//    private ViewAction personalNestedScrollto(){
+//        return new ViewAction() {
+//            @Override
+//            public Matcher<View> getConstraints() {
+//                return ViewMatchers.isEnabled(); // no constraints, they are checked above
+//            }
+//
+//            @Override
+//            public String getDescription() {
+//                return "click plus button";
+//            }
+//
+//            @Override
+//            public void perform(UiController uiController, View view)
+//            {
+//                View nestedScrollView = (View)view.getParent().getParent();
+//                nestedScrollView.scrollTo(0, 50);
+//
+//
+//
+//            }
+//        };
+//    }
 }
