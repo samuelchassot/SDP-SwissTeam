@@ -33,7 +33,7 @@ import ch.epfl.swissteam.services.utils.ActivityUtils;
  *
  * @author Julie Giunta
  */
-public class NavigationDrawerActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback {
+public abstract class NavigationDrawerActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback {
 
     public static final String NAVIGATION_TAG = "NAV_DRAWER_CLICKED";
     public static final String CANCEL = "Cancel";
