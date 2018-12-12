@@ -10,6 +10,11 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import ch.epfl.swissteam.services.view.activities.MainActivity;
+import ch.epfl.swissteam.services.view.activities.NewProfileCapabilitiesActivity;
+import ch.epfl.swissteam.services.view.activities.NewProfileDetailsActivity;
+import ch.epfl.swissteam.services.view.activities.SignInActivity;
+
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;

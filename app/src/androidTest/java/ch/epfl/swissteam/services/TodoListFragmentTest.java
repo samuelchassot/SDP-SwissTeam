@@ -9,6 +9,15 @@ import org.junit.Test;
 import java.util.Calendar;
 import java.util.Date;
 
+import ch.epfl.swissteam.services.models.Post;
+import ch.epfl.swissteam.services.models.User;
+import ch.epfl.swissteam.services.providers.DBUtility;
+import ch.epfl.swissteam.services.providers.GoogleSignInSingleton;
+import ch.epfl.swissteam.services.providers.TodoListDBUtility;
+import ch.epfl.swissteam.services.utils.TodoListContract;
+import ch.epfl.swissteam.services.utils.TodoListDbHelper;
+import ch.epfl.swissteam.services.view.activities.MainActivity;
+
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.intent.Intents.intended;
@@ -20,7 +29,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.hasDescendant;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static ch.epfl.swissteam.services.TestUtils.sleep;
-import static ch.epfl.swissteam.services.UtilityTest.clickChildViewWithId;
+import static ch.epfl.swissteam.services.UtilsTest.clickChildViewWithId;
 import static org.hamcrest.Matchers.not;
 
 public class TodoListFragmentTest extends SocializeTest<MainActivity> {

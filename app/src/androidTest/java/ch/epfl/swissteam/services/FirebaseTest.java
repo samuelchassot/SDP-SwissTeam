@@ -2,12 +2,11 @@ package ch.epfl.swissteam.services;
 
 import android.support.test.runner.AndroidJUnit4;
 
-import com.google.firebase.database.FirebaseDatabase;
-
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.runner.RunWith;
+
+import ch.epfl.swissteam.services.providers.DBUtility;
 
 /**
  * Class designed to wrap tests that interact with the Firebase Realtime Database to prevent actual interaction with the DB.

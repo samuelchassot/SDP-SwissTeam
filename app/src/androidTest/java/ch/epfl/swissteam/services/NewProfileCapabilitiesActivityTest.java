@@ -4,9 +4,11 @@ import android.support.test.espresso.contrib.RecyclerViewActions;
 
 import org.junit.Test;
 
+import ch.epfl.swissteam.services.view.activities.NewProfileCapabilitiesActivity;
+
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static ch.epfl.swissteam.services.UtilityTest.clickChildViewWithId;
+import static ch.epfl.swissteam.services.UtilsTest.clickChildViewWithId;
 
 public class NewProfileCapabilitiesActivityTest extends SocializeTest<NewProfileCapabilitiesActivity>{
 

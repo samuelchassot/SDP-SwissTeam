@@ -10,6 +10,9 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
 
+import ch.epfl.swissteam.services.providers.DBUtility;
+import ch.epfl.swissteam.services.providers.LocationManager;
+
 /**
  * Class designed to wrap tests to prevent actual interaction with the Firebase DB or the Location Manager.
  * Subclasses have to define a constructor where they call setTestRule with argument being C.class

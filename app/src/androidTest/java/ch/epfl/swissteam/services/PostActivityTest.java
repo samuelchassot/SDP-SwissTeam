@@ -3,17 +3,21 @@ package ch.epfl.swissteam.services;
 import android.content.Intent;
 import android.support.test.espresso.contrib.DrawerActions;
 import android.support.test.espresso.contrib.NavigationViewActions;
-import android.support.test.rule.ActivityTestRule;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 
-import org.junit.Rule;
 import org.junit.Test;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+
+import ch.epfl.swissteam.services.models.Post;
+import ch.epfl.swissteam.services.models.User;
+import ch.epfl.swissteam.services.providers.DBUtility;
+import ch.epfl.swissteam.services.providers.GoogleSignInSingleton;
+import ch.epfl.swissteam.services.view.activities.PostActivity;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
@@ -21,7 +25,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.hasDescendant;
 import static android.support.test.espresso.matcher.ViewMatchers.isClickable;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
-import static ch.epfl.swissteam.services.PostAdapter.POST_TAG;
+import static ch.epfl.swissteam.services.view.builders.PostAdapter.POST_TAG;
 import static ch.epfl.swissteam.services.TestUtils.personalClick;
 import static ch.epfl.swissteam.services.TestUtils.sleep;
 import static org.hamcrest.Matchers.not;

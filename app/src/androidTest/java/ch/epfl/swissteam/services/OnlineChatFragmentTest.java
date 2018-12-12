@@ -6,6 +6,13 @@ import android.support.test.espresso.contrib.NavigationViewActions;
 
 import org.junit.Test;
 
+import ch.epfl.swissteam.services.models.ChatRelation;
+import ch.epfl.swissteam.services.models.User;
+import ch.epfl.swissteam.services.providers.DBUtility;
+import ch.epfl.swissteam.services.providers.GoogleSignInSingleton;
+import ch.epfl.swissteam.services.view.activities.ChatRoomActivity;
+import ch.epfl.swissteam.services.view.activities.MainActivity;
+
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;

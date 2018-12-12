@@ -10,6 +10,10 @@ import com.google.android.gms.maps.model.Marker;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import ch.epfl.swissteam.services.providers.DBUtility;
+import ch.epfl.swissteam.services.providers.GoogleSignInSingleton;
+import ch.epfl.swissteam.services.view.activities.ProfileActivity;
+
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.scrollTo;
@@ -17,7 +21,7 @@ import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
-import static ch.epfl.swissteam.services.NewProfileDetailsActivity.GOOGLE_ID_TAG;
+import static ch.epfl.swissteam.services.view.activities.NewProfileDetailsActivity.GOOGLE_ID_TAG;
 import static ch.epfl.swissteam.services.TestUtils.M_USER;
 import static ch.epfl.swissteam.services.TestUtils.O_USER;
 import static ch.epfl.swissteam.services.TestUtils.sleep;
