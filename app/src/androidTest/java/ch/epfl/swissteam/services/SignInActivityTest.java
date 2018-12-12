@@ -2,17 +2,16 @@ package ch.epfl.swissteam.services;
 
 import android.app.Activity;
 import android.app.Instrumentation;
-import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.NonNull;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import ch.epfl.swissteam.services.view.activities.SignInActivity;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;

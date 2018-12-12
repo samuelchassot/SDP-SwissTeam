@@ -3,11 +3,15 @@ package ch.epfl.swissteam.services;
 import android.support.test.espresso.Espresso;
 import android.support.test.espresso.contrib.DrawerActions;
 import android.support.test.espresso.contrib.NavigationViewActions;
-import android.support.test.espresso.intent.Intents;
-import android.support.test.rule.ActivityTestRule;
 
-import org.junit.Rule;
 import org.junit.Test;
+
+import ch.epfl.swissteam.services.models.ChatRelation;
+import ch.epfl.swissteam.services.models.User;
+import ch.epfl.swissteam.services.providers.DBUtility;
+import ch.epfl.swissteam.services.providers.GoogleSignInSingleton;
+import ch.epfl.swissteam.services.view.activities.ChatRoomActivity;
+import ch.epfl.swissteam.services.view.activities.MainActivity;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
@@ -16,7 +20,6 @@ import static android.support.test.espresso.action.ViewActions.longClick;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
-import static android.support.test.espresso.intent.Intents.init;
 import static android.support.test.espresso.intent.Intents.intended;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static android.support.test.espresso.matcher.ViewMatchers.hasDescendant;
@@ -91,7 +94,7 @@ public class OnlineChatFragmentTest extends SocializeTest<MainActivity> {
         sleep(100);
         onView(withText(oUser.getName_())).perform(click());
         sleep(100);
-        intended(hasComponent(ChatRoom.class.getName()));
+        intended(hasComponent(ChatRoomActivity.class.getName()));
     }
 
     @Test

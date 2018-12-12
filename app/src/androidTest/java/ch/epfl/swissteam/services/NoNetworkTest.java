@@ -2,18 +2,13 @@ package ch.epfl.swissteam.services;
 
 import android.content.Context;
 import android.net.wifi.WifiManager;
-import android.os.SystemClock;
-import android.support.test.rule.ActivityTestRule;
-import android.support.test.rule.GrantPermissionRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.telephony.TelephonyManager;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import ch.epfl.swissteam.services.view.activities.MainActivity;
 
 
 @RunWith(AndroidJUnit4.class)

@@ -1,7 +1,5 @@
 package ch.epfl.swissteam.services;
 
-import android.app.Activity;
-import android.app.Instrumentation;
 import android.content.Intent;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.action.GeneralClickAction;
@@ -10,21 +8,26 @@ import android.support.test.espresso.action.Press;
 import android.support.test.espresso.action.Tap;
 import android.support.test.espresso.contrib.DrawerActions;
 import android.support.test.espresso.contrib.NavigationViewActions;
-import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.support.test.uiautomator.UiDevice;
 
 import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.util.Locale;
 
+import ch.epfl.swissteam.services.models.User;
+import ch.epfl.swissteam.services.providers.DBUtility;
+import ch.epfl.swissteam.services.providers.GoogleSignInSingleton;
+import ch.epfl.swissteam.services.providers.LocationManager;
+import ch.epfl.swissteam.services.providers.SettingsDBUtility;
+import ch.epfl.swissteam.services.utils.SettingsContract;
+import ch.epfl.swissteam.services.utils.SettingsDbHelper;
+import ch.epfl.swissteam.services.view.activities.MainActivity;
+
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static android.support.test.espresso.action.ViewActions.scrollTo;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.intent.Intents.intended;
@@ -38,7 +41,6 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
 import static ch.epfl.swissteam.services.TestUtils.personalClick;
 import static ch.epfl.swissteam.services.TestUtils.sleep;
-import static org.junit.Assert.*;
 
 @RunWith(AndroidJUnit4.class)
 public class SettingsFragmentTest extends SocializeTest<MainActivity>{

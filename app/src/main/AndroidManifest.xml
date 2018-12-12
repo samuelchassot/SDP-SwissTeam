@@ -15,24 +15,24 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name=".view.activities.MainActivity"
             android:label="@string/title_activity_main" />
-        <activity android:name=".SignInActivity">
+        <activity android:name=".view.activities.SignInActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".NewProfileDetails" />
-        <activity android:name=".NewProfileCapabilities" />
+        <activity android:name=".view.activities.NewProfileDetailsActivity" />
+        <activity android:name=".view.activities.NewProfileCapabilitiesActivity" />
         <activity
-            android:name=".ChatRoom"
+            android:name=".view.activities.ChatRoomActivity"
             android:label="@string/title_activity_chat_room" />
-        <activity android:name=".MyPostEdit" />
-        <activity android:name=".ProfileSettings" />
-        <activity android:name=".ProfileActivity" />
-        <activity android:name=".PostActivity" />
+        <activity android:name=".view.activities.MyPostEditActivity" />
+        <activity android:name=".view.activities.ProfileSettingsActivity" />
+        <activity android:name=".view.activities.ProfileActivity" />
+        <activity android:name=".view.activities.PostActivity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -48,9 +48,9 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity android:name=".DeleteAccountActivity" />
-        <activity android:name=".PostsMapActivity"></activity>
-        <activity android:name=".NavigationDrawer" />
+        <activity android:name=".view.activities.DeleteAccountActivity" />
+        <activity android:name=".view.activities.PostsMapActivity"></activity>
+        <activity android:name=".view.activities.NavigationDrawerActivity" />
     </application>
 
 </manifest>

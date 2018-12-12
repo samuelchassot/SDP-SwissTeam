@@ -15,7 +15,7 @@
         android:id="@+id/chat_room_general_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ChatRoom">
+        tools:context=".view.activities.ChatRoomActivity">
 
         <android.support.constraint.ConstraintLayout
             android:id="@+id/constraintLayout"

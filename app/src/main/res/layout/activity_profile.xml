@@ -23,7 +23,7 @@
                 android:layout_height="wrap_content"
                 android:minHeight="250dp"
                 android:visibility="visible"
-                tools:context=".ProfileActivity">
+                tools:context=".view.activities.ProfileActivity">
 
 
                 <ImageView
