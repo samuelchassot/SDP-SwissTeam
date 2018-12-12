@@ -1,9 +1,18 @@
 package ch.epfl.swissteam.services;
 
+import android.support.test.espresso.UiController;
+import android.support.test.espresso.ViewAction;
 import android.support.test.espresso.contrib.DrawerActions;
 import android.support.test.espresso.contrib.NavigationViewActions;
-import android.support.test.runner.AndroidJUnit4;
 
+import android.support.test.espresso.matcher.ViewMatchers;
+import android.support.test.rule.ActivityTestRule;
+
+import android.support.test.runner.AndroidJUnit4;
+import android.support.v4.widget.NestedScrollView;
+import android.view.View;
+
+import org.hamcrest.Matcher;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -54,7 +63,7 @@ public class ServicesFragmentTest extends SocializeTest<MainActivity>{
     public void openFragment() {
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_services));
-        onView(withId(R.id.services_spinner)).perform(scrollTo()).perform(click());
+        onView(withId(R.id.services_spinner)).perform(click());
     }
 
     @Test
@@ -86,19 +95,43 @@ public class ServicesFragmentTest extends SocializeTest<MainActivity>{
         onView(withId(R.id.button_services_search)).perform(click());
     }
 
-    @Test
-    public void clickSearchCloseKeyBoard(){
-        onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
-        onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_services));
-        sleep(1000);
-        onView(withId(R.id.edittext_services_keywordsinput)).perform(clearText()).perform(typeText("Python"));
-        sleep(1000);
-        onView(withId(R.id.button_services_search)).perform(scrollTo()).perform(click());
-        sleep(1000);
-        onView(withId(R.id.edittext_services_keywordsinput)).perform(clearText()).perform(typeText("Java"));
-        closeSoftKeyboard();
-        sleep(1000);
-        onView(withId(R.id.button_services_search)).perform(scrollTo()).perform(click());
-        sleep(1000);
-    }
+//    @Test
+//    public void clickSearchCloseKeyBoard(){
+//        onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
+//        onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.button_maindrawer_services));
+//        sleep(1000);
+//        onView(withId(R.id.edittext_services_keywordsinput)).perform(clearText()).perform(typeText("Python"));
+//        sleep(1000);
+//        onView(withId(R.id.button_services_search)).perform(click());
+//        sleep(1000);
+//        onView(withId(R.id.edittext_services_keywordsinput)).perform(clearText()).perform(typeText("Java"));
+//        closeSoftKeyboard();
+//        sleep(1000);
+//        onView(withId(R.id.button_services_search)).perform(personalNestedScrollto()).perform(click());
+//        sleep(1000);
+//    }
+
+//    private ViewAction personalNestedScrollto(){
+//        return new ViewAction() {
+//            @Override
+//            public Matcher<View> getConstraints() {
+//                return ViewMatchers.isEnabled(); // no constraints, they are checked above
+//            }
+//
+//            @Override
+//            public String getDescription() {
+//                return "click plus button";
+//            }
+//
+//            @Override
+//            public void perform(UiController uiController, View view)
+//            {
+//                View nestedScrollView = (View)view.getParent().getParent();
+//                nestedScrollView.scrollTo(0, 50);
+//
+//
+//
+//            }
+//        };
+//    }
 }

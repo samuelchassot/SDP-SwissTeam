@@ -60,7 +60,7 @@ public class ProfileActivityTest extends SocializeTest<ProfileActivity> {
     @Test
     public void canAccessToChatButtonIfOtherProfile() {
         startIntentWith(O_USER.getGoogleId_());
-        onView(withId(R.id.button_profile_toChat)).perform(scrollTo()).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+        onView(withId(R.id.button_profile_toChat)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
     }
 
     @Test
@@ -72,15 +72,15 @@ public class ProfileActivityTest extends SocializeTest<ProfileActivity> {
     @Test
     public void votesWorks(){
         startIntentWith(O_USER.getGoogleId_());
-        onView(withId(R.id.button_profile_upvote)).perform(scrollTo()).perform(click());
-        onView(withId(R.id.button_profile_downvote)).perform(scrollTo()).perform(click());
+        onView(withId(R.id.button_profile_upvote)).perform(click());
+        onView(withId(R.id.button_profile_downvote)).perform(click());
     }
 
 
     @Test
     public void mapIsVisibleIfUserWants(){
         startIntentWith(M_USER.getGoogleId_());
-        onView(withId(R.id.mapview_profileactivity)).perform(scrollTo()).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+        onView(withId(R.id.mapview_profileactivity)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
     }
 
     @Test
