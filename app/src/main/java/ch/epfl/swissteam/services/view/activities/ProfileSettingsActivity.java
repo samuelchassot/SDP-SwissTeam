@@ -41,7 +41,7 @@ public class ProfileSettingsActivity extends NavigationDrawerActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_profile_settings);
-        super.onCreateDrawer(CANCEL);
+        super.onCreateDrawer(ToogleState.CANCEL);
 
         String uniqueID = GoogleSignInSingleton.get().getClientUniqueID();
         loadAndShowUser(uniqueID);

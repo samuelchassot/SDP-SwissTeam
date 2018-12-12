@@ -65,7 +65,7 @@ public class ProfileActivity extends NavigationDrawerActivity implements OnMapRe
 
 
         setContentView(R.layout.activity_profile);
-        super.onCreateDrawer(BACK);
+        super.onCreateDrawer(ToogleState.BACK);
 
         String clientUID = getIntent().getStringExtra(GOOGLE_ID_TAG);
 

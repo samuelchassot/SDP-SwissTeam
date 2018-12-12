@@ -36,7 +36,7 @@ public class MainActivity extends NavigationDrawerActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        super.onCreateDrawer(MAIN);
+        super.onCreateDrawer(ToogleState.MAIN);
 
         br_ = new NetworkStatusReceiver();
         br_.setActivity_(this);
@@ -47,7 +47,7 @@ public class MainActivity extends NavigationDrawerActivity {
         super.onStart();
         DBUtility.get().notifyNewMessages(this, GoogleSignInSingleton.get().getClientUniqueID());
         Intent intent = getIntent();
-        chooseFragment(intent.getIntExtra(NAVIGATION_TAG, -1));
+        chooseFragment(intent.getIntExtra(ToogleState.NAVIGATION_TAG.toString(), -1));
     }
 
     @Override

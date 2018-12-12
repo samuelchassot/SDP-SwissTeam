@@ -20,7 +20,7 @@ public class DeleteAccountActivity extends NavigationDrawerActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_deleteaccount);
-        super.onCreateDrawer(CANCEL);
+        super.onCreateDrawer(ToogleState.CANCEL);
 
         Button deleteButton = this.findViewById(R.id.button_deleteaccount_deletebutton);
         EditText continueEditText = this.findViewById(R.id.edittext_deleteaccount_continue);

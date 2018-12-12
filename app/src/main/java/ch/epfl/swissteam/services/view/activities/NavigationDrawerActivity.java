@@ -35,17 +35,33 @@ import ch.epfl.swissteam.services.utils.ActivityUtils;
  */
 public abstract class NavigationDrawerActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback {
 
-    public static final String NAVIGATION_TAG = "NAV_DRAWER_CLICKED";
-    public static final String CANCEL = "Cancel";
-    public static final String MAIN = "Main";
-    public static final String BACK = "Back";
+    /**
+     * Set of states that help to define which button should be placed on the toolbar.
+     */
+    public enum ToogleState {
+
+        NAVIGATION_TAG("NAV_DRAWER_CLICKED"),
+        CANCEL("Cancel"),
+        MAIN("Main"),
+        BACK("Back");
+
+        private String state_;
+
+        ToogleState(String state) {
+            state_ = state;
+        }
+
+        public String toString() {
+            return state_;
+        }
+    }
 
     private DBUtility util_ = DBUtility.get();
 
     private DrawerLayout drawer_;
     private Toolbar toolbar_;
     protected ActionBarDrawerToggle toggle_;
-    private String toggleButton_;
+    private ToogleState toggleButton_;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +82,7 @@ public abstract class NavigationDrawerActivity extends AppCompatActivity impleme
      *                     BACK : arrow image and disables button tu draw the menu)
      *
      */
-    protected void onCreateDrawer(String toggleButton) {
+    protected void onCreateDrawer(ToogleState toggleButton) {
         this.toggleButton_ = toggleButton;
         toolbar_ = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar_);
@@ -97,7 +113,7 @@ public abstract class NavigationDrawerActivity extends AppCompatActivity impleme
         drawer_.addDrawerListener(toggle_);
         toggle_.syncState();
 
-        if(!toggleButton_.equals(MAIN)){
+        if(!toggleButton_.equals(ToogleState.MAIN)){
             toggle_.setDrawerIndicatorEnabled(false);
             toggle_.setToolbarNavigationClickListener(view -> {
                 finish();
@@ -105,10 +121,10 @@ public abstract class NavigationDrawerActivity extends AppCompatActivity impleme
         }
 
         switch(toggleButton_){
-            case (CANCEL) :
+            case CANCEL :
                 toggle_.setHomeAsUpIndicator(R.drawable.ic_toggle_cancel);
                 break;
-            case (BACK) :
+            case BACK :
                 toggle_.setHomeAsUpIndicator(R.drawable.ic_toggle_backarrow);
                 break;
         }
@@ -127,7 +143,7 @@ public abstract class NavigationDrawerActivity extends AppCompatActivity impleme
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
-        if(toggleButton_.equals(CANCEL)){
+        if(toggleButton_.equals(ToogleState.CANCEL)){
             menu.setGroupEnabled(R.id.group_cancel, true);
             menu.setGroupVisible(R.id.group_cancel, true);
         }
@@ -149,7 +165,7 @@ public abstract class NavigationDrawerActivity extends AppCompatActivity impleme
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        startActivity(new Intent(this, MainActivity.class).putExtra(NAVIGATION_TAG, id));
+        startActivity(new Intent(this, MainActivity.class).putExtra(ToogleState.NAVIGATION_TAG.toString(), id));
         drawer_.closeDrawer(GravityCompat.START);
         finish();
 
