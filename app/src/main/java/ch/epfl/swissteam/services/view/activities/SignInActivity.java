@@ -1,5 +1,6 @@
 package ch.epfl.swissteam.services.view.activities;
 
+import android.app.Activity;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Intent;
@@ -75,15 +76,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         initializeNotifications();
 
         if (account != null) {
-            // Launch main
-
-            // put uniqueID in the singleton
-            GoogleSignInSingleton.putUniqueID(account.getId());
-            SettingsDBUtility.addRowIfNeeded(settingsDbHelper_, account.getId());
-            Intent mainIntent = new Intent(this, MainActivity.class);
-            mainIntent.putExtra(ACCOUNT_TAG , account);
-
-            startActivity(mainIntent);
+            endSetUp(account, MainActivity.class);
         }
     }
 
@@ -117,30 +110,36 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
-            SettingsDBUtility.addRowIfNeeded(settingsDbHelper_, account.getId());
 
-            //TODO: Maybe load a list of all users while the user is connecting then check here if the googleId is in it to avoid the wait time.
             DBUtility.get().getUser(account.getId(), user -> {
                 if(user != null){
-                    GoogleSignInSingleton.putUniqueID(account.getId());
-                    Intent mainIntent = new Intent(this, MainActivity.class);
-                    mainIntent.putExtra(ACCOUNT_TAG , account);
-                    startActivity(mainIntent);
+                    endSetUp(account, MainActivity.class);
                 }
                 else{
                     // Signed in successfully, show authenticated UI
-                    GoogleSignInSingleton.putUniqueID(account.getId());
-                    Intent newProfileIntent = new Intent(this, NewProfileDetailsActivity.class);
-                    newProfileIntent.putExtra(ACCOUNT_TAG , account);
-                    startActivity(newProfileIntent);
+                    endSetUp(account, NewProfileDetailsActivity.class);
                 }
             });
+
         } catch (ApiException e) {
             // The ApiException status code indicates the detailed failure reason.
             // Please refer to the GoogleSignInStatusCodes class reference for more information.
             Log.w(ERROR_TAG, ERROR_MSG + e.getStatusCode());
             recreate();
         }
+    }
+
+    /**
+     * End of the set up of the user in the app, start the wanted activity
+     * @param account the account of the user
+     * @param nextActivity the activity to start after the set up.
+     */
+    private void endSetUp(GoogleSignInAccount account, Class nextActivity){
+        SettingsDBUtility.addRowIfNeeded(settingsDbHelper_, account.getId());
+        GoogleSignInSingleton.putUniqueID(account.getId());
+        Intent intent = new Intent(this, nextActivity);
+        intent.putExtra(ACCOUNT_TAG , account);
+        startActivity(intent);
     }
 
     @Override
