@@ -33,11 +33,9 @@ import ch.epfl.swissteam.services.utils.SettingsDbHelper;
  */
 public class SignInActivity extends AppCompatActivity implements View.OnClickListener {
 
-    public static final String ACCOUNT_TAG = "ch.epfl.swissteam.services.account";
+    public static final String ACCOUNT_TAG = "ACCOUNT";
     //Request code for startActivityForResult
     private static final int RC_SIGN_IN = 42;
-    private final String ERROR_TAG = "SignInActivity";
-    private final String ERROR_MSG = "signInResult:failed code=";
 
     private GoogleSignInClient mGoogleSignInClient_;
     private SettingsDbHelper settingsDbHelper_;
@@ -122,7 +120,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         } catch (ApiException e) {
             // The ApiException status code indicates the detailed failure reason.
             // Please refer to the GoogleSignInStatusCodes class reference for more information.
-            Log.w(ERROR_TAG, ERROR_MSG + e.getStatusCode());
+            Log.w("SignInActivity", "signInResult:failed code=" + e.getStatusCode());
             recreate();
         }
     }
