@@ -46,7 +46,7 @@ public class CreatePostFragment extends Fragment implements View.OnClickListener
     private boolean isHomeLocation_;
     private Date timeoutDate_;
 
-    protected enum TimeOut {
+    public enum TimeOut {
         oneDay,
         threeDays,
         oneWeek,
