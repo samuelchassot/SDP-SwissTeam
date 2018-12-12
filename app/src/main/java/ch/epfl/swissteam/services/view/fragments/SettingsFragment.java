@@ -94,47 +94,18 @@ public class SettingsFragment extends Fragment implements OnMapReadyCallback {
         if (savedInstanceState != null) {
             mapViewBundle = savedInstanceState.getBundle(MAPVIEW_BUNDLE_KEY);
         }
-
         mapView_ = view.findViewById(R.id.mapview_settings);
         mapView_.onCreate(mapViewBundle);
         mapView_.getMapAsync(this);
 
-        // Set home button
-        Button setHome = view.findViewById(R.id.button_settings_sethome);
-        setHome.setOnClickListener(v -> {
-            Location currentLocation = LocationManager.get().getCurrentLocation_();
-            if(currentLocation != null) {
-                updateHomeLocation(currentLocation.getLatitude(), currentLocation.getLongitude());
-                updateMapView();
-            } else {
-                Toast.makeText(getActivity(), R.string.settings_unavailable_location, Toast.LENGTH_LONG).show();
-            }
-        });
 
+        constructSetHomeButton(view);
         constructRadiusSettings(view);
         constructShowMyLocationToOthers(view);
         constructDarkModeSettings(view);
 
-        // Delete account button
-        Button deleteAccountButton = (Button) view.findViewById(R.id.button_settings_deleteaccount);
-        deleteAccountButton.setOnClickListener(v->{
-            Intent intent = new Intent(v.getContext(), DeleteAccountActivity.class);
-            v.getContext().startActivity(intent);
-        });
-
-        // Invite friend button
-        Button inviteFriendButton = (Button) view.findViewById(R.id.button_settings_invite_friend);
-        inviteFriendButton.setOnClickListener(v -> {
-            Intent inviteIntent = new Intent(Intent.ACTION_SEND);
-
-            // Extra for email purpose
-            inviteIntent.putExtra(Intent.EXTRA_SUBJECT, getResources().getString(R.string.settings_invite_friend_subject));
-            // Body of the message
-            inviteIntent.putExtra(Intent.EXTRA_TEXT, getResources().getString(R.string.settings_invite_friend_body));
-            inviteIntent.setType("text/plain");
-            startActivity(Intent.createChooser(inviteIntent, getResources().getString(R.string.settings_invite_friend_client_chooser)));
-        });
-
+        constructDeleteAccountButton(view);
+        constructInviteFriendButton(view);
 
         return view;
     }
@@ -223,6 +194,18 @@ public class SettingsFragment extends Fragment implements OnMapReadyCallback {
         SettingsDBUtility.updateHome(dbHelper_, SettingsContract.SettingsEntry.COLUMN_SETTINGS_HOME_LONGITUDE, id_, newLng);
     }
 
+    private void constructSetHomeButton(View view) {
+        Button setHome = view.findViewById(R.id.button_settings_sethome);
+        setHome.setOnClickListener(v -> {
+            Location currentLocation = LocationManager.get().getCurrentLocation_();
+            if(currentLocation != null) {
+                updateHomeLocation(currentLocation.getLatitude(), currentLocation.getLongitude());
+                updateMapView();
+            } else {
+                Toast.makeText(getActivity(), R.string.settings_unavailable_location, Toast.LENGTH_LONG).show();
+            }
+        });
+    }
       
     private void constructDarkModeSettings(View view){
         Switch darkModeSwitch = view.findViewById(R.id.switch_settings_darkmode);
@@ -302,6 +285,29 @@ public class SettingsFragment extends Fragment implements OnMapReadyCallback {
                 });
             }
 
+        });
+    }
+
+    private void constructDeleteAccountButton(View view) {
+        Button deleteAccountButton = view.findViewById(R.id.button_settings_deleteaccount);
+        deleteAccountButton.setOnClickListener(v->{
+            Intent intent = new Intent(v.getContext(), DeleteAccountActivity.class);
+            v.getContext().startActivity(intent);
+        });
+    }
+
+    private void constructInviteFriendButton(View view) {
+        // Invite friend button
+        Button inviteFriendButton = view.findViewById(R.id.button_settings_invite_friend);
+        inviteFriendButton.setOnClickListener(v -> {
+            Intent inviteIntent = new Intent(Intent.ACTION_SEND);
+
+            // Extra for email purpose
+            inviteIntent.putExtra(Intent.EXTRA_SUBJECT, getResources().getString(R.string.settings_invite_friend_subject));
+            // Body of the message
+            inviteIntent.putExtra(Intent.EXTRA_TEXT, getResources().getString(R.string.settings_invite_friend_body));
+            inviteIntent.setType("text/plain");
+            startActivity(Intent.createChooser(inviteIntent, getResources().getString(R.string.settings_invite_friend_client_chooser)));
         });
     }
 }
