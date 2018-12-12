@@ -17,12 +17,12 @@ import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 
 import ch.epfl.swissteam.services.R;
-import ch.epfl.swissteam.services.providers.SettingsDBUtility;
-import ch.epfl.swissteam.services.utils.SettingsDbHelper;
 import ch.epfl.swissteam.services.providers.DBUtility;
 import ch.epfl.swissteam.services.providers.GoogleSignInSingleton;
 import ch.epfl.swissteam.services.providers.LocationManager;
+import ch.epfl.swissteam.services.providers.SettingsDBUtility;
 import ch.epfl.swissteam.services.utils.NotificationUtils;
+import ch.epfl.swissteam.services.utils.SettingsDbHelper;
 
 /**
  * This class is an activity created to make the user authenticate with Google.
@@ -33,11 +33,9 @@ import ch.epfl.swissteam.services.utils.NotificationUtils;
  */
 public class SignInActivity extends AppCompatActivity implements View.OnClickListener {
 
-    public static final String ACCOUNT_TAG = "ch.epfl.swissteam.services.account";
+    public static final String ACCOUNT_TAG = "ACCOUNT";
     //Request code for startActivityForResult
     private static final int RC_SIGN_IN = 42;
-    private final String ERROR_TAG = "SignInActivity";
-    private final String ERROR_MSG = "signInResult:failed code=";
 
     private GoogleSignInClient mGoogleSignInClient_;
     private SettingsDbHelper settingsDbHelper_;
@@ -75,15 +73,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         initializeNotifications();
 
         if (account != null) {
-            // Launch main
-
-            // put uniqueID in the singleton
-            GoogleSignInSingleton.putUniqueID(account.getId());
-            SettingsDBUtility.addRowIfNeeded(settingsDbHelper_, account.getId());
-            Intent mainIntent = new Intent(this, MainActivity.class);
-            mainIntent.putExtra(ACCOUNT_TAG , account);
-
-            startActivity(mainIntent);
+            endSetUp(account, MainActivity.class);
         }
     }
 
@@ -117,30 +107,36 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
-            SettingsDBUtility.addRowIfNeeded(settingsDbHelper_, account.getId());
 
-            //TODO: Maybe load a list of all users while the user is connecting then check here if the googleId is in it to avoid the wait time.
             DBUtility.get().getUser(account.getId(), user -> {
-                if(user != null){
-                    GoogleSignInSingleton.putUniqueID(account.getId());
-                    Intent mainIntent = new Intent(this, MainActivity.class);
-                    mainIntent.putExtra(ACCOUNT_TAG , account);
-                    startActivity(mainIntent);
-                }
-                else{
+                if (user != null) {
+                    endSetUp(account, MainActivity.class);
+                } else {
                     // Signed in successfully, show authenticated UI
-                    GoogleSignInSingleton.putUniqueID(account.getId());
-                    Intent newProfileIntent = new Intent(this, NewProfileDetailsActivity.class);
-                    newProfileIntent.putExtra(ACCOUNT_TAG , account);
-                    startActivity(newProfileIntent);
+                    endSetUp(account, NewProfileDetailsActivity.class);
                 }
             });
+
         } catch (ApiException e) {
             // The ApiException status code indicates the detailed failure reason.
             // Please refer to the GoogleSignInStatusCodes class reference for more information.
-            Log.w(ERROR_TAG, ERROR_MSG + e.getStatusCode());
+            Log.w("SignInActivity", "signInResult:failed code=" + e.getStatusCode());
             recreate();
         }
+    }
+
+    /**
+     * End of the set up of the user in the app, start the wanted activity
+     *
+     * @param account      the account of the user
+     * @param nextActivity the activity to start after the set up.
+     */
+    private void endSetUp(GoogleSignInAccount account, Class nextActivity) {
+        SettingsDBUtility.addRowIfNeeded(settingsDbHelper_, account.getId());
+        GoogleSignInSingleton.putUniqueID(account.getId());
+        Intent intent = new Intent(this, nextActivity);
+        intent.putExtra(ACCOUNT_TAG, account);
+        startActivity(intent);
     }
 
     @Override
