@@ -43,8 +43,7 @@ public class OnlineChatFragment extends Fragment {
      * @return A new instance of fragment OnlineChatFragment.
      */
     public static OnlineChatFragment newInstance() {
-        OnlineChatFragment fragment = new OnlineChatFragment();
-        return fragment;
+        return new OnlineChatFragment();
     }
 
     @Override
