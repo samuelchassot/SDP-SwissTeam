@@ -121,7 +121,12 @@ public class PostActivity extends NavigationDrawerActivity implements OnMapReady
             ((TextView)findViewById(R.id.textview_postactivity_distance)).setText(this.getResources().getString(R.string.homefragment_postdistance, LocationManager.MAX_POST_DISTANCE / LocationManager.M_IN_ONE_KM));
         }
 
-        //TODOLIST button
+        // Add post in TodoList if it is not already in
+        setTodoButtonBehavior();
+
+    }
+
+    private void setTodoButtonBehavior() {
         TodoListDbHelper todoListDbHelper = new TodoListDbHelper(this);
         String user = GoogleSignInSingleton.get().getClientUniqueID();
 
