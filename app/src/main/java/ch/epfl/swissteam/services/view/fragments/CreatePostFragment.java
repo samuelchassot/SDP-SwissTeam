@@ -47,6 +47,9 @@ public class CreatePostFragment extends Fragment implements View.OnClickListener
     private boolean isHomeLocation_;
     private Date timeoutDate_;
 
+    /**
+     * An enum containing different periods of time, used to represent lifetime of posts
+     */
     public enum TimeOut {
         oneDay,
         threeDays,

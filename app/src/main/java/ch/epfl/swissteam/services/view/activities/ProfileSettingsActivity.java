@@ -30,7 +30,7 @@ import ch.epfl.swissteam.services.providers.GoogleSignInSingleton;
  */
 public class ProfileSettingsActivity extends NavigationDrawerActivity {
 
-    private String imageUrl_; //TODO: Allow user to change picture in his profile.
+    private String imageUrl_;
     private ArrayList<Categories> userCapabilities_ = new ArrayList<>();
     private HashMap<String, ArrayList<String>> keyWords_ = new HashMap<>();
     private RecyclerView recycler;
