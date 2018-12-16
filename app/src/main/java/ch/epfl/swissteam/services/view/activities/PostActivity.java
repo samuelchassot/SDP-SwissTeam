@@ -1,6 +1,7 @@
 package ch.epfl.swissteam.services.view.activities;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
 import android.view.View;
@@ -120,9 +121,20 @@ public class PostActivity extends NavigationDrawerActivity implements OnMapReady
         }
 
         //TODOLIST button
-        findViewById(R.id.button_postactivity_todo).setOnClickListener(view -> {
-            TodoListDBUtility.addPost(new TodoListDbHelper(this), GoogleSignInSingleton.get().getClientUniqueID() ,post_.getKey_());
+        TodoListDbHelper todoListDbHelper = new TodoListDbHelper(this);
+        String user = GoogleSignInSingleton.get().getClientUniqueID();
+
+        if (TodoListDBUtility.isPostInDB(todoListDbHelper, user, post_.getKey_())) {
+            findViewById(R.id.button_postactivity_todo).setBackgroundColor(Color.rgb(100, 170, 100));
             findViewById(R.id.button_postactivity_todo).setClickable(false);
+        }
+
+        findViewById(R.id.button_postactivity_todo).setOnClickListener(view -> {
+            if (!TodoListDBUtility.isPostInDB(todoListDbHelper, user, post_.getKey_())) {
+                TodoListDBUtility.addPost(todoListDbHelper, user, post_.getKey_());
+            }
+            findViewById(R.id.button_postactivity_todo).setClickable(false);
+            findViewById(R.id.button_postactivity_todo).setBackgroundColor(Color.rgb(100, 170, 100));
         });
 
     }
