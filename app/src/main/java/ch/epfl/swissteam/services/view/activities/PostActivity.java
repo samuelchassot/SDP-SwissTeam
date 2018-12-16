@@ -41,6 +41,7 @@ import static ch.epfl.swissteam.services.view.activities.NewProfileDetailsActivi
 public class PostActivity extends NavigationDrawerActivity implements OnMapReadyCallback {
 
     private static final String POST_MAPVIEW_BUNDLE_KEY = "PostMapViewBundleKey";
+    private static final int COLOR_OF_CHECKED_TODO_BUTTON = Color.rgb(100, 170, 100);
 
     private Post post_;
     private User user_;
@@ -125,7 +126,7 @@ public class PostActivity extends NavigationDrawerActivity implements OnMapReady
         String user = GoogleSignInSingleton.get().getClientUniqueID();
 
         if (TodoListDBUtility.isPostInDB(todoListDbHelper, user, post_.getKey_())) {
-            findViewById(R.id.button_postactivity_todo).setBackgroundColor(Color.rgb(100, 170, 100));
+            findViewById(R.id.button_postactivity_todo).setBackgroundColor(COLOR_OF_CHECKED_TODO_BUTTON);
             findViewById(R.id.button_postactivity_todo).setClickable(false);
         }
 
@@ -134,7 +135,7 @@ public class PostActivity extends NavigationDrawerActivity implements OnMapReady
                 TodoListDBUtility.addPost(todoListDbHelper, user, post_.getKey_());
             }
             findViewById(R.id.button_postactivity_todo).setClickable(false);
-            findViewById(R.id.button_postactivity_todo).setBackgroundColor(Color.rgb(100, 170, 100));
+            findViewById(R.id.button_postactivity_todo).setBackgroundColor(COLOR_OF_CHECKED_TODO_BUTTON);
         });
 
     }
