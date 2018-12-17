@@ -1,5 +1,7 @@
 package ch.epfl.swissteam.services.models;
 
+import android.app.Notification;
+
 import com.google.firebase.database.DatabaseReference;
 
 import java.util.Date;
@@ -34,6 +36,7 @@ public class ChatMessage implements DBSavable {
     }
 
     public ChatMessage() {
+        //empty constructor is required by firebase
     }
 
     /**
@@ -140,5 +143,14 @@ public class ChatMessage implements DBSavable {
     public void removeFromDB(DatabaseReference databaseReference, String child){
         if(child != null)
             databaseReference.child(DBUtility.CHATS).child(relationId_).child(child).removeValue();
+    }
+
+    @Override
+    public boolean equals(Object o){
+        if(!(o instanceof ChatMessage)) return false;
+        ChatMessage other = (ChatMessage) o;
+        return user_.equals(other.getUser_()) && userId_.equals(other.getUserId_())
+                && text_.equals(other.getText_()) && time_ == other.getTime_()
+                && relationId_.equals(other.getRelationId_());
     }
 }

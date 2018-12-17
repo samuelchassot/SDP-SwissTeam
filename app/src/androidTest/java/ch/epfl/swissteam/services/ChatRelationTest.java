@@ -53,38 +53,32 @@ public class ChatRelationTest {
         ChatRelation relation = new ChatRelation(user1, null);
     }
 
-    //assignUsers(User,User)
     @Test
-    public void setUsersYieldSortedIds() {
-        ChatRelation relation = new ChatRelation();
-        relation.assignUsers(user1, user2);
+    public void UsersIdsAreSorted() {
+        ChatRelation relation = new ChatRelation(user1, user2);
 
         assertEquals(userId1, relation.getFirstUserId_());
         assertEquals(userId2, relation.getSecondUserId_());
     }
 
     @Test(expected = NullPointerException.class)
-    public void setUsersYieldExceptionOnNullValuesForFirstUser() {
-        ChatRelation relation = new ChatRelation();
-        relation.assignUsers(null, user2);
+    public void cannotInstantiateWithNullFirstUser() {
+        new ChatRelation(null, user2);
     }
 
     @Test(expected = NullPointerException.class)
-    public void setUsersYieldExceptionOnNullValuesForSecondUser() {
-        ChatRelation relation = new ChatRelation();
-        relation.assignUsers(user1, null);
+    public void cannotInstantiateWithNullSecondUser() {
+        new ChatRelation(user1, null);
     }
 
     @Test(expected = NullPointerException.class)
-    public void assignUserWithNullIdForFirstUserThrows() {
-        ChatRelation relation = new ChatRelation();
-        relation.assignUsers(nullUser, user2);
+    public void cannotInstantiateWithNullFirstUserId() {
+        new ChatRelation(nullUser, user2);
     }
 
     @Test(expected = NullPointerException.class)
-    public void assignUserWithNullIdForSecondUserThrows() {
-        ChatRelation relation = new ChatRelation();
-        relation.assignUsers(user1, nullUser);
+    public void cannotInstantiateWithNullSecondUserId() {
+        new ChatRelation(user1, nullUser);
     }
 
     //setFirstUserId

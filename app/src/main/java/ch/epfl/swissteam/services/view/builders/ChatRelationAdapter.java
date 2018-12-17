@@ -108,6 +108,10 @@ public class ChatRelationAdapter extends RecyclerView.Adapter<ChatRelationAdapte
         notifyDataSetChanged();
     }
 
+    /**
+     * Set the the key word to filter the displayed chatRelations
+     * @param filterName the name of the chat partner
+     */
     public void setFilterName(String filterName){
         relations_.setFilterName_(filterName);
     }

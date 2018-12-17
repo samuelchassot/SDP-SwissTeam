@@ -1,6 +1,7 @@
 package ch.epfl.swissteam.services.view.activities;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -54,7 +55,7 @@ public class ChatRoomActivity extends NavigationDrawerActivity {
         super.onCreateDrawer(ToogleState.BACK);
         dataBase_ = DBUtility.get().getDb_();
 
-        setCurrentRelationId_(getIntent().getExtras().getString(ChatRelation.RELATION_ID_TEXT, null));
+        currentRelationId_ = getIntent().getExtras().getString(ChatRelation.RELATION_ID_TEXT, null);
         checkAndSetIfDeletedByPartner();
         retrieveUserAndSetRelationId();
 
@@ -94,7 +95,7 @@ public class ChatRoomActivity extends NavigationDrawerActivity {
                     newRelationWith(contactId);
                 }
                 else {
-                    setCurrentRelationId_(cR.getId_());
+                    currentRelationId_ = cR.getId_();
                     displayMessages();
                 }
             }
@@ -104,9 +105,6 @@ public class ChatRoomActivity extends NavigationDrawerActivity {
         });
     }
 
-    private void setCurrentRelationId_(String relationId){
-        currentRelationId_ = relationId;
-    }
     /**
      * display messages retrieved form the database
      */
@@ -170,7 +168,7 @@ public class ChatRoomActivity extends NavigationDrawerActivity {
             newRelation.addToDB(DBUtility.get().getDb_());
             mUser_.addChatRelation(newRelation,  DBUtility.get().getDb_());
             cUser.addChatRelation(newRelation, DBUtility.get().getDb_());
-            setCurrentRelationId_(newRelation.getId_());
+            currentRelationId_ = newRelation.getId_();
             displayMessages();
         });
     }
@@ -185,8 +183,14 @@ public class ChatRoomActivity extends NavigationDrawerActivity {
                 });
     }
 
+    //This method is useful to give this as parameter even inside anonymous declaration
     private void hideKeyboard(){
         ActivityUtils.hideKeyboard(this);
+    }
+
+    //This method is useful to give this as parameter even inside anonymous declaration
+    private void toastUser(String text){
+        Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
     }
 
     private void checkAndSetIfDeletedByPartner(){
@@ -197,9 +201,6 @@ public class ChatRoomActivity extends NavigationDrawerActivity {
             });
     }
 
-    private void toastUser(String text){
-        Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
-    }
 
     /**
      *
@@ -260,6 +261,5 @@ public class ChatRoomActivity extends NavigationDrawerActivity {
             leftSpace_ = view.findViewById(R.id.message_leftspace);
             rightSpace_ = view.findViewById(R.id.message_rightspace);
         }
-
     }
 }

@@ -10,13 +10,27 @@ import java.util.Iterator;
 import ch.epfl.swissteam.services.providers.DBCallBack;
 import ch.epfl.swissteam.services.providers.DBUtility;
 
+/**
+ * This class allows to store chat relations with some extra information such as the name of the
+ * chat partner and the timestamp of the last message and therefore provides a better control over
+ * the display of the relations. An extended chat relation is designed to be a reactive object over
+ * its completion which is achieved when all required information have been fetched from the database.
+ * When completed the ExtendedChatRelation will call its ready call back.
+ * @author Sébastien Gachoud
+ */
 public class ExtendedChatRelation {
     private String othersName_;
     private String othersImageUrl_;
     private long timestamp_;
-    private DBCallBack<ExtendedChatRelation> ready_;
-    private ChatRelation chatRelation_;
+    private final DBCallBack<ExtendedChatRelation> ready_;
+    private final ChatRelation chatRelation_;
 
+    /**
+     *
+     * @param chatRelation  The chatRelation which is supposed to be extended by this
+     * @param currentUserId The id of the current user
+     * @param ready         The call back to call when this is completed (see class description for more info)
+     */
     public ExtendedChatRelation(ChatRelation chatRelation, String currentUserId, DBCallBack<ExtendedChatRelation> ready){
         ready_ = ready;
         chatRelation_ = chatRelation;
@@ -36,18 +50,34 @@ public class ExtendedChatRelation {
         });
     }
 
+    /**
+     *
+     * @return the name of the chat partner
+     */
     public String getOthersName_() {
         return othersName_;
     }
 
+    /**
+     *
+     * @return the url of the profile pictures of the chat partner
+     */
     public String getOthersImageUrl_() {
         return othersImageUrl_;
     }
 
+    /**
+     *
+     * @return the chat relation that this extends
+     */
     public ChatRelation getChatRelation_() {
         return chatRelation_;
     }
 
+    /**
+     *
+     * @return the timestamp of the last message of this chat relation
+     */
     public long getTimestamp_() { return timestamp_; }
 
     @Override
@@ -58,7 +88,7 @@ public class ExtendedChatRelation {
         }
     }
 
-    public void retrieveLastTimestamp(DBCallBack<Long> callBackTimestamp){
+    private void retrieveLastTimestamp(DBCallBack<Long> callBackTimestamp){
         Query lastQuery = DBUtility.get().getDb_()
                 .child(DBUtility.CHATS).child(chatRelation_.getId_()).orderByKey().limitToLast(1);
         lastQuery.addListenerForSingleValueEvent(new ValueEventListener() {

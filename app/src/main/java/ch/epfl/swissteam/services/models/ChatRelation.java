@@ -14,8 +14,6 @@ public class ChatRelation implements DBSavable {
 
     public static final String RELATION_ID_TEXT = "relationId";
 
-
-    //Attributes
     private String firstUserId_;
     private String secondUserId_;
     private String id_;
@@ -28,10 +26,21 @@ public class ChatRelation implements DBSavable {
      */
     public ChatRelation(User firstUser, User secondUser ) {
         //set users IDs in alphanumeric order
-        assignUsers(firstUser, secondUser);
+
+        if(firstUser == null) {
+            throw new NullPointerException("ChatRelations requires non null firstUser");
+        }
+        if(secondUser == null) {
+            throw new NullPointerException("ChatRelations requires non null secondUser");
+        }
+
+        //set users IDs in alphanumeric order
+        assignUsersId(firstUser.getGoogleId_(), secondUser.getGoogleId_());
     }
 
-    public ChatRelation(){}
+    public ChatRelation(){
+        //empty constructor is required by firebase
+    }
 
     //Getters
 
@@ -102,24 +111,6 @@ public class ChatRelation implements DBSavable {
     }
 
     //public methods
-
-    /**
-     * assign users by their ID in alphanumeric order, firstUser < secondUser.
-     * It does not matter in which order the IDs are input, this method take care of ordering them.
-     * @param firstUser a reference to the first user
-     * @param secondUser    a reference to the second user
-     */
-    public void assignUsers(User firstUser, User secondUser) {
-        if(firstUser == null) {
-            throw new NullPointerException("ChatRelations requires non null firstUser");
-        }
-        if(secondUser == null) {
-            throw new NullPointerException("ChatRelations requires non null secondUser");
-        }
-
-        //set users IDs in alphanumeric order
-        assignUsersId(firstUser.getGoogleId_(), secondUser.getGoogleId_());
-    }
 
     /**
      * assign users ID in alphanumeric order, firstUser < secondUser.
