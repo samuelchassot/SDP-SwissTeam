@@ -50,18 +50,34 @@ public class ExtendedChatRelation {
         });
     }
 
+    /**
+     *
+     * @return the name of the chat partner
+     */
     public String getOthersName_() {
         return othersName_;
     }
 
+    /**
+     *
+     * @return the url of the profile pictures of the chat partner
+     */
     public String getOthersImageUrl_() {
         return othersImageUrl_;
     }
 
+    /**
+     *
+     * @return the chat relation that this extends
+     */
     public ChatRelation getChatRelation_() {
         return chatRelation_;
     }
 
+    /**
+     *
+     * @return the timestamp of the last message of this chat relation
+     */
     public long getTimestamp_() { return timestamp_; }
 
     @Override
