@@ -1,6 +1,7 @@
 package ch.epfl.swissteam.services.view.activities;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
 import android.view.View;
@@ -40,6 +41,7 @@ import static ch.epfl.swissteam.services.view.activities.NewProfileDetailsActivi
 public class PostActivity extends NavigationDrawerActivity implements OnMapReadyCallback {
 
     private static final String POST_MAPVIEW_BUNDLE_KEY = "PostMapViewBundleKey";
+    private static final int COLOR_OF_CHECKED_TODO_BUTTON = Color.rgb(100, 170, 100);
 
     private Post post_;
     private User user_;
@@ -119,10 +121,26 @@ public class PostActivity extends NavigationDrawerActivity implements OnMapReady
             ((TextView)findViewById(R.id.textview_postactivity_distance)).setText(this.getResources().getString(R.string.homefragment_postdistance, LocationManager.MAX_POST_DISTANCE / LocationManager.M_IN_ONE_KM));
         }
 
-        //TODOLIST button
-        findViewById(R.id.button_postactivity_todo).setOnClickListener(view -> {
-            TodoListDBUtility.addPost(new TodoListDbHelper(this), GoogleSignInSingleton.get().getClientUniqueID() ,post_.getKey_());
+        // Add post in TodoList if it is not already in
+        setTodoButtonBehavior();
+
+    }
+
+    private void setTodoButtonBehavior() {
+        TodoListDbHelper todoListDbHelper = new TodoListDbHelper(this);
+        String user = GoogleSignInSingleton.get().getClientUniqueID();
+
+        if (TodoListDBUtility.isPostInDB(todoListDbHelper, user, post_.getKey_())) {
+            findViewById(R.id.button_postactivity_todo).setBackgroundColor(COLOR_OF_CHECKED_TODO_BUTTON);
             findViewById(R.id.button_postactivity_todo).setClickable(false);
+        }
+
+        findViewById(R.id.button_postactivity_todo).setOnClickListener(view -> {
+            if (!TodoListDBUtility.isPostInDB(todoListDbHelper, user, post_.getKey_())) {
+                TodoListDBUtility.addPost(todoListDbHelper, user, post_.getKey_());
+            }
+            findViewById(R.id.button_postactivity_todo).setClickable(false);
+            findViewById(R.id.button_postactivity_todo).setBackgroundColor(COLOR_OF_CHECKED_TODO_BUTTON);
         });
 
     }

@@ -183,6 +183,9 @@ public class MainActivity extends NavigationDrawerActivity {
         this.startTransactionFragment(this.homeFragment_);
     }
 
+    /**
+     * Shows the chat Fragment, with the current relations with whom the user can communicate
+     */
     private void showChatsFragment() {
         if (this.onlineChatFragment_ == null) {
             this.onlineChatFragment_ = OnlineChatFragment.newInstance();

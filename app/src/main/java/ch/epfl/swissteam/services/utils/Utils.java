@@ -55,7 +55,7 @@ public class Utils {
     }
 
     /**
-     * alert dialog with a title 'title' that ask 'message' and as two buttons, on 'delete' and one 'cancel'
+     * alert dialog with a title 'title' that ask 'message' and has two buttons, one 'delete' and one 'cancel'
      * if delete is pressed then deletionCallBack callback true, false otherwise
      * @param context the context for this dialog to appear
      * @param title the title of the alert

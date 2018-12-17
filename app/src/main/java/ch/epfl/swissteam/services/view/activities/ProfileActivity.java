@@ -198,7 +198,6 @@ public class ProfileActivity extends NavigationDrawerActivity implements OnMapRe
             ViewGroup.LayoutParams p = m.getLayoutParams();
             p.height = 500;
             m.setLayoutParams(p);
-            //findViewById(R.id.mapview_profileactivity).setMinimumHeight(160);
         }
     }
 

@@ -192,6 +192,12 @@ public abstract class NavigationDrawerActivity extends AppCompatActivity impleme
 
         });
     }
+
+    /**
+     * Check if the drawer is open
+     *
+     * @return true if the drawer is open, false otherwise
+     */
     protected boolean isDrawerOpen(){
         return drawer_.isDrawerOpen(GravityCompat.START);
     }
