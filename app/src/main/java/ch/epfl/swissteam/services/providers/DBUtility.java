@@ -163,7 +163,6 @@ public class DBUtility {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot data : dataSnapshot.getChildren()) {
-                    Log.i("USERSDB", data.getValue(User.class).getName_());
                     users.add(data.getValue(User.class));
                 }
                 callBack.onCallBack(users);
