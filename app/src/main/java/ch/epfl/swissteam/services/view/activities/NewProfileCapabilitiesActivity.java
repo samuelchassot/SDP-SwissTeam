@@ -91,9 +91,7 @@ public class NewProfileCapabilitiesActivity extends AppCompatActivity {
      */
     public void addKeyWords(Categories capability, String keyWords) {
         ArrayList<String> kW = new ArrayList<>(Arrays.asList(keyWords.split(";")));
-        if (keyWords_.containsKey(capability.toString())) {
-            keyWords_.remove(capability.toString());
-        }
+        keyWords_.remove(capability.toString());
         Log.i("ADDKEYWORD", "key words for " + capability.toString() + " added");
         keyWords_.put(capability.toString(), kW);
 
@@ -105,9 +103,7 @@ public class NewProfileCapabilitiesActivity extends AppCompatActivity {
      * @param capability capability to remove.
      */
     public void removeCapability(Categories capability) {
-        if (capabilitiesList_.contains(capability)) {
-            capabilitiesList_.remove(capability);
-        }
+        capabilitiesList_.remove(capability);
     }
 
     /**
@@ -116,8 +112,6 @@ public class NewProfileCapabilitiesActivity extends AppCompatActivity {
      * @param capability capability for which remove the keywords.
      */
     public void removeKeyWords(Categories capability) {
-        if (keyWords_.containsKey(capability.toString())) {
-            keyWords_.remove(capability.toString());
-        }
+        keyWords_.remove(capability.toString());
     }
 }

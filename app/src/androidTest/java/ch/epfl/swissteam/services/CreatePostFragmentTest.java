@@ -103,19 +103,19 @@ public class CreatePostFragmentTest extends SocializeTest<MainActivity>{
     @Test
     public void createsPost1Week(){
         openMyPostFragment();
-        createPostNMonths(CreatePostFragment.TimeOut.oneWeek);
+        createPostNMonths(CreatePostFragment.TimeOut.ONE_WEEK);
     }
 
     @Test
     public void createsPost1Month(){
         openMyPostFragment();
-        createPostNMonths(CreatePostFragment.TimeOut.threeDays);
+        createPostNMonths(CreatePostFragment.TimeOut.THREE_DAYS);
     }
 
     @Test
     public void createsPost3Months(){
         openMyPostFragment();
-        createPostNMonths(CreatePostFragment.TimeOut.twoWeeks);
+        createPostNMonths(CreatePostFragment.TimeOut.TWO_WEEKS);
     }
 
 

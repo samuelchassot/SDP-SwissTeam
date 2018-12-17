@@ -51,10 +51,10 @@ public class CreatePostFragment extends Fragment implements View.OnClickListener
      * An enum containing different periods of time, used to represent lifetime of posts
      */
     public enum TimeOut {
-        oneDay,
-        threeDays,
-        oneWeek,
-        twoWeeks;
+        ONE_DAY,
+        THREE_DAYS,
+        ONE_WEEK,
+        TWO_WEEKS;
 
         private static Context ctx;
 
@@ -67,16 +67,16 @@ public class CreatePostFragment extends Fragment implements View.OnClickListener
             String result = "";
             if(ctx != null) {
                 switch (this) {
-                    case oneDay:
+                    case ONE_DAY:
                         result = ctx.getString(R.string.createpost_timeout_oneday);
                         break;
-                    case threeDays:
+                    case THREE_DAYS:
                         result = ctx.getString(R.string.createpost_timeout_threedays);
                         break;
-                    case oneWeek:
+                    case ONE_WEEK:
                         result = ctx.getString(R.string.createpost_timeout_oneweek);
                         break;
-                    case twoWeeks:
+                    case TWO_WEEKS:
                         result = ctx.getString(R.string.createpost_timeout_twoweeks);
                         break;
 
@@ -88,16 +88,16 @@ public class CreatePostFragment extends Fragment implements View.OnClickListener
         public Date getTimeoutDate(){
             Calendar cal = Calendar.getInstance();
             switch(this){
-                case oneDay:
+                case ONE_DAY:
                     cal.add(Calendar.DAY_OF_YEAR, 1);
                     break;
-                case threeDays:
+                case THREE_DAYS:
                     cal.add(Calendar.DAY_OF_YEAR, 3);
                     break;
-                case oneWeek:
+                case ONE_WEEK:
                     cal.add(Calendar.WEEK_OF_YEAR, 1);
                     break;
-                case twoWeeks:
+                case TWO_WEEKS:
                     cal.add(Calendar.WEEK_OF_YEAR, 2);
                     break;
             }
