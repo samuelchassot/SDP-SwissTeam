@@ -116,7 +116,11 @@ public class NearbyFragment extends Fragment implements View.OnClickListener {
             } else {
                 DBUtility.get().getPostsFeed(postsCallback, LocationManager.get().getZeroLocation(), helper_);
             }
-            ((MainActivity) getActivity()).showHomeFragment();
+            
+            MainActivity activity = (MainActivity) getActivity();
+            if(activity != null){
+                activity.showHomeFragment();
+            }
         });
     }
 
