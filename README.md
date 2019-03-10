@@ -3,10 +3,15 @@ Development of an Android application.
 
 ## Team
 Julie Giunta
+
 Simon Wicky
+
 Adrian Baudat
+
 Ghali Chraibi
+
 Sebastien Gachoud
+
 Samuel Chassot
 
 
