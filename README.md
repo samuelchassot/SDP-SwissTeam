@@ -1,3 +1,15 @@
+# Software Development Project from EPFL - Computer Science Bachelor course
+Development of an Android application.
+
+## Team
+Julie Giunta
+Simon Wicky
+Adrian Baudat
+Ghali Chraibi
+Sebastien Gachoud
+Samuel Chassot
+
+
 [![Build Status](https://travis-ci.org/samuelchassot/SDP-SwissTeam.svg?branch=master)](https://travis-ci.org/samuelchassot/SDP-SwissTeam)
 
 
